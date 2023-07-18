@@ -1,0 +1,30 @@
+name: Lint Build and Test
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.10.6' # Set the desired Flutter version here
+          channel: 'stable'
+      - name: Install Dependencies
+        run: flutter pub get
+      - name: Build App
+        run: flutter build apk # Replace 'apk' with the desired build target (apk, appbundle, ios, etc.)
+      - name: Archive Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-release
+          path: build/app/outputs/apk/release # Adjust the path according to your build target
+
