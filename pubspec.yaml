@@ -1,7 +1,7 @@
 name: smileid
-description: Smile ID Flutter3 SDK Wrapper
+description: Smile ID Flutter SDK
 version: 0.0.1
-homepage:
+homepage: "https://usesmileid.com"
 
 environment:
   sdk: '>=3.0.5 <4.0.0'

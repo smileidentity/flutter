@@ -1,4 +1,4 @@
-# Smile ID Flutter3 SDK
+# Smile ID Flutter SDK
 
 Smile ID provides the best solutions for Real Time Digital KYC, Identity Verification, User
 Onboarding, and User Authentication across Africa.
@@ -8,7 +8,7 @@ If you haven’t already,
 with Sandbox access.
 
 Please see [CHANGELOG.md](CHANGELOG.md) or
-[Releases](https://github.com/smileidentity/flutter3/releases) for the most recent version and
+[Releases](https://github.com/smileidentity/flutter/releases) for the most recent version and
 release notes
 
 ## Getting Started
