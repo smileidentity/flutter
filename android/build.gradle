@@ -41,6 +41,10 @@ android {
     dependencies {
         implementation 'com.smileidentity:android-sdk:10.0.0-beta06-SNAPSHOT'
 
+        implementation 'com.jakewharton.timber:timber:5.0.1'
+
+        implementation 'com.squareup.okhttp3:okhttp:4.11.0'
+
         testImplementation 'org.jetbrains.kotlin:kotlin-test'
         testImplementation 'org.mockito:mockito-core:5.0.0'
     }
