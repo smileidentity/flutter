@@ -4,6 +4,7 @@ version '1.0-SNAPSHOT'
 buildscript {
     ext.kotlin_version = '1.8.22'
     repositories {
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         google()
         mavenCentral()
     }
@@ -16,6 +17,7 @@ buildscript {
 
 allprojects {
     repositories {
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         google()
         mavenCentral()
     }
@@ -27,13 +29,8 @@ apply plugin: 'kotlin-android'
 android {
     compileSdkVersion 34
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
+    defaultConfig {
+        minSdkVersion 21
     }
 
     sourceSets {
@@ -41,12 +38,8 @@ android {
         test.java.srcDirs += 'src/test/kotlin'
     }
 
-    defaultConfig {
-        minSdkVersion 21
-    }
-
     dependencies {
-        implementation 'com.smileidentity:android-sdk:10.0.0-beta04'
+        implementation 'com.smileidentity:android-sdk:10.0.0-beta06-SNAPSHOT'
 
         testImplementation 'org.jetbrains.kotlin:kotlin-test'
         testImplementation 'org.mockito:mockito-core:5.0.0'
@@ -57,9 +50,9 @@ android {
             useJUnitPlatform()
 
             testLogging {
-               events "passed", "skipped", "failed", "standardOut", "standardError"
-               outputs.upToDateWhen {false}
-               showStandardStreams = true
+                events "passed", "skipped", "failed", "standardOut", "standardError"
+                outputs.upToDateWhen { false }
+                showStandardStreams = true
             }
         }
     }
