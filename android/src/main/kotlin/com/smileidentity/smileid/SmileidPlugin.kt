@@ -1,38 +1,57 @@
 package com.smileidentity.smileid
 
+import FlutterEnhancedKycAsyncResponse
+import FlutterEnhancedKycRequest
+import SmileIdApi
+import android.content.Context
 import androidx.annotation.NonNull
-
+import com.smileidentity.SmileID
 import io.flutter.embedding.engine.plugins.FlutterPlugin
-import io.flutter.plugin.common.MethodCall
-import io.flutter.plugin.common.MethodChannel
-import io.flutter.plugin.common.MethodChannel.MethodCallHandler
-import io.flutter.plugin.common.MethodChannel.Result
+import io.flutter.embedding.engine.plugins.activity.ActivityAware
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
+import kotlinx.coroutines.runBlocking
 
 /** SmileidPlugin */
-class SmileidPlugin: FlutterPlugin, MethodCallHandler {
-  /// The MethodChannel that will the communication between Flutter and native Android
-  ///
-  /// This local reference serves to register the plugin with the Flutter Engine and unregister it
-  /// when the Flutter Engine is detached from the Activity
-  private lateinit var channel : MethodChannel
+class SmileidPlugin : FlutterPlugin, SmileIdApi, ActivityAware {
 
-  override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "smileid")
-    channel.setMethodCallHandler(this)
-  }
+    private lateinit var context: Context
 
-  override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-    when (call.method) {
-        "getPlatformVersion" -> {
-          result.success("Android ${android.os.Build.VERSION.RELEASE}")
-        }
-        else -> {
-          result.notImplemented()
-        }
+    override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+        SmileIdApi.setUp(flutterPluginBinding.binaryMessenger, this)
+        context = flutterPluginBinding.applicationContext
     }
-  }
 
-  override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-    channel.setMethodCallHandler(null)
-  }
+    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+        SmileIdApi.setUp(binding.binaryMessenger, this)
+    }
+
+    override fun getPlatformVersion(callback: (Result<String?>) -> Unit) {
+        callback.invoke(Result.success("Android ${android.os.Build.VERSION.RELEASE}"))
+    }
+
+    override fun initialize(callback: (Result<Unit>) -> Unit) {
+        SmileID.initialize(context)
+    }
+
+    override fun doEnhancedKycAsync(
+        request: FlutterEnhancedKycRequest,
+        callback: (Result<FlutterEnhancedKycAsyncResponse?>) -> Unit
+    ) = runBlocking {
+        val response = SmileID.api.doEnhancedKycAsync(request.toRequest())
+        callback.invoke(Result.success(response.toResponse()))
+    }
+
+    /**
+     * https://stackoverflow.com/a/62206235
+     *
+     * We can get the context in a ActivityAware way, without asking users to pass the context when
+     * calling "initialize" on the sdk
+     */
+    override fun onAttachedToActivity(binding: ActivityPluginBinding) {}
+
+    override fun onDetachedFromActivityForConfigChanges() {}
+
+    override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {}
+
+    override fun onDetachedFromActivity() {}
 }

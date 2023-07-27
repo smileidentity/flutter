@@ -1,7 +1,6 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-
+import 'package:smileid/messages.g.dart';
 import 'smileid_method_channel.dart';
-import 'package:smileid/kyc.dart';
 
 abstract class SmileidPlatform extends PlatformInterface {
   /// Constructs a SmileidPlatform.
@@ -28,7 +27,12 @@ abstract class SmileidPlatform extends PlatformInterface {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
-  Future<EnhancedKycAsyncResponse> doEnhancedKycAsync(EnhancedKycRequest request) {
+  Future<void> initialize() {
+    throw UnimplementedError('initialize() has not been implemented.');
+  }
+
+  Future<FlutterEnhancedKycAsyncResponse?> doEnhancedKycAsync(
+      FlutterEnhancedKycRequest request) async {
     throw UnimplementedError('doEnhancedKycAsync() has not been implemented.');
   }
 }
