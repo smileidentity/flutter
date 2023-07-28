@@ -8,11 +8,11 @@ abstract class SmileidPlatform extends PlatformInterface {
 
   static final Object _token = Object();
 
-  static SmileidPlatform _instance = MethodChannelSmileid();
+  static SmileidPlatform _instance = SmileidUsage();
 
   /// The default instance of [SmileidPlatform] to use.
   ///
-  /// Defaults to [MethodChannelSmileid].
+  /// Defaults to [SmileidUsage].
   static SmileidPlatform get instance => _instance;
 
   /// Platform-specific implementations should set this with their own

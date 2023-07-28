@@ -3,7 +3,7 @@ import 'package:smileid/messages.g.dart';
 import 'package:smileid/smileid_platform_interface.dart';
 
 /// An implementation of [SmileidPlatform]
-class MethodChannelSmileid extends SmileidPlatform {
+class SmileidUsage extends SmileidPlatform {
   @visibleForTesting
   final SmileIdApi _api = SmileIdApi();
 

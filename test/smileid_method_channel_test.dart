@@ -5,7 +5,7 @@ import 'package:smileid/smileid_method_channel.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  MethodChannelSmileid platform = MethodChannelSmileid();
+  SmileidUsage platform = SmileidUsage();
   const MethodChannel channel = MethodChannel('smileid');
 
   setUp(() {
