@@ -14,13 +14,13 @@ enum FlutterJobType {
 
 class FlutterPartnerParams {
   FlutterPartnerParams({
-    required this.jobType,
+    this.jobType,
     required this.jobId,
     required this.userId,
     required this.extras,
   });
 
-  FlutterJobType jobType;
+  FlutterJobType? jobType;
 
   String jobId;
 
@@ -30,7 +30,7 @@ class FlutterPartnerParams {
 
   Object encode() {
     return <Object?>[
-      jobType.index,
+      jobType?.index,
       jobId,
       userId,
       extras,
@@ -40,7 +40,9 @@ class FlutterPartnerParams {
   static FlutterPartnerParams decode(Object result) {
     result as List<Object?>;
     return FlutterPartnerParams(
-      jobType: FlutterJobType.values[result[0]! as int],
+      jobType: result[0] != null
+          ? FlutterJobType.values[result[0]! as int]
+          : null,
       jobId: result[1]! as String,
       userId: result[2]! as String,
       extras: (result[3] as Map<Object?, Object?>?)!.cast<String?, String?>(),
@@ -53,13 +55,13 @@ class FlutterEnhancedKycRequest {
     required this.country,
     required this.idType,
     required this.idNumber,
-    required this.firstName,
-    required this.middleName,
-    required this.lastName,
-    required this.dob,
-    required this.phoneNumber,
-    required this.bankCode,
-    required this.callbackUrl,
+    this.firstName,
+    this.middleName,
+    this.lastName,
+    this.dob,
+    this.phoneNumber,
+    this.bankCode,
+    this.callbackUrl,
     required this.partnerParams,
     required this.partnerId,
     required this.sourceSdk,
@@ -74,19 +76,19 @@ class FlutterEnhancedKycRequest {
 
   String idNumber;
 
-  String firstName;
+  String? firstName;
 
-  String middleName;
+  String? middleName;
 
-  String lastName;
+  String? lastName;
 
-  String dob;
+  String? dob;
 
-  String phoneNumber;
+  String? phoneNumber;
 
-  String bankCode;
+  String? bankCode;
 
-  String callbackUrl;
+  String? callbackUrl;
 
   FlutterPartnerParams partnerParams;
 
@@ -127,13 +129,13 @@ class FlutterEnhancedKycRequest {
       country: result[0]! as String,
       idType: result[1]! as String,
       idNumber: result[2]! as String,
-      firstName: result[3]! as String,
-      middleName: result[4]! as String,
-      lastName: result[5]! as String,
-      dob: result[6]! as String,
-      phoneNumber: result[7]! as String,
-      bankCode: result[8]! as String,
-      callbackUrl: result[9]! as String,
+      firstName: result[3] as String?,
+      middleName: result[4] as String?,
+      lastName: result[5] as String?,
+      dob: result[6] as String?,
+      phoneNumber: result[7] as String?,
+      bankCode: result[8] as String?,
+      callbackUrl: result[9] as String?,
       partnerParams: FlutterPartnerParams.decode(result[10]! as List<Object?>),
       partnerId: result[11]! as String,
       sourceSdk: result[12]! as String,

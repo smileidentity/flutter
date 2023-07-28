@@ -13,7 +13,7 @@ import 'package:pigeon/pigeon.dart';
 enum FlutterJobType { biometric_kyc }
 
 class FlutterPartnerParams {
-  final FlutterJobType jobType;
+  final FlutterJobType? jobType;
   final String jobId;
   final String userId;
   final Map<String?, String?> extras;
@@ -25,13 +25,13 @@ class FlutterEnhancedKycRequest {
   final String country;
   final String idType;
   final String idNumber;
-  final String firstName;
-  final String middleName;
-  final String lastName;
-  final String dob;
-  final String phoneNumber;
-  final String bankCode;
-  final String callbackUrl;
+  final String? firstName;
+  final String? middleName;
+  final String? lastName;
+  final String? dob;
+  final String? phoneNumber;
+  final String? bankCode;
+  final String? callbackUrl;
   final FlutterPartnerParams partnerParams;
   final String partnerId;
   final String sourceSdk;

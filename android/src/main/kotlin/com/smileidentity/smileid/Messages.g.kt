@@ -54,7 +54,7 @@ enum class FlutterJobType(val raw: Int) {
 
 /** Generated class from Pigeon that represents data sent in messages. */
 data class FlutterPartnerParams (
-  val jobType: FlutterJobType,
+  val jobType: FlutterJobType? = null,
   val jobId: String,
   val userId: String,
   val extras: Map<String?, String?>
@@ -63,7 +63,9 @@ data class FlutterPartnerParams (
   companion object {
     @Suppress("UNCHECKED_CAST")
     fun fromList(list: List<Any?>): FlutterPartnerParams {
-      val jobType = FlutterJobType.ofRaw(list[0] as Int)!!
+      val jobType: FlutterJobType? = (list[0] as Int?)?.let {
+        FlutterJobType.ofRaw(it)
+      }
       val jobId = list[1] as String
       val userId = list[2] as String
       val extras = list[3] as Map<String?, String?>
@@ -72,7 +74,7 @@ data class FlutterPartnerParams (
   }
   fun toList(): List<Any?> {
     return listOf<Any?>(
-      jobType.raw,
+      jobType?.raw,
       jobId,
       userId,
       extras,
@@ -85,13 +87,13 @@ data class FlutterEnhancedKycRequest (
   val country: String,
   val idType: String,
   val idNumber: String,
-  val firstName: String,
-  val middleName: String,
-  val lastName: String,
-  val dob: String,
-  val phoneNumber: String,
-  val bankCode: String,
-  val callbackUrl: String,
+  val firstName: String? = null,
+  val middleName: String? = null,
+  val lastName: String? = null,
+  val dob: String? = null,
+  val phoneNumber: String? = null,
+  val bankCode: String? = null,
+  val callbackUrl: String? = null,
   val partnerParams: FlutterPartnerParams,
   val partnerId: String,
   val sourceSdk: String,
@@ -106,13 +108,13 @@ data class FlutterEnhancedKycRequest (
       val country = list[0] as String
       val idType = list[1] as String
       val idNumber = list[2] as String
-      val firstName = list[3] as String
-      val middleName = list[4] as String
-      val lastName = list[5] as String
-      val dob = list[6] as String
-      val phoneNumber = list[7] as String
-      val bankCode = list[8] as String
-      val callbackUrl = list[9] as String
+      val firstName = list[3] as String?
+      val middleName = list[4] as String?
+      val lastName = list[5] as String?
+      val dob = list[6] as String?
+      val phoneNumber = list[7] as String?
+      val bankCode = list[8] as String?
+      val callbackUrl = list[9] as String?
       val partnerParams = FlutterPartnerParams.fromList(list[10] as List<Any?>)
       val partnerId = list[11] as String
       val sourceSdk = list[12] as String
