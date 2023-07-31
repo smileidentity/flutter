@@ -5,9 +5,8 @@ import 'package:pigeon/pigeon.dart';
   dartOptions: DartOptions(),
   kotlinOut: 'android/src/main/kotlin/com/smileidentity/smileid/Messages.g.kt',
   kotlinOptions: KotlinOptions(),
-  // TODO - Vansh/Jubril look at this bit
-  // swiftOut: 'ios/Runner/Messages.g.swift',
-  // swiftOptions: SwiftOptions(),
+  swiftOut: 'ios/Classes/Messages.g.swift',
+  swiftOptions: SwiftOptions(),
   dartPackageName: 'smileid',
 ))
 enum FlutterJobType { biometric_kyc }

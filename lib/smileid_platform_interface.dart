@@ -1,5 +1,5 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-import 'package:smileid/messages.g.dart';
+import 'package:smileid_flutter/messages.g.dart';
 import 'smileid_method_channel.dart';
 
 abstract class SmileidPlatform extends PlatformInterface {

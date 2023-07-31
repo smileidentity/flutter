@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:smileid/messages.g.dart';
-import 'package:smileid/smileid.dart';
+import 'package:smileid_flutter/messages.g.dart';
+import 'package:smileid_flutter/smileid.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,7 +30,27 @@ class _MyAppState extends State<MyApp> {
   Future<void> initPlatformState() async {
     _smileidPlugin.initialize();
 
-    // _smileidPlugin.doEnhancedKycAsync( FlutterEnhancedKycRequest(country: country, idType: idType, idNumber: idNumber, firstName: firstName, middleName: middleName, lastName: lastName, dob: dob, phoneNumber: phoneNumber, bankCode: bankCode, callbackUrl: callbackUrl, partnerParams: partnerParams, partnerId: partnerId, sourceSdk: sourceSdk, sourceSdkVersion: sourceSdkVersion, timestamp: timestamp, signature: signature))
+    _smileidPlugin.doEnhancedKycAsync(FlutterEnhancedKycRequest(
+        country: "country",
+        idType: "idType",
+        idNumber: "idNumber",
+        firstName: "firstName",
+        middleName: "middleName",
+        lastName: "lastName",
+        dob: "dob",
+        phoneNumber: "phoneNumber",
+        bankCode: "bankCode",
+        callbackUrl: "callbackUrl",
+        partnerParams: FlutterPartnerParams(
+            jobId: "jobId",
+            userId: "userId",
+            extras: {},
+            jobType: FlutterJobType.biometric_kyc),
+        partnerId: "partnerId",
+        sourceSdk: "sourceSdk",
+        sourceSdkVersion: "sourceSdkVersion",
+        timestamp: "timestamp",
+        signature: "signature"));
 
     String platformVersion;
     // Platform messages may fail, so we use a try/catch PlatformException.
