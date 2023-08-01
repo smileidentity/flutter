@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:smileid/smileid.dart';
+import 'package:smileid_flutter/messages.g.dart';
+import 'package:smileid_flutter/smileid.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,12 +28,36 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
+    _smileidPlugin.initialize();
+
+    _smileidPlugin.doEnhancedKycAsync(FlutterEnhancedKycRequest(
+        country: "country",
+        idType: "idType",
+        idNumber: "idNumber",
+        firstName: "firstName",
+        middleName: "middleName",
+        lastName: "lastName",
+        dob: "dob",
+        phoneNumber: "phoneNumber",
+        bankCode: "bankCode",
+        callbackUrl: "callbackUrl",
+        partnerParams: FlutterPartnerParams(
+            jobId: "jobId",
+            userId: "userId",
+            extras: {},
+            jobType: FlutterJobType.biometric_kyc),
+        partnerId: "partnerId",
+        sourceSdk: "sourceSdk",
+        sourceSdkVersion: "sourceSdkVersion",
+        timestamp: "timestamp",
+        signature: "signature"));
+
     String platformVersion;
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      platformVersion =
-          await _smileidPlugin.getPlatformVersion() ?? 'Unknown platform version';
+      platformVersion = await _smileidPlugin.getPlatformVersion() ??
+          'Unknown platform version';
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
@@ -52,7 +77,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('Smile ID'),
         ),
         body: Center(
           child: Text('Running on: $_platformVersion\n'),
