@@ -2,7 +2,7 @@ package com.smileidentity.smileid
 
 import FlutterEnhancedKycAsyncResponse
 import FlutterEnhancedKycRequest
-import SmileIdApi
+import SmileIDApi
 import android.content.Context
 import androidx.annotation.NonNull
 import com.smileidentity.SmileID
@@ -11,18 +11,18 @@ import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import kotlinx.coroutines.runBlocking
 
-/** SmileidPlugin */
-class SmileidPlugin : FlutterPlugin, SmileIdApi, ActivityAware {
+/** SmileIDPlugin */
+class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
 
     private lateinit var context: Context
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        SmileIdApi.setUp(flutterPluginBinding.binaryMessenger, this)
+        SmileIDApi.setUp(flutterPluginBinding.binaryMessenger, this)
         context = flutterPluginBinding.applicationContext
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-        SmileIdApi.setUp(binding.binaryMessenger, this)
+        SmileIDApi.setUp(binding.binaryMessenger, this)
     }
 
     override fun getPlatformVersion(callback: (Result<String?>) -> Unit) {

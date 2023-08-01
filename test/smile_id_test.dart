@@ -1,13 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-import 'package:smileid_flutter/messages.g.dart';
-import 'package:smileid_flutter/smileid.dart';
-import 'package:smileid_flutter/smileid_method_channel.dart';
-import 'package:smileid_flutter/smileid_platform_interface.dart';
+import 'package:smile_id_flutter/messages.g.dart';
+import 'package:smile_id_flutter/smile_id.dart';
+import 'package:smile_id_flutter/smile_id_method_channel.dart';
+import 'package:smile_id_flutter/smile_id_platform_interface.dart';
 
-class MockSmileidPlatform
+class MockSmileIDPlatform
     with MockPlatformInterfaceMixin
-    implements SmileidPlatform {
+    implements SmileIDPlatform {
   @override
   Future<String?> getPlatformVersion() => Future.value('42');
 
@@ -26,16 +26,16 @@ class MockSmileidPlatform
 }
 
 void main() {
-  final SmileidPlatform initialPlatform = SmileidPlatform.instance;
+  final SmileIDPlatform initialPlatform = SmileIDPlatform.instance;
 
-  test('$SmileidUsage is the default instance', () {
-    expect(initialPlatform, isInstanceOf<SmileidUsage>());
+  test('$SmileIDUsage is the default instance', () {
+    expect(initialPlatform, isInstanceOf<SmileIDUsage>());
   });
 
   test('getPlatformVersion', () async {
-    Smileid smileidPlugin = Smileid();
-    MockSmileidPlatform fakePlatform = MockSmileidPlatform();
-    SmileidPlatform.instance = fakePlatform;
+    SmileID smileidPlugin = SmileID();
+    MockSmileIDPlatform fakePlatform = MockSmileIDPlatform();
+    SmileIDPlatform.instance = fakePlatform;
 
     expect(await smileidPlugin.getPlatformVersion(), '42');
   });

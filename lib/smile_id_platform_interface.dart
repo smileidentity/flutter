@@ -1,24 +1,24 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-import 'package:smileid_flutter/messages.g.dart';
-import 'smileid_method_channel.dart';
+import 'package:smile_id_flutter/messages.g.dart';
+import 'smile_id_method_channel.dart';
 
-abstract class SmileidPlatform extends PlatformInterface {
-  /// Constructs a SmileidPlatform.
-  SmileidPlatform() : super(token: _token);
+abstract class SmileIDPlatform extends PlatformInterface {
+  /// Constructs a SmileIDPlatform.
+  SmileIDPlatform() : super(token: _token);
 
   static final Object _token = Object();
 
-  static SmileidPlatform _instance = SmileidUsage();
+  static SmileIDPlatform _instance = SmileIDUsage();
 
-  /// The default instance of [SmileidPlatform] to use.
+  /// The default instance of [SmileIDPlatform] to use.
   ///
-  /// Defaults to [SmileidUsage].
-  static SmileidPlatform get instance => _instance;
+  /// Defaults to [SmileIDUsage].
+  static SmileIDPlatform get instance => _instance;
 
   /// Platform-specific implementations should set this with their own
-  /// platform-specific class that extends [SmileidPlatform] when
+  /// platform-specific class that extends [SmileIDPlatform] when
   /// they register themselves.
-  static set instance(SmileidPlatform instance) {
+  static set instance(SmileIDPlatform instance) {
     PlatformInterface.verifyToken(instance, _token);
     _instance = instance;
   }
