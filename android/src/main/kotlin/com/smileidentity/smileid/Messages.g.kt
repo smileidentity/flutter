@@ -82,6 +82,154 @@ data class FlutterPartnerParams (
   }
 }
 
+/**
+ * The Auth Smile request. Auth Smile serves multiple purposes:
+ *
+ * - It is used to fetch the signature needed for subsequent API requests
+ * - It indicates the type of job that will being performed
+ * - It is used to fetch consent information for the partner
+ *
+ * [jobType] The type of job that will be performed
+ * [enrollment] Whether or not this is an enrollment job
+ * [country] The country code of the country where the job is being performed. This value is
+ * required in order to get back consent information for the partner
+ * [idType] The type of ID that will be used for the job. This value is required in order to
+ * get back consent information for the partner
+ * [updateEnrolledImage] Whether or not the enrolled image should be updated with image
+ * submitted for this job
+ * [jobId] The job ID to associate with the job. Most often, this will correspond to a unique
+ * Job ID within your own system. If not provided, a random job ID will be generated
+ * [userId] The user ID to associate with the job. Most often, this will correspond to a unique
+ * User ID within your own system. If not provided, a random user ID will be generated
+ * [signature] Whether or not to fetch the signature for the job
+ * [production] Whether or not to use the production environment
+ * [partnerId] The partner ID
+ * [authToken] The auth token from smile_config.json
+ *
+ * Generated class from Pigeon that represents data sent in messages.
+ */
+data class FlutterAuthenticationRequest (
+  val jobType: FlutterJobType? = null,
+  val enrollment: Boolean,
+  val country: String? = null,
+  val idType: String? = null,
+  val updateEnrolledImage: Boolean? = null,
+  val jobId: String? = null,
+  val userId: String? = null,
+  val signature: Boolean,
+  val production: Boolean,
+  val partnerId: String,
+  val authToken: String
+
+) {
+  companion object {
+    @Suppress("UNCHECKED_CAST")
+    fun fromList(list: List<Any?>): FlutterAuthenticationRequest {
+      val jobType: FlutterJobType? = (list[0] as Int?)?.let {
+        FlutterJobType.ofRaw(it)
+      }
+      val enrollment = list[1] as Boolean
+      val country = list[2] as String?
+      val idType = list[3] as String?
+      val updateEnrolledImage = list[4] as Boolean?
+      val jobId = list[5] as String?
+      val userId = list[6] as String?
+      val signature = list[7] as Boolean
+      val production = list[8] as Boolean
+      val partnerId = list[9] as String
+      val authToken = list[10] as String
+      return FlutterAuthenticationRequest(jobType, enrollment, country, idType, updateEnrolledImage, jobId, userId, signature, production, partnerId, authToken)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf<Any?>(
+      jobType?.raw,
+      enrollment,
+      country,
+      idType,
+      updateEnrolledImage,
+      jobId,
+      userId,
+      signature,
+      production,
+      partnerId,
+      authToken,
+    )
+  }
+}
+
+/**
+ * [consentInfo] is only populated when a country and ID type are provided in the
+ * [FlutterAuthenticationRequest]. To get information about *all* countries and ID types instead,
+ *  [SmileIDService.getProductsConfig]
+ *
+ * [timestamp] is *not* a [DateTime] because technically, any arbitrary value could have been
+ * passed to it. This applies to all other timestamp fields in the SDK.
+ *
+ * Generated class from Pigeon that represents data sent in messages.
+ */
+data class FlutterAuthenticationResponse (
+  val success: Boolean,
+  val signature: String,
+  val timestamp: String,
+  val partnerParams: FlutterPartnerParams,
+  val callbackUrl: String? = null,
+  val consentInfo: FlutterConsentInfo? = null
+
+) {
+  companion object {
+    @Suppress("UNCHECKED_CAST")
+    fun fromList(list: List<Any?>): FlutterAuthenticationResponse {
+      val success = list[0] as Boolean
+      val signature = list[1] as String
+      val timestamp = list[2] as String
+      val partnerParams = FlutterPartnerParams.fromList(list[3] as List<Any?>)
+      val callbackUrl = list[4] as String?
+      val consentInfo: FlutterConsentInfo? = (list[5] as List<Any?>?)?.let {
+        FlutterConsentInfo.fromList(it)
+      }
+      return FlutterAuthenticationResponse(success, signature, timestamp, partnerParams, callbackUrl, consentInfo)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf<Any?>(
+      success,
+      signature,
+      timestamp,
+      partnerParams.toList(),
+      callbackUrl,
+      consentInfo?.toList(),
+    )
+  }
+}
+
+/**
+ * [canAccess] Whether or not the ID type is enabled for the partner
+ * [consentRequired] Whether or not consent is required for the ID type
+ *
+ * Generated class from Pigeon that represents data sent in messages.
+ */
+data class FlutterConsentInfo (
+  val canAccess: Boolean,
+  val consentRequired: Boolean
+
+) {
+  companion object {
+    @Suppress("UNCHECKED_CAST")
+    fun fromList(list: List<Any?>): FlutterConsentInfo {
+      val canAccess = list[0] as Boolean
+      val consentRequired = list[1] as Boolean
+      return FlutterConsentInfo(canAccess, consentRequired)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf<Any?>(
+      canAccess,
+      consentRequired,
+    )
+  }
+}
+
 /** Generated class from Pigeon that represents data sent in messages. */
 data class FlutterEnhancedKycRequest (
   val country: String,
@@ -171,15 +319,30 @@ private object SmileIDApiCodec : StandardMessageCodec() {
     return when (type) {
       128.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterEnhancedKycAsyncResponse.fromList(it)
+          FlutterAuthenticationRequest.fromList(it)
         }
       }
       129.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterEnhancedKycRequest.fromList(it)
+          FlutterAuthenticationResponse.fromList(it)
         }
       }
       130.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
+          FlutterConsentInfo.fromList(it)
+        }
+      }
+      131.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
+          FlutterEnhancedKycAsyncResponse.fromList(it)
+        }
+      }
+      132.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
+          FlutterEnhancedKycRequest.fromList(it)
+        }
+      }
+      133.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
           FlutterPartnerParams.fromList(it)
         }
@@ -189,16 +352,28 @@ private object SmileIDApiCodec : StandardMessageCodec() {
   }
   override fun writeValue(stream: ByteArrayOutputStream, value: Any?)   {
     when (value) {
-      is FlutterEnhancedKycAsyncResponse -> {
+      is FlutterAuthenticationRequest -> {
         stream.write(128)
         writeValue(stream, value.toList())
       }
-      is FlutterEnhancedKycRequest -> {
+      is FlutterAuthenticationResponse -> {
         stream.write(129)
         writeValue(stream, value.toList())
       }
-      is FlutterPartnerParams -> {
+      is FlutterConsentInfo -> {
         stream.write(130)
+        writeValue(stream, value.toList())
+      }
+      is FlutterEnhancedKycAsyncResponse -> {
+        stream.write(131)
+        writeValue(stream, value.toList())
+      }
+      is FlutterEnhancedKycRequest -> {
+        stream.write(132)
+        writeValue(stream, value.toList())
+      }
+      is FlutterPartnerParams -> {
+        stream.write(133)
         writeValue(stream, value.toList())
       }
       else -> super.writeValue(stream, value)
@@ -208,9 +383,9 @@ private object SmileIDApiCodec : StandardMessageCodec() {
 
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface SmileIDApi {
-  fun getPlatformVersion(callback: (Result<String?>) -> Unit)
-  fun initialize(callback: (Result<Unit>) -> Unit)
-  fun doEnhancedKycAsync(request: FlutterEnhancedKycRequest, callback: (Result<FlutterEnhancedKycAsyncResponse?>) -> Unit)
+  fun initialize()
+  fun authenticate(request: FlutterAuthenticationRequest, callback: (Result<FlutterAuthenticationResponse>) -> Unit)
+  fun doEnhancedKycAsync(request: FlutterEnhancedKycRequest, callback: (Result<FlutterEnhancedKycAsyncResponse>) -> Unit)
 
   companion object {
     /** The codec used by SmileIDApi. */
@@ -221,10 +396,29 @@ interface SmileIDApi {
     @Suppress("UNCHECKED_CAST")
     fun setUp(binaryMessenger: BinaryMessenger, api: SmileIDApi?) {
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.getPlatformVersion", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.initialize", codec)
         if (api != null) {
           channel.setMessageHandler { _, reply ->
-            api.getPlatformVersion() { result: Result<String?> ->
+            var wrapped: List<Any?>
+            try {
+              api.initialize()
+              wrapped = listOf<Any?>(null)
+            } catch (exception: Throwable) {
+              wrapped = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.authenticate", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val requestArg = args[0] as FlutterAuthenticationRequest
+            api.authenticate(requestArg) { result: Result<FlutterAuthenticationResponse> ->
               val error = result.exceptionOrNull()
               if (error != null) {
                 reply.reply(wrapError(error))
@@ -239,29 +433,12 @@ interface SmileIDApi {
         }
       }
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.initialize", codec)
-        if (api != null) {
-          channel.setMessageHandler { _, reply ->
-            api.initialize() { result: Result<Unit> ->
-              val error = result.exceptionOrNull()
-              if (error != null) {
-                reply.reply(wrapError(error))
-              } else {
-                reply.reply(wrapResult(null))
-              }
-            }
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
         val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.doEnhancedKycAsync", codec)
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>
             val requestArg = args[0] as FlutterEnhancedKycRequest
-            api.doEnhancedKycAsync(requestArg) { result: Result<FlutterEnhancedKycAsyncResponse?> ->
+            api.doEnhancedKycAsync(requestArg) { result: Result<FlutterEnhancedKycAsyncResponse> ->
               val error = result.exceptionOrNull()
               if (error != null) {
                 reply.reply(wrapError(error))

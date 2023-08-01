@@ -1,5 +1,7 @@
 package com.smileidentity.smileid
 
+import FlutterAuthenticationRequest
+import FlutterAuthenticationResponse
 import FlutterEnhancedKycAsyncResponse
 import FlutterEnhancedKycRequest
 import SmileIDApi
@@ -25,17 +27,20 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         SmileIDApi.setUp(binding.binaryMessenger, this)
     }
 
-    override fun getPlatformVersion(callback: (Result<String?>) -> Unit) {
-        callback.invoke(Result.success("Android ${android.os.Build.VERSION.RELEASE}"))
+    override fun authenticate(
+        request: FlutterAuthenticationRequest,
+        callback: (Result<FlutterAuthenticationResponse>) -> Unit
+    ) {
+        callback.invoke(Result.success(SmileID.api.authenticate(request.toRequest()).toResponse()))
     }
 
-    override fun initialize(callback: (Result<Unit>) -> Unit) {
+    override fun initialize() {
         SmileID.initialize(context)
     }
 
     override fun doEnhancedKycAsync(
         request: FlutterEnhancedKycRequest,
-        callback: (Result<FlutterEnhancedKycAsyncResponse?>) -> Unit
+        callback: (Result<FlutterEnhancedKycAsyncResponse>) -> Unit
     ) = runBlocking {
         val response = SmileID.api.doEnhancedKycAsync(request.toRequest())
         callback.invoke(Result.success(response.toResponse()))

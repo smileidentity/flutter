@@ -20,6 +20,91 @@ class FlutterPartnerParams {
   FlutterPartnerParams(this.jobType, this.jobId, this.userId, this.extras);
 }
 
+/// The Auth Smile request. Auth Smile serves multiple purposes:
+///
+/// - It is used to fetch the signature needed for subsequent API requests
+/// - It indicates the type of job that will being performed
+/// - It is used to fetch consent information for the partner
+///
+/// [jobType] The type of job that will be performed
+/// [enrollment] Whether or not this is an enrollment job
+/// [country] The country code of the country where the job is being performed. This value is
+/// required in order to get back consent information for the partner
+/// [idType] The type of ID that will be used for the job. This value is required in order to
+/// get back consent information for the partner
+/// [updateEnrolledImage] Whether or not the enrolled image should be updated with image
+/// submitted for this job
+/// [jobId] The job ID to associate with the job. Most often, this will correspond to a unique
+/// Job ID within your own system. If not provided, a random job ID will be generated
+/// [userId] The user ID to associate with the job. Most often, this will correspond to a unique
+/// User ID within your own system. If not provided, a random user ID will be generated
+/// [signature] Whether or not to fetch the signature for the job
+/// [production] Whether or not to use the production environment
+/// [partnerId] The partner ID
+/// [authToken] The auth token from smile_config.json
+
+class FlutterAuthenticationRequest {
+  final FlutterJobType? jobType;
+  final bool enrollment;
+  final String? country;
+  final String? idType;
+  final bool? updateEnrolledImage;
+  final String? jobId;
+  final String? userId;
+  final bool signature;
+  final bool production;
+  final String partnerId;
+  final String authToken;
+
+  FlutterAuthenticationRequest({
+    this.jobType,
+    required this.enrollment,
+    this.country,
+    this.idType,
+    this.updateEnrolledImage,
+    this.jobId,
+    this.userId,
+    required this.signature,
+    required this.production,
+    required this.partnerId,
+    required this.authToken,
+  });
+}
+
+/// [consentInfo] is only populated when a country and ID type are provided in the
+/// [FlutterAuthenticationRequest]. To get information about *all* countries and ID types instead,
+///  [SmileIDService.getProductsConfig]
+///
+/// [timestamp] is *not* a [DateTime] because technically, any arbitrary value could have been
+/// passed to it. This applies to all other timestamp fields in the SDK.
+
+class FlutterAuthenticationResponse {
+  final bool success;
+  final String signature;
+  final String timestamp;
+  final FlutterPartnerParams partnerParams;
+  final String? callbackUrl;
+  final FlutterConsentInfo? consentInfo;
+
+  FlutterAuthenticationResponse({
+    required this.success,
+    required this.signature,
+    required this.timestamp,
+    required this.partnerParams,
+    this.callbackUrl,
+    this.consentInfo,
+  });
+}
+
+/// [canAccess] Whether or not the ID type is enabled for the partner
+/// [consentRequired] Whether or not consent is required for the ID type
+class FlutterConsentInfo {
+  final bool canAccess;
+  final bool consentRequired;
+
+  FlutterConsentInfo({required this.canAccess, required this.consentRequired});
+}
+
 class FlutterEnhancedKycRequest {
   final String country;
   final String idType;
@@ -65,13 +150,11 @@ class FlutterEnhancedKycAsyncResponse {
 
 @HostApi()
 abstract class SmileIDApi {
-  @async
-  String? getPlatformVersion();
-
-  @async
   void initialize();
 
   @async
-  FlutterEnhancedKycAsyncResponse? doEnhancedKycAsync(
-      FlutterEnhancedKycRequest request);
+  FlutterAuthenticationResponse authenticate(FlutterAuthenticationRequest request);
+
+  @async
+  FlutterEnhancedKycAsyncResponse doEnhancedKycAsync(FlutterEnhancedKycRequest request);
 }

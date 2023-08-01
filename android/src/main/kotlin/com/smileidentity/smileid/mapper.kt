@@ -1,5 +1,6 @@
 package com.smileidentity.smileid
 
+import FlutterAuthenticationRequest
 import FlutterEnhancedKycAsyncResponse
 import FlutterEnhancedKycRequest
 import FlutterJobType
@@ -11,6 +12,29 @@ import com.smileidentity.models.PartnerParams
 fun FlutterJobType.toRequest(): JobType {
     return JobType.valueOf(this.name)
 }
+
+fun FlutterAuthenticationRequest.toRequest() = AuthenticationRequest(
+    jobType = jobType,
+    enrollment = enrollment,
+    country = country,
+    idType = idType,
+    updateEnrolledImage = updateEnrolledImage,
+    jobId = jobId,
+    userId = userId,
+    signature = signature,
+    production = production,
+    partnerId = partnerId,
+    authToken = authToken,
+)
+
+fun AuthenticationResponse.toResponse() = FlutterAuthenticationResponse(
+    success = success,
+    signature = signature,
+    timestamp = timestamp,
+    partnerParams = partnerParams.toResponse(),
+    callbackUrl = callbackUrl,
+    consentInfo = consentInfo?.toResponse(),
+)
 
 fun FlutterEnhancedKycRequest.toRequest(): EnhancedKycRequest {
     return EnhancedKycRequest(
@@ -43,4 +67,3 @@ fun EnhancedKycAsyncResponse.toResponse(): FlutterEnhancedKycAsyncResponse {
         success = this.success
     )
 }
-
