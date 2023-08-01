@@ -164,7 +164,7 @@ struct FlutterEnhancedKycAsyncResponse {
   }
 }
 
-private class SmileIdApiCodecReader: FlutterStandardReader {
+private class SmileIDApiCodecReader: FlutterStandardReader {
   override func readValue(ofType type: UInt8) -> Any? {
     switch type {
       case 128:
@@ -179,7 +179,7 @@ private class SmileIdApiCodecReader: FlutterStandardReader {
   }
 }
 
-private class SmileIdApiCodecWriter: FlutterStandardWriter {
+private class SmileIDApiCodecWriter: FlutterStandardWriter {
   override func writeValue(_ value: Any) {
     if let value = value as? FlutterEnhancedKycAsyncResponse {
       super.writeByte(128)
@@ -196,34 +196,34 @@ private class SmileIdApiCodecWriter: FlutterStandardWriter {
   }
 }
 
-private class SmileIdApiCodecReaderWriter: FlutterStandardReaderWriter {
+private class SmileIDApiCodecReaderWriter: FlutterStandardReaderWriter {
   override func reader(with data: Data) -> FlutterStandardReader {
-    return SmileIdApiCodecReader(data: data)
+    return SmileIDApiCodecReader(data: data)
   }
 
   override func writer(with data: NSMutableData) -> FlutterStandardWriter {
-    return SmileIdApiCodecWriter(data: data)
+    return SmileIDApiCodecWriter(data: data)
   }
 }
 
-class SmileIdApiCodec: FlutterStandardMessageCodec {
-  static let shared = SmileIdApiCodec(readerWriter: SmileIdApiCodecReaderWriter())
+class SmileIDApiCodec: FlutterStandardMessageCodec {
+  static let shared = SmileIDApiCodec(readerWriter: SmileIDApiCodecReaderWriter())
 }
 
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
-protocol SmileIdApi {
+protocol SmileIDApi {
   func getPlatformVersion(completion: @escaping (Result<String?, Error>) -> Void)
   func initialize(completion: @escaping (Result<Void, Error>) -> Void)
   func doEnhancedKycAsync(request: FlutterEnhancedKycRequest, completion: @escaping (Result<FlutterEnhancedKycAsyncResponse?, Error>) -> Void)
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
-class SmileIdApiSetup {
-  /// The codec used by SmileIdApi.
-  static var codec: FlutterStandardMessageCodec { SmileIdApiCodec.shared }
-  /// Sets up an instance of `SmileIdApi` to handle messages through the `binaryMessenger`.
-  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: SmileIdApi?) {
-    let getPlatformVersionChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIdApi.getPlatformVersion", binaryMessenger: binaryMessenger, codec: codec)
+class SmileIDApiSetup {
+  /// The codec used by SmileIDApi.
+  static var codec: FlutterStandardMessageCodec { SmileIDApiCodec.shared }
+  /// Sets up an instance of `SmileIDApi` to handle messages through the `binaryMessenger`.
+  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: SmileIDApi?) {
+    let getPlatformVersionChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.getPlatformVersion", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       getPlatformVersionChannel.setMessageHandler { _, reply in
         api.getPlatformVersion() { result in
@@ -238,7 +238,7 @@ class SmileIdApiSetup {
     } else {
       getPlatformVersionChannel.setMessageHandler(nil)
     }
-    let initializeChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIdApi.initialize", binaryMessenger: binaryMessenger, codec: codec)
+    let initializeChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.initialize", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       initializeChannel.setMessageHandler { _, reply in
         api.initialize() { result in
@@ -253,7 +253,7 @@ class SmileIdApiSetup {
     } else {
       initializeChannel.setMessageHandler(nil)
     }
-    let doEnhancedKycAsyncChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIdApi.doEnhancedKycAsync", binaryMessenger: binaryMessenger, codec: codec)
+    let doEnhancedKycAsyncChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.doEnhancedKycAsync", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       doEnhancedKycAsyncChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]

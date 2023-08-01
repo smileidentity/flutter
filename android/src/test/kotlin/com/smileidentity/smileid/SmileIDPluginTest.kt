@@ -13,11 +13,11 @@ import org.mockito.Mockito
  * you can run them directly from IDEs that support JUnit such as Android Studio.
  */
 
-internal class SmileidPluginTest {
+internal class SmileIDPluginTest {
 
   @Test
   fun onMethodCall_getPlatformVersion_returnsExpectedValue() {
-    val plugin = SmileidPlugin()
+    val plugin = SmileIDPlugin()
 
     val call = MethodCall("getPlatformVersion", null)
     val mockResult: MethodChannel.Result = Mockito.mock(MethodChannel.Result::class.java)

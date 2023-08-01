@@ -167,8 +167,8 @@ class FlutterEnhancedKycAsyncResponse {
   }
 }
 
-class _SmileIdApiCodec extends StandardMessageCodec {
-  const _SmileIdApiCodec();
+class _SmileIDApiCodec extends StandardMessageCodec {
+  const _SmileIDApiCodec();
   @override
   void writeValue(WriteBuffer buffer, Object? value) {
     if (value is FlutterEnhancedKycAsyncResponse) {
@@ -200,19 +200,19 @@ class _SmileIdApiCodec extends StandardMessageCodec {
   }
 }
 
-class SmileIdApi {
-  /// Constructor for [SmileIdApi].  The [binaryMessenger] named argument is
+class SmileIDApi {
+  /// Constructor for [SmileIDApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
   /// BinaryMessenger will be used which routes to the host platform.
-  SmileIdApi({BinaryMessenger? binaryMessenger})
+  SmileIDApi({BinaryMessenger? binaryMessenger})
       : _binaryMessenger = binaryMessenger;
   final BinaryMessenger? _binaryMessenger;
 
-  static const MessageCodec<Object?> codec = _SmileIdApiCodec();
+  static const MessageCodec<Object?> codec = _SmileIDApiCodec();
 
   Future<String?> getPlatformVersion() async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.smileid.SmileIdApi.getPlatformVersion', codec,
+        'dev.flutter.pigeon.smileid.SmileIDApi.getPlatformVersion', codec,
         binaryMessenger: _binaryMessenger);
     final List<Object?>? replyList =
         await channel.send(null) as List<Object?>?;
@@ -234,7 +234,7 @@ class SmileIdApi {
 
   Future<void> initialize() async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.smileid.SmileIdApi.initialize', codec,
+        'dev.flutter.pigeon.smileid.SmileIDApi.initialize', codec,
         binaryMessenger: _binaryMessenger);
     final List<Object?>? replyList =
         await channel.send(null) as List<Object?>?;
@@ -256,7 +256,7 @@ class SmileIdApi {
 
   Future<FlutterEnhancedKycAsyncResponse?> doEnhancedKycAsync(FlutterEnhancedKycRequest arg_request) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.smileid.SmileIdApi.doEnhancedKycAsync', codec,
+        'dev.flutter.pigeon.smileid.SmileIDApi.doEnhancedKycAsync', codec,
         binaryMessenger: _binaryMessenger);
     final List<Object?>? replyList =
         await channel.send(<Object?>[arg_request]) as List<Object?>?;

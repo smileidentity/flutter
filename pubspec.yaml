@@ -1,4 +1,4 @@
-name: smileid_flutter
+name: smile_id_flutter
 description: Smile ID Flutter SDK
 version: 0.0.1
 homepage: "https://usesmileid.com"
@@ -37,9 +37,9 @@ flutter:
     platforms:
       android:
         package: com.smileidentity.smileid
-        pluginClass: SmileidPlugin
+        pluginClass: SmileIDPlugin
       ios:
-        pluginClass: SmileidPlugin
+        pluginClass: SmileIDPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

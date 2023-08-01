@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:smileid_flutter/messages.g.dart';
-import 'package:smileid_flutter/smileid.dart';
+import 'package:smile_id_flutter/messages.g.dart';
+import 'package:smile_id_flutter/smile_id.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +18,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
-  final _smileidPlugin = Smileid();
+  final _smileidPlugin = SmileID();
 
   @override
   void initState() {
