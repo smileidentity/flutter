@@ -35,7 +35,7 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
 }
 
 enum FlutterJobType: Int {
-  case biometricKyc = 0
+  case enhancedKyc = 0
 }
 
 /// Generated class from Pigeon that represents data sent in messages.
