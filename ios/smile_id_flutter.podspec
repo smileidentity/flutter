@@ -2,7 +2,7 @@
 # Run `pod lib lint smileid.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'smileid_flutter'
+  s.name             = 'smile_id_flutter'
   # NB! Keep this version in sync with the Native iOS SDK version
   s.version          = '10.0.0-beta03'
   s.summary          = 'Official Smile ID SDK for Flutter'

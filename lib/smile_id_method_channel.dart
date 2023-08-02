@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
-import 'package:smileid_flutter/messages.g.dart';
-import 'package:smileid_flutter/smileid_platform_interface.dart';
+import 'package:smile_id_flutter/messages.g.dart';
+import 'package:smile_id_flutter/smile_id_platform_interface.dart';
 
-/// An implementation of [SmileidPlatform]
-class SmileidUsage extends SmileidPlatform {
+/// An implementation of [SmileIDPlatform]
+class SmileIDUsage extends SmileIDPlatform {
   @visibleForTesting
-  final SmileIdApi _api = SmileIdApi();
+  final SmileIDApi _api = SmileIDApi();
 
   @override
   Future<String?> getPlatformVersion() {

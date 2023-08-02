@@ -166,7 +166,7 @@ data class FlutterEnhancedKycAsyncResponse (
 }
 
 @Suppress("UNCHECKED_CAST")
-private object SmileIdApiCodec : StandardMessageCodec() {
+private object SmileIDApiCodec : StandardMessageCodec() {
   override fun readValueOfType(type: Byte, buffer: ByteBuffer): Any? {
     return when (type) {
       128.toByte() -> {
@@ -207,21 +207,21 @@ private object SmileIdApiCodec : StandardMessageCodec() {
 }
 
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
-interface SmileIdApi {
+interface SmileIDApi {
   fun getPlatformVersion(callback: (Result<String?>) -> Unit)
   fun initialize(callback: (Result<Unit>) -> Unit)
   fun doEnhancedKycAsync(request: FlutterEnhancedKycRequest, callback: (Result<FlutterEnhancedKycAsyncResponse?>) -> Unit)
 
   companion object {
-    /** The codec used by SmileIdApi. */
+    /** The codec used by SmileIDApi. */
     val codec: MessageCodec<Any?> by lazy {
-      SmileIdApiCodec
+      SmileIDApiCodec
     }
-    /** Sets up an instance of `SmileIdApi` to handle messages through the `binaryMessenger`. */
+    /** Sets up an instance of `SmileIDApi` to handle messages through the `binaryMessenger`. */
     @Suppress("UNCHECKED_CAST")
-    fun setUp(binaryMessenger: BinaryMessenger, api: SmileIdApi?) {
+    fun setUp(binaryMessenger: BinaryMessenger, api: SmileIDApi?) {
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIdApi.getPlatformVersion", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.getPlatformVersion", codec)
         if (api != null) {
           channel.setMessageHandler { _, reply ->
             api.getPlatformVersion() { result: Result<String?> ->
@@ -239,7 +239,7 @@ interface SmileIdApi {
         }
       }
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIdApi.initialize", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.initialize", codec)
         if (api != null) {
           channel.setMessageHandler { _, reply ->
             api.initialize() { result: Result<Unit> ->
@@ -256,7 +256,7 @@ interface SmileIdApi {
         }
       }
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIdApi.doEnhancedKycAsync", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.doEnhancedKycAsync", codec)
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>

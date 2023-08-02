@@ -64,7 +64,7 @@ class FlutterEnhancedKycAsyncResponse {
 }
 
 @HostApi()
-abstract class SmileIdApi {
+abstract class SmileIDApi {
   @async
   String? getPlatformVersion();
 

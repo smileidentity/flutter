@@ -3,11 +3,11 @@ import UIKit
 import SmileID
 import Combine
 
-public class SmileidPlugin: NSObject, FlutterPlugin, SmileIdApi {
+public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
   private var subscribers = Set<AnyCancellable>()
   public static func register(with registrar: FlutterPluginRegistrar) {
     let messenger: FlutterBinaryMessenger = registrar.messenger()
-    let api: SmileIdApi & NSObjectProtocol = SmileidPlugin()
+    let api: SmileIdApi & NSObjectProtocol = SmileIDPlugin()
     SmileIdApiSetup.setUp(binaryMessenger: messenger, api: api)
   }
 
