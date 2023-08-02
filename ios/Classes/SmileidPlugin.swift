@@ -1,8 +1,10 @@
 import Flutter
 import UIKit
 import SmileID
+import Combine
 
 public class SmileidPlugin: NSObject, FlutterPlugin, SmileIdApi {
+  private var subscribers = Set<AnyCancellable>()
   public static func register(with registrar: FlutterPluginRegistrar) {
     let messenger: FlutterBinaryMessenger = registrar.messenger()
     let api: SmileIdApi & NSObjectProtocol = SmileidPlugin()
@@ -14,13 +16,22 @@ public class SmileidPlugin: NSObject, FlutterPlugin, SmileIdApi {
   }
 
   func initialize(completion: @escaping (Result<Void, Error>) -> Void) {
-    // TODO
-    // SmileID.initialize(config: Config())
+    SmileID.initialize()
     completion(.success(()))
   }
 
   func doEnhancedKycAsync(request: FlutterEnhancedKycRequest,
                           completion: @escaping (Result<FlutterEnhancedKycAsyncResponse?, Error>) -> Void) {
-    // TODO
+      SmileID.api.doEnhancedKycAsync(request: request.toRequest())
+          .sink(receiveCompletion: { status in
+              switch status {
+              case .failure(let error):
+                  completion(.failure(error))
+              default:
+                  break
+              }
+          }, receiveValue: { response in
+              completion(.success(response.toFlutterResponse()))
+          }).store(in: &subscribers)
   }
 }
