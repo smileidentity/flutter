@@ -21,7 +21,7 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
       - name: Build App
-        run: flutter build apk # Replace 'apk' with the desired build target (apk, appbundle, ios, etc.)
+        run: cd sample && flutter build apk # Replace 'apk' with the desired build target (apk, appbundle, ios, etc.)
       - name: Archive Artifacts
         uses: actions/upload-artifact@v2
         with:
