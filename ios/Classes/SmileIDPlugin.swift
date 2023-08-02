@@ -7,8 +7,8 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
   private var subscribers = Set<AnyCancellable>()
   public static func register(with registrar: FlutterPluginRegistrar) {
     let messenger: FlutterBinaryMessenger = registrar.messenger()
-    let api: SmileIdApi & NSObjectProtocol = SmileIDPlugin()
-    SmileIdApiSetup.setUp(binaryMessenger: messenger, api: api)
+    let api: SmileIDApi & NSObjectProtocol = SmileIDPlugin()
+    SmileIDApiSetup.setUp(binaryMessenger: messenger, api: api)
   }
 
   func getPlatformVersion(completion: @escaping (Result<String?, Error>) -> Void) {
