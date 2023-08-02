@@ -1,9 +1,15 @@
 package com.smileidentity.smileid
 
 import FlutterAuthenticationRequest
+import FlutterAuthenticationResponse
+import FlutterConsentInfo
 import FlutterEnhancedKycAsyncResponse
 import FlutterEnhancedKycRequest
 import FlutterJobType
+import FlutterPartnerParams
+import com.smileidentity.models.AuthenticationRequest
+import com.smileidentity.models.AuthenticationResponse
+import com.smileidentity.models.ConsentInfo
 import com.smileidentity.models.EnhancedKycAsyncResponse
 import com.smileidentity.models.EnhancedKycRequest
 import com.smileidentity.models.JobType
@@ -13,8 +19,12 @@ fun FlutterJobType.toRequest(): JobType {
     return JobType.valueOf(this.name)
 }
 
+fun JobType.toResponse(): FlutterJobType {
+    return FlutterJobType.valueOf(this.name)
+}
+
 fun FlutterAuthenticationRequest.toRequest() = AuthenticationRequest(
-    jobType = jobType,
+    jobType = jobType?.toRequest(),
     enrollment = enrollment,
     country = country,
     idType = idType,
@@ -27,43 +37,52 @@ fun FlutterAuthenticationRequest.toRequest() = AuthenticationRequest(
     authToken = authToken,
 )
 
+fun PartnerParams.toResponse() = FlutterPartnerParams(
+    jobType = jobType?.toResponse(),
+    jobId = jobId,
+    userId = userId,
+    extras = mapOf()
+)
+
+fun ConsentInfo.toRequest() = FlutterConsentInfo(
+    canAccess = canAccess,
+    consentRequired = consentRequired
+)
+
 fun AuthenticationResponse.toResponse() = FlutterAuthenticationResponse(
     success = success,
     signature = signature,
     timestamp = timestamp,
     partnerParams = partnerParams.toResponse(),
     callbackUrl = callbackUrl,
-    consentInfo = consentInfo?.toResponse(),
+    consentInfo = consentInfo?.toRequest(),
 )
 
-fun FlutterEnhancedKycRequest.toRequest(): EnhancedKycRequest {
-    return EnhancedKycRequest(
-        country = this.country,
-        idType = this.idType,
-        idNumber = this.idNumber,
-        firstName = this.firstName,
-        middleName = this.middleName,
-        lastName = this.lastName,
-        dob = this.dob,
-        phoneNumber = this.phoneNumber,
-        bankCode = this.bankCode,
-        callbackUrl = this.callbackUrl,
-        partnerParams = PartnerParams(
-            jobType = this.partnerParams.jobType.toRequest(),
-            jobId = this.partnerParams.jobId,
-            userId = this.partnerParams.userId,
-            extras = mapOf(),
-        ),
-        partnerId = this.partnerId,
-        sourceSdk = this.sourceSdk,
-        sourceSdkVersion = this.sourceSdkVersion,
-        timestamp = this.timestamp,
-        signature = this.signature,
-    )
-}
+fun FlutterEnhancedKycRequest.toRequest() = EnhancedKycRequest(
+    country = country,
+    idType = idType,
+    idNumber = idNumber,
+    firstName = firstName,
+    middleName = middleName,
+    lastName = lastName,
+    dob = dob,
+    phoneNumber = phoneNumber,
+    bankCode = bankCode,
+    callbackUrl = callbackUrl,
+    partnerParams = PartnerParams(
+        jobType = partnerParams.jobType?.toRequest(),
+        jobId = partnerParams.jobId,
+        userId = partnerParams.userId,
+        extras = mapOf(),
+    ),
+    partnerId = partnerId,
+    sourceSdk = sourceSdk,
+    sourceSdkVersion = sourceSdkVersion,
+    timestamp = timestamp,
+    signature = signature,
+)
 
-fun EnhancedKycAsyncResponse.toResponse(): FlutterEnhancedKycAsyncResponse {
-    return FlutterEnhancedKycAsyncResponse(
-        success = this.success
-    )
-}
+fun EnhancedKycAsyncResponse.toResponse() = FlutterEnhancedKycAsyncResponse(
+    success = success
+)
+

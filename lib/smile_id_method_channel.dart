@@ -8,8 +8,9 @@ class SmileIDUsage extends SmileIDPlatform {
   final SmileIDApi _api = SmileIDApi();
 
   @override
-  Future<String?> getPlatformVersion() {
-    return _api.getPlatformVersion();
+  Future<FlutterAuthenticationResponse?> authenticate(
+      FlutterAuthenticationRequest request) async {
+    return _api.authenticate(request);
   }
 
   @override

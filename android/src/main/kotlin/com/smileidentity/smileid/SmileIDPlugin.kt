@@ -30,7 +30,7 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
     override fun authenticate(
         request: FlutterAuthenticationRequest,
         callback: (Result<FlutterAuthenticationResponse>) -> Unit
-    ) {
+    ) = runBlocking {
         callback.invoke(Result.success(SmileID.api.authenticate(request.toRequest()).toResponse()))
     }
 

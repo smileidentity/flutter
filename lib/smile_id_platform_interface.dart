@@ -23,8 +23,9 @@ abstract class SmileIDPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+  Future<FlutterAuthenticationResponse?> authenticate(
+      FlutterAuthenticationRequest request) async {
+    throw UnimplementedError('authenticate() has not been implemented.');
   }
 
   Future<void> initialize() {
