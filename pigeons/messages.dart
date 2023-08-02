@@ -9,7 +9,7 @@ import 'package:pigeon/pigeon.dart';
   swiftOptions: SwiftOptions(),
   dartPackageName: 'smileid',
 ))
-enum FlutterJobType { biometric_kyc }
+enum FlutterJobType { enhanced_kyc(5) }
 
 class FlutterPartnerParams {
   final FlutterJobType? jobType;
