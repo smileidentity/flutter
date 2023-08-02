@@ -1,4 +1,4 @@
-name: Lint Build and Test
+name: Lint Build and Test (Android)
 on:
   pull_request:
   push:
