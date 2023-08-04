@@ -15,13 +15,26 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
     completion(.success("blah " + UIDevice.current.systemVersion))
   }
 
-  func initialize(completion: @escaping (Result<Void, Error>) -> Void) {
+    func authenticate(request: FlutterAuthenticationRequest, completion: @escaping (Result<FlutterAuthenticationResponse, Error>) -> Void) {
+        SmileID.api.authenticate(request: request.toRequest())
+            .sink(receiveCompletion: { status in
+                switch status {
+                case .failure(let error):
+                    completion(.failure(error))
+                default:
+                    break
+                }
+            }, receiveValue: { response in
+                completion(.success(response.toResponse()))
+            }).store(in: &subscribers)
+    }
+
+  func initialize() {
     SmileID.initialize()
-    completion(.success(()))
   }
 
   func doEnhancedKycAsync(request: FlutterEnhancedKycRequest,
-                          completion: @escaping (Result<FlutterEnhancedKycAsyncResponse?, Error>) -> Void) {
+                          completion: @escaping (Result<FlutterEnhancedKycAsyncResponse, Error>) -> Void) {
       SmileID.api.doEnhancedKycAsync(request: request.toRequest())
           .sink(receiveCompletion: { status in
               switch status {

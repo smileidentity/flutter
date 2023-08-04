@@ -34,6 +34,34 @@ extension FlutterPartnerParams {
     func toPartnerParams() -> PartnerParams {
         PartnerParams(jobId: jobId,
                       userId: userId,
-                      jobType: JobType(rawValue: jobType.rawValue)!)
+                      jobType: JobType(rawValue: jobType!.rawValue)!)
+    }
+}
+
+extension FlutterAuthenticationRequest {
+    func toRequest() -> AuthenticationRequest {
+        AuthenticationRequest(jobType: JobType(rawValue: jobType!.rawValue)!,
+                              enrollment: enrollment,
+                              updateEnrolledImage: updateEnrolledImage!,
+                              jobId: jobId!,
+                              userId: userId!)
+    }
+}
+
+extension AuthenticationResponse {
+    func toResponse() -> FlutterAuthenticationResponse {
+        FlutterAuthenticationResponse(success: success,
+                                      signature: signature,
+                                      timestamp: timestamp,
+                                      partnerParams: partnerParams.toFlutterParnerParams())
+    }
+}
+
+extension PartnerParams {
+    func toFlutterParnerParams() -> FlutterPartnerParams {
+        FlutterPartnerParams(jobType: FlutterJobType(rawValue: jobType.rawValue),
+                             jobId: jobId,
+                             userId: userId,
+                             extras: [:])
     }
 }
