@@ -51,7 +51,7 @@ android {
     }
 
     dependencies {
-        implementation "com.smileidentity:android-sdk:10.0.0-beta06-SNAPSHOT"
+        implementation "com.smileidentity:android-sdk:${version}"
 
         implementation "com.squareup.okhttp3:okhttp"
         implementation "androidx.core:core-ktx"
