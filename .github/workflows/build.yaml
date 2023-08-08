@@ -28,11 +28,9 @@ jobs:
         uses: gradle/gradle-build-action@v2
       - name: Run Android Tests
         run: |
-          cd sample
+          cd sample/android
           ./gradlew testDebugUnitTest
       - name: Build Android Sample App
         run: |
-          cd sample
+          cd sample/android
           flutter build apk
-    
-          
