@@ -1,4 +1,4 @@
-name: Lint Build and Test (Android)
+name: Lint Build and Test
 on:
   pull_request:
   push:
@@ -23,9 +23,10 @@ jobs:
           flutter-version: '3.10.6' # Set the desired Flutter version here
           channel: 'stable'
       - name: Install Dependencies
-        run: flutter pub get
-      - name: Run Android Tests
-        uses: gradle/gradle-build-action@v2
-        with:
-          build-root-directory: sample/android
-          arguments: testDebugUnitTest assembleDebug
+        run: flutter pub get && cd sample && flutter pub get && cd ..
+      - name: Test
+        run: flutter test && cd sample && flutter test && cd ..
+      - name: Build Android Sample App
+        run: cd sample && flutter build apk && cd ..
+      - name: Build iOS Sample App
+        run: cd sample && flutter build ios --no-codesign && cd ..
