@@ -1,4 +1,4 @@
-package com.smileidentity.sample
+package com.smileidentity.flutter.sample
 
 import io.flutter.embedding.android.FlutterActivity
 

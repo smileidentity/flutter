@@ -9,7 +9,7 @@ import 'package:flutter/foundation.dart' show ReadBuffer, WriteBuffer;
 import 'package:flutter/services.dart';
 
 enum FlutterJobType {
-  biometric_kyc,
+  enhanced_kyc,
 }
 
 class FlutterPartnerParams {

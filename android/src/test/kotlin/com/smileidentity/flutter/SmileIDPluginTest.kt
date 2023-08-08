@@ -1,4 +1,4 @@
-package com.smileidentity.smileid
+package com.smileidentity.flutter
 
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel

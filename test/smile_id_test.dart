@@ -9,7 +9,10 @@ class MockSmileIDPlatform
     with MockPlatformInterfaceMixin
     implements SmileIDPlatform {
   @override
-  Future<String?> getPlatformVersion() => Future.value('42');
+  void initialize() {
+    // TODO: implement initialize
+    throw UnimplementedError();
+  }
 
   @override
   Future<FlutterEnhancedKycAsyncResponse?> doEnhancedKycAsync(
@@ -19,8 +22,8 @@ class MockSmileIDPlatform
   }
 
   @override
-  Future<void> initialize() {
-    // TODO: implement initialize
+  Future<FlutterAuthenticationResponse?> authenticate(FlutterAuthenticationRequest request) {
+    // TODO: implement authenticate
     throw UnimplementedError();
   }
 }
@@ -30,13 +33,5 @@ void main() {
 
   test('$SmileIDUsage is the default instance', () {
     expect(initialPlatform, isInstanceOf<SmileIDUsage>());
-  });
-
-  test('getPlatformVersion', () async {
-    SmileID smileidPlugin = SmileID();
-    MockSmileIDPlatform fakePlatform = MockSmileIDPlatform();
-    SmileIDPlatform.instance = fakePlatform;
-
-    expect(await smileidPlugin.getPlatformVersion(), '42');
   });
 }
