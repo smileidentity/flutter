@@ -29,4 +29,4 @@ jobs:
       - name: Build Android Sample App
         run: cd sample && flutter build apk && cd ..
       - name: Build iOS Sample App
-        run: cd sample && flutter build ios && cd ..
+        run: cd sample && flutter build ios --no-codesign && cd ..
