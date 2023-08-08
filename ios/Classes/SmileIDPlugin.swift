@@ -11,10 +11,6 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
     SmileIDApiSetup.setUp(binaryMessenger: messenger, api: api)
   }
 
-  func getPlatformVersion(completion: @escaping (Result<String?, Error>) -> Void) {
-    completion(.success("blah " + UIDevice.current.systemVersion))
-  }
-
     func authenticate(request: FlutterAuthenticationRequest, completion: @escaping (Result<FlutterAuthenticationResponse, Error>) -> Void) {
         SmileID.api.authenticate(request: request.toRequest())
             .sink(receiveCompletion: { status in
