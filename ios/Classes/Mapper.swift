@@ -42,9 +42,12 @@ extension FlutterAuthenticationRequest {
     func toRequest() -> AuthenticationRequest {
         AuthenticationRequest(jobType: JobType(rawValue: jobType!.rawValue)!,
                               enrollment: enrollment,
-                              updateEnrolledImage: updateEnrolledImage!,
-                              jobId: jobId!,
-                              userId: userId!)
+                              updateEnrolledImage: updateEnrolledImage,
+                              jobId: jobId, userId: userId,
+                              signature: signature,
+                              production: production,
+                              partnerId: partnerId,
+                              authToken: authToken)
     }
 }
 
