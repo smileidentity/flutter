@@ -5,7 +5,7 @@ PODS:
   - smile_id_flutter (10.0.0-beta04):
     - Flutter
     - SmileID (= 10.0.0-beta04)
-  - SmileID (10.0.0-beta04):
+  - SmileID (10.0.0-beta.04):
     - Zip (~> 2.1.0)
   - Zip (2.1.2)
 
@@ -15,7 +15,7 @@ DEPENDENCIES:
   - smile_id_flutter (from `.symlinks/plugins/smile_id_flutter/ios`)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs:
+  trunk:
     - SmileID
     - Zip
 
@@ -31,9 +31,9 @@ SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   integration_test: 13825b8a9334a850581300559b8839134b124670
   smile_id_flutter: 53f9a256c7c565dcccdef30b9c86e1621323b77a
-  SmileID: c3ebaee55b06009cf1363df98e4dab82d2c3b1a4
+  SmileID: 2ae72dc859d3dd45f6b4e929615a4d6520af0c6b
   Zip: b3fef584b147b6e582b2256a9815c897d60ddc67
 
-PODFILE CHECKSUM: 1d0249d02fb6aa89c8c67bf40a208e83e067b342
+PODFILE CHECKSUM: 929954fb8941cef06249e96bd1516fd2a22ed7a5
 
 COCOAPODS: 1.12.1
