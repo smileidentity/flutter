@@ -23,13 +23,13 @@ abstract class SmileIDPlatform extends PlatformInterface {
     _instance = instance;
   }
 
+  void initialize() {
+    throw UnimplementedError('initialize() has not been implemented.');
+  }
+
   Future<FlutterAuthenticationResponse?> authenticate(
       FlutterAuthenticationRequest request) async {
     throw UnimplementedError('authenticate() has not been implemented.');
-  }
-
-  Future<void> initialize() {
-    throw UnimplementedError('initialize() has not been implemented.');
   }
 
   Future<FlutterEnhancedKycAsyncResponse?> doEnhancedKycAsync(

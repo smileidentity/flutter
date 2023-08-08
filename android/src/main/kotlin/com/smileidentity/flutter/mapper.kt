@@ -1,4 +1,4 @@
-package com.smileidentity.smileid
+package com.smileidentity.flutter
 
 import FlutterAuthenticationRequest
 import FlutterAuthenticationResponse
@@ -103,4 +103,3 @@ fun FlutterEnhancedKycRequest.toRequest() = EnhancedKycRequest(
 fun EnhancedKycAsyncResponse.toResponse() = FlutterEnhancedKycAsyncResponse(
     success = success
 )
-

@@ -15,7 +15,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final _smileidPlugin = SmileID();
+  final _smileIdPlugin = SmileID();
 
   @override
   void initState() {
@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    _smileidPlugin.initialize();
+    _smileIdPlugin.initialize();
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
