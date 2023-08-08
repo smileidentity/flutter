@@ -24,7 +24,15 @@ jobs:
           channel: 'stable'
       - name: Install Dependencies
         run: flutter pub get
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+      - name: Run Android Tests
+        run: |
+          cd sample
+          ./gradlew testDebugUnitTest
       - name: Build Android Sample App
         run: |
           cd sample
           flutter build apk
+    
+          

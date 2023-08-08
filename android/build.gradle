@@ -58,7 +58,8 @@ android {
         implementation "androidx.core:core-ktx"
         implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core"
         implementation "com.jakewharton.timber:timber"
+
         testImplementation "org.jetbrains.kotlin:kotlin-test"
-        testImplementation "org.mockito:mockito-core:5.0.0"
+        testImplementation "io.mockk:mockk:1.13.5"
     }
 }
