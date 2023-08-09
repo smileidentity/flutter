@@ -36,7 +36,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.smileidentity.smileid
+        package: com.smileidentity.flutter
         pluginClass: SmileIDPlugin
       ios:
         pluginClass: SmileIDPlugin

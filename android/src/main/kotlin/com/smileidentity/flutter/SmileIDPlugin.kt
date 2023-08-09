@@ -1,4 +1,4 @@
-package com.smileidentity.smileid
+package com.smileidentity.flutter
 
 import FlutterAuthenticationRequest
 import FlutterAuthenticationResponse
@@ -6,45 +6,47 @@ import FlutterEnhancedKycAsyncResponse
 import FlutterEnhancedKycRequest
 import SmileIDApi
 import android.content.Context
-import androidx.annotation.NonNull
 import com.smileidentity.SmileID
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-/** SmileIDPlugin */
 class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
 
     private lateinit var context: Context
 
-    override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+    override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         SmileIDApi.setUp(flutterPluginBinding.binaryMessenger, this)
         context = flutterPluginBinding.applicationContext
     }
 
-    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+    override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         SmileIDApi.setUp(binding.binaryMessenger, this)
-    }
-
-    override fun authenticate(
-        request: FlutterAuthenticationRequest,
-        callback: (Result<FlutterAuthenticationResponse>) -> Unit
-    ) {
-        callback.invoke(Result.success(SmileID.api.authenticate(request.toRequest()).toResponse()))
     }
 
     override fun initialize() {
         SmileID.initialize(context)
     }
 
+    override fun authenticate(
+        request: FlutterAuthenticationRequest,
+        callback: (Result<FlutterAuthenticationResponse>) -> Unit
+    ) = launch(
+        work = { SmileID.api.authenticate(request.toRequest()).toResponse() },
+        callback = callback
+    )
+
     override fun doEnhancedKycAsync(
         request: FlutterEnhancedKycRequest,
         callback: (Result<FlutterEnhancedKycAsyncResponse>) -> Unit
-    ) = runBlocking {
-        val response = SmileID.api.doEnhancedKycAsync(request.toRequest())
-        callback.invoke(Result.success(response.toResponse()))
-    }
+    ) = launch(
+        work = { SmileID.api.doEnhancedKycAsync(request.toRequest()).toResponse() },
+        callback = callback
+    )
 
     /**
      * https://stackoverflow.com/a/62206235
@@ -59,4 +61,21 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {}
 
     override fun onDetachedFromActivity() {}
+}
+
+/**
+ * Launches a new coroutine in the specified dispatcher (IO by default) and returns the result to
+ * the callback. Used for launching coroutines from Dart.
+ */
+private fun <T> launch(
+    work: suspend () -> T,
+    callback: (Result<T>) -> Unit,
+    scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
+) {
+    val handler = CoroutineExceptionHandler { _, throwable ->
+        callback.invoke(Result.failure(throwable))
+    }
+    scope.launch(handler) {
+        callback.invoke(Result.success(work()))
+    }
 }

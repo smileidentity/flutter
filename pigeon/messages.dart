@@ -9,8 +9,10 @@ import 'package:pigeon/pigeon.dart';
   swiftOptions: SwiftOptions(),
   dartPackageName: 'smileid',
 ))
+
 enum FlutterJobType { enhanced_kyc(5) }
 
+///  Custom values specific to partners can be placed in [extras]
 class FlutterPartnerParams {
   final FlutterJobType? jobType;
   final String jobId;
@@ -105,6 +107,8 @@ class FlutterConsentInfo {
   FlutterConsentInfo({required this.canAccess, required this.consentRequired});
 }
 
+/// [timestamp] is *not* a [DateTime] because technically, any arbitrary value could have been
+/// passed to it. This applies to all other timestamp fields in the SDK.
 class FlutterEnhancedKycRequest {
   final String country;
   final String idType;
@@ -123,10 +127,10 @@ class FlutterEnhancedKycRequest {
   final String timestamp;
   final String signature;
 
-  FlutterEnhancedKycRequest(
-      this.country,
-      this.idType,
-      this.idNumber,
+  FlutterEnhancedKycRequest({
+      required this.country,
+      required this.idType,
+      required this.idNumber,
       this.firstName,
       this.middleName,
       this.lastName,
@@ -134,18 +138,21 @@ class FlutterEnhancedKycRequest {
       this.phoneNumber,
       this.bankCode,
       this.callbackUrl,
-      this.partnerParams,
-      this.partnerId,
-      this.sourceSdk,
-      this.sourceSdkVersion,
-      this.timestamp,
-      this.signature);
+      required this.partnerParams,
+      required this.partnerId,
+      required this.sourceSdk,
+      required this.sourceSdkVersion,
+      required this.timestamp,
+      required this.signature
+  });
 }
 
 class FlutterEnhancedKycAsyncResponse {
   final bool success;
 
-  FlutterEnhancedKycAsyncResponse(this.success);
+  FlutterEnhancedKycAsyncResponse({
+    required this.success
+  });
 }
 
 @HostApi()

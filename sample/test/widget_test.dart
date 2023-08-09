@@ -10,15 +10,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:sample/main.dart';
 
 void main() {
-  testWidgets('Verify Platform version', (WidgetTester tester) async {
+  testWidgets('Verify Running', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
 
-    // Verify that platform version is retrieved.
+    // Verify that text is displayed.
     expect(
       find.byWidgetPredicate(
         (Widget widget) => widget is Text &&
-                           widget.data!.startsWith('Running on:'),
+                           widget.data!.startsWith('Sample App'),
       ),
       findsOneWidget,
     );

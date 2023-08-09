@@ -43,7 +43,7 @@ class FlutterError (
 ) : Throwable()
 
 enum class FlutterJobType(val raw: Int) {
-  BIOMETRIC_KYC(0);
+  ENHANCED_KYC(0);
 
   companion object {
     fun ofRaw(raw: Int): FlutterJobType? {
@@ -396,7 +396,7 @@ interface SmileIDApi {
     @Suppress("UNCHECKED_CAST")
     fun setUp(binaryMessenger: BinaryMessenger, api: SmileIDApi?) {
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.initialize", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.flutter.SmileIDApi.initialize", codec)
         if (api != null) {
           channel.setMessageHandler { _, reply ->
             var wrapped: List<Any?>
@@ -413,7 +413,7 @@ interface SmileIDApi {
         }
       }
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.authenticate", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.flutter.SmileIDApi.authenticate", codec)
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>
@@ -433,7 +433,7 @@ interface SmileIDApi {
         }
       }
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.doEnhancedKycAsync", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.flutter.SmileIDApi.doEnhancedKycAsync", codec)
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>
