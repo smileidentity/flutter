@@ -1,4 +1,4 @@
-name: Lint Build and Test (Android)
+name: Lint Build and Test
 on:
   pull_request:
   push:
@@ -9,7 +9,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  Android:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -28,3 +28,16 @@ jobs:
         run: flutter test && cd sample && flutter test && cd ..
       - name: Build Android Sample App
         run: cd sample && flutter build apk && cd ..
+  iOS:
+    runs-on: macos-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.10.6' # Set the desired Flutter version here
+          channel: 'stable'
+      - name: Install Dependencies
+        run: flutter pub get && cd sample && flutter pub get && cd ..
+      - name: Build iOS Sample App
+        run: cd sample && flutter build ios --no-codesign && cd ..
