@@ -1,6 +1,6 @@
-# smileid_example
+# Smile ID Flutter Sample
 
-Demonstrates how to use the smileid plugin.
+Demonstrates how to use the SmileID Flutter Plugin.
 
 ## Getting Started
 

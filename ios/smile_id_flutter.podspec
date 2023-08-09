@@ -2,9 +2,9 @@
 # Run `pod lib lint smileid.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'smileid_flutter'
+  s.name             = 'smile_id_flutter'
   # NB! Keep this version in sync with the Native iOS SDK version
-  s.version          = '10.0.0-beta02'
+  s.version          = '10.0.0-beta04'
   s.summary          = 'Official Smile ID SDK for Flutter'
   s.description      = <<-DESC
 A new Flutter project.
@@ -15,7 +15,7 @@ A new Flutter project.
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
   # NB! Update the s.version above when changing this version
-  s.dependency 'SmileID'
+  s.dependency 'SmileID' , '10.0.0-beta04'
   s.platform = :ios, '13.0'
 
   # Flutter.framework does not contain a i386 slice.
