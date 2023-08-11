@@ -3,14 +3,14 @@ import 'package:pigeon/pigeon.dart';
 @ConfigurePigeon(PigeonOptions(
   dartOut: 'lib/messages.g.dart',
   dartOptions: DartOptions(),
-  kotlinOut: 'android/src/main/kotlin/com/smileidentity/smileid/Messages.g.kt',
+  kotlinOut: 'android/src/main/kotlin/com/smileidentity/flutter/Messages.g.kt',
   kotlinOptions: KotlinOptions(),
   swiftOut: 'ios/Classes/Messages.g.swift',
   swiftOptions: SwiftOptions(),
   dartPackageName: 'smileid',
 ))
 
-enum FlutterJobType { enhanced_kyc(5) }
+enum FlutterJobType { enhancedKyc }
 
 ///  Custom values specific to partners can be placed in [extras]
 class FlutterPartnerParams {

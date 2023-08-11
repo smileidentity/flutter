@@ -38,6 +38,8 @@ enum FlutterJobType: Int {
   case enhancedKyc = 0
 }
 
+///  Custom values specific to partners can be placed in [extras]
+///
 /// Generated class from Pigeon that represents data sent in messages.
 struct FlutterPartnerParams {
   var jobType: FlutterJobType? = nil
@@ -230,6 +232,9 @@ struct FlutterConsentInfo {
   }
 }
 
+/// [timestamp] is *not* a [DateTime] because technically, any arbitrary value could have been
+/// passed to it. This applies to all other timestamp fields in the SDK.
+///
 /// Generated class from Pigeon that represents data sent in messages.
 struct FlutterEnhancedKycRequest {
   var country: String

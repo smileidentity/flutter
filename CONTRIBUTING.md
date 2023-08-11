@@ -12,3 +12,4 @@ project consisting of the following modules:
 
 - [FVM](https://fvm.app/docs/getting_started/installation)  
 - Android Studio or Visual Studio Code
+- To generate new mocks, run `fvm flutter pub run build_runner build`

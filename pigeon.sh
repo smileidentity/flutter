@@ -1,1 +1,1 @@
-flutter pub run pigeon --input pigeons/messages.dart
+flutter pub run pigeon --input pigeon/messages.dart

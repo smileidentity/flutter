@@ -37,9 +37,14 @@ fun convertNonNullMapToNullable(map: Map<String, String>): Map<String?, String?>
         .mapValues { it.value }
 
 
-fun FlutterJobType.toRequest() = JobType.valueOf(this.name)
+fun FlutterJobType.toRequest() = when(this) {
+    FlutterJobType.ENHANCEDKYC -> JobType.EnhancedKyc
+}
 
-fun JobType.toResponse() = FlutterJobType.valueOf(this.name)
+fun JobType.toResponse() = when(this) {
+    JobType.EnhancedKyc -> FlutterJobType.ENHANCEDKYC
+    else -> TODO("Not yet implemented")
+}
 
 fun FlutterAuthenticationRequest.toRequest() = AuthenticationRequest(
     jobType = jobType?.toRequest(),
