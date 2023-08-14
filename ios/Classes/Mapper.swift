@@ -81,6 +81,7 @@ extension JobType {
         switch (self) {
         case .enhancedKyc:
             return FlutterJobType.enhancedKyc
+        default: fatalError("Not yet supported")
         }
     }
 }
