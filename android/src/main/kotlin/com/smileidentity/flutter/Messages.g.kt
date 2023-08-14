@@ -52,16 +52,11 @@ enum class FlutterJobType(val raw: Int) {
   }
 }
 
-/**
- *  Custom values specific to partners can be placed in [extras]
- *
- * Generated class from Pigeon that represents data sent in messages.
- */
+/** Generated class from Pigeon that represents data sent in messages. */
 data class FlutterPartnerParams (
   val jobType: FlutterJobType? = null,
   val jobId: String,
-  val userId: String,
-  val extras: Map<String?, String?>
+  val userId: String
 
 ) {
   companion object {
@@ -72,8 +67,7 @@ data class FlutterPartnerParams (
       }
       val jobId = list[1] as String
       val userId = list[2] as String
-      val extras = list[3] as Map<String?, String?>
-      return FlutterPartnerParams(jobType, jobId, userId, extras)
+      return FlutterPartnerParams(jobType, jobId, userId)
     }
   }
   fun toList(): List<Any?> {
@@ -81,7 +75,6 @@ data class FlutterPartnerParams (
       jobType?.raw,
       jobId,
       userId,
-      extras,
     )
   }
 }
@@ -94,7 +87,6 @@ data class FlutterPartnerParams (
  * - It is used to fetch consent information for the partner
  *
  * [jobType] The type of job that will be performed
- * [enrollment] Whether or not this is an enrollment job
  * [country] The country code of the country where the job is being performed. This value is
  * required in order to get back consent information for the partner
  * [idType] The type of ID that will be used for the job. This value is required in order to
@@ -105,59 +97,38 @@ data class FlutterPartnerParams (
  * Job ID within your own system. If not provided, a random job ID will be generated
  * [userId] The user ID to associate with the job. Most often, this will correspond to a unique
  * User ID within your own system. If not provided, a random user ID will be generated
- * [signature] Whether or not to fetch the signature for the job
- * [production] Whether or not to use the production environment
- * [partnerId] The partner ID
- * [authToken] The auth token from smile_config.json
  *
  * Generated class from Pigeon that represents data sent in messages.
  */
 data class FlutterAuthenticationRequest (
-  val jobType: FlutterJobType? = null,
-  val enrollment: Boolean,
+  val jobType: FlutterJobType,
   val country: String? = null,
   val idType: String? = null,
   val updateEnrolledImage: Boolean? = null,
   val jobId: String? = null,
-  val userId: String? = null,
-  val signature: Boolean,
-  val production: Boolean,
-  val partnerId: String,
-  val authToken: String
+  val userId: String? = null
 
 ) {
   companion object {
     @Suppress("UNCHECKED_CAST")
     fun fromList(list: List<Any?>): FlutterAuthenticationRequest {
-      val jobType: FlutterJobType? = (list[0] as Int?)?.let {
-        FlutterJobType.ofRaw(it)
-      }
-      val enrollment = list[1] as Boolean
-      val country = list[2] as String?
-      val idType = list[3] as String?
-      val updateEnrolledImage = list[4] as Boolean?
-      val jobId = list[5] as String?
-      val userId = list[6] as String?
-      val signature = list[7] as Boolean
-      val production = list[8] as Boolean
-      val partnerId = list[9] as String
-      val authToken = list[10] as String
-      return FlutterAuthenticationRequest(jobType, enrollment, country, idType, updateEnrolledImage, jobId, userId, signature, production, partnerId, authToken)
+      val jobType = FlutterJobType.ofRaw(list[0] as Int)!!
+      val country = list[1] as String?
+      val idType = list[2] as String?
+      val updateEnrolledImage = list[3] as Boolean?
+      val jobId = list[4] as String?
+      val userId = list[5] as String?
+      return FlutterAuthenticationRequest(jobType, country, idType, updateEnrolledImage, jobId, userId)
     }
   }
   fun toList(): List<Any?> {
     return listOf<Any?>(
-      jobType?.raw,
-      enrollment,
+      jobType.raw,
       country,
       idType,
       updateEnrolledImage,
       jobId,
       userId,
-      signature,
-      production,
-      partnerId,
-      authToken,
     )
   }
 }
@@ -252,9 +223,6 @@ data class FlutterEnhancedKycRequest (
   val bankCode: String? = null,
   val callbackUrl: String? = null,
   val partnerParams: FlutterPartnerParams,
-  val partnerId: String,
-  val sourceSdk: String,
-  val sourceSdkVersion: String,
   val timestamp: String,
   val signature: String
 
@@ -273,12 +241,9 @@ data class FlutterEnhancedKycRequest (
       val bankCode = list[8] as String?
       val callbackUrl = list[9] as String?
       val partnerParams = FlutterPartnerParams.fromList(list[10] as List<Any?>)
-      val partnerId = list[11] as String
-      val sourceSdk = list[12] as String
-      val sourceSdkVersion = list[13] as String
-      val timestamp = list[14] as String
-      val signature = list[15] as String
-      return FlutterEnhancedKycRequest(country, idType, idNumber, firstName, middleName, lastName, dob, phoneNumber, bankCode, callbackUrl, partnerParams, partnerId, sourceSdk, sourceSdkVersion, timestamp, signature)
+      val timestamp = list[11] as String
+      val signature = list[12] as String
+      return FlutterEnhancedKycRequest(country, idType, idNumber, firstName, middleName, lastName, dob, phoneNumber, bankCode, callbackUrl, partnerParams, timestamp, signature)
     }
   }
   fun toList(): List<Any?> {
@@ -294,9 +259,6 @@ data class FlutterEnhancedKycRequest (
       bankCode,
       callbackUrl,
       partnerParams.toList(),
-      partnerId,
-      sourceSdk,
-      sourceSdkVersion,
       timestamp,
       signature,
     )

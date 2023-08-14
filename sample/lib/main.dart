@@ -48,12 +48,7 @@ class _MyAppState extends State<MyApp> {
                   var userId = "<your user's user ID>";
                   SmileID.authenticate(FlutterAuthenticationRequest(
                     jobType: FlutterJobType.enhancedKyc,
-                    enrollment: false,
-                    signature: true,
-                    production: false,
                     userId: userId,
-                    partnerId: "",
-                    authToken: ""
                   )).then((authResponse) => {
                     SmileID.doEnhancedKycAsync(FlutterEnhancedKycRequest(
                       country: "GH",
@@ -64,11 +59,7 @@ class _MyAppState extends State<MyApp> {
                         jobType: FlutterJobType.enhancedKyc,
                         jobId: userId,
                         userId: userId,
-                        extras: <String, String>{}
                       ),
-                      partnerId: "",
-                      sourceSdk: "Flutter",
-                      sourceSdkVersion: "10.0.0-beta01",
                       timestamp: authResponse!.timestamp,
                       signature: authResponse.signature
                     ))

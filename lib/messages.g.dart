@@ -12,13 +12,11 @@ enum FlutterJobType {
   enhancedKyc,
 }
 
-///  Custom values specific to partners can be placed in [extras]
 class FlutterPartnerParams {
   FlutterPartnerParams({
     this.jobType,
     required this.jobId,
     required this.userId,
-    required this.extras,
   });
 
   FlutterJobType? jobType;
@@ -27,14 +25,11 @@ class FlutterPartnerParams {
 
   String userId;
 
-  Map<String?, String?> extras;
-
   Object encode() {
     return <Object?>[
       jobType?.index,
       jobId,
       userId,
-      extras,
     ];
   }
 
@@ -46,7 +41,6 @@ class FlutterPartnerParams {
           : null,
       jobId: result[1]! as String,
       userId: result[2]! as String,
-      extras: (result[3] as Map<Object?, Object?>?)!.cast<String?, String?>(),
     );
   }
 }
@@ -58,7 +52,6 @@ class FlutterPartnerParams {
 /// - It is used to fetch consent information for the partner
 ///
 /// [jobType] The type of job that will be performed
-/// [enrollment] Whether or not this is an enrollment job
 /// [country] The country code of the country where the job is being performed. This value is
 /// required in order to get back consent information for the partner
 /// [idType] The type of ID that will be used for the job. This value is required in order to
@@ -69,28 +62,17 @@ class FlutterPartnerParams {
 /// Job ID within your own system. If not provided, a random job ID will be generated
 /// [userId] The user ID to associate with the job. Most often, this will correspond to a unique
 /// User ID within your own system. If not provided, a random user ID will be generated
-/// [signature] Whether or not to fetch the signature for the job
-/// [production] Whether or not to use the production environment
-/// [partnerId] The partner ID
-/// [authToken] The auth token from smile_config.json
 class FlutterAuthenticationRequest {
   FlutterAuthenticationRequest({
-    this.jobType,
-    required this.enrollment,
+    required this.jobType,
     this.country,
     this.idType,
     this.updateEnrolledImage,
     this.jobId,
     this.userId,
-    required this.signature,
-    required this.production,
-    required this.partnerId,
-    required this.authToken,
   });
 
-  FlutterJobType? jobType;
-
-  bool enrollment;
+  FlutterJobType jobType;
 
   String? country;
 
@@ -102,46 +84,26 @@ class FlutterAuthenticationRequest {
 
   String? userId;
 
-  bool signature;
-
-  bool production;
-
-  String partnerId;
-
-  String authToken;
-
   Object encode() {
     return <Object?>[
-      jobType?.index,
-      enrollment,
+      jobType.index,
       country,
       idType,
       updateEnrolledImage,
       jobId,
       userId,
-      signature,
-      production,
-      partnerId,
-      authToken,
     ];
   }
 
   static FlutterAuthenticationRequest decode(Object result) {
     result as List<Object?>;
     return FlutterAuthenticationRequest(
-      jobType: result[0] != null
-          ? FlutterJobType.values[result[0]! as int]
-          : null,
-      enrollment: result[1]! as bool,
-      country: result[2] as String?,
-      idType: result[3] as String?,
-      updateEnrolledImage: result[4] as bool?,
-      jobId: result[5] as String?,
-      userId: result[6] as String?,
-      signature: result[7]! as bool,
-      production: result[8]! as bool,
-      partnerId: result[9]! as String,
-      authToken: result[10]! as String,
+      jobType: FlutterJobType.values[result[0]! as int],
+      country: result[1] as String?,
+      idType: result[2] as String?,
+      updateEnrolledImage: result[3] as bool?,
+      jobId: result[4] as String?,
+      userId: result[5] as String?,
     );
   }
 }
@@ -243,9 +205,6 @@ class FlutterEnhancedKycRequest {
     this.bankCode,
     this.callbackUrl,
     required this.partnerParams,
-    required this.partnerId,
-    required this.sourceSdk,
-    required this.sourceSdkVersion,
     required this.timestamp,
     required this.signature,
   });
@@ -272,12 +231,6 @@ class FlutterEnhancedKycRequest {
 
   FlutterPartnerParams partnerParams;
 
-  String partnerId;
-
-  String sourceSdk;
-
-  String sourceSdkVersion;
-
   String timestamp;
 
   String signature;
@@ -295,9 +248,6 @@ class FlutterEnhancedKycRequest {
       bankCode,
       callbackUrl,
       partnerParams.encode(),
-      partnerId,
-      sourceSdk,
-      sourceSdkVersion,
       timestamp,
       signature,
     ];
@@ -317,11 +267,8 @@ class FlutterEnhancedKycRequest {
       bankCode: result[8] as String?,
       callbackUrl: result[9] as String?,
       partnerParams: FlutterPartnerParams.decode(result[10]! as List<Object?>),
-      partnerId: result[11]! as String,
-      sourceSdk: result[12]! as String,
-      sourceSdkVersion: result[13]! as String,
-      timestamp: result[14]! as String,
-      signature: result[15]! as String,
+      timestamp: result[11]! as String,
+      signature: result[12]! as String,
     );
   }
 }
