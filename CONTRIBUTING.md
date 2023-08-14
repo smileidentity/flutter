@@ -17,7 +17,7 @@ project consisting of the following modules:
 
 ## Run the sample app
 
-We bundle a sample app that demonstrates SDK integration and showcases Smile ID products. To run itt, 
+We bundle a sample app that demonstrates SDK integration and showcases Smile ID products. To run it, 
 follow the following steps
 
 #### Android
