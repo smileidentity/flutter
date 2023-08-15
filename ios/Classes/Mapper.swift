@@ -13,6 +13,7 @@ extension FlutterEnhancedKycRequest {
                            bankCode: bankCode,
                            callbackUrl: callbackUrl,
                            partnerParams: partnerParams.toPartnerParams(),
+                           sourceSdk: "ios (flutter)",
                            timestamp: timestamp,
                            signature: signature)
     }

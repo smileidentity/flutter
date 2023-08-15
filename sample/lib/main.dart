@@ -59,6 +59,7 @@ class _MyAppState extends State<MyApp> {
                         jobType: FlutterJobType.enhancedKyc,
                         jobId: userId,
                         userId: userId,
+                        extras: {},
                       ),
                       timestamp: authResponse!.timestamp,
                       signature: authResponse.signature
