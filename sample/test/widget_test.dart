@@ -18,7 +18,7 @@ void main() {
     expect(
       find.byWidgetPredicate(
         (Widget widget) => widget is Text &&
-                           widget.data!.startsWith('Sample App'),
+                           widget.data!.startsWith('Smile ID'),
       ),
       findsOneWidget,
     );

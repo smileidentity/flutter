@@ -9,7 +9,7 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:smile_id_flutter/smile_id.dart';
+import 'package:smile_id/smile_id.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();

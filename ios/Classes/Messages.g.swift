@@ -43,7 +43,6 @@ struct FlutterPartnerParams {
   var jobType: FlutterJobType? = nil
   var jobId: String
   var userId: String
-  var extras: [String?: String?]
 
   static func fromList(_ list: [Any?]) -> FlutterPartnerParams? {
     var jobType: FlutterJobType? = nil
@@ -53,13 +52,11 @@ struct FlutterPartnerParams {
     }
     let jobId = list[1] as! String
     let userId = list[2] as! String
-    let extras = list[3] as! [String?: String?]
 
     return FlutterPartnerParams(
       jobType: jobType,
       jobId: jobId,
-      userId: userId,
-      extras: extras
+      userId: userId
     )
   }
   func toList() -> [Any?] {
@@ -67,7 +64,6 @@ struct FlutterPartnerParams {
       jobType?.rawValue,
       jobId,
       userId,
-      extras,
     ]
   }
 }
@@ -79,7 +75,6 @@ struct FlutterPartnerParams {
 /// - It is used to fetch consent information for the partner
 ///
 /// [jobType] The type of job that will be performed
-/// [enrollment] Whether or not this is an enrollment job
 /// [country] The country code of the country where the job is being performed. This value is
 /// required in order to get back consent information for the partner
 /// [idType] The type of ID that will be used for the job. This value is required in order to
@@ -90,69 +85,41 @@ struct FlutterPartnerParams {
 /// Job ID within your own system. If not provided, a random job ID will be generated
 /// [userId] The user ID to associate with the job. Most often, this will correspond to a unique
 /// User ID within your own system. If not provided, a random user ID will be generated
-/// [signature] Whether or not to fetch the signature for the job
-/// [production] Whether or not to use the production environment
-/// [partnerId] The partner ID
-/// [authToken] The auth token from smile_config.json
 ///
 /// Generated class from Pigeon that represents data sent in messages.
 struct FlutterAuthenticationRequest {
-  var jobType: FlutterJobType? = nil
-  var enrollment: Bool
+  var jobType: FlutterJobType
   var country: String? = nil
   var idType: String? = nil
   var updateEnrolledImage: Bool? = nil
   var jobId: String? = nil
   var userId: String? = nil
-  var signature: Bool
-  var production: Bool
-  var partnerId: String
-  var authToken: String
 
   static func fromList(_ list: [Any?]) -> FlutterAuthenticationRequest? {
-    var jobType: FlutterJobType? = nil
-    let jobTypeEnumVal: Int? = nilOrValue(list[0])
-    if let jobTypeRawValue = jobTypeEnumVal {
-      jobType = FlutterJobType(rawValue: jobTypeRawValue)!
-    }
-    let enrollment = list[1] as! Bool
-    let country: String? = nilOrValue(list[2])
-    let idType: String? = nilOrValue(list[3])
-    let updateEnrolledImage: Bool? = nilOrValue(list[4])
-    let jobId: String? = nilOrValue(list[5])
-    let userId: String? = nilOrValue(list[6])
-    let signature = list[7] as! Bool
-    let production = list[8] as! Bool
-    let partnerId = list[9] as! String
-    let authToken = list[10] as! String
+    let jobType = FlutterJobType(rawValue: list[0] as! Int)!
+    let country: String? = nilOrValue(list[1])
+    let idType: String? = nilOrValue(list[2])
+    let updateEnrolledImage: Bool? = nilOrValue(list[3])
+    let jobId: String? = nilOrValue(list[4])
+    let userId: String? = nilOrValue(list[5])
 
     return FlutterAuthenticationRequest(
       jobType: jobType,
-      enrollment: enrollment,
       country: country,
       idType: idType,
       updateEnrolledImage: updateEnrolledImage,
       jobId: jobId,
-      userId: userId,
-      signature: signature,
-      production: production,
-      partnerId: partnerId,
-      authToken: authToken
+      userId: userId
     )
   }
   func toList() -> [Any?] {
     return [
-      jobType?.rawValue,
-      enrollment,
+      jobType.rawValue,
       country,
       idType,
       updateEnrolledImage,
       jobId,
       userId,
-      signature,
-      production,
-      partnerId,
-      authToken,
     ]
   }
 }
@@ -230,6 +197,9 @@ struct FlutterConsentInfo {
   }
 }
 
+/// [timestamp] is *not* a [DateTime] because technically, any arbitrary value could have been
+/// passed to it. This applies to all other timestamp fields in the SDK.
+///
 /// Generated class from Pigeon that represents data sent in messages.
 struct FlutterEnhancedKycRequest {
   var country: String
@@ -243,9 +213,6 @@ struct FlutterEnhancedKycRequest {
   var bankCode: String? = nil
   var callbackUrl: String? = nil
   var partnerParams: FlutterPartnerParams
-  var partnerId: String
-  var sourceSdk: String
-  var sourceSdkVersion: String
   var timestamp: String
   var signature: String
 
@@ -261,11 +228,8 @@ struct FlutterEnhancedKycRequest {
     let bankCode: String? = nilOrValue(list[8])
     let callbackUrl: String? = nilOrValue(list[9])
     let partnerParams = FlutterPartnerParams.fromList(list[10] as! [Any?])!
-    let partnerId = list[11] as! String
-    let sourceSdk = list[12] as! String
-    let sourceSdkVersion = list[13] as! String
-    let timestamp = list[14] as! String
-    let signature = list[15] as! String
+    let timestamp = list[11] as! String
+    let signature = list[12] as! String
 
     return FlutterEnhancedKycRequest(
       country: country,
@@ -279,9 +243,6 @@ struct FlutterEnhancedKycRequest {
       bankCode: bankCode,
       callbackUrl: callbackUrl,
       partnerParams: partnerParams,
-      partnerId: partnerId,
-      sourceSdk: sourceSdk,
-      sourceSdkVersion: sourceSdkVersion,
       timestamp: timestamp,
       signature: signature
     )
@@ -299,9 +260,6 @@ struct FlutterEnhancedKycRequest {
       bankCode,
       callbackUrl,
       partnerParams.toList(),
-      partnerId,
-      sourceSdk,
-      sourceSdkVersion,
       timestamp,
       signature,
     ]

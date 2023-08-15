@@ -40,14 +40,12 @@ extension FlutterPartnerParams {
 
 extension FlutterAuthenticationRequest {
     func toRequest() -> AuthenticationRequest {
-        AuthenticationRequest(jobType: JobType(rawValue: jobType!.rawValue)!,
-                              enrollment: enrollment,
+        let mappedJobType = JobType(rawValue: jobType.rawValue)!
+        return AuthenticationRequest(jobType: mappedJobType,
+                              enrollment: mappedJobType == .smartSelfieEnrollment,
                               updateEnrolledImage: updateEnrolledImage,
-                              jobId: jobId, userId: userId,
-                              signature: signature,
-                              production: production,
-                              partnerId: partnerId,
-                              authToken: authToken)
+                              jobId: jobId,
+                              userId: userId)
     }
 }
 
@@ -56,15 +54,34 @@ extension AuthenticationResponse {
         FlutterAuthenticationResponse(success: success,
                                       signature: signature,
                                       timestamp: timestamp,
-                                      partnerParams: partnerParams.toFlutterParnerParams())
+                                      partnerParams: partnerParams.toFlutterPartnerParams())
     }
 }
 
 extension PartnerParams {
-    func toFlutterParnerParams() -> FlutterPartnerParams {
+    func toFlutterPartnerParams() -> FlutterPartnerParams {
         FlutterPartnerParams(jobType: FlutterJobType(rawValue: jobType.rawValue),
                              jobId: jobId,
-                             userId: userId,
-                             extras: [:])
+                             userId: userId)
+    }
+}
+
+extension FlutterJobType {
+    func toRequest() -> JobType {
+        switch (self) {
+        case .enhancedKyc:
+            return JobType.enhancedKyc
+        default: fatalError("Not yet supported")
+        }
+    }
+}
+
+extension JobType {
+    func toResponse() -> FlutterJobType {
+        switch (self) {
+        case .enhancedKyc:
+            return FlutterJobType.enhancedKyc
+        default: fatalError("Not yet supported")
+        }
     }
 }

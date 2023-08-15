@@ -1,16 +1,20 @@
+import 'package:flutter/foundation.dart';
+
 import 'messages.g.dart';
-import 'smile_id_platform_interface.dart';
 
 class SmileID {
-  void initialize() {
-    SmileIDPlatform.instance.initialize();
+  @visibleForTesting
+  static SmileIDApi platformInterface = SmileIDApi();
+
+  static void initialize() {
+    platformInterface.initialize();
   }
 
-  Future<FlutterAuthenticationResponse?> authenticate(FlutterAuthenticationRequest request) {
-    return SmileIDPlatform.instance.authenticate(request);
+  static Future<FlutterAuthenticationResponse?> authenticate(FlutterAuthenticationRequest request) {
+    return platformInterface.authenticate(request);
   }
 
-  Future<FlutterEnhancedKycAsyncResponse?> doEnhancedKycAsync(FlutterEnhancedKycRequest request) {
-    return SmileIDPlatform.instance.doEnhancedKycAsync(request);
+  static Future<FlutterEnhancedKycAsyncResponse?> doEnhancedKycAsync(FlutterEnhancedKycRequest request) {
+    return platformInterface.doEnhancedKycAsync(request);
   }
 }

@@ -2,7 +2,7 @@ PODS:
   - Flutter (1.0.0)
   - integration_test (0.0.1):
     - Flutter
-  - smile_id_flutter (10.0.0-beta04):
+  - smile_id (10.0.0-beta04):
     - Flutter
     - SmileID (= 10.0.0-beta04)
   - SmileID (10.0.0-beta04):
@@ -12,7 +12,7 @@ PODS:
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
-  - smile_id_flutter (from `.symlinks/plugins/smile_id_flutter/ios`)
+  - smile_id (from `.symlinks/plugins/smile_id/ios`)
 
 SPEC REPOS:
   trunk:
@@ -24,13 +24,13 @@ EXTERNAL SOURCES:
     :path: Flutter
   integration_test:
     :path: ".symlinks/plugins/integration_test/ios"
-  smile_id_flutter:
-    :path: ".symlinks/plugins/smile_id_flutter/ios"
+  smile_id:
+    :path: ".symlinks/plugins/smile_id/ios"
 
 SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   integration_test: 13825b8a9334a850581300559b8839134b124670
-  smile_id_flutter: 53f9a256c7c565dcccdef30b9c86e1621323b77a
+  smile_id: 60b37c0c644448e8b8f3a39c706c25f09232eb3d
   SmileID: c3ebaee55b06009cf1363df98e4dab82d2c3b1a4
   Zip: b3fef584b147b6e582b2256a9815c897d60ddc67
 

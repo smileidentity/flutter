@@ -3,23 +3,20 @@ import 'package:pigeon/pigeon.dart';
 @ConfigurePigeon(PigeonOptions(
   dartOut: 'lib/messages.g.dart',
   dartOptions: DartOptions(),
-  kotlinOut: 'android/src/main/kotlin/com/smileidentity/smileid/Messages.g.kt',
+  kotlinOut: 'android/src/main/kotlin/com/smileidentity/flutter/Messages.g.kt',
   kotlinOptions: KotlinOptions(),
   swiftOut: 'ios/Classes/Messages.g.swift',
   swiftOptions: SwiftOptions(),
   dartPackageName: 'smileid',
 ))
+enum FlutterJobType { enhancedKyc }
 
-enum FlutterJobType { enhanced_kyc(5) }
-
-///  Custom values specific to partners can be placed in [extras]
 class FlutterPartnerParams {
   final FlutterJobType? jobType;
   final String jobId;
   final String userId;
-  final Map<String?, String?> extras;
 
-  FlutterPartnerParams(this.jobType, this.jobId, this.userId, this.extras);
+  FlutterPartnerParams(this.jobType, this.jobId, this.userId);
 }
 
 /// The Auth Smile request. Auth Smile serves multiple purposes:
@@ -29,7 +26,6 @@ class FlutterPartnerParams {
 /// - It is used to fetch consent information for the partner
 ///
 /// [jobType] The type of job that will be performed
-/// [enrollment] Whether or not this is an enrollment job
 /// [country] The country code of the country where the job is being performed. This value is
 /// required in order to get back consent information for the partner
 /// [idType] The type of ID that will be used for the job. This value is required in order to
@@ -40,36 +36,22 @@ class FlutterPartnerParams {
 /// Job ID within your own system. If not provided, a random job ID will be generated
 /// [userId] The user ID to associate with the job. Most often, this will correspond to a unique
 /// User ID within your own system. If not provided, a random user ID will be generated
-/// [signature] Whether or not to fetch the signature for the job
-/// [production] Whether or not to use the production environment
-/// [partnerId] The partner ID
-/// [authToken] The auth token from smile_config.json
 
 class FlutterAuthenticationRequest {
-  final FlutterJobType? jobType;
-  final bool enrollment;
+  final FlutterJobType jobType;
   final String? country;
   final String? idType;
   final bool? updateEnrolledImage;
   final String? jobId;
   final String? userId;
-  final bool signature;
-  final bool production;
-  final String partnerId;
-  final String authToken;
 
   FlutterAuthenticationRequest({
-    this.jobType,
-    required this.enrollment,
+    required this.jobType,
     this.country,
     this.idType,
     this.updateEnrolledImage,
     this.jobId,
     this.userId,
-    required this.signature,
-    required this.production,
-    required this.partnerId,
-    required this.authToken,
   });
 }
 
@@ -121,14 +103,11 @@ class FlutterEnhancedKycRequest {
   final String? bankCode;
   final String? callbackUrl;
   final FlutterPartnerParams partnerParams;
-  final String partnerId;
-  final String sourceSdk;
-  final String sourceSdkVersion;
   final String timestamp;
   final String signature;
 
-  FlutterEnhancedKycRequest({
-      required this.country,
+  FlutterEnhancedKycRequest(
+      {required this.country,
       required this.idType,
       required this.idNumber,
       this.firstName,
@@ -139,20 +118,14 @@ class FlutterEnhancedKycRequest {
       this.bankCode,
       this.callbackUrl,
       required this.partnerParams,
-      required this.partnerId,
-      required this.sourceSdk,
-      required this.sourceSdkVersion,
       required this.timestamp,
-      required this.signature
-  });
+      required this.signature});
 }
 
 class FlutterEnhancedKycAsyncResponse {
   final bool success;
 
-  FlutterEnhancedKycAsyncResponse({
-    required this.success
-  });
+  FlutterEnhancedKycAsyncResponse({required this.success});
 }
 
 @HostApi()

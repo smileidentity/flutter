@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:smile_id_flutter/smile_id.dart';
+import 'package:smile_id/messages.g.dart';
+import 'package:smile_id/smile_id.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final _smileIdPlugin = SmileID();
 
   @override
   void initState() {
@@ -25,8 +25,6 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    _smileIdPlugin.initialize();
-
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
@@ -41,7 +39,35 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Smile ID'),
         ),
         body: Center(
-          child: Text('Sample App'),
+          child: Column(
+            children: [
+              ElevatedButton(
+                child: Text("Enhanced KYC (Async)"),
+                onPressed: () {
+                  SmileID.initialize();
+                  var userId = "<your user's user ID>";
+                  SmileID.authenticate(FlutterAuthenticationRequest(
+                    jobType: FlutterJobType.enhancedKyc,
+                    userId: userId,
+                  )).then((authResponse) => {
+                    SmileID.doEnhancedKycAsync(FlutterEnhancedKycRequest(
+                      country: "GH",
+                      idType: "DRIVERS_LICENSE",
+                      idNumber: "B0000000",
+                      callbackUrl: "https://webhook.site/a3d19f24-769a-46f2-997c-d186c3ae70ea",
+                      partnerParams: FlutterPartnerParams(
+                        jobType: FlutterJobType.enhancedKyc,
+                        jobId: userId,
+                        userId: userId,
+                      ),
+                      timestamp: authResponse!.timestamp,
+                      signature: authResponse.signature
+                    ))
+                  }, onError: (error) => {print("error: $error")});
+                }
+              )
+            ],
+          )
         ),
       ),
     );

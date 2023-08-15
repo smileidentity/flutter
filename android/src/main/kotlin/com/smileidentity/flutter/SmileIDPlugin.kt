@@ -6,6 +6,7 @@ import FlutterEnhancedKycAsyncResponse
 import FlutterEnhancedKycRequest
 import SmileIDApi
 import android.content.Context
+import android.util.Log
 import com.smileidentity.SmileID
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -25,7 +26,7 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
-        SmileIDApi.setUp(binding.binaryMessenger, this)
+        SmileIDApi.setUp(binding.binaryMessenger, null)
     }
 
     override fun initialize() {

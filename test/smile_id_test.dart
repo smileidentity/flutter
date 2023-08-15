@@ -1,37 +1,35 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-import 'package:smile_id_flutter/messages.g.dart';
-import 'package:smile_id_flutter/smile_id.dart';
-import 'package:smile_id_flutter/smile_id_method_channel.dart';
-import 'package:smile_id_flutter/smile_id_platform_interface.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
+import 'package:smile_id/messages.g.dart';
+import 'package:smile_id/smile_id.dart';
 
-class MockSmileIDPlatform
-    with MockPlatformInterfaceMixin
-    implements SmileIDPlatform {
-  @override
-  void initialize() {
-    // TODO: implement initialize
-    throw UnimplementedError();
-  }
+@GenerateNiceMocks([MockSpec<SmileIDApi>()])
+@GenerateNiceMocks([MockSpec<FlutterAuthenticationRequest>()])
+@GenerateNiceMocks([MockSpec<FlutterEnhancedKycRequest>()])
+import 'smile_id_test.mocks.dart';
 
-  @override
-  Future<FlutterEnhancedKycAsyncResponse?> doEnhancedKycAsync(
-      FlutterEnhancedKycRequest request) {
-    // TODO: implement doEnhancedKycAsync
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<FlutterAuthenticationResponse?> authenticate(FlutterAuthenticationRequest request) {
-    // TODO: implement authenticate
-    throw UnimplementedError();
-  }
-}
 
 void main() {
-  final SmileIDPlatform initialPlatform = SmileIDPlatform.instance;
+  setUp(() {
+    final SmileIDApi platformInterface = MockSmileIDApi();
+    SmileID.platformInterface = platformInterface;
+  });
 
-  test('$SmileIDUsage is the default instance', () {
-    expect(initialPlatform, isInstanceOf<SmileIDUsage>());
+  test("initialize call is proxied", () {
+    SmileID.initialize();
+    verify(SmileID.platformInterface.initialize());
+  });
+
+  test("authenticate call is proxied", () {
+    final FlutterAuthenticationRequest request = MockFlutterAuthenticationRequest();
+    SmileID.authenticate(request);
+    verify(SmileID.platformInterface.authenticate(request));
+  });
+
+  test("enhanced kyc async is proxied", () {
+    final FlutterEnhancedKycRequest request = MockFlutterEnhancedKycRequest();
+    SmileID.doEnhancedKycAsync(request);
+    verify(SmileID.platformInterface.doEnhancedKycAsync(request));
   });
 }
