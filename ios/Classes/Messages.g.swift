@@ -45,6 +45,7 @@ struct FlutterPartnerParams {
   var jobType: FlutterJobType? = nil
   var jobId: String
   var userId: String
+  var extras: [String?: String?]
 
   static func fromList(_ list: [Any?]) -> FlutterPartnerParams? {
     var jobType: FlutterJobType? = nil
@@ -54,11 +55,13 @@ struct FlutterPartnerParams {
     }
     let jobId = list[1] as! String
     let userId = list[2] as! String
+    let extras = list[3] as! [String?: String?]
 
     return FlutterPartnerParams(
       jobType: jobType,
       jobId: jobId,
-      userId: userId
+      userId: userId,
+      extras: extras
     )
   }
   func toList() -> [Any?] {
@@ -66,6 +69,7 @@ struct FlutterPartnerParams {
       jobType?.rawValue,
       jobId,
       userId,
+      extras,
     ]
   }
 }
