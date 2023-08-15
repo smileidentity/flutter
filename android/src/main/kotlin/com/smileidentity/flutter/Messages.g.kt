@@ -60,8 +60,7 @@ enum class FlutterJobType(val raw: Int) {
 data class FlutterPartnerParams (
   val jobType: FlutterJobType? = null,
   val jobId: String,
-  val userId: String,
-  val extras: Map<String?, String?>
+  val userId: String
 
 ) {
   companion object {
@@ -72,8 +71,7 @@ data class FlutterPartnerParams (
       }
       val jobId = list[1] as String
       val userId = list[2] as String
-      val extras = list[3] as Map<String?, String?>
-      return FlutterPartnerParams(jobType, jobId, userId, extras)
+      return FlutterPartnerParams(jobType, jobId, userId)
     }
   }
   fun toList(): List<Any?> {
@@ -81,7 +79,6 @@ data class FlutterPartnerParams (
       jobType?.raw,
       jobId,
       userId,
-      extras,
     )
   }
 }
