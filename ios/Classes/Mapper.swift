@@ -12,7 +12,7 @@ extension FlutterEnhancedKycRequest {
                            phoneNumber: phoneNumber,
                            bankCode: bankCode,
                            callbackUrl: callbackUrl,
-                           partnerParams: partnerParams.toPartnerParams(),
+                           partnerParams: partnerParams.toRequest(),
                            sourceSdk: "ios (flutter)",
                            timestamp: timestamp,
                            signature: signature)
@@ -32,16 +32,16 @@ extension EnhancedKycAsyncResponse {
 }
 
 extension FlutterPartnerParams {
-    func toPartnerParams() -> PartnerParams {
+    func toRequest() -> PartnerParams {
         PartnerParams(jobId: jobId,
                       userId: userId,
-                      jobType: JobType(rawValue: jobType!.rawValue)!)
+                      jobType: jobType!.toRequest())
     }
 }
 
 extension FlutterAuthenticationRequest {
     func toRequest() -> AuthenticationRequest {
-        let mappedJobType = JobType(rawValue: jobType.rawValue)!
+        let mappedJobType = jobType.toRequest()
         return AuthenticationRequest(jobType: mappedJobType,
                               enrollment: mappedJobType == .smartSelfieEnrollment,
                               updateEnrolledImage: updateEnrolledImage,

@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             children: [
               ElevatedButton(
-                child: Text("Enhanced KYC (Async)"),
+                child: const Text("Enhanced KYC (Async)"),
                 onPressed: () {
                   SmileID.initialize();
                   var userId = "<your user's user ID>";
@@ -59,7 +59,6 @@ class _MyAppState extends State<MyApp> {
                         jobType: FlutterJobType.enhancedKyc,
                         jobId: userId,
                         userId: userId,
-                        extras: {},
                       ),
                       timestamp: authResponse!.timestamp,
                       signature: authResponse.signature

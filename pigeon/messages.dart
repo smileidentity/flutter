@@ -16,9 +16,9 @@ class FlutterPartnerParams {
   final FlutterJobType? jobType;
   final String jobId;
   final String userId;
-  final Map<String?, String?> extras;
+  Map<String?, String?>? extras;
 
-  FlutterPartnerParams(this.jobType, this.jobId, this.userId, this.extras);
+  FlutterPartnerParams(this.jobType, this.jobId, this.userId);
 }
 
 /// The Auth Smile request. Auth Smile serves multiple purposes:

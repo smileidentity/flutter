@@ -25,11 +25,11 @@ import com.smileidentity.models.PartnerParams
  *
  *  The fix is these two helper functions to convert maps to nullable types, and vice versa
  */
-fun convertNullableMapToNonNull(map: Map<String?, String?>): Map<String, String> =
-    map.filterKeys { it != null }
-        .filterValues { it != null }
-        .mapKeys { it.key!! }
-        .mapValues { it.value!! }
+fun convertNullableMapToNonNull(map: Map<String?, String?>?): Map<String, String> =
+    map?.filterKeys { it != null }
+        ?.filterValues { it != null }
+        ?.mapKeys { it.key!! }
+        ?.mapValues { it.value!! } ?: mapOf()
 
 fun convertNonNullMapToNullable(map: Map<String, String>): Map<String?, String?> =
     map.mapKeys { it.key }
@@ -58,6 +58,13 @@ fun PartnerParams.toResponse() = FlutterPartnerParams(
     jobId = jobId,
     userId = userId,
     extras = convertNonNullMapToNullable(extras)
+)
+
+fun FlutterPartnerParams.toRequest() = PartnerParams(
+    jobType = jobType?.toRequest(),
+    jobId = jobId,
+    userId = userId,
+    extras = convertNullableMapToNonNull(extras)
 )
 
 fun ConsentInfo.toRequest() = FlutterConsentInfo(
