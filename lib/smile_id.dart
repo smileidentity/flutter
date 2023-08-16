@@ -14,7 +14,8 @@ class SmileID {
     return platformInterface.authenticate(request);
   }
 
-  static Future<FlutterEnhancedKycAsyncResponse?> doEnhancedKycAsync(FlutterEnhancedKycRequest request) {
+  static Future<FlutterEnhancedKycAsyncResponse?> doEnhancedKycAsync(
+      FlutterEnhancedKycRequest request) {
     return platformInterface.doEnhancedKycAsync(request);
   }
 }

@@ -12,11 +12,13 @@ enum FlutterJobType {
   enhancedKyc,
 }
 
+///  Custom values specific to partners can be placed in [extras]
 class FlutterPartnerParams {
   FlutterPartnerParams({
     this.jobType,
     required this.jobId,
     required this.userId,
+    this.extras,
   });
 
   FlutterJobType? jobType;
@@ -25,11 +27,14 @@ class FlutterPartnerParams {
 
   String userId;
 
+  Map<String?, String?>? extras;
+
   Object encode() {
     return <Object?>[
       jobType?.index,
       jobId,
       userId,
+      extras,
     ];
   }
 
@@ -41,6 +46,7 @@ class FlutterPartnerParams {
           : null,
       jobId: result[1]! as String,
       userId: result[2]! as String,
+      extras: (result[3] as Map<Object?, Object?>?)?.cast<String?, String?>(),
     );
   }
 }

@@ -15,16 +15,31 @@ import com.smileidentity.models.EnhancedKycRequest
 import com.smileidentity.models.JobType
 import com.smileidentity.models.PartnerParams
 
+/**
+ * Pigeon does not allow non nullable types in this example here
+ *
+ *  final Map<String, String> extras;
+ *
+ *  Error: pigeons/messages.dart:18: Generic type arguments must be nullable in field "extras" in
+ *  class "FlutterPartnerParams".
+ *
+ *  The fix is these two helper functions to convert maps to nullable types, and vice versa
+ */
+fun convertNullableMapToNonNull(map: Map<String?, String?>?): Map<String, String> =
+    map?.filterKeys { it != null }
+        ?.filterValues { it != null }
+        ?.mapKeys { it.key!! }
+        ?.mapValues { it.value!! } ?: mapOf()
+
 fun convertNonNullMapToNullable(map: Map<String, String>): Map<String?, String?> =
     map.mapKeys { it.key }
         .mapValues { it.value }
-
 
 fun FlutterJobType.toRequest() = when(this) {
     FlutterJobType.ENHANCEDKYC -> JobType.EnhancedKyc
 }
 
-fun JobType.toResponse() = when(this) {
+fun JobType.toResponse() = when (this) {
     JobType.EnhancedKyc -> FlutterJobType.ENHANCEDKYC
     else -> TODO("Not yet implemented")
 }
@@ -42,6 +57,14 @@ fun PartnerParams.toResponse() = FlutterPartnerParams(
     jobType = jobType?.toResponse(),
     jobId = jobId,
     userId = userId,
+    extras = convertNonNullMapToNullable(extras)
+)
+
+fun FlutterPartnerParams.toRequest() = PartnerParams(
+    jobType = jobType?.toRequest(),
+    jobId = jobId,
+    userId = userId,
+    extras = convertNullableMapToNonNull(extras)
 )
 
 fun ConsentInfo.toRequest() = FlutterConsentInfo(
@@ -73,6 +96,7 @@ fun FlutterEnhancedKycRequest.toRequest() = EnhancedKycRequest(
         jobType = partnerParams.jobType?.toRequest(),
         jobId = partnerParams.jobId,
         userId = partnerParams.userId,
+        extras = convertNullableMapToNonNull(partnerParams.extras)
     ),
     sourceSdk = "android (flutter)",
     timestamp = timestamp,

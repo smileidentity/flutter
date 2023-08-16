@@ -11,10 +11,12 @@ import 'package:pigeon/pigeon.dart';
 ))
 enum FlutterJobType { enhancedKyc }
 
+///  Custom values specific to partners can be placed in [extras]
 class FlutterPartnerParams {
   final FlutterJobType? jobType;
   final String jobId;
   final String userId;
+  Map<String?, String?>? extras;
 
   FlutterPartnerParams(this.jobType, this.jobId, this.userId);
 }
