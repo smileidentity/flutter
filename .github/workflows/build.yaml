@@ -33,7 +33,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v3
-      - run: touch sample/ios/smile_config.json
+      - run: touch example/ios/smile_config.json
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.10.6' # Set the desired Flutter version here
