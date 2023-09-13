@@ -43,7 +43,8 @@ class FlutterError (
 ) : Throwable()
 
 enum class FlutterJobType(val raw: Int) {
-  ENHANCEDKYC(0);
+  ENHANCEDKYC(0),
+  DOCUMENTVERIFICATION(1);
 
   companion object {
     fun ofRaw(raw: Int): FlutterJobType? {

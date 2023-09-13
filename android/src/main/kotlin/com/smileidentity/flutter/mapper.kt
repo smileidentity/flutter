@@ -37,10 +37,12 @@ fun convertNonNullMapToNullable(map: Map<String, String>): Map<String?, String?>
 
 fun FlutterJobType.toRequest() = when(this) {
     FlutterJobType.ENHANCEDKYC -> JobType.EnhancedKyc
+    FlutterJobType.DOCUMENTVERIFICATION -> JobType.DocumentVerification
 }
 
 fun JobType.toResponse() = when (this) {
     JobType.EnhancedKyc -> FlutterJobType.ENHANCEDKYC
+    JobType.DocumentVerification -> FlutterJobType.DOCUMENTVERIFICATION
     else -> TODO("Not yet implemented")
 }
 
