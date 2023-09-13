@@ -1,23 +1,21 @@
 group "com.smileidentity.flutter"
-version findProperty("SDK_VERSION") ?: "10.0.0-beta06-SNAPSHOT"
+version findProperty("SDK_VERSION") ?: "10.0.0-beta07"
 
 buildscript {
-    ext.kotlin_version = "1.9.0"
+    ext.kotlin_version = "1.9.10"
     repositories {
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         google()
         mavenCentral()
     }
 
     dependencies {
-        classpath "com.android.tools.build:gradle:8.1.0"
+        classpath "com.android.tools.build:gradle:8.1.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
 allprojects {
     repositories {
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         google()
         mavenCentral()
     }
@@ -51,6 +49,11 @@ android {
         }
     }
 
+    buildFeatures.compose = true
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.3"
+    }
+
     dependencies {
         implementation "com.smileidentity:android-sdk:${version}"
 
@@ -58,8 +61,10 @@ android {
         implementation "androidx.core:core-ktx"
         implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core"
         implementation "com.jakewharton.timber:timber"
+        implementation "androidx.compose.ui:ui"
+        implementation "androidx.compose.material3:material3"
 
         testImplementation "org.jetbrains.kotlin:kotlin-test"
-        testImplementation "io.mockk:mockk:1.13.5"
+        testImplementation "io.mockk:mockk:1.13.7"
     }
 }
