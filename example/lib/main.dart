@@ -37,21 +37,45 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Smile ID'),
-        ),
-        body: Center(
-          child: DocumentVerification()
-          // Column(
-          //   children: [
-          //     EnhancedKycAsyncButton(),
-          //     DocumentVerificationButton(),
-          //   ],
-          // )
-        ),
+    return const MaterialApp(
+      title: "Smile ID",
+      // MainContent requires its own BuildContext for Navigator to work, hence it is defined as its
+      // own widget
+      home: MainContent(),
+    );
+  }
+}
+
+class MyScaffold extends StatelessWidget {
+  final Widget body;
+  const MyScaffold({super.key, required this.body});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: const BackButton(),
+        title: const Text("Smile ID"),
       ),
+      body: body,
+    );
+  }
+}
+
+class MainContent extends StatelessWidget {
+  const MainContent({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MyScaffold(
+        body: Center(
+          child: Column(
+            children: [
+              EnhancedKycAsyncButton(),
+              DocumentVerificationButton(context),
+            ],
+          )
+      )
     );
   }
 
@@ -83,73 +107,30 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  Widget DocumentVerificationButton() {
+  Widget DocumentVerificationButton(BuildContext context) {
     return ElevatedButton(
-        child: const Text("Document Verification"),
-        onPressed: () {
-          SmileID.initialize();
-          var userId = "<your user's user ID>";
-          SmileID.authenticate(FlutterAuthenticationRequest(
-            jobType: FlutterJobType.documentVerification,
-            userId: userId,
-          )).then((authResponse) => {
-            // SmileID.doDocumentVerification(FlutterDocumentVerificationRequest(
-            //     country: "GH",
-            //     idType: "DRIVERS_LICENSE",
-            //     idNumber: "B0000000",
-            //     callbackUrl: "https://webhook.site/a3d19f24-769a-46f2-997c-d186c3ae70ea",
-            //     partnerParams: FlutterPartnerParams(
-            //       jobType: FlutterJobType.documentVerification,
-            //       jobId: userId,
-            //       userId: userId,
-            //     ),
-            //     timestamp: authResponse!.timestamp,
-            //     signature: authResponse.signature
-            // ))
-          }, onError: (error) => {print("error: $error")});
-        }
-    );
-  }
-}
-
-class DocumentVerification extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    switch (defaultTargetPlatform) {
-      case TargetPlatform.android:
-        return GestureDetector(
-          onTap: (){ print("onTap"); },
-          child: AndroidView(
-              viewType: "SmileIDDocumentVerification",
-              onPlatformViewCreated: _onPlatformViewCreated,
-              gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{
-                Factory<OneSequenceGestureRecognizer>(EagerGestureRecognizer.new),
-              }
+      child: const Text("Document Verification"),
+      onPressed: () {
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => MyScaffold(
+              body: SmileIDDocumentVerification(
+                creationParams: const <String, dynamic>{
+                  "country": "GH",
+                  "idType": "DRIVERS_LICENSE",
+                  "userId": "1234567890",
+                  "jobId": "1234567890",
+                  "idAspectRatio": 1.5
+                },
+                onResult: (String result) {
+                  print("onResult: $result");
+                  Navigator.of(context).pop();
+                },
+              )
+            ),
           ),
         );
-      case TargetPlatform.iOS:
-        return UiKitView(
-          viewType: "SmileIDDocumentVerification",
-          onPlatformViewCreated: _onPlatformViewCreated
-        );
-      default:
-        throw UnsupportedError("Unsupported platform");
-    }
-  }
-
-  void _onPlatformViewCreated(int id) {
-    final channel = MethodChannel('SmileIDDocumentVerification_$id');
-    channel.setMethodCallHandler(_handleMethodCall);
-  }
-
-  Future<dynamic> _handleMethodCall(MethodCall call) async {
-    switch (call.method) {
-      case "onResult":
-        print("onResult");
-        print(call.arguments);
-        return Future.value(true);
-      default:
-        throw MissingPluginException();
-    }
+      },
+    );
   }
 }
