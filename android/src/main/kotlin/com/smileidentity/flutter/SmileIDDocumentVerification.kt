@@ -6,6 +6,10 @@ import androidx.compose.ui.platform.ComposeView
 import com.smileidentity.SmileID
 import com.smileidentity.compose.DocumentVerification
 import com.smileidentity.models.Document
+import com.smileidentity.results.DocumentVerificationResult
+import com.smileidentity.results.SmileIDResult
+import com.smileidentity.util.randomJobId
+import com.smileidentity.util.randomUserId
 import io.flutter.Log
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodChannel
@@ -39,20 +43,46 @@ internal class SmileIDDocumentVerification private constructor(
             setContent {
                 SmileID.DocumentVerification(
                     // TODO: Global DocV changes
-                    idType = Document(args["countryCode"] as String, args["documentType"] as String),
+                    idType = Document(
+                        args["countryCode"] as String,
+                        args["documentType"] as String
+                    ),
                     idAspectRatio = (args["idAspectRatio"] as Double?)?.toFloat(),
                     captureBothSides = args["captureBothSides"] as? Boolean ?: false,
-                    bypassSelfieCaptureWithFile = (args["bypassSelfieCaptureWithFile"] as? String)?.let { File(it) },
-                    userId = args["userId"] as? String ?: "",
-                    jobId = args["jobId"] as? String ?: "",
+                    bypassSelfieCaptureWithFile = (args["bypassSelfieCaptureWithFile"] as? String)?.let {
+                        File(it)
+                    },
+                    userId = args["userId"] as? String ?: randomUserId(),
+                    jobId = args["jobId"] as? String ?: randomJobId(),
                     showAttribution = args["showAttribution"] as? Boolean ?: true,
                     allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false,
                     showInstructions = args["showInstructions"] as? Boolean ?: true,
                 ) {
-                    methodChannel.invokeMethod(
-                        "onResult",
-                        it.toString(),
-                    )
+                    when (it) {
+                        is SmileIDResult.Success -> {
+                            // At this point, we have a successful result from the native SDK. But,
+                            // there is still a possibility of the JSON serializing erroring for
+                            // whatever reason -- if such a thing happens, we still want to tell
+                            // the caller that the overall operation was successful. However, we
+                            // just may not be able to provide the result JSON.
+                            val json = try {
+                                SmileID.moshi
+                                    .adapter(DocumentVerificationResult::class.java)
+                                    .toJson(it.data)
+                            } catch (e: Exception) {
+                                Log.e("SmileIDDocumentVerification", "Error serializing result", e)
+                                "null"
+                            }
+                            methodChannel.invokeMethod("onSuccess", json)
+                        }
+
+                        is SmileIDResult.Error -> {
+                            // Print the stack trace, since we can't provide the actual Throwable
+                            // back to Flutter
+                            it.throwable.printStackTrace()
+                            methodChannel.invokeMethod("onError", it.throwable.message)
+                        }
+                    }
                 }
             }
         }

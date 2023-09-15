@@ -117,11 +117,15 @@ class MainContent extends StatelessWidget {
               body: SmileIDDocumentVerification(
                 countryCode: "GH",
                 documentType: "DRIVERS_LICENSE",
-                userId: "1234567890",
-                jobId: "1234567890",
-                idAspectRatio: 1.5,
-                onResult: (String result) {
-                  final snackBar = SnackBar(content: Text(result));
+                onSuccess: (String? result) {
+                  // Your success handling logic
+                  final snackBar = SnackBar(content: Text("Success: $result"));
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  Navigator.of(context).pop();
+                },
+                onError: (String errorMessage) {
+                  // Your error handling logic
+                  final snackBar = SnackBar(content: Text("Error: $errorMessage"));
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   Navigator.of(context).pop();
                 },

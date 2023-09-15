@@ -28,9 +28,17 @@ class SmileID {
 class SmileIDDocumentVerification extends StatelessWidget {
   static const String viewType = "SmileIDDocumentVerification";
   final Map<String, dynamic> creationParams;
-  final Function(String) onResult;
 
-  const SmileIDDocumentVerification._({required this.creationParams, required this.onResult});
+  /// Called when the user successfully completes the document verification flow. The result is a
+  /// JSON string.
+  final Function(String) onSuccess;
+  final Function(String) onError;
+
+  const SmileIDDocumentVerification._({
+    required this.creationParams,
+    required this.onSuccess,
+    required this.onError,
+  });
 
   factory SmileIDDocumentVerification({
     Key? key,
@@ -46,10 +54,12 @@ class SmileIDDocumentVerification extends StatelessWidget {
     bool showAttribution = true,
     bool allowGalleryUpload = false,
     bool showInstructions = true,
-    required Function(String) onResult,
+    required Function(String resultJson) onSuccess,
+    required Function(String errorMessage) onError,
   }) {
     return SmileIDDocumentVerification._(
-      onResult: onResult,
+      onSuccess: onSuccess,
+      onError: onError,
       creationParams: {
         "countryCode": countryCode,
         "documentType": documentType,
@@ -97,8 +107,10 @@ class SmileIDDocumentVerification extends StatelessWidget {
 
   Future<dynamic> _handleMethodCall(MethodCall call) async {
     switch (call.method) {
-      case "onResult":
-        onResult(call.arguments);
+      case "onSuccess":
+        onSuccess(call.arguments);
+      case "onError":
+        onError(call.arguments);
       default:
         throw MissingPluginException();
     }
