@@ -115,15 +115,14 @@ class MainContent extends StatelessWidget {
           MaterialPageRoute<void>(
             builder: (BuildContext context) => MyScaffold(
               body: SmileIDDocumentVerification(
-                creationParams: const <String, dynamic>{
-                  "country": "GH",
-                  "idType": "DRIVERS_LICENSE",
-                  "userId": "1234567890",
-                  "jobId": "1234567890",
-                  "idAspectRatio": 1.5
-                },
+                countryCode: "GH",
+                documentType: "DRIVERS_LICENSE",
+                userId: "1234567890",
+                jobId: "1234567890",
+                idAspectRatio: 1.5,
                 onResult: (String result) {
-                  print("onResult: $result");
+                  final snackBar = SnackBar(content: Text(result));
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   Navigator.of(context).pop();
                 },
               )

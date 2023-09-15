@@ -25,15 +25,43 @@ class SmileID {
 
 class SmileIDDocumentVerification extends StatelessWidget {
   static const String viewType = "SmileIDDocumentVerification";
-  final Function(String) onResult;
-  // todo: separate out creation params into independent keys
   final Map<String, dynamic> creationParams;
-  const SmileIDDocumentVerification({
-    super.key,
-    required this.creationParams,
-    required this.onResult,
-  });
+  final Function(String) onResult;
 
+  const SmileIDDocumentVerification._({required this.creationParams, required this.onResult});
+
+  factory SmileIDDocumentVerification({
+    Key? key,
+    required String countryCode,
+    String? documentType,
+    double? idAspectRatio,
+    bool captureBothSides = false,
+    String? bypassSelfieCaptureWithFile,
+    // userId and jobId can't actually be null in the native SDK but we delegate their creation to
+    // the native platform code, since that's where the random ID creation happens
+    String? userId,
+    String? jobId,
+    bool showAttribution = true,
+    bool allowGalleryUpload = false,
+    bool showInstructions = true,
+    required Function(String) onResult,
+  }) {
+    return SmileIDDocumentVerification._(
+      onResult: onResult,
+      creationParams: {
+        "countryCode": countryCode,
+        "documentType": documentType,
+        "idAspectRatio": idAspectRatio,
+        "captureBothSides": captureBothSides,
+        "bypassSelfieCaptureWithFile": bypassSelfieCaptureWithFile,
+        "userId": userId,
+        "jobId": jobId,
+        "showAttribution": showAttribution,
+        "allowGalleryUpload": allowGalleryUpload,
+        "showInstructions": showInstructions,
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +79,8 @@ class SmileIDDocumentVerification extends StatelessWidget {
       case TargetPlatform.iOS:
         return UiKitView(
             viewType: viewType,
-            onPlatformViewCreated: _onPlatformViewCreated
+            onPlatformViewCreated: _onPlatformViewCreated,
+            creationParams: creationParams,
         );
       default:
         throw UnsupportedError("Unsupported platform");
