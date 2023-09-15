@@ -9,6 +9,9 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
     let messenger: FlutterBinaryMessenger = registrar.messenger()
     let api: SmileIDApi & NSObjectProtocol = SmileIDPlugin()
     SmileIDApiSetup.setUp(binaryMessenger: messenger, api: api)
+
+    let factory = SmileIDDocumentVerification.Factory(messenger: registrar.messenger())
+    registrar.register(factory, withId: SmileIDDocumentVerification.viewTypeId)
   }
 
     func authenticate(request: FlutterAuthenticationRequest, completion: @escaping (Result<FlutterAuthenticationResponse, Error>) -> Void) {

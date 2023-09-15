@@ -21,6 +21,8 @@ class SmileID {
       FlutterEnhancedKycRequest request) {
     return platformInterface.doEnhancedKycAsync(request);
   }
+
+  // TODO: move authentication and doEnhancedKycAsync to an "api" object to mirror native API
 }
 
 class SmileIDDocumentVerification extends StatelessWidget {
@@ -79,8 +81,9 @@ class SmileIDDocumentVerification extends StatelessWidget {
       case TargetPlatform.iOS:
         return UiKitView(
             viewType: viewType,
-            onPlatformViewCreated: _onPlatformViewCreated,
             creationParams: creationParams,
+            creationParamsCodec: const StandardMessageCodec(),
+            onPlatformViewCreated: _onPlatformViewCreated,
         );
       default:
         throw UnsupportedError("Unsupported platform");

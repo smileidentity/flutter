@@ -20,6 +20,9 @@ internal class SmileIDDocumentVerification private constructor(
     messenger: BinaryMessenger,
     args: Map<String, Any?>,
 ) : PlatformView {
+    companion object {
+        const val viewTypeId = "SmileIDDocumentVerification"
+    }
 
     private val methodChannel: MethodChannel
     private val view: View

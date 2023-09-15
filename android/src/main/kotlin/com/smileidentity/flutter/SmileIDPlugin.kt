@@ -24,8 +24,9 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         SmileIDApi.setUp(flutterPluginBinding.binaryMessenger, this)
         appContext = flutterPluginBinding.applicationContext
+
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
-            "SmileIDDocumentVerification",
+            SmileIDDocumentVerification.viewTypeId,
             SmileIDDocumentVerification.Factory(flutterPluginBinding.binaryMessenger)
         )
     }
