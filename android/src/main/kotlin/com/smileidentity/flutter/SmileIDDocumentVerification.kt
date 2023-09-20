@@ -31,7 +31,7 @@ internal class SmileIDDocumentVerification private constructor(
     private val view: View
 
     init {
-        methodChannel = MethodChannel(messenger, "SmileIDDocumentVerification_$viewId")
+        methodChannel = MethodChannel(messenger, "${VIEW_TYPE_ID}_$viewId")
         view = ComposeView(context).apply {
             setContent {
                 SmileID.DocumentVerification(
