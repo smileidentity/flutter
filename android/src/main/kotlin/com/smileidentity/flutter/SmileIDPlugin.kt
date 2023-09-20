@@ -26,7 +26,7 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         appContext = flutterPluginBinding.applicationContext
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
-            SmileIDDocumentVerification.viewTypeId,
+            SmileIDDocumentVerification.VIEW_TYPE_ID,
             SmileIDDocumentVerification.Factory(flutterPluginBinding.binaryMessenger)
         )
     }

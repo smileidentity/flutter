@@ -24,7 +24,7 @@ internal class SmileIDDocumentVerification private constructor(
     args: Map<String, Any?>,
 ) : PlatformView {
     companion object {
-        const val viewTypeId = "SmileIDDocumentVerification"
+        const val VIEW_TYPE_ID = "SmileIDDocumentVerification"
     }
 
     private val methodChannel: MethodChannel
@@ -81,11 +81,6 @@ internal class SmileIDDocumentVerification private constructor(
     override fun getView() = view
 
     override fun dispose() = Unit
-
-    override fun onFlutterViewAttached(flutterView: View) {
-        // Log.e("SmileIDDocumentVerification", "flutterView: $flutterView")
-        throw RuntimeException("crash")
-    }
 
     class Factory(
         private val messenger: BinaryMessenger
