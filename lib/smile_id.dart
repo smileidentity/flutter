@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
@@ -45,7 +46,7 @@ class SmileIDDocumentVerification extends StatelessWidget {
     required String countryCode,
     String? documentType,
     double? idAspectRatio,
-    bool captureBothSides = false,
+    bool captureBothSides = true,
     String? bypassSelfieCaptureWithFile,
     // userId and jobId can't actually be null in the native SDK but we delegate their creation to
     // the native platform code, since that's where the random ID creation happens
@@ -79,14 +80,29 @@ class SmileIDDocumentVerification extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return AndroidView(
+        return PlatformViewLink(
             viewType: viewType,
-            creationParams: creationParams,
-            creationParamsCodec: const StandardMessageCodec(),
-            onPlatformViewCreated: _onPlatformViewCreated,
-            gestureRecognizers: const {
-              Factory<OneSequenceGestureRecognizer>(EagerGestureRecognizer.new),
-            }
+            surfaceFactory: (context, controller) {
+              return AndroidViewSurface(
+                controller: controller as AndroidViewController,
+                hitTestBehavior: PlatformViewHitTestBehavior.opaque,
+                gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{
+                  Factory<OneSequenceGestureRecognizer>(EagerGestureRecognizer.new)
+                },
+              );
+            },
+            onCreatePlatformView: (params) {
+              return PlatformViewsService.initExpensiveAndroidView(
+                id: params.id,
+                viewType: viewType,
+                layoutDirection: Directionality.of(context),
+                creationParams: creationParams,
+                creationParamsCodec: const StandardMessageCodec(),
+                onFocus: () {params.onFocusChanged(true);},
+              )
+                  ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
+                  ..create();
+            },
         );
       case TargetPlatform.iOS:
         return UiKitView(

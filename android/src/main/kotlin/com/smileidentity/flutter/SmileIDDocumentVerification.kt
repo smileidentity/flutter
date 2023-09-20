@@ -5,7 +5,6 @@ import android.view.View
 import androidx.compose.ui.platform.ComposeView
 import com.smileidentity.SmileID
 import com.smileidentity.compose.DocumentVerification
-import com.smileidentity.models.Document
 import com.smileidentity.results.DocumentVerificationResult
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
@@ -17,7 +16,6 @@ import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 import java.io.File
-import java.lang.RuntimeException
 
 internal class SmileIDDocumentVerification private constructor(
     context: Context,
@@ -37,13 +35,10 @@ internal class SmileIDDocumentVerification private constructor(
         view = ComposeView(context).apply {
             setContent {
                 SmileID.DocumentVerification(
-                    // TODO: Global DocV changes
-                    idType = Document(
-                        args["countryCode"] as String,
-                        args["documentType"] as String
-                    ),
+                    countryCode = args["countryCode"] as String,
+                    documentType = args["documentType"] as? String,
                     idAspectRatio = (args["idAspectRatio"] as Double?)?.toFloat(),
-                    captureBothSides = args["captureBothSides"] as? Boolean ?: false,
+                    captureBothSides = args["captureBothSides"] as? Boolean ?: true,
                     bypassSelfieCaptureWithFile = (args["bypassSelfieCaptureWithFile"] as? String)?.let {
                         File(it)
                     },
