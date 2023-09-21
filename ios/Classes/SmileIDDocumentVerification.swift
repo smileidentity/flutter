@@ -20,9 +20,18 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, SmartSelfieRe
         _channel = FlutterMethodChannel(name: "\(SmileIDDocumentVerification.VIEW_TYPE_ID)_\(viewId)", binaryMessenger: messenger)
         _childViewController = nil
         super.init()
-        let screen = SmileID.smartSelfieEnrollmentScreen(
+        let url = (args["selfie"] as? String).map { URL(string: $0) }
+        let screen = SmileID.documentVerificationScreen(
             userId: args["userId"] as? String ?? "user-\(UUID().uuidString)",
             jobId: args["jobId"] as? String ?? "job-\(UUID().uuidString)",
+            countryCode: args["countryCode"] as! String,
+            documentType: args["documentType"] as? String,
+            idAspectRatio: args["idAspectRatio"] as? Double,
+            selfie: url,
+            captureBothSides: args["captureBothSides"] as? Bool ?? true,
+            allowGalleryUpload: args["allowGalleryUpload"] as? Bool ?? false,
+            showInstructions: args["showInstructions"] as? Bool ?? true,
+            showAttribution: args["showAttribution"] as? Bool ?? true,
             delegate: self
         )
         let childViewController = UIHostingController(rootView: screen)
@@ -41,13 +50,14 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, SmartSelfieRe
         return _view
     }
     
-    func didSucceed(selfieImage: Data, livenessImages: [Data], jobStatusResponse: JobStatusResponse?) {
+    func didSucceed(selfie: URL, documentFrontImage: URL, documentBackImage: URL?, jobStatusResponse: JobStatusResponse) {
         _childViewController?.removeFromParent()
         let encoder = JSONEncoder()
+        let documentBackFileJson = documentBackImage.map{ "\"\($0.absoluteString)\"" } ?? "null"
         _channel.invokeMethod("onSuccess", arguments: """
-        "selfieFile": "TODO (replace with URL path returned by document delegate)",
-        "documentFrontFile": "TODO",
-        "documentBackFile": "TODO",
+        "selfieFile": "\(selfie.absoluteString)",
+        "documentFrontFile": "\(documentFrontImage.absoluteString)",
+        "documentBackFile": \(documentBackFileJson),
         "jobStatusResponse": \(try! encoder.encode(jobStatusResponse))
         """)
     }
