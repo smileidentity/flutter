@@ -6,6 +6,7 @@ import SwiftUI
 class SmileIDDocumentVerification : NSObject, FlutterPlatformView, SmartSelfieResultDelegate {
     private var _view: UIView
     private var _channel: FlutterMethodChannel
+    private var _childViewController: UIViewController?
 
     static let VIEW_TYPE_ID = "SmileIDDocumentVerification"
 
@@ -17,21 +18,23 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, SmartSelfieRe
     ) {
         _view = UIView()
         _channel = FlutterMethodChannel(name: "\(SmileIDDocumentVerification.VIEW_TYPE_ID)_\(viewId)", binaryMessenger: messenger)
+        _childViewController = nil
         super.init()
-        
-        // TODO: Replace with documentVerificationScreen once iOS is updated
         let screen = SmileID.smartSelfieEnrollmentScreen(
             userId: args["userId"] as? String ?? "user-\(UUID().uuidString)",
             jobId: args["jobId"] as? String ?? "job-\(UUID().uuidString)",
             delegate: self
         )
-        let controller = UIHostingController(rootView: screen)
-        let rootViewController  = UIApplication.shared.windows.first?.rootViewController
+        let childViewController = UIHostingController(rootView: screen)
+        
+        // TODO: Replace with documentVerificationScreen once iOS is updated
 
-        controller.view.frame = frame
-        controller.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        _view.addSubview(controller.view)
-        rootViewController?.addChild(controller)
+        childViewController.view.frame = frame
+        childViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        _view.addSubview(childViewController.view)
+        let rootViewController = UIApplication.shared.windows.first?.rootViewController
+        rootViewController?.addChild(childViewController)
+        _childViewController = childViewController
     }
 
     func view() -> UIView {
@@ -39,7 +42,7 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, SmartSelfieRe
     }
     
     func didSucceed(selfieImage: Data, livenessImages: [Data], jobStatusResponse: JobStatusResponse?) {
-        print("Successfully submitted job")
+        _childViewController?.removeFromParent()
         let encoder = JSONEncoder()
         _channel.invokeMethod("onSuccess", arguments: """
         "selfieFile": "TODO (replace with URL path returned by document delegate)",
@@ -50,7 +53,7 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, SmartSelfieRe
     }
 
     func didError(error: Error) {
-        print("An error occurred - \(error.localizedDescription)")
+        print("[Smile ID] An error occurred - \(error.localizedDescription)")
         _channel.invokeMethod("onError", arguments: error.localizedDescription)
     }
     
