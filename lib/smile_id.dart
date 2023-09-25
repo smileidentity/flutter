@@ -101,6 +101,7 @@ class SmileIDDocumentVerification extends StatelessWidget {
                 onFocus: () {params.onFocusChanged(true);},
               )
                   ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
+                  ..addOnPlatformViewCreatedListener(_onPlatformViewCreated)
                   ..create();
             },
         );
@@ -117,7 +118,7 @@ class SmileIDDocumentVerification extends StatelessWidget {
   }
 
   void _onPlatformViewCreated(int id) {
-    final channel = MethodChannel("${viewType}_$id", const StandardMethodCodec());
+    final channel = MethodChannel("${viewType}_$id");
     channel.setMethodCallHandler(_handleMethodCall);
   }
 
