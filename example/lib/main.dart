@@ -112,23 +112,49 @@ class MainContent extends StatelessWidget {
         Navigator.of(context).push(
           MaterialPageRoute<void>(
             builder: (BuildContext context) => MyScaffold(
-              body: SmileIDDocumentVerification(
-                countryCode: "GH",
-                documentType: "DRIVERS_LICENSE",
-                onSuccess: (String? result) {
-                  // Your success handling logic
-                  final snackBar = SnackBar(content: Text("Success: $result"));
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  Navigator.of(context).pop();
-                },
-                onError: (String errorMessage) {
-                  // Your error handling logic
-                  final snackBar = SnackBar(content: Text("Error: $errorMessage"));
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  Navigator.of(context).pop();
-                },
-              )
-            ),
+                body: SmileIDDocumentVerification(
+              countryCode: "GH",
+              documentType: "DRIVERS_LICENSE",
+              onSuccess: (String? result) {
+                // Your success handling logic
+                final snackBar = SnackBar(content: Text("Success: $result"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.of(context).pop();
+              },
+              onError: (String errorMessage) {
+                // Your error handling logic
+                final snackBar = SnackBar(content: Text("Error: $errorMessage"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.of(context).pop();
+              },
+            )),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget SmartSelfieEnrollmentButton(BuildContext context) {
+    return ElevatedButton(
+      child: const Text("Smart Selfie Enrollment"),
+      onPressed: () {
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => MyScaffold(
+                body: SmileIDSmartSelfieEnrollment(
+                  onSuccess: (String? result) {
+                    // Your success handling logic
+                    final snackBar = SnackBar(content: Text("Success: $result"));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Navigator.of(context).pop();
+                  },
+                  onError: (String errorMessage) {
+                    // Your error handling logic
+                    final snackBar = SnackBar(content: Text("Error: $errorMessage"));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Navigator.of(context).pop();
+                  },
+                )),
           ),
         );
       },
