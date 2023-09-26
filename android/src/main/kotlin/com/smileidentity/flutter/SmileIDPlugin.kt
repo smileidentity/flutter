@@ -8,6 +8,7 @@ import SmileIDApi
 import android.app.Activity
 import android.content.Context
 import com.smileidentity.SmileID
+import com.smileidentity.compose.SmartSelfieEnrollment
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -38,6 +39,11 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDSmartSelfieAuthentication.VIEW_TYPE_ID,
             SmileIDSmartSelfieAuthentication.Factory(flutterPluginBinding.binaryMessenger),
+        )
+
+        flutterPluginBinding.platformViewRegistry.registerViewFactory(
+            SmileIDSmartSelfieEnrollment.VIEW_TYPE_ID,
+            SmileIDSmartSelfieEnrollment.Factory(flutterPluginBinding.binaryMessenger)
         )
     }
 
