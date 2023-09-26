@@ -1,11 +1,10 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:smile_id/messages.g.dart';
 import 'package:smile_id/smile_id.dart';
+import 'package:smile_id/smile_id_document_verification.dart';
+import 'package:smile_id/smile_id_smart_selfie_enrollment.dart';
 
 void main() {
   runApp(const MyApp());
@@ -69,14 +68,13 @@ class MainContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return MyScaffold(
         body: Center(
-          child: Column(
-            children: [
-              EnhancedKycAsyncButton(),
-              DocumentVerificationButton(context),
-            ],
-          )
-      )
-    );
+            child: Column(
+      children: [
+        EnhancedKycAsyncButton(),
+        DocumentVerificationButton(context),
+        SmartSelfieEnrollmentButton(context)
+      ],
+    )));
   }
 
   Widget EnhancedKycAsyncButton() {
