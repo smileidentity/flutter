@@ -136,7 +136,7 @@ class MainContent extends StatelessWidget {
 
   Widget SmartSelfieEnrollmentButton(BuildContext context) {
     return ElevatedButton(
-      child: const Text("Smart Selfie Enrollment"),
+      child: const Text("SmartSelfie Enrollment"),
       onPressed: () {
         Navigator.of(context).push(
           MaterialPageRoute<void>(
