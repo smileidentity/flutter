@@ -6,6 +6,8 @@ import 'package:smile_id/smile_id.dart';
 import 'package:smile_id/smile_id_document_verification.dart';
 import 'package:smile_id/smile_id_smart_selfie_enrollment.dart';
 
+// ignore_for_file: avoid_print
+
 void main() {
   runApp(const MyApp());
 }
@@ -70,14 +72,14 @@ class MainContent extends StatelessWidget {
         body: Center(
             child: Column(
       children: [
-        EnhancedKycAsyncButton(),
-        DocumentVerificationButton(context),
-        SmartSelfieEnrollmentButton(context)
+        enhancedKycAsyncButton(),
+        documentVerificationButton(context),
+        smartSelfieEnrollmentButton(context)
       ],
     )));
   }
 
-  Widget EnhancedKycAsyncButton() {
+  Widget enhancedKycAsyncButton() {
     return ElevatedButton(
         child: const Text("Enhanced KYC (Async)"),
         onPressed: () {
@@ -105,7 +107,7 @@ class MainContent extends StatelessWidget {
     );
   }
 
-  Widget DocumentVerificationButton(BuildContext context) {
+  Widget documentVerificationButton(BuildContext context) {
     return ElevatedButton(
       child: const Text("Document Verification"),
       onPressed: () {
@@ -134,7 +136,7 @@ class MainContent extends StatelessWidget {
     );
   }
 
-  Widget SmartSelfieEnrollmentButton(BuildContext context) {
+  Widget smartSelfieEnrollmentButton(BuildContext context) {
     return ElevatedButton(
       child: const Text("SmartSelfie Enrollment"),
       onPressed: () {
