@@ -24,6 +24,8 @@ jobs:
           channel: 'stable'
       - name: Install Dependencies
         run: flutter pub get && cd example && flutter pub get && cd ..
+      - name: Lint
+        uses: zgosalvez/github-actions-analyze-dart@v2
       - name: Test
         run: flutter test && cd example && flutter test && cd ..
       - name: Build Android Sample App
@@ -40,5 +42,7 @@ jobs:
           channel: 'stable'
       - name: Install Dependencies
         run: flutter pub get && cd example && flutter pub get && cd ..
+      - name: Lint
+        uses: zgosalvez/github-actions-analyze-dart@v2
       - name: Build iOS Sample App
         run: cd example && flutter build ios --no-codesign && cd ..
