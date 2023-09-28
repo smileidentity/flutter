@@ -66,7 +66,6 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentCaptu
         print("[Smile ID] An error occurred - \(error.localizedDescription)")
         _channel.invokeMethod("onError", arguments: error.localizedDescription)
     }
-    
 
     class Factory : NSObject, FlutterPlatformViewFactory {
         private var messenger: FlutterBinaryMessenger

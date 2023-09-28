@@ -59,7 +59,6 @@ class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieR
         _channel.invokeMethod("onError", arguments: error.localizedDescription)
     }
 
-
     class Factory : NSObject, FlutterPlatformViewFactory {
         private var messenger: FlutterBinaryMessenger
         init(messenger: FlutterBinaryMessenger) {
