@@ -21,7 +21,7 @@ internal class SmileIDDocumentVerification private constructor(
     context: Context,
     viewId: Int,
     messenger: BinaryMessenger,
-    args: Map<String, Any?>,
+    args: Map<String, Any?>
 ) : PlatformView {
     companion object {
         const val VIEW_TYPE_ID = "SmileIDDocumentVerification"
@@ -39,14 +39,13 @@ internal class SmileIDDocumentVerification private constructor(
                     documentType = args["documentType"] as? String,
                     idAspectRatio = (args["idAspectRatio"] as Double?)?.toFloat(),
                     captureBothSides = args["captureBothSides"] as? Boolean ?: true,
-                    bypassSelfieCaptureWithFile = (args["bypassSelfieCaptureWithFile"] as? String)?.let {
-                        File(it)
-                    },
+                    bypassSelfieCaptureWithFile =
+                    (args["bypassSelfieCaptureWithFile"] as? String)?.let { File(it) },
                     userId = args["userId"] as? String ?: randomUserId(),
                     jobId = args["jobId"] as? String ?: randomJobId(),
                     showAttribution = args["showAttribution"] as? Boolean ?: true,
                     allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false,
-                    showInstructions = args["showInstructions"] as? Boolean ?: true,
+                    showInstructions = args["showInstructions"] as? Boolean ?: true
                 ) {
                     when (it) {
                         is SmileIDResult.Success -> {
@@ -88,7 +87,10 @@ internal class SmileIDDocumentVerification private constructor(
         override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
             @Suppress("UNCHECKED_CAST")
             return SmileIDDocumentVerification(
-                context, viewId, messenger, args as Map<String, Any?>
+                context,
+                viewId,
+                messenger,
+                args as Map<String, Any?>
             )
         }
     }
