@@ -35,7 +35,7 @@ fun convertNonNullMapToNullable(map: Map<String, String>): Map<String?, String?>
     map.mapKeys { it.key }
         .mapValues { it.value }
 
-fun FlutterJobType.toRequest() = when(this) {
+fun FlutterJobType.toRequest() = when (this) {
     FlutterJobType.ENHANCEDKYC -> JobType.EnhancedKyc
     FlutterJobType.DOCUMENTVERIFICATION -> JobType.DocumentVerification
 }
@@ -52,7 +52,7 @@ fun FlutterAuthenticationRequest.toRequest() = AuthenticationRequest(
     idType = idType,
     updateEnrolledImage = updateEnrolledImage,
     jobId = jobId,
-    userId = userId,
+    userId = userId
 )
 
 fun PartnerParams.toResponse() = FlutterPartnerParams(
@@ -80,7 +80,7 @@ fun AuthenticationResponse.toResponse() = FlutterAuthenticationResponse(
     timestamp = timestamp,
     partnerParams = partnerParams.toResponse(),
     callbackUrl = callbackUrl,
-    consentInfo = consentInfo?.toRequest(),
+    consentInfo = consentInfo?.toRequest()
 )
 
 fun FlutterEnhancedKycRequest.toRequest() = EnhancedKycRequest(
@@ -102,7 +102,7 @@ fun FlutterEnhancedKycRequest.toRequest() = EnhancedKycRequest(
     ),
     sourceSdk = "android (flutter)",
     timestamp = timestamp,
-    signature = signature,
+    signature = signature
 )
 
 fun EnhancedKycAsyncResponse.toResponse() = FlutterEnhancedKycAsyncResponse(
