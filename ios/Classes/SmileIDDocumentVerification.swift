@@ -3,7 +3,7 @@ import UIKit
 import SmileID
 import SwiftUI
 
-class SmileIDDocumentVerification : NSObject, FlutterPlatformView, SmartSelfieResultDelegate {
+class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentCaptureResultDelegate {
     private var _view: UIView
     private var _channel: FlutterMethodChannel
     private var _childViewController: UIViewController?
@@ -20,14 +20,14 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, SmartSelfieRe
         _channel = FlutterMethodChannel(name: "\(SmileIDDocumentVerification.VIEW_TYPE_ID)_\(viewId)", binaryMessenger: messenger)
         _childViewController = nil
         super.init()
-        let url = (args["selfie"] as? String).map { URL(string: $0) }
+        let url = URL(fileURLWithPath: args["bypassSelfieCaptureWithFile"] as? String ?? "")
         let screen = SmileID.documentVerificationScreen(
             userId: args["userId"] as? String ?? "user-\(UUID().uuidString)",
             jobId: args["jobId"] as? String ?? "job-\(UUID().uuidString)",
             countryCode: args["countryCode"] as! String,
             documentType: args["documentType"] as? String,
             idAspectRatio: args["idAspectRatio"] as? Double,
-            selfie: url,
+            selfie: try? Data(contentsOf: url),
             captureBothSides: args["captureBothSides"] as? Bool ?? true,
             allowGalleryUpload: args["allowGalleryUpload"] as? Bool ?? false,
             showInstructions: args["showInstructions"] as? Bool ?? true,

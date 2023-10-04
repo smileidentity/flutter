@@ -61,7 +61,7 @@ extension AuthenticationResponse {
 
 extension PartnerParams {
     func toFlutterPartnerParams() -> FlutterPartnerParams {
-        FlutterPartnerParams(jobType: FlutterJobType(rawValue: jobType.rawValue),
+        FlutterPartnerParams(jobType: FlutterJobType(rawValue: jobType!.rawValue),
                              jobId: jobId,
                              userId: userId,
                              extras: [:])
