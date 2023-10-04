@@ -61,7 +61,7 @@ extension AuthenticationResponse {
 
 extension PartnerParams {
     func toFlutterPartnerParams() -> FlutterPartnerParams {
-        FlutterPartnerParams(jobType: FlutterJobType(rawValue: jobType!.rawValue),
+        FlutterPartnerParams(jobType: jobType?.toResponse(),
                              jobId: jobId,
                              userId: userId,
                              extras: [:])
@@ -73,6 +73,8 @@ extension FlutterJobType {
         switch (self) {
         case .enhancedKyc:
             return JobType.enhancedKyc
+        case .documentVerification:
+            return JobType.documentVerification
         default: fatalError("Not yet supported")
         }
     }
@@ -83,6 +85,8 @@ extension JobType {
         switch (self) {
         case .enhancedKyc:
             return FlutterJobType.enhancedKyc
+        case .documentVerification:
+            return FlutterJobType.documentVerification
         default: fatalError("Not yet supported")
         }
     }
