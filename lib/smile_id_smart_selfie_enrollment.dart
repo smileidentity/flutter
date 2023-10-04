@@ -39,7 +39,7 @@ class SmileIDSmartSelfieEnrollment extends StatelessWidget {
         "jobId": jobId,
         "allowAgentMode": allowAgentMode,
         "showAttribution": showAttribution,
-        "showInstructions": showInstructions,
+        "showInstruction": showInstructions,
       },
     );
   }

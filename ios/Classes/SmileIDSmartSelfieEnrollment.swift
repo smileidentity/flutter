@@ -20,7 +20,7 @@ class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieR
         _channel = FlutterMethodChannel(name: "\(SmileIDSmartSelfieEnrollment.VIEW_TYPE_ID)_\(viewId)", binaryMessenger: messenger)
         _childViewController = nil
         super.init()
-        let screen = SmileID.smartSelfieEnrollment(
+        let screen = SmileID.smartSelfieEnrollmentScreen(
             userId: args["userId"] as? String ?? "user-\(UUID().uuidString)",
             jobId: args["jobId"] as? String ?? "job-\(UUID().uuidString)",
             allowAgentMode: args["allowAgentMode"] as? Bool ?? false,
@@ -42,14 +42,12 @@ class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieR
         return _view
     }
 
-    // TODO - Need native sdk to return url instead of data here
     func didSucceed(selfieImage: URL, livenessImages: [URL], jobStatusResponse: JobStatusResponse) {
         _childViewController?.removeFromParent()
         let encoder = JSONEncoder()
-        let selfieBackFileJson = selfieBackImage.map{ "\"\($0.absoluteString)\"" } ?? "null"
         _channel.invokeMethod("onSuccess", arguments: """
-        "selfieFile": "\(selfie.absoluteString)",
-        "selfieFrontFile": "\(selfieFrontImage.absoluteString)",
+        "selfieFile": "\(selfieImage.absoluteString)",
+        "livenessImages": "\(livenessImages.map{ _ in  })",
         "jobStatusResponse": \(try! encoder.encode(jobStatusResponse))
         """)
     }
