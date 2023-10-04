@@ -29,7 +29,7 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentCaptu
             countryCode: args["countryCode"] as! String,
             documentType: args["documentType"] as? String,
             idAspectRatio: args["idAspectRatio"] as? Double,
-            selfie: try? Data(contentsOf: url),
+            selfie: selfie,
             captureBothSides: args["captureBothSides"] as? Bool ?? true,
             allowGalleryUpload: args["allowGalleryUpload"] as? Bool ?? false,
             showInstructions: args["showInstructions"] as? Bool ?? true,
