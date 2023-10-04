@@ -48,8 +48,8 @@ class SmileIDSmartSelfieAuthentication : NSObject, FlutterPlatformView, SmartSel
         let encoder = JSONEncoder()
         let documentBackFileJson = documentBackImage.map{ "\"\($0.absoluteString)\"" } ?? "null"
         _channel.invokeMethod("onSuccess", arguments: """
-        "selfieFile": "\(selfie.absoluteString)",
-        "documentFrontFile": "\(documentFrontImage.absoluteString)",
+        "selfieFile": "\(selfieImage.absoluteString)",
+        "livenessImages": "\(livenessImages.map{ _ in  })",
         "jobStatusResponse": \(try! encoder.encode(jobStatusResponse))
         """)
     }
