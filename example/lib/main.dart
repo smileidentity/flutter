@@ -117,20 +117,21 @@ class MainContent extends StatelessWidget {
           MaterialPageRoute<void>(
             builder: (BuildContext context) => MyScaffold(
                 body: SmileIDDocumentVerification(
-              countryCode: "GH",
-              documentType: "DRIVERS_LICENSE",
-              onSuccess: (String? result) {
-                // Your success handling logic
-                final snackBar = SnackBar(content: Text("Success: $result"));
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                Navigator.of(context).pop();
-              },
-              onError: (String errorMessage) {
-                // Your error handling logic
-                final snackBar = SnackBar(content: Text("Error: $errorMessage"));
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                Navigator.of(context).pop();
-              },
+                  countryCode: "GH",
+                  documentType: "DRIVERS_LICENSE",
+                  allowGalleryUpload: true,
+                  onSuccess: (String? result) {
+                    // Your success handling logic
+                    final snackBar = SnackBar(content: Text("Success: $result"));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Navigator.of(context).pop();
+                  },
+                  onError: (String errorMessage) {
+                    // Your error handling logic
+                    final snackBar = SnackBar(content: Text("Error: $errorMessage"));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Navigator.of(context).pop();
+                  },
             )),
           ),
         );
