@@ -29,19 +29,19 @@ internal class SmileIDPluginTest {
         coEvery {
             api.authenticate(
                 request = request,
-                callback = callback
+                callback = callback,
             )
         } returns Unit
 
         api.authenticate(
             request = request,
-            callback = callback
+            callback = callback,
         )
 
         coVerify {
             api.authenticate(
                 request = request,
-                callback = callback
+                callback = callback,
             )
         }
 
@@ -58,19 +58,19 @@ internal class SmileIDPluginTest {
         coEvery {
             api.doEnhancedKycAsync(
                 request = request,
-                callback = callback
+                callback = callback,
             )
         } returns Unit
 
         api.doEnhancedKycAsync(
             request = request,
-            callback = callback
+            callback = callback,
         )
 
         coVerify {
             api.doEnhancedKycAsync(
                 request = request,
-                callback = callback
+                callback = callback,
             )
         }
 

@@ -20,7 +20,7 @@ internal class SmileIDSmartSelfieEnrollment private constructor(
     context: Context,
     viewId: Int,
     messenger: BinaryMessenger,
-    args: Map<String, Any?>
+    args: Map<String, Any?>,
 ) : PlatformView {
     companion object {
         const val VIEW_TYPE_ID = "SmileIDSmartSelfieEnrollment"
@@ -38,7 +38,7 @@ internal class SmileIDSmartSelfieEnrollment private constructor(
                     jobId = args["jobId"] as? String ?: randomJobId(),
                     allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
                     showAttribution = args["showAttribution"] as? Boolean ?: true,
-                    showInstructions = args["showInstructions"] as? Boolean ?: true
+                    showInstructions = args["showInstructions"] as? Boolean ?: true,
                 ) {
                     when (it) {
                         is SmileIDResult.Success -> {
@@ -75,7 +75,7 @@ internal class SmileIDSmartSelfieEnrollment private constructor(
     override fun dispose() = Unit
 
     class Factory(
-        private val messenger: BinaryMessenger
+        private val messenger: BinaryMessenger,
     ) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
         override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
             @Suppress("UNCHECKED_CAST")
@@ -83,7 +83,7 @@ internal class SmileIDSmartSelfieEnrollment private constructor(
                 context,
                 viewId,
                 messenger,
-                args as Map<String, Any?>
+                args as Map<String, Any?>,
             )
         }
     }
