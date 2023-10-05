@@ -20,16 +20,13 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentCaptu
         _channel = FlutterMethodChannel(name: "\(SmileIDDocumentVerification.VIEW_TYPE_ID)_\(viewId)", binaryMessenger: messenger)
         _childViewController = nil
         super.init()
-        let selfie = (args["bypassSelfieCaptureWithFile"] as? String)
-                    .map { URL(string: $0) }?
-                    .flatMap { try? Data(contentsOf: $0) }
         let screen = SmileID.documentVerificationScreen(
             userId: args["userId"] as? String ?? "user-\(UUID().uuidString)",
             jobId: args["jobId"] as? String ?? "job-\(UUID().uuidString)",
             countryCode: args["countryCode"] as! String,
             documentType: args["documentType"] as? String,
             idAspectRatio: args["idAspectRatio"] as? Double,
-            selfie: selfie,
+            bypassSelfieCaptureWithFile: URL(fileURLWithPath: args["bypassSelfieCaptureWithFile"] as? String ?? ""),
             captureBothSides: args["captureBothSides"] as? Bool ?? true,
             allowGalleryUpload: args["allowGalleryUpload"] as? Bool ?? false,
             showInstructions: args["showInstructions"] as? Bool ?? true,
@@ -38,6 +35,8 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentCaptu
         )
         let childViewController = UIHostingController(rootView: screen)
         
+        // TODO: Replace with documentVerificationScreen once iOS is updated
+
         childViewController.view.frame = frame
         childViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         _view.addSubview(childViewController.view)
