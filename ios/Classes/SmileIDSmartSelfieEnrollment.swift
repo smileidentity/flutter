@@ -17,7 +17,10 @@ class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieR
         binaryMessenger messenger: FlutterBinaryMessenger
     ) {
         _view = UIView()
-        _channel = FlutterMethodChannel(name: "\(SmileIDSmartSelfieEnrollment.VIEW_TYPE_ID)_\(viewId)", binaryMessenger: messenger)
+        _channel = FlutterMethodChannel(
+            name: "\(SmileIDSmartSelfieEnrollment.VIEW_TYPE_ID)_\(viewId)",
+            binaryMessenger: messenger
+        )
         _childViewController = nil
         super.init()
         let screen = SmileID.smartSelfieEnrollmentScreen(
@@ -47,7 +50,7 @@ class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieR
         let encoder = JSONEncoder()
         _channel.invokeMethod("onSuccess", arguments: """
         "selfieFile": "\(selfieImage.absoluteString)",
-        "livenessImages": "\(livenessImages.map{ _ in  })",
+        "livenessImages": "\(livenessImages.map{ $0.absoluteString })",
         "jobStatusResponse": \(try! encoder.encode(jobStatusResponse))
         """)
     }

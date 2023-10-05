@@ -17,16 +17,21 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentCaptu
         binaryMessenger messenger: FlutterBinaryMessenger
     ) {
         _view = UIView()
-        _channel = FlutterMethodChannel(name: "\(SmileIDDocumentVerification.VIEW_TYPE_ID)_\(viewId)", binaryMessenger: messenger)
+        _channel = FlutterMethodChannel(
+            name: "\(SmileIDDocumentVerification.VIEW_TYPE_ID)_\(viewId)",
+            binaryMessenger: messenger
+        )
         _childViewController = nil
         super.init()
+        let bypassSelfieCaptureWithFile = (args["bypassSelfieCaptureWithFile"] as? String)
+            .flatMap { URL(string: $0) }
         let screen = SmileID.documentVerificationScreen(
             userId: args["userId"] as? String ?? "user-\(UUID().uuidString)",
             jobId: args["jobId"] as? String ?? "job-\(UUID().uuidString)",
             countryCode: args["countryCode"] as! String,
             documentType: args["documentType"] as? String,
             idAspectRatio: args["idAspectRatio"] as? Double,
-            bypassSelfieCaptureWithFile: URL(fileURLWithPath: args["bypassSelfieCaptureWithFile"] as? String ?? ""),
+            bypassSelfieCaptureWithFile: bypassSelfieCaptureWithFile,
             captureBothSides: args["captureBothSides"] as? Bool ?? true,
             allowGalleryUpload: args["allowGalleryUpload"] as? Bool ?? false,
             showInstructions: args["showInstructions"] as? Bool ?? true,
@@ -35,8 +40,6 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentCaptu
         )
         let childViewController = UIHostingController(rootView: screen)
         
-        // TODO: Replace with documentVerificationScreen once iOS is updated
-
         childViewController.view.frame = frame
         childViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         _view.addSubview(childViewController.view)
@@ -49,7 +52,12 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentCaptu
         return _view
     }
     
-    func didSucceed(selfie: URL, documentFrontImage: URL, documentBackImage: URL?, jobStatusResponse: JobStatusResponse) {
+    func didSucceed(
+        selfie: URL,
+        documentFrontImage: URL,
+        documentBackImage: URL?,
+        jobStatusResponse: JobStatusResponse
+    ) {
         _childViewController?.removeFromParent()
         let encoder = JSONEncoder()
         let documentBackFileJson = documentBackImage.map{ "\"\($0.absoluteString)\"" } ?? "null"

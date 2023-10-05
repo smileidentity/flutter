@@ -17,7 +17,10 @@ class SmileIDSmartSelfieAuthentication : NSObject, FlutterPlatformView, SmartSel
         binaryMessenger messenger: FlutterBinaryMessenger
     ) {
         _view = UIView()
-        _channel = FlutterMethodChannel(name: "\(SmileIDSmartSelfieAuthentication.VIEW_TYPE_ID)_\(viewId)", binaryMessenger: messenger)
+        _channel = FlutterMethodChannel(
+            name: "\(SmileIDSmartSelfieAuthentication.VIEW_TYPE_ID)_\(viewId)",
+            binaryMessenger: messenger
+        )
         _childViewController = nil
         super.init()
         let screen = SmileID.smartSelfieEnrollmentScreen(
@@ -42,13 +45,12 @@ class SmileIDSmartSelfieAuthentication : NSObject, FlutterPlatformView, SmartSel
         return _view
     }
 
-    // TODO - Need native sdk to return url instead of data here
     func didSucceed(selfieImage: URL, livenessImages: [URL], jobStatusResponse: JobStatusResponse) {
         _childViewController?.removeFromParent()
         let encoder = JSONEncoder()
         _channel.invokeMethod("onSuccess", arguments: """
         "selfieFile": "\(selfieImage.absoluteString)",
-        "livenessImages": "\(livenessImages.map{ _ in  })",
+        "livenessImages": "\(livenessImages.map { $0.absoluteString })",
         "jobStatusResponse": \(try! encoder.encode(jobStatusResponse))
         """)
     }
