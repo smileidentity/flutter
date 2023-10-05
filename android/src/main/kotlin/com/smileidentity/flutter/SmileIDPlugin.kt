@@ -42,12 +42,12 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDBiometricKyc.VIEW_TYPE_ID,
-            SmileIDBiometricKyc.Factory(flutterPluginBinding.binaryMessenger)
+            SmileIDBiometricKyc.Factory(flutterPluginBinding.binaryMessenger),
         )
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDBvnConsent.VIEW_TYPE_ID,
-            SmileIDBvnConsent.Factory(flutterPluginBinding.binaryMessenger)
+            SmileIDBvnConsent.Factory(flutterPluginBinding.binaryMessenger),
         )
     }
 
