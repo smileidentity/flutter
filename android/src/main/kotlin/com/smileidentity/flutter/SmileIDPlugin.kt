@@ -34,6 +34,11 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
             SmileIDSmartSelfieEnrollment.VIEW_TYPE_ID,
             SmileIDSmartSelfieEnrollment.Factory(flutterPluginBinding.binaryMessenger)
         )
+
+        flutterPluginBinding.platformViewRegistry.registerViewFactory(
+            SmileIDSmartSelfieAuthentication.VIEW_TYPE_ID,
+            SmileIDSmartSelfieAuthentication.Factory(flutterPluginBinding.binaryMessenger)
+        )
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {

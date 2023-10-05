@@ -3,12 +3,12 @@ import UIKit
 import SmileID
 import SwiftUI
 
-class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieResultDelegate {
+class SmileIDSmartSelfieAuthentication : NSObject, FlutterPlatformView, SmartSelfieResultDelegate {
     private var _view: UIView
     private var _channel: FlutterMethodChannel
     private var _childViewController: UIViewController?
 
-    static let VIEW_TYPE_ID = "SmileIDSmartSelfieEnrollment"
+    static let VIEW_TYPE_ID = "SmileIDSmartSelfieAuthentication"
 
     init(
         frame: CGRect,
@@ -17,7 +17,7 @@ class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieR
         binaryMessenger messenger: FlutterBinaryMessenger
     ) {
         _view = UIView()
-        _channel = FlutterMethodChannel(name: "\(SmileIDSmartSelfieEnrollment.VIEW_TYPE_ID)_\(viewId)", binaryMessenger: messenger)
+        _channel = FlutterMethodChannel(name: "\(SmileIDSmartSelfieAuthentication.VIEW_TYPE_ID)_\(viewId)", binaryMessenger: messenger)
         _childViewController = nil
         super.init()
         let screen = SmileID.smartSelfieEnrollmentScreen(
@@ -42,6 +42,7 @@ class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieR
         return _view
     }
 
+    // TODO - Need native sdk to return url instead of data here
     func didSucceed(selfieImage: URL, livenessImages: [URL], jobStatusResponse: JobStatusResponse) {
         _childViewController?.removeFromParent()
         let encoder = JSONEncoder()
@@ -57,6 +58,7 @@ class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieR
         _channel.invokeMethod("onError", arguments: error.localizedDescription)
     }
 
+
     class Factory : NSObject, FlutterPlatformViewFactory {
         private var messenger: FlutterBinaryMessenger
         init(messenger: FlutterBinaryMessenger) {
@@ -69,7 +71,7 @@ class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieR
             viewIdentifier viewId: Int64,
             arguments args: Any?
         ) -> FlutterPlatformView {
-            return SmileIDSmartSelfieEnrollment(
+            return SmileIDSmartSelfieAuthentication(
                 frame: frame,
                 viewIdentifier: viewId,
                 arguments: args as! [String: Any?],

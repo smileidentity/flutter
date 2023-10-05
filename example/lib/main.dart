@@ -5,6 +5,7 @@ import 'package:smile_id/messages.g.dart';
 import 'package:smile_id/smile_id.dart';
 import 'package:smile_id/smile_id_document_verification.dart';
 import 'package:smile_id/smile_id_smart_selfie_enrollment.dart';
+import 'package:smile_id/smile_id_smart_selfie_authentication.dart';
 
 // ignore_for_file: avoid_print
 
@@ -74,7 +75,8 @@ class MainContent extends StatelessWidget {
       children: [
         enhancedKycAsyncButton(),
         documentVerificationButton(context),
-        smartSelfieEnrollmentButton(context)
+        smartSelfieEnrollmentButton(context),
+        smartSelfieAuthenticationButton(context)
       ],
     )));
   }
@@ -144,6 +146,33 @@ class MainContent extends StatelessWidget {
           MaterialPageRoute<void>(
             builder: (BuildContext context) => MyScaffold(
                 body: SmileIDSmartSelfieEnrollment(
+                  onSuccess: (String? result) {
+                    // Your success handling logic
+                    final snackBar = SnackBar(content: Text("Success: $result"));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Navigator.of(context).pop();
+                  },
+                  onError: (String errorMessage) {
+                    // Your error handling logic
+                    final snackBar = SnackBar(content: Text("Error: $errorMessage"));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Navigator.of(context).pop();
+                  },
+                )),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget smartSelfieAuthenticationButton(BuildContext context) {
+    return ElevatedButton(
+      child: const Text("SmartSelfie Authentication"),
+      onPressed: () {
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => MyScaffold(
+                body: SmileIDSmartSelfieAuthentication(
                   onSuccess: (String? result) {
                     // Your success handling logic
                     final snackBar = SnackBar(content: Text("Success: $result"));
