@@ -10,8 +10,14 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
     let api: SmileIDApi & NSObjectProtocol = SmileIDPlugin()
     SmileIDApiSetup.setUp(binaryMessenger: messenger, api: api)
 
-    let factory = SmileIDDocumentVerification.Factory(messenger: registrar.messenger())
-    registrar.register(factory, withId: SmileIDDocumentVerification.VIEW_TYPE_ID)
+    let documentVerificationFactory = SmileIDDocumentVerification.Factory(messenger: registrar.messenger())
+    registrar.register(documentVerificationFactory, withId: SmileIDDocumentVerification.VIEW_TYPE_ID)
+
+    let smartSelfieEnrollmentFactory = SmileIDSmartSelfieEnrollment.Factory(messenger: registrar.messenger())
+    registrar.register(smartSelfieEnrollmentFactory, withId: SmileIDSmartSelfieEnrollment.VIEW_TYPE_ID)
+
+    let smartSelfieAuthenticationFactory = SmileIDSmartSelfieAuthentication.Factory(messenger: registrar.messenger())
+    registrar.register(smartSelfieAuthenticationFactory, withId: SmileIDSmartSelfieAuthentication.VIEW_TYPE_ID)
   }
 
     func authenticate(request: FlutterAuthenticationRequest, completion: @escaping (Result<FlutterAuthenticationResponse, Error>) -> Void) {

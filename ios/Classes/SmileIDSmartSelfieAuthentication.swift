@@ -3,12 +3,12 @@ import UIKit
 import SmileID
 import SwiftUI
 
-class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentCaptureResultDelegate {
+class SmileIDSmartSelfieAuthentication : NSObject, FlutterPlatformView, SmartSelfieResultDelegate {
     private var _view: UIView
     private var _channel: FlutterMethodChannel
     private var _childViewController: UIViewController?
 
-    static let VIEW_TYPE_ID = "SmileIDDocumentVerification"
+    static let VIEW_TYPE_ID = "SmileIDSmartSelfieAuthentication"
 
     init(
         frame: CGRect,
@@ -17,25 +17,18 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentCaptu
         binaryMessenger messenger: FlutterBinaryMessenger
     ) {
         _view = UIView()
-        _channel = FlutterMethodChannel(name: "\(SmileIDDocumentVerification.VIEW_TYPE_ID)_\(viewId)", binaryMessenger: messenger)
+        _channel = FlutterMethodChannel(name: "\(SmileIDSmartSelfieAuthentication.VIEW_TYPE_ID)_\(viewId)", binaryMessenger: messenger)
         _childViewController = nil
         super.init()
-        let screen = SmileID.documentVerificationScreen(
+        let screen = SmileID.smartSelfieEnrollmentScreen(
             userId: args["userId"] as? String ?? "user-\(UUID().uuidString)",
             jobId: args["jobId"] as? String ?? "job-\(UUID().uuidString)",
-            countryCode: args["countryCode"] as! String,
-            documentType: args["documentType"] as? String,
-            idAspectRatio: args["idAspectRatio"] as? Double,
-            bypassSelfieCaptureWithFile: URL(fileURLWithPath: args["bypassSelfieCaptureWithFile"] as? String ?? ""),
-            captureBothSides: args["captureBothSides"] as? Bool ?? true,
-            allowGalleryUpload: args["allowGalleryUpload"] as? Bool ?? false,
-            showInstructions: args["showInstructions"] as? Bool ?? true,
+            allowAgentMode: args["allowAgentMode"] as? Bool ?? false,
             showAttribution: args["showAttribution"] as? Bool ?? true,
+            showInstructions: args["showInstructions"] as? Bool ?? true,
             delegate: self
         )
         let childViewController = UIHostingController(rootView: screen)
-        
-        // TODO: Replace with documentVerificationScreen once iOS is updated
 
         childViewController.view.frame = frame
         childViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -48,15 +41,14 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentCaptu
     func view() -> UIView {
         return _view
     }
-    
-    func didSucceed(selfie: URL, documentFrontImage: URL, documentBackImage: URL?, jobStatusResponse: JobStatusResponse) {
+
+    // TODO - Need native sdk to return url instead of data here
+    func didSucceed(selfieImage: URL, livenessImages: [URL], jobStatusResponse: JobStatusResponse) {
         _childViewController?.removeFromParent()
         let encoder = JSONEncoder()
-        let documentBackFileJson = documentBackImage.map{ "\"\($0.absoluteString)\"" } ?? "null"
         _channel.invokeMethod("onSuccess", arguments: """
-        "selfieFile": "\(selfie.absoluteString)",
-        "documentFrontFile": "\(documentFrontImage.absoluteString)",
-        "documentBackFile": \(documentBackFileJson),
+        "selfieFile": "\(selfieImage.absoluteString)",
+        "livenessImages": "\(livenessImages.map{ _ in  })",
         "jobStatusResponse": \(try! encoder.encode(jobStatusResponse))
         """)
     }
@@ -65,6 +57,7 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentCaptu
         print("[Smile ID] An error occurred - \(error.localizedDescription)")
         _channel.invokeMethod("onError", arguments: error.localizedDescription)
     }
+
 
     class Factory : NSObject, FlutterPlatformViewFactory {
         private var messenger: FlutterBinaryMessenger
@@ -78,14 +71,14 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentCaptu
             viewIdentifier viewId: Int64,
             arguments args: Any?
         ) -> FlutterPlatformView {
-            return SmileIDDocumentVerification(
+            return SmileIDSmartSelfieAuthentication(
                 frame: frame,
                 viewIdentifier: viewId,
                 arguments: args as! [String: Any?],
                 binaryMessenger: messenger
             )
         }
-        
+
         public func createArgsCodec() -> FlutterMessageCodec & NSObjectProtocol {
               return FlutterStandardMessageCodec.sharedInstance()
         }

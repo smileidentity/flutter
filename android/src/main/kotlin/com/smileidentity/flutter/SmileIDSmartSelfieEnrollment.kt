@@ -4,8 +4,8 @@ import android.content.Context
 import android.view.View
 import androidx.compose.ui.platform.ComposeView
 import com.smileidentity.SmileID
-import com.smileidentity.compose.DocumentVerification
-import com.smileidentity.results.DocumentVerificationResult
+import com.smileidentity.compose.SmartSelfieEnrollment
+import com.smileidentity.results.SmartSelfieResult
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
@@ -15,16 +15,15 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
-import java.io.File
 
-internal class SmileIDDocumentVerification private constructor(
+internal class SmileIDSmartSelfieEnrollment private constructor(
     context: Context,
     viewId: Int,
     messenger: BinaryMessenger,
     args: Map<String, Any?>,
 ) : PlatformView {
     companion object {
-        const val VIEW_TYPE_ID = "SmileIDDocumentVerification"
+        const val VIEW_TYPE_ID = "SmileIDSmartSelfieEnrollment"
     }
 
     private val methodChannel: MethodChannel
@@ -34,17 +33,11 @@ internal class SmileIDDocumentVerification private constructor(
         methodChannel = MethodChannel(messenger, "${VIEW_TYPE_ID}_$viewId")
         view = ComposeView(context).apply {
             setContent {
-                SmileID.DocumentVerification(
-                    countryCode = args["countryCode"] as String,
-                    documentType = args["documentType"] as? String,
-                    idAspectRatio = (args["idAspectRatio"] as Double?)?.toFloat(),
-                    captureBothSides = args["captureBothSides"] as? Boolean ?: true,
-                    bypassSelfieCaptureWithFile =
-                    (args["bypassSelfieCaptureWithFile"] as? String)?.let { File(it) },
+                SmileID.SmartSelfieEnrollment(
                     userId = args["userId"] as? String ?: randomUserId(),
                     jobId = args["jobId"] as? String ?: randomJobId(),
+                    allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
                     showAttribution = args["showAttribution"] as? Boolean ?: true,
-                    allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false,
                     showInstructions = args["showInstructions"] as? Boolean ?: true,
                 ) {
                     when (it) {
@@ -56,10 +49,10 @@ internal class SmileIDDocumentVerification private constructor(
                             // just may not be able to provide the result JSON.
                             val json = try {
                                 SmileID.moshi
-                                    .adapter(DocumentVerificationResult::class.java)
+                                    .adapter(SmartSelfieResult::class.java)
                                     .toJson(it.data)
                             } catch (e: Exception) {
-                                Log.e("SmileIDDocumentVerification", "Error serializing result", e)
+                                Log.e("SmileIDSmartSelfieEnrollment", "Error serializing result", e)
                                 "null"
                             }
                             methodChannel.invokeMethod("onSuccess", json)
@@ -86,7 +79,7 @@ internal class SmileIDDocumentVerification private constructor(
     ) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
         override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
             @Suppress("UNCHECKED_CAST")
-            return SmileIDDocumentVerification(
+            return SmileIDSmartSelfieEnrollment(
                 context,
                 viewId,
                 messenger,
