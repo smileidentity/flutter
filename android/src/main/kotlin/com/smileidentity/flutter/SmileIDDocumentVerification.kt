@@ -21,7 +21,7 @@ internal class SmileIDDocumentVerification private constructor(
     context: Context,
     viewId: Int,
     messenger: BinaryMessenger,
-    args: Map<String, Any?>
+    args: Map<String, Any?>,
 ) : PlatformView {
     companion object {
         const val VIEW_TYPE_ID = "SmileIDDocumentVerification"
@@ -45,7 +45,7 @@ internal class SmileIDDocumentVerification private constructor(
                     jobId = args["jobId"] as? String ?: randomJobId(),
                     showAttribution = args["showAttribution"] as? Boolean ?: true,
                     allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false,
-                    showInstructions = args["showInstructions"] as? Boolean ?: true
+                    showInstructions = args["showInstructions"] as? Boolean ?: true,
                 ) {
                     when (it) {
                         is SmileIDResult.Success -> {
@@ -82,7 +82,7 @@ internal class SmileIDDocumentVerification private constructor(
     override fun dispose() = Unit
 
     class Factory(
-        private val messenger: BinaryMessenger
+        private val messenger: BinaryMessenger,
     ) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
         override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
             @Suppress("UNCHECKED_CAST")
@@ -90,7 +90,7 @@ internal class SmileIDDocumentVerification private constructor(
                 context,
                 viewId,
                 messenger,
-                args as Map<String, Any?>
+                args as Map<String, Any?>,
             )
         }
     }

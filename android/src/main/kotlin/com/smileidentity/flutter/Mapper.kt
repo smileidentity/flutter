@@ -52,26 +52,26 @@ fun FlutterAuthenticationRequest.toRequest() = AuthenticationRequest(
     idType = idType,
     updateEnrolledImage = updateEnrolledImage,
     jobId = jobId,
-    userId = userId
+    userId = userId,
 )
 
 fun PartnerParams.toResponse() = FlutterPartnerParams(
     jobType = jobType?.toResponse(),
     jobId = jobId,
     userId = userId,
-    extras = convertNonNullMapToNullable(extras)
+    extras = convertNonNullMapToNullable(extras),
 )
 
 fun FlutterPartnerParams.toRequest() = PartnerParams(
     jobType = jobType?.toRequest(),
     jobId = jobId,
     userId = userId,
-    extras = convertNullableMapToNonNull(extras)
+    extras = convertNullableMapToNonNull(extras),
 )
 
 fun ConsentInfo.toRequest() = FlutterConsentInfo(
     canAccess = canAccess,
-    consentRequired = consentRequired
+    consentRequired = consentRequired,
 )
 
 fun AuthenticationResponse.toResponse() = FlutterAuthenticationResponse(
@@ -80,7 +80,7 @@ fun AuthenticationResponse.toResponse() = FlutterAuthenticationResponse(
     timestamp = timestamp,
     partnerParams = partnerParams.toResponse(),
     callbackUrl = callbackUrl,
-    consentInfo = consentInfo?.toRequest()
+    consentInfo = consentInfo?.toRequest(),
 )
 
 fun FlutterEnhancedKycRequest.toRequest() = EnhancedKycRequest(
@@ -98,13 +98,13 @@ fun FlutterEnhancedKycRequest.toRequest() = EnhancedKycRequest(
         jobType = partnerParams.jobType?.toRequest(),
         jobId = partnerParams.jobId,
         userId = partnerParams.userId,
-        extras = convertNullableMapToNonNull(partnerParams.extras)
+        extras = convertNullableMapToNonNull(partnerParams.extras),
     ),
     sourceSdk = "android (flutter)",
     timestamp = timestamp,
-    signature = signature
+    signature = signature,
 )
 
 fun EnhancedKycAsyncResponse.toResponse() = FlutterEnhancedKycAsyncResponse(
-    success = success
+    success = success,
 )
