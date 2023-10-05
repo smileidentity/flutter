@@ -41,13 +41,13 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         )
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
-            SmileIDSmartSelfieEnrollment.VIEW_TYPE_ID,
-            SmileIDSmartSelfieEnrollment.Factory(flutterPluginBinding.binaryMessenger)
+            SmileIDBiometricKyc.VIEW_TYPE_ID,
+            SmileIDBiometricKyc.Factory(flutterPluginBinding.binaryMessenger)
         )
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
-            SmileIDSmartSelfieAuthentication.VIEW_TYPE_ID,
-            SmileIDSmartSelfieAuthentication.Factory(flutterPluginBinding.binaryMessenger)
+            SmileIDBvnConsent.VIEW_TYPE_ID,
+            SmileIDBvnConsent.Factory(flutterPluginBinding.binaryMessenger)
         )
     }
 
