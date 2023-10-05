@@ -10,7 +10,7 @@ buildscript {
     }
 
     dependencies {
-        classpath "com.android.tools.build:gradle:8.1.1"
+        classpath "com.android.tools.build:gradle:8.1.2"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jlleitschuh.gradle:ktlint-gradle:11.6.0"
     }
@@ -66,14 +66,18 @@ android {
         implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core"
 
         testImplementation "org.jetbrains.kotlin:kotlin-test"
-        testImplementation "io.mockk:mockk:1.13.7"
+        testImplementation "io.mockk:mockk:1.13.8"
     }
 }
 
-ktlint {
-    filter {
-        exclude { entry ->
-            entry.file.toString().contains("Messages.g.kt")
+allprojects {
+    apply plugin: "org.jlleitschuh.gradle.ktlint"
+
+    ktlint {
+        android = true
+        verbose = true
+        filter {
+            exclude("**/generated/**")
         }
     }
 }

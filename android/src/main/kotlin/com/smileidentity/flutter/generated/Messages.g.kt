@@ -18,13 +18,13 @@ private fun wrapError(exception: Throwable): List<Any?> {
         return listOf(
             exception.code,
             exception.message,
-            exception.details
+            exception.details,
         )
     } else {
         return listOf(
             exception.javaClass.simpleName,
             exception.toString(),
-            "Cause: " + exception.cause + ", Stacktrace: " + Log.getStackTraceString(exception)
+            "Cause: " + exception.cause + ", Stacktrace: " + Log.getStackTraceString(exception),
         )
     }
 }
@@ -38,12 +38,13 @@ private fun wrapError(exception: Throwable): List<Any?> {
 class FlutterError(
     val code: String,
     override val message: String? = null,
-    val details: Any? = null
+    val details: Any? = null,
 ) : Throwable()
 
 enum class FlutterJobType(val raw: Int) {
     ENHANCEDKYC(0),
-    DOCUMENTVERIFICATION(1);
+    DOCUMENTVERIFICATION(1),
+    ;
 
     companion object {
         fun ofRaw(raw: Int): FlutterJobType? {
@@ -61,7 +62,7 @@ data class FlutterPartnerParams(
     val jobType: FlutterJobType? = null,
     val jobId: String,
     val userId: String,
-    val extras: Map<String?, String?>? = null
+    val extras: Map<String?, String?>? = null,
 
 ) {
     companion object {
@@ -81,7 +82,7 @@ data class FlutterPartnerParams(
             jobType?.raw,
             jobId,
             userId,
-            extras
+            extras,
         )
     }
 }
@@ -113,7 +114,7 @@ data class FlutterAuthenticationRequest(
     val idType: String? = null,
     val updateEnrolledImage: Boolean? = null,
     val jobId: String? = null,
-    val userId: String? = null
+    val userId: String? = null,
 
 ) {
     companion object {
@@ -131,7 +132,7 @@ data class FlutterAuthenticationRequest(
                 idType,
                 updateEnrolledImage,
                 jobId,
-                userId
+                userId,
             )
         }
     }
@@ -142,7 +143,7 @@ data class FlutterAuthenticationRequest(
             idType,
             updateEnrolledImage,
             jobId,
-            userId
+            userId,
         )
     }
 }
@@ -163,7 +164,7 @@ data class FlutterAuthenticationResponse(
     val timestamp: String,
     val partnerParams: FlutterPartnerParams,
     val callbackUrl: String? = null,
-    val consentInfo: FlutterConsentInfo? = null
+    val consentInfo: FlutterConsentInfo? = null,
 
 ) {
     companion object {
@@ -183,7 +184,7 @@ data class FlutterAuthenticationResponse(
                 timestamp,
                 partnerParams,
                 callbackUrl,
-                consentInfo
+                consentInfo,
             )
         }
     }
@@ -194,7 +195,7 @@ data class FlutterAuthenticationResponse(
             timestamp,
             partnerParams.toList(),
             callbackUrl,
-            consentInfo?.toList()
+            consentInfo?.toList(),
         )
     }
 }
@@ -207,7 +208,7 @@ data class FlutterAuthenticationResponse(
  */
 data class FlutterConsentInfo(
     val canAccess: Boolean,
-    val consentRequired: Boolean
+    val consentRequired: Boolean,
 
 ) {
     companion object {
@@ -221,7 +222,7 @@ data class FlutterConsentInfo(
     fun toList(): List<Any?> {
         return listOf<Any?>(
             canAccess,
-            consentRequired
+            consentRequired,
         )
     }
 }
@@ -245,7 +246,7 @@ data class FlutterEnhancedKycRequest(
     val callbackUrl: String? = null,
     val partnerParams: FlutterPartnerParams,
     val timestamp: String,
-    val signature: String
+    val signature: String,
 
 ) {
     companion object {
@@ -281,14 +282,14 @@ data class FlutterEnhancedKycRequest(
             callbackUrl,
             partnerParams.toList(),
             timestamp,
-            signature
+            signature,
         )
     }
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
 data class FlutterEnhancedKycAsyncResponse(
-    val success: Boolean
+    val success: Boolean,
 
 ) {
     companion object {
@@ -300,7 +301,7 @@ data class FlutterEnhancedKycAsyncResponse(
     }
     fun toList(): List<Any?> {
         return listOf<Any?>(
-            success
+            success,
         )
     }
 }
@@ -378,11 +379,11 @@ interface SmileIDApi {
     fun initialize()
     fun authenticate(
         request: FlutterAuthenticationRequest,
-        callback: (Result<FlutterAuthenticationResponse>) -> Unit
+        callback: (Result<FlutterAuthenticationResponse>) -> Unit,
     )
     fun doEnhancedKycAsync(
         request: FlutterEnhancedKycRequest,
-        callback: (Result<FlutterEnhancedKycAsyncResponse>) -> Unit
+        callback: (Result<FlutterEnhancedKycAsyncResponse>) -> Unit,
     )
 
     companion object {
@@ -398,7 +399,7 @@ interface SmileIDApi {
                 val channel = BasicMessageChannel<Any?>(
                     binaryMessenger,
                     "dev.flutter.pigeon.smileid.SmileIDApi.initialize",
-                    codec
+                    codec,
                 )
                 if (api != null) {
                     channel.setMessageHandler { _, reply ->
@@ -419,7 +420,7 @@ interface SmileIDApi {
                 val channel = BasicMessageChannel<Any?>(
                     binaryMessenger,
                     "dev.flutter.pigeon.smileid.SmileIDApi.authenticate",
-                    codec
+                    codec,
                 )
                 if (api != null) {
                     channel.setMessageHandler { message, reply ->
@@ -443,12 +444,13 @@ interface SmileIDApi {
                 val channel = BasicMessageChannel<Any?>(
                     binaryMessenger,
                     "dev.flutter.pigeon.smileid.SmileIDApi.doEnhancedKycAsync",
-                    codec
+                    codec,
                 )
                 if (api != null) {
                     channel.setMessageHandler { message, reply ->
                         val args = message as List<Any?>
                         val requestArg = args[0] as FlutterEnhancedKycRequest
+
                         api.doEnhancedKycAsync(requestArg) { result: Result<FlutterEnhancedKycAsyncResponse> ->
                             val error = result.exceptionOrNull()
                             if (error != null) {
