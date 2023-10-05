@@ -30,6 +30,9 @@ jobs:
         uses: musichin/ktlint-check@v2
         with:
           ktlint-version: "0.49.1"
+          patterns: |
+            **/**.kt
+            !**/generated/**
       - name: Test
         run: flutter test && cd example && flutter test && cd ..
       - name: Build Android Sample App
