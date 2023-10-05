@@ -6,6 +6,8 @@ import 'package:smile_id/smile_id.dart';
 import 'package:smile_id/smile_id_document_verification.dart';
 import 'package:smile_id/smile_id_smart_selfie_enrollment.dart';
 import 'package:smile_id/smile_id_smart_selfie_authentication.dart';
+import 'package:smile_id/smile_id_biometric_kyc.dart';
+import 'package:smile_id/smile_id_bvn_consent.dart';
 
 // ignore_for_file: avoid_print
 
@@ -76,7 +78,9 @@ class MainContent extends StatelessWidget {
         enhancedKycAsyncButton(),
         documentVerificationButton(context),
         smartSelfieEnrollmentButton(context),
-        smartSelfieAuthenticationButton(context)
+        smartSelfieAuthenticationButton(context),
+        biometricKycButton(context),
+        bvnConsentButton(context)
       ],
     )));
   }
@@ -174,6 +178,60 @@ class MainContent extends StatelessWidget {
           MaterialPageRoute<void>(
             builder: (BuildContext context) => MyScaffold(
                 body: SmileIDSmartSelfieAuthentication(
+                  onSuccess: (String? result) {
+                    // Your success handling logic
+                    final snackBar = SnackBar(content: Text("Success: $result"));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Navigator.of(context).pop();
+                  },
+                  onError: (String errorMessage) {
+                    // Your error handling logic
+                    final snackBar = SnackBar(content: Text("Error: $errorMessage"));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Navigator.of(context).pop();
+                  },
+                )),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget biometricKycButton(BuildContext context) {
+    return ElevatedButton(
+      child: const Text("Biometric KYC"),
+      onPressed: () {
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => MyScaffold(
+                body: SmileIDBiometricKyc(
+                  onSuccess: (String? result) {
+                    // Your success handling logic
+                    final snackBar = SnackBar(content: Text("Success: $result"));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Navigator.of(context).pop();
+                  },
+                  onError: (String errorMessage) {
+                    // Your error handling logic
+                    final snackBar = SnackBar(content: Text("Error: $errorMessage"));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Navigator.of(context).pop();
+                  },
+                )),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget bvnConsentButton(BuildContext context) {
+    return ElevatedButton(
+      child: const Text("BVN Consent"),
+      onPressed: () {
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => MyScaffold(
+                body: SmileIDBvnConsent(
                   onSuccess: (String? result) {
                     // Your success handling logic
                     final snackBar = SnackBar(content: Text("Success: $result"));
