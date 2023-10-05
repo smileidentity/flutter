@@ -85,7 +85,6 @@ extension FlutterJobType {
             return JobType.enhancedKyc
         case .documentVerification:
             return JobType.documentVerification
-        default: fatalError("Not yet supported")
         }
     }
 }
