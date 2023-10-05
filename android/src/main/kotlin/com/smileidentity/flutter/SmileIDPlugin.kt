@@ -5,8 +5,8 @@ import FlutterAuthenticationResponse
 import FlutterEnhancedKycAsyncResponse
 import FlutterEnhancedKycRequest
 import SmileIDApi
+import android.app.Activity
 import android.content.Context
-import android.util.Log
 import com.smileidentity.SmileID
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -18,11 +18,27 @@ import kotlinx.coroutines.launch
 
 class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
 
-    private lateinit var context: Context
+    private var activity: Activity? = null
+    private lateinit var appContext: Context
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         SmileIDApi.setUp(flutterPluginBinding.binaryMessenger, this)
-        context = flutterPluginBinding.applicationContext
+        appContext = flutterPluginBinding.applicationContext
+
+        flutterPluginBinding.platformViewRegistry.registerViewFactory(
+            SmileIDDocumentVerification.VIEW_TYPE_ID,
+            SmileIDDocumentVerification.Factory(flutterPluginBinding.binaryMessenger),
+        )
+
+        flutterPluginBinding.platformViewRegistry.registerViewFactory(
+            SmileIDSmartSelfieEnrollment.VIEW_TYPE_ID,
+            SmileIDSmartSelfieEnrollment.Factory(flutterPluginBinding.binaryMessenger),
+        )
+
+        flutterPluginBinding.platformViewRegistry.registerViewFactory(
+            SmileIDSmartSelfieAuthentication.VIEW_TYPE_ID,
+            SmileIDSmartSelfieAuthentication.Factory(flutterPluginBinding.binaryMessenger),
+        )
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
@@ -30,23 +46,23 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
     }
 
     override fun initialize() {
-        SmileID.initialize(context)
+        SmileID.initialize(appContext, enableCrashReporting = false)
     }
 
     override fun authenticate(
         request: FlutterAuthenticationRequest,
-        callback: (Result<FlutterAuthenticationResponse>) -> Unit
+        callback: (Result<FlutterAuthenticationResponse>) -> Unit,
     ) = launch(
         work = { SmileID.api.authenticate(request.toRequest()).toResponse() },
-        callback = callback
+        callback = callback,
     )
 
     override fun doEnhancedKycAsync(
         request: FlutterEnhancedKycRequest,
-        callback: (Result<FlutterEnhancedKycAsyncResponse>) -> Unit
+        callback: (Result<FlutterEnhancedKycAsyncResponse>) -> Unit,
     ) = launch(
         work = { SmileID.api.doEnhancedKycAsync(request.toRequest()).toResponse() },
-        callback = callback
+        callback = callback,
     )
 
     /**
@@ -55,7 +71,9 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
      * We can get the context in a ActivityAware way, without asking users to pass the context when
      * calling "initialize" on the sdk
      */
-    override fun onAttachedToActivity(binding: ActivityPluginBinding) {}
+    override fun onAttachedToActivity(binding: ActivityPluginBinding) {
+        this.activity = binding.activity
+    }
 
     override fun onDetachedFromActivityForConfigChanges() {}
 
@@ -71,7 +89,7 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
 private fun <T> launch(
     work: suspend () -> T,
     callback: (Result<T>) -> Unit,
-    scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
+    scope: CoroutineScope = CoroutineScope(Dispatchers.IO),
 ) {
     val handler = CoroutineExceptionHandler { _, throwable ->
         callback.invoke(Result.failure(throwable))

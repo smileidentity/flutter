@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 
 enum FlutterJobType {
   enhancedKyc,
+  documentVerification,
 }
 
 ///  Custom values specific to partners can be placed in [extras]

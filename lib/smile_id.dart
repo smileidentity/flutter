@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 
 import 'messages.g.dart';
 
@@ -18,4 +19,6 @@ class SmileID {
       FlutterEnhancedKycRequest request) {
     return platformInterface.doEnhancedKycAsync(request);
   }
+
+// TODO: move authentication and doEnhancedKycAsync to an "api" object to mirror native API
 }

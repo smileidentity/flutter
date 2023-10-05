@@ -36,6 +36,7 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
 
 enum FlutterJobType: Int {
   case enhancedKyc = 0
+  case documentVerification = 1
 }
 
 ///  Custom values specific to partners can be placed in [extras]

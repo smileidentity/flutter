@@ -9,6 +9,19 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  Flutter:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.10.6' # Set the desired Flutter version here
+          channel: 'stable'
+      - name: Install Dependencies
+        run: flutter pub get && cd example && flutter pub get && cd ..
+      - name: Lint Flutter
+        run: flutter analyze
   Android:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -24,6 +37,13 @@ jobs:
           channel: 'stable'
       - name: Install Dependencies
         run: flutter pub get && cd example && flutter pub get && cd ..
+      - name: Lint Android
+        uses: musichin/ktlint-check@v2
+        with:
+          ktlint-version: "0.49.1"
+          patterns: |
+            **/**.kt
+            !**/generated/**
       - name: Test
         run: flutter test && cd example && flutter test && cd ..
       - name: Build Android Sample App

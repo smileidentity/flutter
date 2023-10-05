@@ -1,23 +1,23 @@
 group "com.smileidentity.flutter"
-version findProperty("SDK_VERSION") ?: "10.0.0-beta06-SNAPSHOT"
+version findProperty("SDK_VERSION") ?: "10.0.0-beta08"
 
 buildscript {
-    ext.kotlin_version = "1.9.0"
+    ext.kotlin_version = "1.9.10"
     repositories {
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         google()
         mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
     }
 
     dependencies {
-        classpath "com.android.tools.build:gradle:8.1.0"
+        classpath "com.android.tools.build:gradle:8.1.2"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:11.6.0"
     }
 }
 
 allprojects {
     repositories {
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         google()
         mavenCentral()
     }
@@ -25,6 +25,7 @@ allprojects {
 
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
+apply plugin: "org.jlleitschuh.gradle.ktlint"
 
 android {
     namespace group
@@ -51,15 +52,27 @@ android {
         }
     }
 
+    buildFeatures.compose = true
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.3"
+    }
+
     dependencies {
         implementation "com.smileidentity:android-sdk:${version}"
-
-        implementation "com.squareup.okhttp3:okhttp"
         implementation "androidx.core:core-ktx"
+        implementation "androidx.compose.ui:ui"
+        implementation "androidx.compose.material3:material3"
+        implementation "androidx.fragment:fragment-ktx"
         implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core"
-        implementation "com.jakewharton.timber:timber"
 
         testImplementation "org.jetbrains.kotlin:kotlin-test"
-        testImplementation "io.mockk:mockk:1.13.5"
+        testImplementation "io.mockk:mockk:1.13.8"
+    }
+}
+
+ktlint {
+    android = true
+    filter {
+        exclude { it.file.path.contains(".g.kt") }
     }
 }
