@@ -25,7 +25,7 @@ class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieR
             jobId: args["jobId"] as? String ?? "job-\(UUID().uuidString)",
             allowAgentMode: args["allowAgentMode"] as? Bool ?? false,
             showAttribution: args["showAttribution"] as? Bool ?? true,
-            showInstructions: args["showInstructions"] as? Bool ?? true,
+            showInstruction: args["showInstructions"] as? Bool ?? true,
             delegate: self
         )
         let childViewController = UIHostingController(rootView: screen)

@@ -20,12 +20,12 @@ class SmileIDSmartSelfieAuthentication : NSObject, FlutterPlatformView, SmartSel
         _channel = FlutterMethodChannel(name: "\(SmileIDSmartSelfieAuthentication.VIEW_TYPE_ID)_\(viewId)", binaryMessenger: messenger)
         _childViewController = nil
         super.init()
-        let screen = SmileID.smartSelfieEnrollment(
+        let screen = SmileID.smartSelfieEnrollmentScreen(
             userId: args["userId"] as? String ?? "user-\(UUID().uuidString)",
             jobId: args["jobId"] as? String ?? "job-\(UUID().uuidString)",
             allowAgentMode: args["allowAgentMode"] as? Bool ?? false,
             showAttribution: args["showAttribution"] as? Bool ?? true,
-            showInstructions: args["showInstructions"] as? Bool ?? true,
+            showInstruction: args["showInstructions"] as? Bool ?? true,
             delegate: self
         )
         let childViewController = UIHostingController(rootView: screen)
@@ -46,7 +46,6 @@ class SmileIDSmartSelfieAuthentication : NSObject, FlutterPlatformView, SmartSel
     func didSucceed(selfieImage: URL, livenessImages: [URL], jobStatusResponse: JobStatusResponse) {
         _childViewController?.removeFromParent()
         let encoder = JSONEncoder()
-        let documentBackFileJson = documentBackImage.map{ "\"\($0.absoluteString)\"" } ?? "null"
         _channel.invokeMethod("onSuccess", arguments: """
         "selfieFile": "\(selfieImage.absoluteString)",
         "livenessImages": "\(livenessImages.map{ _ in  })",
