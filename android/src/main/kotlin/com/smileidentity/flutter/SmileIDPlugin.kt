@@ -27,17 +27,17 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDDocumentVerification.VIEW_TYPE_ID,
-            SmileIDDocumentVerification.Factory(flutterPluginBinding.binaryMessenger)
+            SmileIDDocumentVerification.Factory(flutterPluginBinding.binaryMessenger),
         )
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDSmartSelfieEnrollment.VIEW_TYPE_ID,
-            SmileIDSmartSelfieEnrollment.Factory(flutterPluginBinding.binaryMessenger)
+            SmileIDSmartSelfieEnrollment.Factory(flutterPluginBinding.binaryMessenger),
         )
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDSmartSelfieAuthentication.VIEW_TYPE_ID,
-            SmileIDSmartSelfieAuthentication.Factory(flutterPluginBinding.binaryMessenger)
+            SmileIDSmartSelfieAuthentication.Factory(flutterPluginBinding.binaryMessenger),
         )
     }
 
@@ -51,18 +51,18 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
 
     override fun authenticate(
         request: FlutterAuthenticationRequest,
-        callback: (Result<FlutterAuthenticationResponse>) -> Unit
+        callback: (Result<FlutterAuthenticationResponse>) -> Unit,
     ) = launch(
         work = { SmileID.api.authenticate(request.toRequest()).toResponse() },
-        callback = callback
+        callback = callback,
     )
 
     override fun doEnhancedKycAsync(
         request: FlutterEnhancedKycRequest,
-        callback: (Result<FlutterEnhancedKycAsyncResponse>) -> Unit
+        callback: (Result<FlutterEnhancedKycAsyncResponse>) -> Unit,
     ) = launch(
         work = { SmileID.api.doEnhancedKycAsync(request.toRequest()).toResponse() },
-        callback = callback
+        callback = callback,
     )
 
     /**
@@ -89,7 +89,7 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
 private fun <T> launch(
     work: suspend () -> T,
     callback: (Result<T>) -> Unit,
-    scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
+    scope: CoroutineScope = CoroutineScope(Dispatchers.IO),
 ) {
     val handler = CoroutineExceptionHandler { _, throwable ->
         callback.invoke(Result.failure(throwable))

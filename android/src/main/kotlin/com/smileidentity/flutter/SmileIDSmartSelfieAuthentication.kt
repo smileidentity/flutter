@@ -5,7 +5,6 @@ import android.view.View
 import androidx.compose.ui.platform.ComposeView
 import com.smileidentity.SmileID
 import com.smileidentity.compose.SmartSelfieAuthentication
-import com.smileidentity.compose.SmartSelfieEnrollment
 import com.smileidentity.results.SmartSelfieResult
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
@@ -52,7 +51,11 @@ internal class SmileIDSmartSelfieAuthentication private constructor(
                                     .adapter(SmartSelfieResult::class.java)
                                     .toJson(it.data)
                             } catch (e: Exception) {
-                                Log.e("SmileIDSmartSelfieAuthentication", "Error serializing result", e)
+                                Log.e(
+                                    "SmileIDSmartSelfieAuthentication",
+                                    "Error serializing result",
+                                    e,
+                                )
                                 "null"
                             }
                             methodChannel.invokeMethod("onSuccess", json)
@@ -75,12 +78,15 @@ internal class SmileIDSmartSelfieAuthentication private constructor(
     override fun dispose() = Unit
 
     class Factory(
-        private val messenger: BinaryMessenger
+        private val messenger: BinaryMessenger,
     ) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
         override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
             @Suppress("UNCHECKED_CAST")
             return SmileIDSmartSelfieAuthentication(
-                context, viewId, messenger, args as Map<String, Any?>
+                context,
+                viewId,
+                messenger,
+                args as Map<String, Any?>,
             )
         }
     }
