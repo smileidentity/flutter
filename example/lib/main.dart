@@ -232,6 +232,8 @@ class MainContent extends StatelessWidget {
           MaterialPageRoute<void>(
             builder: (BuildContext context) => MyScaffold(
                 body: SmileIDBvnConsent(
+                  partnerName: "Smile ID",
+                  partnerPrivacyPolicy: "https://usesmileid.com",
                   onSuccess: (String? result) {
                     // Your success handling logic
                     final snackBar = SnackBar(content: Text("Success: $result"));

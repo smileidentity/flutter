@@ -2,8 +2,8 @@ package com.smileidentity.flutter
 
 import android.content.Context
 import android.view.View
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.painterResource
 import com.smileidentity.SmileID
 import com.smileidentity.compose.BiometricKYC
 import com.smileidentity.models.IdInfo
@@ -37,11 +37,14 @@ internal class SmileIDBiometricKyc private constructor(
         view = ComposeView(context).apply {
             setContent {
                 SmileID.BiometricKYC(
-                    idInfo = args["idInfo"] as IdInfo,
-                    partnerIcon = args["partnerIcon"] as Painter,
+                    idInfo = IdInfo(
+                        country = args["country"] as String,
+                        idType = args["idType"] as String,
+                    ),
+                    partnerIcon = painterResource(id = args["partnerIcon"] as Int),
                     partnerName = args["partnerName"] as String,
                     productName = args["productName"] as String,
-                    partnerPrivacyPolicy = args["partnerPrivacyPolicy"] as URL,
+                    partnerPrivacyPolicy = URL(args["partnerPrivacyPolicy"] as String),
                     userId = args["userId"] as? String ?: randomUserId(),
                     jobId = args["jobId"] as? String ?: randomJobId(),
                     allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,

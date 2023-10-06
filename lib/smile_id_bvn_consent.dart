@@ -21,6 +21,8 @@ class SmileIDBvnConsent extends StatelessWidget {
 
   factory SmileIDBvnConsent({
     Key? key,
+    required String partnerName,
+    required String partnerPrivacyPolicy,
     // userId and jobId can't actually be null in the native SDK but we delegate their creation to
     // the native platform code, since that's where the random ID creation happens
     String? userId,
@@ -31,6 +33,8 @@ class SmileIDBvnConsent extends StatelessWidget {
       onSuccess: onSuccess,
       onError: onError,
       creationParams: {
+        "partnerName": partnerName,
+        "partnerPrivacyPolicy": partnerPrivacyPolicy,
         "userId": userId,
       },
     );

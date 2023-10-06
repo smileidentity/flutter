@@ -2,7 +2,9 @@ package com.smileidentity.flutter
 
 import android.content.Context
 import android.view.View
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.painterResource
 import com.smileidentity.SmileID
 import com.smileidentity.compose.BvnConsentScreen
 import com.smileidentity.util.randomUserId
@@ -11,6 +13,7 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
+import java.net.URL
 
 internal class SmileIDBvnConsent private constructor(
     context: Context,
@@ -30,13 +33,17 @@ internal class SmileIDBvnConsent private constructor(
         view = ComposeView(context).apply {
             setContent {
                 SmileID.BvnConsentScreen(
-//                    partnerIcon = args["partnerIcon"] as Painter,
-//                    partnerName = args["partnerName"] as String,
-//                    partnerPrivacyPolicy = args["partnerPrivacyPolicy"] as URL,
+                    partnerIcon = painterResource(id = R.drawable.si_logo_with_text) ,
+//                    partnerIcon = painterResource(id = args["partnerIcon"] as Int) ,
+                    partnerName = args["partnerName"] as String,
+                    partnerPrivacyPolicy = URL(args["partnerPrivacyPolicy"] as String),
+                    onConsentGranted = {},
+                    onConsentDenied = {},
+                    showAttribution = args["showAttribution"] as? Boolean ?: true,
                     userId = args["userId"] as? String ?: randomUserId(),
-                ) {
-                }
+                )
             }
+
         }
     }
 
