@@ -11,11 +11,11 @@ class SmileID {
     platformInterface.initialize();
   }
 
-  static void setEnvironment(bool useSandbox) {
+  static void setEnvironment({required bool useSandbox}) {
     platformInterface.setEnvironment(useSandbox);
   }
 
-  static void setCallbackUrl(Uri callbackUrl) {
+  static void setCallbackUrl({required Uri callbackUrl}) {
     platformInterface.setCallbackUrl(callbackUrl.toString());
   }
 
