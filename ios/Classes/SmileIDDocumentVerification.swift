@@ -3,7 +3,7 @@ import UIKit
 import SmileID
 import SwiftUI
 
-class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentCaptureResultDelegate {
+class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerificationResultDelegate {
     private var _view: UIView
     private var _channel: FlutterMethodChannel
     private var _childViewController: UIViewController?
@@ -56,7 +56,7 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentCaptu
         selfie: URL,
         documentFrontImage: URL,
         documentBackImage: URL?,
-        jobStatusResponse: JobStatusResponse
+        jobStatusResponse: DocumentVerificationJobStatusResponse
     ) {
         _childViewController?.removeFromParent()
         let encoder = JSONEncoder()

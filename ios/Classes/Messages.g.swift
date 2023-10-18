@@ -355,6 +355,8 @@ class SmileIDApiCodec: FlutterStandardMessageCodec {
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol SmileIDApi {
   func initialize() throws
+  func setEnvironment(useSandbox: Bool) throws
+  func setCallbackUrl(callbackUrl: String) throws
   func authenticate(request: FlutterAuthenticationRequest, completion: @escaping (Result<FlutterAuthenticationResponse, Error>) -> Void)
   func doEnhancedKycAsync(request: FlutterEnhancedKycRequest, completion: @escaping (Result<FlutterEnhancedKycAsyncResponse, Error>) -> Void)
 }
@@ -377,6 +379,36 @@ class SmileIDApiSetup {
       }
     } else {
       initializeChannel.setMessageHandler(nil)
+    }
+    let setEnvironmentChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.setEnvironment", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      setEnvironmentChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let useSandboxArg = args[0] as! Bool
+        do {
+          try api.setEnvironment(useSandbox: useSandboxArg)
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      setEnvironmentChannel.setMessageHandler(nil)
+    }
+    let setCallbackUrlChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.setCallbackUrl", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      setCallbackUrlChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let callbackUrlArg = args[0] as! String
+        do {
+          try api.setCallbackUrl(callbackUrl: callbackUrlArg)
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      setCallbackUrlChannel.setMessageHandler(nil)
     }
     let authenticateChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.authenticate", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {

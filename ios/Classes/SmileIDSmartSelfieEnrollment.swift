@@ -45,7 +45,7 @@ class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieR
         return _view
     }
 
-    func didSucceed(selfieImage: URL, livenessImages: [URL], jobStatusResponse: JobStatusResponse) {
+    func didSucceed(selfieImage: URL, livenessImages: [URL], jobStatusResponse: SmartSelfieJobStatusResponse) {
         _childViewController?.removeFromParent()
         let encoder = JSONEncoder()
         _channel.invokeMethod("onSuccess", arguments: """

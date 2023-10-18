@@ -134,6 +134,10 @@ class FlutterEnhancedKycAsyncResponse {
 abstract class SmileIDApi {
   void initialize();
 
+  void setEnvironment(bool useSandbox);
+
+  void setCallbackUrl(String callbackUrl);
+
   @async
   FlutterAuthenticationResponse authenticate(FlutterAuthenticationRequest request);
 

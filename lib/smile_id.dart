@@ -11,6 +11,14 @@ class SmileID {
     platformInterface.initialize();
   }
 
+  static void setEnvironment({required bool useSandbox}) {
+    platformInterface.setEnvironment(useSandbox);
+  }
+
+  static void setCallbackUrl({required Uri callbackUrl}) {
+    platformInterface.setCallbackUrl(callbackUrl.toString());
+  }
+
   static Future<FlutterAuthenticationResponse?> authenticate(FlutterAuthenticationRequest request) {
     return platformInterface.authenticate(request);
   }
