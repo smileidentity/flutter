@@ -1,5 +1,7 @@
 # Changelog
 
+# 10.0.0-beta03
+
 # 10.0.0-beta02
 - Support for Document Verification, exposed as a `SmileIDDocumentVerification` Widget
 - Support for SmartSelfie Authentication, exposed as a `SmileIDSmartSelfieAuthentication` Widget
