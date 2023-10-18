@@ -15,6 +15,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.net.URL
 
 class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
 
@@ -46,7 +47,15 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
     }
 
     override fun initialize() {
-        SmileID.initialize(appContext, enableCrashReporting = false)
+        SmileID.initialize(context = appContext, enableCrashReporting = false)
+    }
+
+    override fun setEnvironment(useSandbox: Boolean) {
+        SmileID.setEnvironment(useSandbox = useSandbox)
+    }
+
+    override fun setCallbackUrl(callbackUrl: String) {
+        SmileID.setCallbackUrl(callbackUrl = URL(callbackUrl))
     }
 
     override fun authenticate(
