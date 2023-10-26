@@ -15,8 +15,8 @@ import io.flutter.plugin.platform.PlatformView
 
 /**
  * Base class for hosting Smile ID Composables in Flutter. This class handles flutter<>android
- * result delivery, view initialization (incl. view model store), and boilerplate. Subclasses
- * should implement [Content] to provide the actual Composable content.
+ * result delivery, view initialization (incl. view model store), and boilerplate. Subclasses should
+ * implement [Content] to provide the actual Composable content.
  */
 internal abstract class SmileComposablePlatformView(
     context: Context,
@@ -28,17 +28,19 @@ internal abstract class SmileComposablePlatformView(
 
     private val methodChannel = MethodChannel(messenger, "${viewTypeId}_$viewId")
 
-    // Creates a viewModelStore that is scoped to the FlutterView's lifecycle. Otherwise, state gets
-    // shared between multiple FlutterView instances since the default viewModelStore is at the
-    // Activity level and since we don't have a full Compose app or nav graph, the same viewModel
-    // ends up getting re-used
+    /**
+     * Creates a viewModelStore that is scoped to the FlutterView's lifecycle. Otherwise, state gets
+     * shared between multiple FlutterView instances since the default viewModelStore is at the
+     * Activity level and since we don't have a full Compose app or nav graph, the same viewModel
+     * ends up getting re-used
+     */
+    private val viewModelStoreOwner = object : ViewModelStoreOwner {
+        override val viewModelStore = ViewModelStore()
+    }
+
     private var view: ComposeView? = ComposeView(context).apply {
         setContent {
-            CompositionLocalProvider(
-                LocalViewModelStoreOwner provides object : ViewModelStoreOwner {
-                    override val viewModelStore = ViewModelStore()
-                }
-            ) {
+            CompositionLocalProvider(LocalViewModelStoreOwner provides viewModelStoreOwner) {
                 Content(args)
             }
         }
