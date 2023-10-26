@@ -1,5 +1,8 @@
 # Changelog
 
+# 10.0.0-beta04 (unreleased)
+- [Android] Fix bug where Composable state did not get reset 
+
 # 10.0.0-beta03
 - Allow setEnvironment({required bool useSandbox}) to enable sandbox or production environment
 - Allow setCallbackUrl({required Uri callbackUrl}) to set a callback url for all submitted jobs.
