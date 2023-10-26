@@ -1,6 +1,6 @@
 # Changelog
 
-# 10.0.0-beta04 (unreleased)
+# 10.0.0-beta04
 - [Android] Fix bug where Composable state did not get reset 
 
 # 10.0.0-beta03

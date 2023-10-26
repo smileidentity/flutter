@@ -1,6 +1,6 @@
 name: smile_id
 description: The Official Smile ID Flutter SDK
-version: 10.0.0-beta03
+version: 10.0.0-beta04
 homepage: "https://usesmileid.com"
 
 environment:
