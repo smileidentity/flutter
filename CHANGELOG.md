@@ -1,5 +1,14 @@
 # Changelog
 
+# 10.0.0-beta05
+- [Android] Fixed retry document submission on failed document submission
+- [Android] Fixed missing entered key in BiometricKYC
+- [Android] Added jobId on SmartSelfieEnrollmentFragment and SmartSelfieAuthenticationFragment
+- [Android] Added showInstructions on SmartSelfieEnrollmentFragment
+- [Android] Fix bug where showAttirubtion was not respected on the Consent Denied screen
+- [Android] Increased selfie capture resolution to 640px
+- [Android] Fixed a bug where the document preview showed a black box for some older devices
+- 
 # 10.0.0-beta04
 - [Android] Fix bug where Composable state did not get reset 
 
