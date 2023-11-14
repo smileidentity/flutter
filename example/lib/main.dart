@@ -119,8 +119,6 @@ class MainContent extends StatelessWidget {
                 body: SmileIDDocumentVerification(
                   countryCode: "GH",
                   documentType: "DRIVERS_LICENSE",
-                  allowGalleryUpload: true,
-                  partnerParams: {'Juma': 'Flutter iOS'},
                   onSuccess: (String? result) {
                     // Your success handling logic
                     final snackBar = SnackBar(content: Text("Success: $result"));
