@@ -29,6 +29,7 @@ class SmileIDSmartSelfieAuthentication : NSObject, FlutterPlatformView, SmartSel
             allowAgentMode: args["allowAgentMode"] as? Bool ?? false,
             showAttribution: args["showAttribution"] as? Bool ?? true,
             showInstructions: args["showInstructions"] as? Bool ?? true,
+            partnerParams: args["partnerParams"] as? [String: String] ?? [:],
             delegate: self
         )
         let childViewController = UIHostingController(rootView: screen)

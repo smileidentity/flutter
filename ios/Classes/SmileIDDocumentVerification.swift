@@ -36,6 +36,7 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerif
             allowGalleryUpload: args["allowGalleryUpload"] as? Bool ?? false,
             showInstructions: args["showInstructions"] as? Bool ?? true,
             showAttribution: args["showAttribution"] as? Bool ?? true,
+            partnerParams: args["partnerParams"] as? [String: String] ?? [:],
             delegate: self
         )
         let childViewController = UIHostingController(rootView: screen)

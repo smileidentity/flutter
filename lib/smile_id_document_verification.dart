@@ -33,6 +33,7 @@ class SmileIDDocumentVerification extends StatelessWidget {
     bool showAttribution = true,
     bool allowGalleryUpload = false,
     bool showInstructions = true,
+    Map<String, String>? partnerParams,
     required Function(String resultJson) onSuccess,
     required Function(String errorMessage) onError,
   }) {
@@ -50,6 +51,7 @@ class SmileIDDocumentVerification extends StatelessWidget {
         "showAttribution": showAttribution,
         "allowGalleryUpload": allowGalleryUpload,
         "showInstructions": showInstructions,
+        "partnerParams" : partnerParams,
       },
     );
   }

@@ -1,6 +1,7 @@
 package com.smileidentity.flutter
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.Composable
 import com.smileidentity.SmileID
 import com.smileidentity.compose.DocumentVerification
@@ -11,6 +12,7 @@ import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
+import kotlinx.collections.immutable.toImmutableMap
 import java.io.File
 
 internal class SmileIDDocumentVerification private constructor(
@@ -25,6 +27,7 @@ internal class SmileIDDocumentVerification private constructor(
 
     @Composable
     override fun Content(args: Map<String, Any?>) {
+        val partnerParams = args["partnerParams"] as? Map<String, String> ?: emptyMap()
         SmileID.DocumentVerification(
             countryCode = args["countryCode"] as String,
             documentType = args["documentType"] as? String,
@@ -37,6 +40,7 @@ internal class SmileIDDocumentVerification private constructor(
             showAttribution = args["showAttribution"] as? Boolean ?: true,
             allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false,
             showInstructions = args["showInstructions"] as? Boolean ?: true,
+            partnerParams = partnerParams.toImmutableMap(),
         ) {
             when (it) {
                 is SmileIDResult.Success -> onSuccess(it.data)
