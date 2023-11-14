@@ -1,9 +1,8 @@
 # Changelog
 
 # 10.0.0-beta06
-- [Android] Added `extras` as optional params on all job types
-- [Android] Added `idAuthorityBypassPhoto` on Sandbox BiometricKYC jobs
-- [Android] Added `allowAgentMode` option on Document Verification and Enhanced Document Verification
+- [Android & iOS] Added `extras` as optional params on all job types
+- [Android & iOS] Added `allowAgentMode` option on Document Verification and Enhanced Document Verification
 - [Flutter] Fixed wrong iOS decoding bug on success
 
 # 10.0.0-beta05
