@@ -1,0 +1,39 @@
+PODS:
+  - Flutter (1.0.0)
+  - integration_test (0.0.1):
+    - Flutter
+  - smile_id (10.0.0-beta11):
+    - Flutter
+    - SmileID (= 10.0.0-beta11)
+  - SmileID (10.0.0-beta11):
+    - Zip (~> 2.1.0)
+  - Zip (2.1.2)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
+  - smile_id (from `.symlinks/plugins/smile_id/ios`)
+
+SPEC REPOS:
+  trunk:
+    - SmileID
+    - Zip
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
+  smile_id:
+    :path: ".symlinks/plugins/smile_id/ios"
+
+SPEC CHECKSUMS:
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  integration_test: 13825b8a9334a850581300559b8839134b124670
+  smile_id: bdb66ff27813bcd34bc8cb50629d04fd2e997e7b
+  SmileID: fafe73ce2afa5b50d9c3b32e870b40562ff1827b
+  Zip: b3fef584b147b6e582b2256a9815c897d60ddc67
+
+PODFILE CHECKSUM: 929954fb8941cef06249e96bd1516fd2a22ed7a5
+
+COCOAPODS: 1.12.1

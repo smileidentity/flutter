@@ -1,7 +1,6 @@
 package com.smileidentity.flutter
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.runtime.Composable
 import com.smileidentity.SmileID
 import com.smileidentity.compose.DocumentVerification
@@ -38,6 +37,7 @@ internal class SmileIDDocumentVerification private constructor(
             userId = args["userId"] as? String ?: randomUserId(),
             jobId = args["jobId"] as? String ?: randomJobId(),
             showAttribution = args["showAttribution"] as? Boolean ?: true,
+            allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
             allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false,
             showInstructions = args["showInstructions"] as? Boolean ?: true,
             partnerParams = partnerParams.toImmutableMap(),

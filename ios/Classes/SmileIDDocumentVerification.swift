@@ -33,6 +33,7 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerif
             idAspectRatio: args["idAspectRatio"] as? Double,
             bypassSelfieCaptureWithFile: bypassSelfieCaptureWithFile,
             captureBothSides: args["captureBothSides"] as? Bool ?? true,
+            allowAgentMode: args["allowAgentMode"] as? Bool ?? false,
             allowGalleryUpload: args["allowGalleryUpload"] as? Bool ?? false,
             showInstructions: args["showInstructions"] as? Bool ?? true,
             showAttribution: args["showAttribution"] as? Bool ?? true,
