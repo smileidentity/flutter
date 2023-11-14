@@ -38,7 +38,8 @@ extension FlutterPartnerParams {
         PartnerParams(
             jobId: jobId,
             userId: userId,
-            jobType: jobType!.toRequest()
+            jobType: jobType!.toRequest(),
+            extras: [:]
         )
     }
 }
@@ -73,7 +74,7 @@ extension PartnerParams {
             jobType: jobType?.toResponse(),
             jobId: jobId,
             userId: userId,
-            extras: [:]
+            extras: extras
         )
     }
 }

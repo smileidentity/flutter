@@ -11,6 +11,7 @@ import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
+import kotlinx.collections.immutable.toImmutableMap
 import java.io.File
 
 internal class SmileIDDocumentVerification private constructor(
@@ -25,6 +26,7 @@ internal class SmileIDDocumentVerification private constructor(
 
     @Composable
     override fun Content(args: Map<String, Any?>) {
+        val partnerParams = args["partnerParams"] as? Map<String, String> ?: emptyMap()
         SmileID.DocumentVerification(
             countryCode = args["countryCode"] as String,
             documentType = args["documentType"] as? String,
@@ -35,8 +37,10 @@ internal class SmileIDDocumentVerification private constructor(
             userId = args["userId"] as? String ?: randomUserId(),
             jobId = args["jobId"] as? String ?: randomJobId(),
             showAttribution = args["showAttribution"] as? Boolean ?: true,
+            allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
             allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false,
             showInstructions = args["showInstructions"] as? Boolean ?: true,
+            partnerParams = partnerParams.toImmutableMap(),
         ) {
             when (it) {
                 is SmileIDResult.Success -> onSuccess(it.data)

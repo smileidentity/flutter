@@ -11,6 +11,7 @@ import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
+import kotlinx.collections.immutable.toImmutableMap
 
 internal class SmileIDSmartSelfieEnrollment private constructor(
     context: Context,
@@ -24,12 +25,14 @@ internal class SmileIDSmartSelfieEnrollment private constructor(
 
     @Composable
     override fun Content(args: Map<String, Any?>) {
+        val partnerParams = args["partnerParams"] as? Map<String, String> ?: emptyMap()
         SmileID.SmartSelfieEnrollment(
             userId = args["userId"] as? String ?: randomUserId(),
             jobId = args["jobId"] as? String ?: randomJobId(),
             allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
             showAttribution = args["showAttribution"] as? Boolean ?: true,
             showInstructions = args["showInstructions"] as? Boolean ?: true,
+            partnerParams = partnerParams.toImmutableMap(),
         ) {
             when (it) {
                 is SmileIDResult.Success -> onSuccess(it.data)
