@@ -26,7 +26,7 @@ internal class SmileIDDocumentVerification private constructor(
 
     @Composable
     override fun Content(args: Map<String, Any?>) {
-        val partnerParams = args["partnerParams"] as? Map<String, String> ?: emptyMap()
+        val extraPartnerParams = args["extraPartnerParams"] as? Map<String, String> ?: emptyMap()
         SmileID.DocumentVerification(
             countryCode = args["countryCode"] as String,
             documentType = args["documentType"] as? String,
@@ -40,7 +40,7 @@ internal class SmileIDDocumentVerification private constructor(
             allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
             allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false,
             showInstructions = args["showInstructions"] as? Boolean ?: true,
-            partnerParams = partnerParams.toImmutableMap(),
+            extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {
             when (it) {
                 is SmileIDResult.Success -> onSuccess(it.data)
