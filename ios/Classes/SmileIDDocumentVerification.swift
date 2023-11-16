@@ -65,10 +65,10 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerif
         let jsonData = try! encoder.encode(jobStatusResponse)
         let documentBackFileJson = documentBackImage.map{ "\"\($0.absoluteString)\"" } ?? "null"
         _channel.invokeMethod("onSuccess", arguments: """
-        "selfieFile": "\(selfie.absoluteString)",
+        {"selfieFile": "\(selfie.absoluteString)",
         "documentFrontFile": "\(documentFrontImage.absoluteString)",
         "documentBackFile": \(documentBackFileJson),
-        "jobStatusResponse": \(String(data: jsonData, encoding: .utf8)!)
+        "jobStatusResponse": \(String(data: jsonData, encoding: .utf8)!)}
         """)
     }
 
