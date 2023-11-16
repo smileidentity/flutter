@@ -28,7 +28,7 @@ class SmileIDSmartSelfieEnrollment extends StatelessWidget {
     bool allowAgentMode = false,
     bool showAttribution = true,
     bool showInstructions = true,
-    Map<String, String>? partnerParams,
+    Map<String, String>? extraPartnerParams,
     required Function(String resultJson) onSuccess,
     required Function(String errorMessage) onError,
   }) {
@@ -41,7 +41,7 @@ class SmileIDSmartSelfieEnrollment extends StatelessWidget {
         "allowAgentMode": allowAgentMode,
         "showAttribution": showAttribution,
         "showInstruction": showInstructions,
-        "partnerParams" : partnerParams,
+        "extraPartnerParams" : extraPartnerParams,
       },
     );
   }

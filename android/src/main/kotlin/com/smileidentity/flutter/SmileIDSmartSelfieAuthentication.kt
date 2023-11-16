@@ -25,13 +25,13 @@ internal class SmileIDSmartSelfieAuthentication private constructor(
 
     @Composable
     override fun Content(args: Map<String, Any?>) {
-        val partnerParams = args["partnerParams"] as? Map<String, String> ?: emptyMap()
+        val extraPartnerParams = args["extraPartnerParams"] as? Map<String, String> ?: emptyMap()
         SmileID.SmartSelfieAuthentication(
             userId = args["userId"] as? String ?: randomUserId(),
             jobId = args["jobId"] as? String ?: randomJobId(),
             allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
             showAttribution = args["showAttribution"] as? Boolean ?: true,
-            partnerParams = partnerParams.toImmutableMap(),
+            extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {
             when (it) {
                 is SmileIDResult.Success -> onSuccess(it.data)
