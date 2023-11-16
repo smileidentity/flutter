@@ -1,5 +1,19 @@
 # Changelog
 
+# 10.0.0-beta07
+- [Android] Added missing `showInstructions` on some Composables
+- [Android] Added missing proguard rule and updated consumer rules
+- [Android] Added missing parameters on Fragments
+- [Android] Fixed crash when duplicate images are attempted to be zipped
+- [Android] Fixed a bug where some attributes passed in were not respected
+- [Android] Fixed a bug when attempting to parcelize `SmileIDException`
+- [Android] Changed the OKHTTP call timeout to 60 seconds
+- [Android] Rename `partnerParams` to `extraPartnerParams`
+- [iOS] Consent Screen SwiftUI View
+- [iOS] Biometric KYC no longer bundles the Consent Screen
+- [iOS] Biometric KYC no longer bundles an ID Type selector or input
+- [Flutter] Fixed broken json decoding
+
 # 10.0.0-beta06
 - [Android] Added `extras` as optional params on all job types
 - [Android] Added `idAuthorityBypassPhoto` on Sandbox BiometricKYC jobs
