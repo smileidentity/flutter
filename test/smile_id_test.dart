@@ -23,13 +23,13 @@ void main() {
 
   test("authenticate call is proxied", () {
     final FlutterAuthenticationRequest request = MockFlutterAuthenticationRequest();
-    SmileID.authenticate(request);
+    SmileID.api.authenticate(request);
     verify(SmileID.platformInterface.authenticate(request));
   });
 
   test("enhanced kyc async is proxied", () {
     final FlutterEnhancedKycRequest request = MockFlutterEnhancedKycRequest();
-    SmileID.doEnhancedKycAsync(request);
+    SmileID.api.doEnhancedKycAsync(request);
     verify(SmileID.platformInterface.doEnhancedKycAsync(request));
   });
 }
