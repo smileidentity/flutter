@@ -87,11 +87,11 @@ class MainContent extends StatelessWidget {
         onPressed: () {
           SmileID.initialize();
           var userId = "<your user's user ID>";
-          SmileID.authenticate(FlutterAuthenticationRequest(
+          SmileID.api.authenticate(FlutterAuthenticationRequest(
             jobType: FlutterJobType.enhancedKyc,
             userId: userId,
           )).then((authResponse) => {
-            SmileID.doEnhancedKycAsync(FlutterEnhancedKycRequest(
+            SmileID.api.doEnhancedKycAsync(FlutterEnhancedKycRequest(
                 country: "GH",
                 idType: "DRIVERS_LICENSE",
                 idNumber: "B0000000",
