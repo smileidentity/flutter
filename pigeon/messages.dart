@@ -82,6 +82,180 @@ class FlutterAuthenticationResponse {
   });
 }
 
+class FlutterPrepUploadRequest {
+  final FlutterPartnerParams partnerParams;
+  final String? callbackUrl;
+  final String partnerId;
+  final String timestamp;
+  final String signature;
+
+  FlutterPrepUploadRequest({
+    required this.partnerParams,
+    this.callbackUrl,
+    required this.partnerId,
+    required this.timestamp,
+    required this.signature,
+  });
+}
+
+class FlutterPrepUploadResponse {
+  final String code;
+  final String refId;
+  final String uploadUrl;
+  final String smileJobId;
+
+  FlutterPrepUploadResponse({
+    required this.code,
+    required this.refId,
+    required this.uploadUrl,
+    required this.smileJobId,
+  });
+}
+
+class FlutterUploadRequest {
+  final List<FlutterUploadImageInfo?> images;
+  final FlutterIdInfo? idInfo;
+
+  FlutterUploadRequest({
+    required this.images,
+    this.idInfo,
+  });
+}
+
+class FlutterUploadImageInfo {
+  final FlutterImageType imageTypeId;
+  final String imageName;
+
+  FlutterUploadImageInfo({
+    required this.imageTypeId,
+    required this.imageName,
+  });
+}
+
+class FlutterIdInfo {
+  final String country;
+  final String? idType;
+  final String? idNumber;
+  final String? firstName;
+  final String? middleName;
+  final String? lastName;
+  final String? dob;
+  final String? bankCode;
+  final bool? entered;
+
+  FlutterIdInfo({
+    required this.country,
+    this.idType,
+    this.idNumber,
+    this.firstName,
+    this.middleName,
+    this.lastName,
+    this.dob,
+    this.bankCode,
+    this.entered,
+  });
+}
+
+enum FlutterImageType {
+  SelfieJpgFile,
+  IdCardJpgFile,
+  SelfieJpgBase64,
+  IdCardJpgBase64,
+  LivenessJpgFile,
+  IdCardRearJpgFile,
+  LivenessJpgBase64,
+  IdCardRearJpgBase64,
+}
+
+class FlutterEnhancedKycResponse {
+  final String smileJobId;
+  final FlutterPartnerParams partnerParams;
+  final String resultText;
+  final String resultCode;
+  final FlutterActions actions;
+  final String country;
+  final String idType;
+  final String idNumber;
+  final String? fullName;
+  final String? expirationDate;
+  final String? dob;
+  final String? base64Photo;
+
+  FlutterEnhancedKycResponse({
+    required this.smileJobId,
+    required this.partnerParams,
+    required this.resultText,
+    required this.resultCode,
+    required this.actions,
+    required this.country,
+    required this.idType,
+    required this.idNumber,
+    this.fullName,
+    this.expirationDate,
+    this.dob,
+    this.base64Photo,
+  });
+}
+
+class FlutterActions {
+  final FlutterActionResult documentCheck;
+  final FlutterActionResult humanReviewCompare;
+  final FlutterActionResult humanReviewDocumentCheck;
+  final FlutterActionResult humanReviewLivenessCheck;
+  final FlutterActionResult humanReviewSelfieCheck;
+  final FlutterActionResult humanReviewUpdateSelfie;
+  final FlutterActionResult livenessCheck;
+  final FlutterActionResult registerSelfie;
+  final FlutterActionResult returnPersonalInfo;
+  final FlutterActionResult selfieCheck;
+  final FlutterActionResult selfieProvided;
+  final FlutterActionResult selfieToIdAuthorityCompare;
+  final FlutterActionResult selfieToIdCardCompare;
+  final FlutterActionResult selfieToRegisteredSelfieCompare;
+  final FlutterActionResult updateRegisteredSelfieOnFile;
+  final FlutterActionResult verifyDocument;
+  final FlutterActionResult verifyIdNumber;
+
+  FlutterActions({
+    this.documentCheck = FlutterActionResult.NotApplicable,
+    this.humanReviewCompare = FlutterActionResult.NotApplicable,
+    this.humanReviewDocumentCheck = FlutterActionResult.NotApplicable,
+    this.humanReviewLivenessCheck = FlutterActionResult.NotApplicable,
+    this.humanReviewSelfieCheck = FlutterActionResult.NotApplicable,
+    this.humanReviewUpdateSelfie = FlutterActionResult.NotApplicable,
+    this.livenessCheck = FlutterActionResult.NotApplicable,
+    this.registerSelfie = FlutterActionResult.NotApplicable,
+    this.returnPersonalInfo = FlutterActionResult.NotApplicable,
+    this.selfieCheck = FlutterActionResult.NotApplicable,
+    this.selfieProvided = FlutterActionResult.NotApplicable,
+    this.selfieToIdAuthorityCompare = FlutterActionResult.NotApplicable,
+    this.selfieToIdCardCompare = FlutterActionResult.NotApplicable,
+    this.selfieToRegisteredSelfieCompare = FlutterActionResult.NotApplicable,
+    this.updateRegisteredSelfieOnFile = FlutterActionResult.NotApplicable,
+    this.verifyDocument = FlutterActionResult.NotApplicable,
+    this.verifyIdNumber = FlutterActionResult.NotApplicable,
+  });
+}
+
+enum FlutterActionResult {
+  Passed,
+  Completed,
+  Approved,
+  Verified,
+  ProvisionallyApproved,
+  Returned,
+  NotReturned,
+  Failed,
+  Rejected,
+  UnderReview,
+  UnableToDetermine,
+  NotApplicable,
+  NotVerified,
+  NotDone,
+  IssuerUnavailable,
+  Unknown, // Placeholder for unsupported values
+}
+
 /// [canAccess] Whether or not the ID type is enabled for the partner
 /// [consentRequired] Whether or not consent is required for the ID type
 class FlutterConsentInfo {
@@ -130,6 +304,446 @@ class FlutterEnhancedKycAsyncResponse {
   FlutterEnhancedKycAsyncResponse({required this.success});
 }
 
+class FlutterImageLinks {
+  final String? selfieImageUrl;
+  final String? error;
+
+  FlutterImageLinks({
+    this.selfieImageUrl,
+    this.error,
+  });
+}
+
+class FlutterAntifraud {
+  final List<FlutterSuspectUser?> suspectUsers;
+
+  FlutterAntifraud({required this.suspectUsers});
+}
+
+class FlutterSuspectUser {
+  final String reason;
+  final String userId;
+
+  FlutterSuspectUser({
+    required this.reason,
+    required this.userId,
+  });
+}
+
+class FlutterJobStatusRequest {
+  final String userId;
+  final String jobId;
+  final bool includeImageLinks;
+  final bool includeHistory;
+  final String partnerId;
+  final String timestamp;
+  final String signature;
+
+  FlutterJobStatusRequest({
+    required this.userId,
+    required this.jobId,
+    required this.includeImageLinks,
+    required this.includeHistory,
+    required this.partnerId,
+    required this.timestamp,
+    required this.signature,
+  });
+}
+
+class FlutterSmartSelfieJobResult {
+  final FlutterActions actions;
+  final String resultCode;
+  final String resultText;
+  final String smileJobId;
+  final FlutterPartnerParams partnerParams;
+  final double? confidence;
+
+  FlutterSmartSelfieJobResult({
+    required this.actions,
+    required this.resultCode,
+    required this.resultText,
+    required this.smileJobId,
+    required this.partnerParams,
+    this.confidence,
+  });
+}
+
+class FlutterSmartSelfieJobStatusResponse {
+  final String timestamp;
+  final bool jobComplete;
+  final bool jobSuccess;
+  final String code;
+  final FlutterSmartSelfieJobResult? result;
+  final String? resultString;
+  final List<FlutterSmartSelfieJobResult?>? history;
+  final FlutterImageLinks? imageLinks;
+
+  FlutterSmartSelfieJobStatusResponse({
+    required this.timestamp,
+    required this.jobComplete,
+    required this.jobSuccess,
+    required this.code,
+    this.result,
+    this.resultString,
+    this.history,
+    this.imageLinks,
+  });
+}
+
+class FlutterDocumentVerificationJobResult {
+  final FlutterActions actions;
+  final String resultCode;
+  final String resultText;
+  final String smileJobId;
+  final FlutterPartnerParams partnerParams;
+  final String? country;
+  final String? idType;
+  final String? idNumber;
+  final String? fullName;
+  final String? dob;
+  final String? gender;
+  final String? expirationDate;
+  final String? documentImageBase64;
+  final String? phoneNumber;
+  final String? phoneNumber2;
+  final String? address;
+
+  FlutterDocumentVerificationJobResult({
+    required this.actions,
+    required this.resultCode,
+    required this.resultText,
+    required this.smileJobId,
+    required this.partnerParams,
+    this.country,
+    this.idType,
+    this.idNumber,
+    this.fullName,
+    this.dob,
+    this.gender,
+    this.expirationDate,
+    this.documentImageBase64,
+    this.phoneNumber,
+    this.phoneNumber2,
+    this.address,
+  });
+}
+
+class FlutterDocumentVerificationJobStatusResponse {
+  final String timestamp;
+  final bool jobComplete;
+  final bool jobSuccess;
+  final String code;
+  final FlutterDocumentVerificationJobResult? result;
+  final String? resultString;
+  final List<FlutterDocumentVerificationJobResult?>? history;
+  final FlutterImageLinks? imageLinks;
+
+  FlutterDocumentVerificationJobStatusResponse({
+    required this.timestamp,
+    required this.jobComplete,
+    required this.jobSuccess,
+    required this.code,
+    this.result,
+    this.resultString,
+    this.history,
+    this.imageLinks,
+  });
+}
+
+class FlutterBiometricKycJobResult {
+  final FlutterActions actions;
+  final String resultCode;
+  final String resultText;
+  final String resultType;
+  final String smileJobId;
+  final FlutterPartnerParams partnerParams;
+  final FlutterAntifraud? antifraud;
+  final String? dob;
+  final String? photoBase64;
+  final String? gender;
+  final String? idType;
+  final String? address;
+  final String? country;
+  final String? documentImageBase64;
+  final Map<String?, String?>? fullData;
+  final String? fullName;
+  final String? idNumber;
+  final String? phoneNumber;
+  final String? phoneNumber2;
+  final String? expirationDate;
+  final String? secondaryIdNumber;
+  final bool? idNumberPreviouslyRegistered;
+  final List<String?>? previousRegistrantsUserIds;
+
+  FlutterBiometricKycJobResult({
+    required this.actions,
+    required this.resultCode,
+    required this.resultText,
+    required this.resultType,
+    required this.smileJobId,
+    required this.partnerParams,
+    this.antifraud,
+    this.dob,
+    this.photoBase64,
+    this.gender,
+    this.idType,
+    this.address,
+    this.country,
+    this.documentImageBase64,
+    this.fullData,
+    this.fullName,
+    this.idNumber,
+    this.phoneNumber,
+    this.phoneNumber2,
+    this.expirationDate,
+    this.secondaryIdNumber,
+    this.idNumberPreviouslyRegistered,
+    this.previousRegistrantsUserIds,
+  });
+}
+
+class FlutterBiometricKycJobStatusResponse {
+  final String timestamp;
+  final bool jobComplete;
+  final bool jobSuccess;
+  final String code;
+  final FlutterBiometricKycJobResult? result;
+  final String? resultString;
+  final List<FlutterBiometricKycJobResult?>? history;
+  final FlutterImageLinks? imageLinks;
+
+  FlutterBiometricKycJobStatusResponse({
+    required this.timestamp,
+    required this.jobComplete,
+    required this.jobSuccess,
+    required this.code,
+    this.result,
+    this.resultString,
+    this.history,
+    this.imageLinks,
+  });
+}
+
+class FlutterEnhancedDocumentVerificationJobResult {
+  final FlutterActions actions;
+  final String resultCode;
+  final String resultText;
+  final String resultType;
+  final String smileJobId;
+  final FlutterPartnerParams partnerParams;
+  final FlutterAntifraud? antifraud;
+  final String? dob;
+  final String? photoBase64;
+  final String? gender;
+  final String? idType;
+  final String? address;
+  final String? country;
+  final String? documentImageBase64;
+  final Map<String?, String?>? fullData;
+  final String? fullName;
+  final String? idNumber;
+  final String? phoneNumber;
+  final String? phoneNumber2;
+  final String? expirationDate;
+  final String? secondaryIdNumber;
+  final bool? idNumberPreviouslyRegistered;
+  final List<String?>? previousRegistrantsUserIds;
+
+  FlutterEnhancedDocumentVerificationJobResult({
+    required this.actions,
+    required this.resultCode,
+    required this.resultText,
+    required this.resultType,
+    required this.smileJobId,
+    required this.partnerParams,
+    this.antifraud,
+    this.dob,
+    this.photoBase64,
+    this.gender,
+    this.idType,
+    this.address,
+    this.country,
+    this.documentImageBase64,
+    this.fullData,
+    this.fullName,
+    this.idNumber,
+    this.phoneNumber,
+    this.phoneNumber2,
+    this.expirationDate,
+    this.secondaryIdNumber,
+    this.idNumberPreviouslyRegistered,
+    this.previousRegistrantsUserIds,
+  });
+}
+
+class FlutterEnhancedDocumentVerificationJobStatusResponse {
+  final String timestamp;
+  final bool jobComplete;
+  final bool jobSuccess;
+  final String code;
+  final FlutterEnhancedDocumentVerificationJobResult? result;
+  final String? resultString;
+  final List<FlutterEnhancedDocumentVerificationJobResult?>? history;
+  final FlutterImageLinks? imageLinks;
+
+  FlutterEnhancedDocumentVerificationJobStatusResponse({
+    required this.timestamp,
+    required this.jobComplete,
+    required this.jobSuccess,
+    required this.code,
+    this.result,
+    this.resultString,
+    this.history,
+    this.imageLinks,
+  });
+}
+
+class FlutterProductsConfigRequest {
+  final String partnerId;
+  final String timestamp;
+  final String signature;
+
+  FlutterProductsConfigRequest({
+    required this.partnerId,
+    required this.timestamp,
+    required this.signature,
+  });
+}
+
+class FlutterProductsConfigResponse {
+  final Map<String?, List<String?>?> consentRequired;
+  final FlutterIdSelection idSelection;
+
+  FlutterProductsConfigResponse({
+    required this.consentRequired,
+    required this.idSelection,
+  });
+}
+
+class FlutterIdSelection {
+  final Map<String?, List<String?>?> basicKyc;
+  final Map<String?, List<String?>?> biometricKyc;
+  final Map<String?, List<String?>?> enhancedKyc;
+  final Map<String?, List<String?>?> documentVerification;
+
+  FlutterIdSelection({
+    required this.basicKyc,
+    required this.biometricKyc,
+    required this.enhancedKyc,
+    required this.documentVerification,
+  });
+}
+
+class FlutterValidDocumentsResponse {
+  final List<FlutterValidDocument?> validDocuments;
+
+  FlutterValidDocumentsResponse({
+    required this.validDocuments,
+  });
+}
+
+class FlutterValidDocument {
+  final FlutterCountry country;
+  final List<FlutterIdType?> idTypes;
+
+  FlutterValidDocument({
+    required this.country,
+    required this.idTypes,
+  });
+}
+
+class FlutterCountry {
+  final String code;
+  final String continent;
+  final String name;
+
+  FlutterCountry({
+    required this.code,
+    required this.continent,
+    required this.name,
+  });
+}
+
+class FlutterIdType {
+  final String code;
+  final List<String?> example;
+  final bool hasBack;
+  final String name;
+
+  FlutterIdType({
+    required this.code,
+    required this.example,
+    required this.hasBack,
+    required this.name,
+  });
+}
+
+class FlutterServicesResponse {
+  final List<FlutterBankCode?> bankCodes;
+  final FlutterHostedWeb hostedWeb;
+
+  FlutterServicesResponse({
+    required this.bankCodes,
+    required this.hostedWeb,
+  });
+}
+
+class FlutterBankCode {
+  final String name;
+  final String code;
+
+  FlutterBankCode({
+    required this.name,
+    required this.code,
+  });
+}
+
+class FlutterHostedWeb {
+  final Map<String?, FlutterCountryInfo?> basicKyc;
+  final Map<String?, FlutterCountryInfo?> biometricKyc;
+  final Map<String?, FlutterCountryInfo?> enhancedKyc;
+  final Map<String?, FlutterCountryInfo?> documentVerification;
+  final Map<String?, FlutterCountryInfo?> enhancedKycSmartSelfie;
+  final Map<String?, FlutterCountryInfo?> enhancedDocumentVerification;
+
+  FlutterHostedWeb({
+    required this.basicKyc,
+    required this.biometricKyc,
+    required this.enhancedKyc,
+    required this.documentVerification,
+    required this.enhancedKycSmartSelfie,
+    required this.enhancedDocumentVerification,
+  });
+}
+
+class FlutterCountryInfo {
+  final String countryCode;
+  final String name;
+  final List<FlutterAvailableIdType?> availableIdTypes;
+
+  FlutterCountryInfo({
+    required this.countryCode,
+    required this.name,
+    required this.availableIdTypes,
+  });
+}
+
+class FlutterAvailableIdType {
+  final String idTypeKey;
+  final String label;
+  final List<String?> requiredFields;
+  final String? testData;
+  final String? idNumberRegex;
+
+  FlutterAvailableIdType({
+    required this.idTypeKey,
+    required this.label,
+    required this.requiredFields,
+    this.testData,
+    this.idNumberRegex,
+  });
+}
+
 @HostApi()
 abstract class SmileIDApi {
   void initialize();
@@ -142,5 +756,35 @@ abstract class SmileIDApi {
   FlutterAuthenticationResponse authenticate(FlutterAuthenticationRequest request);
 
   @async
+  FlutterPrepUploadResponse prepUpload(FlutterPrepUploadRequest request);
+
+  @async
+  void upload(String url, FlutterUploadRequest request);
+
+  @async
+  FlutterEnhancedKycResponse doEnhancedKyc(FlutterEnhancedKycRequest request);
+
+  @async
   FlutterEnhancedKycAsyncResponse doEnhancedKycAsync(FlutterEnhancedKycRequest request);
+
+  @async
+  FlutterSmartSelfieJobStatusResponse getSmartSelfieJobStatus(FlutterJobStatusRequest request);
+
+  @async
+  FlutterDocumentVerificationJobStatusResponse getDocumentVerificationJobStatus(FlutterJobStatusRequest request);
+
+  @async
+  FlutterBiometricKycJobStatusResponse getBiometricKycJobStatus(FlutterJobStatusRequest request);
+
+  @async
+  FlutterEnhancedDocumentVerificationJobStatusResponse getEnhancedDocumentVerificationJobStatus(FlutterJobStatusRequest request);
+
+  @async
+  FlutterProductsConfigResponse getProductsConfig(FlutterProductsConfigRequest request);
+
+  @async
+  FlutterValidDocumentsResponse getValidDocuments(FlutterProductsConfigRequest request);
+
+  @async
+  FlutterServicesResponse getServices();
 }
