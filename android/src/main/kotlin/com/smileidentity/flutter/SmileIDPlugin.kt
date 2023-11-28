@@ -96,7 +96,6 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         callback = callback,
     )
 
-
     override fun doEnhancedKyc(
         request: FlutterEnhancedKycRequest,
         callback: (Result<FlutterEnhancedKycResponse>) -> Unit,
@@ -104,7 +103,6 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         work = { SmileID.api.doEnhancedKyc(request.toRequest()).toResponse() },
         callback = callback,
     )
-
 
     override fun doEnhancedKycAsync(
         request: FlutterEnhancedKycRequest,
@@ -122,7 +120,6 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         callback = callback,
     )
 
-
     override fun getDocumentVerificationJobStatus(
         request: FlutterJobStatusRequest,
         callback: (Result<FlutterDocumentVerificationJobStatusResponse>) -> Unit,
@@ -130,7 +127,6 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         work = { SmileID.api.getDocumentVerificationJobStatus(request.toRequest()).toResponse() },
         callback = callback,
     )
-
 
     override fun getBiometricKycJobStatus(
         request: FlutterJobStatusRequest,
@@ -140,7 +136,6 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         callback = callback,
     )
 
-
     override fun getEnhancedDocumentVerificationJobStatus(
         request: FlutterJobStatusRequest,
         callback: (Result<FlutterEnhancedDocumentVerificationJobStatusResponse>) -> Unit,
@@ -148,7 +143,6 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         work = { SmileID.api.getEnhancedDocumentVerificationJobStatus(request.toRequest()).toResponse() },
         callback = callback,
     )
-
 
     override fun getProductsConfig(
         request: FlutterProductsConfigRequest,
@@ -158,7 +152,6 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         callback = callback,
     )
 
-
     override fun getValidDocuments(
         request: FlutterProductsConfigRequest,
         callback: (Result<FlutterValidDocumentsResponse>) -> Unit,
@@ -167,14 +160,12 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         callback = callback,
     )
 
-
     override fun getServices(
         callback: (Result<FlutterServicesResponse>) -> Unit,
     ) = launch(
         work = { SmileID.api.getServices().toResponse() },
         callback = callback,
     )
-
 
     /**
      * https://stackoverflow.com/a/62206235
