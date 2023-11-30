@@ -157,14 +157,14 @@ class FlutterIdInfo {
 }
 
 enum FlutterImageType {
-  SelfieJpgFile,
-  IdCardJpgFile,
-  SelfieJpgBase64,
-  IdCardJpgBase64,
-  LivenessJpgFile,
-  IdCardRearJpgFile,
-  LivenessJpgBase64,
-  IdCardRearJpgBase64,
+  selfieJpgFile,
+  idCardJpgFile,
+  selfieJpgBase64,
+  idCardJpgBase64,
+  livenessJpgFile,
+  idCardRearJpgFile,
+  livenessJpgBase64,
+  idCardRearJpgBase64,
 }
 
 class FlutterEnhancedKycResponse {
@@ -217,43 +217,43 @@ class FlutterActions {
   final FlutterActionResult verifyIdNumber;
 
   FlutterActions({
-    this.documentCheck = FlutterActionResult.NotApplicable,
-    this.humanReviewCompare = FlutterActionResult.NotApplicable,
-    this.humanReviewDocumentCheck = FlutterActionResult.NotApplicable,
-    this.humanReviewLivenessCheck = FlutterActionResult.NotApplicable,
-    this.humanReviewSelfieCheck = FlutterActionResult.NotApplicable,
-    this.humanReviewUpdateSelfie = FlutterActionResult.NotApplicable,
-    this.livenessCheck = FlutterActionResult.NotApplicable,
-    this.registerSelfie = FlutterActionResult.NotApplicable,
-    this.returnPersonalInfo = FlutterActionResult.NotApplicable,
-    this.selfieCheck = FlutterActionResult.NotApplicable,
-    this.selfieProvided = FlutterActionResult.NotApplicable,
-    this.selfieToIdAuthorityCompare = FlutterActionResult.NotApplicable,
-    this.selfieToIdCardCompare = FlutterActionResult.NotApplicable,
-    this.selfieToRegisteredSelfieCompare = FlutterActionResult.NotApplicable,
-    this.updateRegisteredSelfieOnFile = FlutterActionResult.NotApplicable,
-    this.verifyDocument = FlutterActionResult.NotApplicable,
-    this.verifyIdNumber = FlutterActionResult.NotApplicable,
+    this.documentCheck = FlutterActionResult.notApplicable,
+    this.humanReviewCompare = FlutterActionResult.notApplicable,
+    this.humanReviewDocumentCheck = FlutterActionResult.notApplicable,
+    this.humanReviewLivenessCheck = FlutterActionResult.notApplicable,
+    this.humanReviewSelfieCheck = FlutterActionResult.notApplicable,
+    this.humanReviewUpdateSelfie = FlutterActionResult.notApplicable,
+    this.livenessCheck = FlutterActionResult.notApplicable,
+    this.registerSelfie = FlutterActionResult.notApplicable,
+    this.returnPersonalInfo = FlutterActionResult.notApplicable,
+    this.selfieCheck = FlutterActionResult.notApplicable,
+    this.selfieProvided = FlutterActionResult.notApplicable,
+    this.selfieToIdAuthorityCompare = FlutterActionResult.notApplicable,
+    this.selfieToIdCardCompare = FlutterActionResult.notApplicable,
+    this.selfieToRegisteredSelfieCompare = FlutterActionResult.notApplicable,
+    this.updateRegisteredSelfieOnFile = FlutterActionResult.notApplicable,
+    this.verifyDocument = FlutterActionResult.notApplicable,
+    this.verifyIdNumber = FlutterActionResult.notApplicable,
   });
 }
 
 enum FlutterActionResult {
-  Passed,
-  Completed,
-  Approved,
-  Verified,
-  ProvisionallyApproved,
-  Returned,
-  NotReturned,
-  Failed,
-  Rejected,
-  UnderReview,
-  UnableToDetermine,
-  NotApplicable,
-  NotVerified,
-  NotDone,
-  IssuerUnavailable,
-  Unknown, // Placeholder for unsupported values
+  passed,
+  completed,
+  approved,
+  verified,
+  provisionallyApproved,
+  returned,
+  notReturned,
+  failed,
+  rejected,
+  underReview,
+  unableToDetermine,
+  notApplicable,
+  notVerified,
+  notDone,
+  issuerUnavailable,
+  unknown, // Placeholder for unsupported values
 }
 
 /// [canAccess] Whether or not the ID type is enabled for the partner
