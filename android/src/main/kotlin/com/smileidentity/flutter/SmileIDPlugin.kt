@@ -140,7 +140,9 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         request: FlutterJobStatusRequest,
         callback: (Result<FlutterEnhancedDocumentVerificationJobStatusResponse>) -> Unit,
     ) = launch(
-        work = { SmileID.api.getEnhancedDocumentVerificationJobStatus(request.toRequest()).toResponse() },
+        work = {
+            SmileID.api.getEnhancedDocumentVerificationJobStatus(request.toRequest()).toResponse()
+        },
         callback = callback,
     )
 
