@@ -30,6 +30,6 @@ void main() {
   test("enhanced kyc async is proxied", () {
     final FlutterEnhancedKycRequest request = MockFlutterEnhancedKycRequest();
     SmileID.api.doEnhancedKycAsync(request);
-    verify(SmileID.platformInterface.doEnhancedKycAsync(request));
+    verify(SmileID.api.platformInterface.doEnhancedKycAsync(request));
   });
 }
