@@ -99,7 +99,7 @@ extension FlutterUploadRequest {
             idInfo: idInfo?.toRequest()
         )
         let dataUrl = try LocalStorage.toZip(uploadRequest: uploadRequest)
-        return Data(contentsOf: dataUrl)
+        return try Data(contentsOf: dataUrl)
     }
 }
 
