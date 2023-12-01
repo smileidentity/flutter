@@ -1,38 +1,5 @@
 import SmileID
 
-extension FlutterEnhancedKycRequest {
-    func toRequest() -> EnhancedKycRequest {
-        EnhancedKycRequest(
-            country: country,
-            idType: idType,
-            idNumber: idNumber,
-            firstName: firstName,
-            middleName: middleName,
-            lastName: lastName,
-            dob: dob,
-            phoneNumber: phoneNumber,
-            bankCode: bankCode,
-            callbackUrl: callbackUrl,
-            partnerParams: partnerParams.toRequest(),
-            sourceSdk: "ios (flutter)",
-            timestamp: timestamp,
-            signature: signature
-        )
-    }
-}
-
-extension FlutterEnhancedKycAsyncResponse {
-    func toResponse() ->  EnhancedKycAsyncResponse {
-        EnhancedKycAsyncResponse(success: success)
-    }
-}
-
-extension EnhancedKycAsyncResponse {
-    func toFlutterResponse() -> FlutterEnhancedKycAsyncResponse {
-        FlutterEnhancedKycAsyncResponse(success: success)
-    }
-}
-
 extension FlutterPartnerParams {
     func toRequest() -> PartnerParams {
         PartnerParams(
@@ -50,7 +17,7 @@ extension PartnerParams {
             jobType: jobType?.toResponse(),
             jobId: jobId,
             userId: userId,
-            extras: extras?.compactMapValues { $0 }
+            extras: extras
         )
     }
 }
@@ -74,18 +41,7 @@ extension AuthenticationResponse {
             success: success,
             signature: signature,
             timestamp: timestamp,
-            partnerParams: partnerParams.toFlutterPartnerParams()
-        )
-    }
-}
-
-extension PartnerParams {
-    func toFlutterPartnerParams() -> FlutterPartnerParams {
-        FlutterPartnerParams(
-            jobType: jobType?.toResponse(),
-            jobId: jobId,
-            userId: userId,
-            extras: extras
+            partnerParams: partnerParams.toResponse()
         )
     }
 }
@@ -206,12 +162,7 @@ extension FlutterEnhancedKycRequest {
             phoneNumber: phoneNumber,
             bankCode: bankCode,
             callbackUrl: callbackUrl,
-            partnerParams: PartnerParams(
-                jobId: partnerParams.jobId,
-                userId: partnerParams.userId,
-                jobType: partnerParams.jobType?.toRequest(),
-                extras: partnerParams.extras?.compactMapValues { $0 }
-            ),
+            partnerParams: partnerParams.toRequest(),
             sourceSdk: "ios (flutter)",
             timestamp: timestamp,
             signature: signature
@@ -223,10 +174,10 @@ extension EnhancedKycResponse {
     func toResponse() -> FlutterEnhancedKycResponse {
         FlutterEnhancedKycResponse(
             smileJobId: smileJobId,
-            partnerParams: partnerParams.toFlutterPartnerParams(),
+            partnerParams: partnerParams.toResponse(),
             resultText: resultText,
             resultCode: resultCode,
-            actions: actions.toFlutterActions(),
+            actions: actions.toResponse(),
             country: country,
             idType: idType,
             idNumber: idNumber,
@@ -395,7 +346,7 @@ extension DocumentVerificationJobResult {
             resultCode: resultCode,
             resultText: resultText,
             smileJobId: smileJobId,
-            partnerParams: partnerParams.toFlutterPartnerParams(),
+            partnerParams: partnerParams.toResponse(),
             country: country,
             idType: idType,
             idNumber: idNumber,
@@ -433,7 +384,7 @@ extension BiometricKycJobResult {
             resultText: resultText,
             resultType: "",
             smileJobId: smileJobId,
-            partnerParams: partnerParams.toFlutterPartnerParams(),
+            partnerParams: partnerParams.toResponse(),
             antifraud: antifraud?.toResponse(),
             dob: dob,
             photoBase64: photoBase64,
@@ -442,7 +393,7 @@ extension BiometricKycJobResult {
             address: address,
             country: country,
             documentImageBase64: documentImageBase64,
-            fullData: fullData?.compactMapValues { $0 },
+            fullData: fullData,
             fullName: fullName,
             idNumber: idNumber,
             phoneNumber: phoneNumber,
@@ -474,7 +425,7 @@ extension EnhancedDocumentVerificationJobResult {
             resultText: resultText,
             resultType: "",
             smileJobId: smileJobId,
-            partnerParams: partnerParams.toFlutterPartnerParams(),
+            partnerParams: partnerParams.toResponse(),
             antifraud: antifraud?.toResponse(),
             dob: dob,
             photoBase64: photoBase64,
@@ -483,7 +434,7 @@ extension EnhancedDocumentVerificationJobResult {
             address: address,
             country: country,
             documentImageBase64: documentImageBase64,
-            fullData: fullData?.compactMapValues { $0 },
+            fullData: fullData,
             fullName: fullName,
             idNumber: idNumber,
             phoneNumber: phoneNumber,

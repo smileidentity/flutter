@@ -136,7 +136,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
                     break
                 }
             }, receiveValue: { response in
-                completion(.success(response.toFlutterResponse()))
+                completion(.success(response.toResponse()))
             })
             .store(in: &subscribers)
     }
