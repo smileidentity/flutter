@@ -191,9 +191,7 @@ extension EnhancedKycResponse {
 
 extension EnhancedKycAsyncResponse {
     func toResponse() -> FlutterEnhancedKycAsyncResponse {
-        FlutterEnhancedKycAsyncResponse(
-            success: success
-        )
+        FlutterEnhancedKycAsyncResponse(success: success)
     }
 }
 
