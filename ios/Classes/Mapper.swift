@@ -138,8 +138,8 @@ extension PrepUploadResponse {
 
 extension FlutterUploadRequest {
     func toRequest() throws -> Data {
-        Data(contentsOf: try LocalStorage.toZip(UploadRequest(
-            images: images.map { $0.toRequest() },
+        Data(contentsOf: try LocalStorage.toZip(uploadRequest: UploadRequest(
+            images: images.map { $0?.toRequest() },
             idInfo: idInfo?.toRequest()
         )))
     }
@@ -233,7 +233,7 @@ extension EnhancedKycResponse {
             fullName: fullName,
             expirationDate: expirationDate,
             dob: dob,
-            base64Photo: base64Photo
+            base64Photo: photo
         )
     }
 }
@@ -389,7 +389,7 @@ extension DocumentVerificationJobStatusResponse {
 }
 
 extension DocumentVerificationJobResult {
-    func toResponse() -> DocumentVerificationJobResult {
+    func toResponse() -> FlutterDocumentVerificationJobResult {
         FlutterDocumentVerificationJobResult(
             actions: actions.toResponse(),
             resultCode: resultCode,
@@ -442,7 +442,7 @@ extension BiometricKycJobResult {
             address: address,
             country: country,
             documentImageBase64: documentImageBase64,
-            fullData: fullData?.mapKeys { $0 },
+            fullData: fullData?.compactMapValues { $0 },
             fullName: fullName,
             idNumber: idNumber,
             phoneNumber: phoneNumber,
@@ -483,7 +483,7 @@ extension EnhancedDocumentVerificationJobResult {
             address: address,
             country: country,
             documentImageBase64: documentImageBase64,
-            fullData: fullData?.mapKeys { $0 },
+            fullData: fullData?.compactMapValues { $0 },
             fullName: fullName,
             idNumber: idNumber,
             phoneNumber: phoneNumber,
@@ -496,9 +496,9 @@ extension EnhancedDocumentVerificationJobResult {
 extension FlutterProductsConfigRequest {
     func toRequest() -> ProductsConfigRequest {
         ProductsConfigRequest(
-            partnerId: partnerId,
             timestamp: timestamp,
-            signature: signature
+            signature: signature,
+            partnerId: partnerId
         )
     }
 }

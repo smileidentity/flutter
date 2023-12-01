@@ -163,7 +163,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         request: FlutterJobStatusRequest,
         completion: @escaping (Result<FlutterDocumentVerificationJobStatusResponse, Error>) -> Void
     ) {
-        SmileID.api.JobStatus(request: request.toRequest())
+        SmileID.api.getJobStatus(request: request.toRequest())
             .sink(receiveCompletion: { status in
                 switch status {
                 case .failure(let error):
