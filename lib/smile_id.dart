@@ -2,10 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import 'messages.g.dart';
+import 'smile_id_service.dart';
 
 class SmileID {
   @visibleForTesting
   static SmileIDApi platformInterface = SmileIDApi();
+  static SmileIDService api = SmileIDService(platformInterface);
 
   static void initialize() {
     platformInterface.initialize();
@@ -18,15 +20,4 @@ class SmileID {
   static void setCallbackUrl({required Uri callbackUrl}) {
     platformInterface.setCallbackUrl(callbackUrl.toString());
   }
-
-  static Future<FlutterAuthenticationResponse?> authenticate(FlutterAuthenticationRequest request) {
-    return platformInterface.authenticate(request);
-  }
-
-  static Future<FlutterEnhancedKycAsyncResponse?> doEnhancedKycAsync(
-      FlutterEnhancedKycRequest request) {
-    return platformInterface.doEnhancedKycAsync(request);
-  }
-
-// TODO: move authentication and doEnhancedKycAsync to an "api" object to mirror native API
 }

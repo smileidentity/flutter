@@ -2,8 +2,21 @@ package com.smileidentity.flutter
 
 import FlutterAuthenticationRequest
 import FlutterAuthenticationResponse
+import FlutterBiometricKycJobStatusResponse
+import FlutterDocumentVerificationJobStatusResponse
+import FlutterEnhancedDocumentVerificationJobStatusResponse
 import FlutterEnhancedKycAsyncResponse
 import FlutterEnhancedKycRequest
+import FlutterEnhancedKycResponse
+import FlutterJobStatusRequest
+import FlutterPrepUploadRequest
+import FlutterPrepUploadResponse
+import FlutterProductsConfigRequest
+import FlutterProductsConfigResponse
+import FlutterServicesResponse
+import FlutterSmartSelfieJobStatusResponse
+import FlutterUploadRequest
+import FlutterValidDocumentsResponse
 import SmileIDApi
 import android.app.Activity
 import android.content.Context
@@ -66,11 +79,93 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         callback = callback,
     )
 
+    override fun prepUpload(
+        request: FlutterPrepUploadRequest,
+        callback: (Result<FlutterPrepUploadResponse>) -> Unit,
+    ) = launch(
+        work = { SmileID.api.prepUpload(request.toRequest()).toResponse() },
+        callback = callback,
+    )
+
+    override fun upload(
+        url: String,
+        request: FlutterUploadRequest,
+        callback: (Result<Unit>) -> Unit,
+    ) = launch(
+        work = { SmileID.api.upload(url, request.toRequest()) },
+        callback = callback,
+    )
+
+    override fun doEnhancedKyc(
+        request: FlutterEnhancedKycRequest,
+        callback: (Result<FlutterEnhancedKycResponse>) -> Unit,
+    ) = launch(
+        work = { SmileID.api.doEnhancedKyc(request.toRequest()).toResponse() },
+        callback = callback,
+    )
+
     override fun doEnhancedKycAsync(
         request: FlutterEnhancedKycRequest,
         callback: (Result<FlutterEnhancedKycAsyncResponse>) -> Unit,
     ) = launch(
         work = { SmileID.api.doEnhancedKycAsync(request.toRequest()).toResponse() },
+        callback = callback,
+    )
+
+    override fun getSmartSelfieJobStatus(
+        request: FlutterJobStatusRequest,
+        callback: (Result<FlutterSmartSelfieJobStatusResponse>) -> Unit,
+    ) = launch(
+        work = { SmileID.api.getSmartSelfieJobStatus(request.toRequest()).toResponse() },
+        callback = callback,
+    )
+
+    override fun getDocumentVerificationJobStatus(
+        request: FlutterJobStatusRequest,
+        callback: (Result<FlutterDocumentVerificationJobStatusResponse>) -> Unit,
+    ) = launch(
+        work = { SmileID.api.getDocumentVerificationJobStatus(request.toRequest()).toResponse() },
+        callback = callback,
+    )
+
+    override fun getBiometricKycJobStatus(
+        request: FlutterJobStatusRequest,
+        callback: (Result<FlutterBiometricKycJobStatusResponse>) -> Unit,
+    ) = launch(
+        work = { SmileID.api.getBiometricKycJobStatus(request.toRequest()).toResponse() },
+        callback = callback,
+    )
+
+    override fun getEnhancedDocumentVerificationJobStatus(
+        request: FlutterJobStatusRequest,
+        callback: (Result<FlutterEnhancedDocumentVerificationJobStatusResponse>) -> Unit,
+    ) = launch(
+        work = {
+            SmileID.api.getEnhancedDocumentVerificationJobStatus(request.toRequest()).toResponse()
+        },
+        callback = callback,
+    )
+
+    override fun getProductsConfig(
+        request: FlutterProductsConfigRequest,
+        callback: (Result<FlutterProductsConfigResponse>) -> Unit,
+    ) = launch(
+        work = { SmileID.api.getProductsConfig(request.toRequest()).toResponse() },
+        callback = callback,
+    )
+
+    override fun getValidDocuments(
+        request: FlutterProductsConfigRequest,
+        callback: (Result<FlutterValidDocumentsResponse>) -> Unit,
+    ) = launch(
+        work = { SmileID.api.getValidDocuments(request.toRequest()).toResponse() },
+        callback = callback,
+    )
+
+    override fun getServices(
+        callback: (Result<FlutterServicesResponse>) -> Unit,
+    ) = launch(
+        work = { SmileID.api.getServices().toResponse() },
         callback = callback,
     )
 

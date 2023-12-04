@@ -8,6 +8,9 @@ include: package:flutter_lints/flutter.yaml
 #  Core (around 30 rules) - https://github.com/dart-lang/lints/blob/main/lib/core.yaml
 #  Recommended (around 55 rules) - https://github.com/dart-lang/lints/blob/main/lib/recommended.yaml
 
+analyzer:
+  exclude: [lib/messages.g.dart]
+
 linter:
   rules:
     - avoid_empty_else
