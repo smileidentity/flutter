@@ -1,6 +1,6 @@
 # Changelog
 
-## 10.0.0-beta08 (unreleased)
+## 10.0.0-beta08
 - Add networking APIs
 
 ## 10.0.0-beta07
@@ -31,9 +31,9 @@
 - [Android] Fix bug where showAttirubtion was not respected on the Consent Denied screen
 - [Android] Increased selfie capture resolution to 640px
 - [Android] Fixed a bug where the document preview showed a black box for some older devices
-- 
+
 ## 10.0.0-beta04
-- [Android] Fix bug where Composable state did not get reset 
+- [Android] Fix bug where Composable state did not get reset
 
 ## 10.0.0-beta03
 - Allow setEnvironment({required bool useSandbox}) to enable sandbox or production environment
