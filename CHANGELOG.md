@@ -1,5 +1,8 @@
 # Changelog
 
+## 10.0.0
+- No changes
+
 ## 10.0.0-beta08
 - Add networking APIs
 
