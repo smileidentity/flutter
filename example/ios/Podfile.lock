@@ -2,10 +2,10 @@ PODS:
   - Flutter (1.0.0)
   - integration_test (0.0.1):
     - Flutter
-  - smile_id (10.0.0-beta13):
+  - smile_id (10.0.0):
     - Flutter
-    - SmileID (= 10.0.0-beta13)
-  - SmileID (10.0.0-beta13):
+    - SmileID (= 10.0.0)
+  - SmileID (10.0.0):
     - Zip (~> 2.1.0)
   - Zip (2.1.2)
 
@@ -30,8 +30,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   integration_test: 13825b8a9334a850581300559b8839134b124670
-  smile_id: d9f869d21a4bb02beb3ae759269435b191632aca
-  SmileID: b4f757dc21f202afae6e7651a19b3bc9c9af3e2d
+  smile_id: dccd44f8f5c88784da6f9ba9762610860133cc98
+  SmileID: 7fa1d27751921a1fb2521d35c28991ded73fdbf5
   Zip: b3fef584b147b6e582b2256a9815c897d60ddc67
 
 PODFILE CHECKSUM: 929954fb8941cef06249e96bd1516fd2a22ed7a5
