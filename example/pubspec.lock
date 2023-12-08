@@ -181,7 +181,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "10.0.0-beta07"
+    version: "10.0.0"
   source_span:
     dependency: transitive
     description:
