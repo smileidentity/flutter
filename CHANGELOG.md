@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.0.1
+- Added `showInstructions` parameter to SmartSelfie Authentication
+- Fixed issue where `showInstructions` parameter was not respected on SmartSelfie Enrollment
+
 ## 10.0.0
 - No changes
 

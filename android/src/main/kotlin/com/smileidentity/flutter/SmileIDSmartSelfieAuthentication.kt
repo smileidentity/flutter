@@ -31,6 +31,7 @@ internal class SmileIDSmartSelfieAuthentication private constructor(
             jobId = args["jobId"] as? String ?: randomJobId(),
             allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
             showAttribution = args["showAttribution"] as? Boolean ?: true,
+            showInstructions = args["showInstructions"] as? Boolean ?: true,
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {
             when (it) {
