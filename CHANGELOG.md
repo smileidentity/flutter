@@ -1,5 +1,8 @@
 # Changelog
 
+## 10.0.2
+- Bump iOS SDK to 10.0.2 to fix white cutout issue on iOS 14 devices
+
 ## 10.0.1
 - Added `showInstructions` parameter to SmartSelfie Authentication
 - Fixed issue where `showInstructions` parameter was not respected on SmartSelfie Enrollment
