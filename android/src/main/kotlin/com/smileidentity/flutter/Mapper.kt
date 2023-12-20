@@ -211,12 +211,7 @@ fun FlutterEnhancedKycRequest.toRequest() = EnhancedKycRequest(
     phoneNumber = phoneNumber,
     bankCode = bankCode,
     callbackUrl = callbackUrl,
-    partnerParams = PartnerParams(
-        jobType = partnerParams.jobType?.toRequest(),
-        jobId = partnerParams.jobId,
-        userId = partnerParams.userId,
-        extras = convertNullableMapToNonNull(partnerParams.extras),
-    ),
+    partnerParams = partnerParams.toRequest(),
     sourceSdk = "android (flutter)",
     timestamp = timestamp,
     signature = signature,
