@@ -1,8 +1,5 @@
 # Changelog
 
-## 10.0.3
-- Added `allowNewEnroll` on SmartSelfie, BiometricKYC, DocV and EnhancedDocV
-
 ## 10.0.2
 - Bump iOS SDK to 10.0.2 to fix white cutout issue on iOS 14 devices
 
