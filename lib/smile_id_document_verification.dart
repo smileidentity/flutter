@@ -30,7 +30,6 @@ class SmileIDDocumentVerification extends StatelessWidget {
     // the native platform code, since that's where the random ID creation happens
     String? userId,
     String? jobId,
-    bool allowNewEnroll = false,
     bool showAttribution = true,
     bool allowGalleryUpload = false,
     bool allowAgentMode = false,
@@ -50,7 +49,6 @@ class SmileIDDocumentVerification extends StatelessWidget {
         "bypassSelfieCaptureWithFile": bypassSelfieCaptureWithFile,
         "userId": userId,
         "jobId": jobId,
-        "allowNewEnroll": allowNewEnroll,
         "showAttribution": showAttribution,
         "allowAgentMode": allowAgentMode,
         "allowGalleryUpload": allowGalleryUpload,
