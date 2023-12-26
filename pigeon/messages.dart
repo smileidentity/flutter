@@ -82,7 +82,6 @@ class FlutterAuthenticationResponse {
   });
 }
 
-// TODO - Add allowNewEnroll when its fixed by Michael
 class FlutterPrepUploadRequest {
   final FlutterPartnerParams partnerParams;
   final String? callbackUrl;
