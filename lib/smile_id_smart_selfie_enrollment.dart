@@ -25,6 +25,7 @@ class SmileIDSmartSelfieEnrollment extends StatelessWidget {
     // the native platform code, since that's where the random ID creation happens
     String? userId,
     String? jobId,
+    bool allowNewEnroll = false,
     bool allowAgentMode = false,
     bool showAttribution = true,
     bool showInstructions = true,
@@ -38,6 +39,7 @@ class SmileIDSmartSelfieEnrollment extends StatelessWidget {
       creationParams: {
         "userId": userId,
         "jobId": jobId,
+        "allowNewEnroll": allowNewEnroll,
         "allowAgentMode": allowAgentMode,
         "showAttribution": showAttribution,
         "showInstructions": showInstructions,
