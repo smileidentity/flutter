@@ -85,6 +85,7 @@ class FlutterAuthenticationResponse {
 class FlutterPrepUploadRequest {
   final FlutterPartnerParams partnerParams;
   final String? callbackUrl;
+  final bool allowNewEnroll;
   final String partnerId;
   final String timestamp;
   final String signature;
@@ -92,6 +93,7 @@ class FlutterPrepUploadRequest {
   FlutterPrepUploadRequest({
     required this.partnerParams,
     this.callbackUrl,
+    required this.allowNewEnroll,
     required this.partnerId,
     required this.timestamp,
     required this.signature,
