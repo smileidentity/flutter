@@ -154,6 +154,7 @@ fun AuthenticationResponse.toResponse() = FlutterAuthenticationResponse(
 fun FlutterPrepUploadRequest.toRequest() = PrepUploadRequest(
     partnerParams = partnerParams.toRequest(),
     callbackUrl = callbackUrl,
+    allowNewEnroll = allowNewEnroll.toString(),
     partnerId = partnerId,
     sourceSdk = "android (flutter)",
     timestamp = timestamp,
