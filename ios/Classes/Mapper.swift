@@ -74,6 +74,7 @@ extension FlutterPrepUploadRequest {
         PrepUploadRequest(
             partnerParams: partnerParams.toRequest(),
             callbackUrl: callbackUrl,
+            allowNewEnroll: String(allowNewEnroll),
             sourceSdk: "ios (flutter)",
             timestamp: timestamp,
             signature: signature
