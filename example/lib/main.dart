@@ -101,7 +101,7 @@ class MainContent extends StatelessWidget {
                             idType: "DRIVERS_LICENSE",
                             idNumber: "B0000000",
                             callbackUrl:
-                                "https://webhook.site/a3d19f24-769a-46f2-997c-d186c3ae70ea",
+                                "https://somedummyurl.com/demo",
                             partnerParams: FlutterPartnerParams(
                               jobType: FlutterJobType.enhancedKyc,
                               jobId: userId,
