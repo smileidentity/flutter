@@ -1,5 +1,8 @@
 # Changelog
 
+## 10.0.4
+- Support for Biometric KYC, exposed as a `SmileIDBiometricKYC` Widget
+
 ## 10.0.3
 - Added `allowNewEnroll` on SmartSelfie, BiometricKYC, DocV and EnhancedDocV
 - [iOS] Fixed missing callbackUrl
