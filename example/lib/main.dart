@@ -3,9 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:smile_id/messages.g.dart';
 import 'package:smile_id/smile_id.dart';
+import 'package:smile_id/smile_id_biometric_kyc.dart';
 import 'package:smile_id/smile_id_document_verification.dart';
-import 'package:smile_id/smile_id_smart_selfie_enrollment.dart';
 import 'package:smile_id/smile_id_smart_selfie_authentication.dart';
+import 'package:smile_id/smile_id_smart_selfie_enrollment.dart';
 
 // ignore_for_file: avoid_print
 
@@ -21,7 +22,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     super.initState();
@@ -50,6 +50,7 @@ class _MyAppState extends State<MyApp> {
 
 class MyScaffold extends StatelessWidget {
   final Widget body;
+
   const MyScaffold({super.key, required this.body});
 
   @override
@@ -76,7 +77,8 @@ class MainContent extends StatelessWidget {
         enhancedKycAsyncButton(),
         documentVerificationButton(context),
         smartSelfieEnrollmentButton(context),
-        smartSelfieAuthenticationButton(context)
+        smartSelfieAuthenticationButton(context),
+        biometricKYCButton(context)
       ],
     )));
   }
@@ -87,26 +89,29 @@ class MainContent extends StatelessWidget {
         onPressed: () {
           SmileID.initialize();
           var userId = "<your user's user ID>";
-          SmileID.api.authenticate(FlutterAuthenticationRequest(
-            jobType: FlutterJobType.enhancedKyc,
-            userId: userId,
-          )).then((authResponse) => {
-            SmileID.api.doEnhancedKycAsync(FlutterEnhancedKycRequest(
-                country: "GH",
-                idType: "DRIVERS_LICENSE",
-                idNumber: "B0000000",
-                callbackUrl: "https://webhook.site/a3d19f24-769a-46f2-997c-d186c3ae70ea",
-                partnerParams: FlutterPartnerParams(
-                  jobType: FlutterJobType.enhancedKyc,
-                  jobId: userId,
-                  userId: userId,
-                ),
-                timestamp: authResponse!.timestamp,
-                signature: authResponse.signature
-            ))
-          }, onError: (error) => {print("error: $error")});
-        }
-    );
+          SmileID.api
+              .authenticate(FlutterAuthenticationRequest(
+                jobType: FlutterJobType.enhancedKyc,
+                userId: userId,
+              ))
+              .then(
+                  (authResponse) => {
+                        SmileID.api.doEnhancedKycAsync(FlutterEnhancedKycRequest(
+                            country: "GH",
+                            idType: "DRIVERS_LICENSE",
+                            idNumber: "B0000000",
+                            callbackUrl:
+                                "https://webhook.site/a3d19f24-769a-46f2-997c-d186c3ae70ea",
+                            partnerParams: FlutterPartnerParams(
+                              jobType: FlutterJobType.enhancedKyc,
+                              jobId: userId,
+                              userId: userId,
+                            ),
+                            timestamp: authResponse!.timestamp,
+                            signature: authResponse.signature))
+                      },
+                  onError: (error) => {print("error: $error")});
+        });
   }
 
   Widget documentVerificationButton(BuildContext context) {
@@ -117,20 +122,20 @@ class MainContent extends StatelessWidget {
           MaterialPageRoute<void>(
             builder: (BuildContext context) => MyScaffold(
                 body: SmileIDDocumentVerification(
-                  countryCode: "GH",
-                  documentType: "DRIVERS_LICENSE",
-                  onSuccess: (String? result) {
-                    // Your success handling logic
-                    final snackBar = SnackBar(content: Text("Success: $result"));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    Navigator.of(context).pop();
-                  },
-                  onError: (String errorMessage) {
-                    // Your error handling logic
-                    final snackBar = SnackBar(content: Text("Error: $errorMessage"));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    Navigator.of(context).pop();
-                  },
+              countryCode: "GH",
+              documentType: "DRIVERS_LICENSE",
+              onSuccess: (String? result) {
+                // Your success handling logic
+                final snackBar = SnackBar(content: Text("Success: $result"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.of(context).pop();
+              },
+              onError: (String errorMessage) {
+                // Your error handling logic
+                final snackBar = SnackBar(content: Text("Error: $errorMessage"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.of(context).pop();
+              },
             )),
           ),
         );
@@ -146,19 +151,19 @@ class MainContent extends StatelessWidget {
           MaterialPageRoute<void>(
             builder: (BuildContext context) => MyScaffold(
                 body: SmileIDSmartSelfieEnrollment(
-                  onSuccess: (String? result) {
-                    // Your success handling logic
-                    final snackBar = SnackBar(content: Text("Success: $result"));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    Navigator.of(context).pop();
-                  },
-                  onError: (String errorMessage) {
-                    // Your error handling logic
-                    final snackBar = SnackBar(content: Text("Error: $errorMessage"));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    Navigator.of(context).pop();
-                  },
-                )),
+              onSuccess: (String? result) {
+                // Your success handling logic
+                final snackBar = SnackBar(content: Text("Success: $result"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.of(context).pop();
+              },
+              onError: (String errorMessage) {
+                // Your error handling logic
+                final snackBar = SnackBar(content: Text("Error: $errorMessage"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.of(context).pop();
+              },
+            )),
           ),
         );
       },
@@ -173,19 +178,49 @@ class MainContent extends StatelessWidget {
           MaterialPageRoute<void>(
             builder: (BuildContext context) => MyScaffold(
                 body: SmileIDSmartSelfieAuthentication(
-                  onSuccess: (String? result) {
-                    // Your success handling logic
-                    final snackBar = SnackBar(content: Text("Success: $result"));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    Navigator.of(context).pop();
-                  },
-                  onError: (String errorMessage) {
-                    // Your error handling logic
-                    final snackBar = SnackBar(content: Text("Error: $errorMessage"));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    Navigator.of(context).pop();
-                  },
-                )),
+              onSuccess: (String? result) {
+                // Your success handling logic
+                final snackBar = SnackBar(content: Text("Success: $result"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.of(context).pop();
+              },
+              onError: (String errorMessage) {
+                // Your error handling logic
+                final snackBar = SnackBar(content: Text("Error: $errorMessage"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.of(context).pop();
+              },
+            )),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget biometricKYCButton(BuildContext context) {
+    return ElevatedButton(
+      child: const Text("Biometric KYC"),
+      onPressed: () {
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => MyScaffold(
+                body: SmileIDBiometricKYC(
+              country: "KE",
+              idType: "NATIONAL_ID",
+              idNumber: "12345678",
+              onSuccess: (String? result) {
+                // Your success handling logic
+                final snackBar = SnackBar(content: Text("Success: $result"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.of(context).pop();
+              },
+              onError: (String errorMessage) {
+                // Your error handling logic
+                final snackBar = SnackBar(content: Text("Error: $errorMessage"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.of(context).pop();
+              },
+            )),
           ),
         );
       },
