@@ -64,7 +64,5 @@ jobs:
           version: 1.14.3
       - name: Install Dependencies
         run: flutter pub get && cd example && flutter pub get && cd ..
-      - name: Run Pod Install
-        run: cd example/ios && pod install && cd ..
       - name: Build iOS Sample App
-        run: cd example && flutter build ios --no-codesign && cd ..
+        run: cd example/ios && pod install && flutter build ios --no-codesign && cd ..
