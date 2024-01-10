@@ -25,7 +25,7 @@ class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDel
         super.init()
         let screen = SmileID.biometricKycScreen(
             idInfo: IdInfo(
-                country:  args["userId"] as? String ?? "",
+                country:  args["country"] as? String ?? "",
                 idType:  args["idType"] as? String,
                 idNumber:  args["idNumber"] as? String,
                 firstName:  args["firstName"] as? String,
@@ -35,8 +35,8 @@ class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDel
                 bankCode:  args["bankCode"] as? String,
                 entered:  args["entered"] as? Bool
             ),
-            userId: args["userId"] as? String ?? "user-\(UUID().uuidString)",
-            jobId: args["jobId"] as? String ?? "job-\(UUID().uuidString)",
+            userId: args["userId"] as? String ?? generateUserId(),
+            jobId: args["jobId"] as? String ?? generateJobId(),
             allowNewEnroll: args["allowNewEnroll"] as? Bool ?? false,
             allowAgentMode: args["allowAgentMode"] as? Bool ?? false,
             showAttribution: args["showAttribution"] as? Bool ?? true,

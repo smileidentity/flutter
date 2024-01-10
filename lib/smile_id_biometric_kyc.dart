@@ -46,6 +46,7 @@ class SmileIDBiometricKYC extends StatelessWidget {
       onSuccess: onSuccess,
       onError: onError,
       creationParams: {
+        "country": country,
         "idType": idType,
         "idNumber": idNumber,
         "firstName": firstName,

@@ -78,7 +78,7 @@ class MainContent extends StatelessWidget {
         documentVerificationButton(context),
         smartSelfieEnrollmentButton(context),
         smartSelfieAuthenticationButton(context),
-        biometricKYCButton(context)
+        biometricKycButton(context)
       ],
     )));
   }
@@ -197,7 +197,7 @@ class MainContent extends StatelessWidget {
     );
   }
 
-  Widget biometricKYCButton(BuildContext context) {
+  Widget biometricKycButton(BuildContext context) {
     return ElevatedButton(
       child: const Text("Biometric KYC"),
       onPressed: () {
