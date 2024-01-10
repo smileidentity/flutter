@@ -34,6 +34,15 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             smartSelfieAuthenticationFactory,
             withId: SmileIDSmartSelfieAuthentication.VIEW_TYPE_ID
         )
+        
+        let biometricKYCFactory = SmileIDBiometricKYC.Factory(
+            messenger: registrar.messenger()
+        )
+        registrar.register(
+            biometricKYCFactory,
+            withId: SmileIDBiometricKYC.VIEW_TYPE_ID
+        )
+        
     }
 
     func initialize() {
