@@ -1,5 +1,10 @@
 # Changelog
 
+## 10.0.5
+- Fixed a bug where Android builds would not compile when the partner app (or a library they 
+  consume) also uses `Pigeon` under the hood
+- Bumped Android and iOS versions
+
 ## 10.0.4
 - Support for Biometric KYC, exposed as a `SmileIDBiometricKYC` Widget
 
