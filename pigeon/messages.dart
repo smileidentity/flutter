@@ -4,7 +4,7 @@ import 'package:pigeon/pigeon.dart';
   dartOut: 'lib/messages.g.dart',
   dartOptions: DartOptions(),
   kotlinOut: 'android/src/main/kotlin/com/smileidentity/flutter/Messages.g.kt',
-  kotlinOptions: KotlinOptions(),
+  kotlinOptions: KotlinOptions(errorClassName: "SmileFlutterError"),
   swiftOut: 'ios/Classes/Messages.g.swift',
   swiftOptions: SwiftOptions(),
   dartPackageName: 'smileid',
