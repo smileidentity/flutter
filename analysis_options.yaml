@@ -9,7 +9,7 @@ include: package:flutter_lints/flutter.yaml
 #  Recommended (around 55 rules) - https://github.com/dart-lang/lints/blob/main/lib/recommended.yaml
 
 analyzer:
-  exclude: [lib/messages.g.dart]
+  exclude: [lib/smileid_messages.g.dart]
 
 linter:
   rules:
