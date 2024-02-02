@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:smile_id/messages.g.dart';
+import 'package:smile_id/smileid_messages.g.dart';
 import 'package:smile_id/smile_id.dart';
 import 'package:smile_id/smile_id_biometric_kyc.dart';
 import 'package:smile_id/smile_id_document_verification.dart';

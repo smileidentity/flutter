@@ -1,5 +1,10 @@
 # Release Notes
 
+## 10.0.6
+
+* Fixed a bug where Android builds would not compile when the partner app (or a library they consume) also uses `Pigeon` under the hood
+* Updated generated files naming to prefix `SmileID` and prevent build duplicate class erros
+
 ## 10.0.5
 
 * Fixed a bug where Android builds would not compile when the partner app (or a library they consume) also uses `Pigeon` under the hood

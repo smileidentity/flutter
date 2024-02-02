@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-import 'messages.g.dart';
+import 'smileid_messages.g.dart';
 import 'smile_id_service.dart';
 
 class SmileID {
