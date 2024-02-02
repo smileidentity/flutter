@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:smile_id/messages.g.dart';
+import 'package:smile_id/smileid_messages.g.dart';
 import 'package:smile_id/smile_id.dart';
 
 @GenerateNiceMocks([MockSpec<SmileIDApi>()])
