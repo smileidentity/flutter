@@ -1,0 +1,34 @@
+name: Post-Release Actions
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  update-docs-release-notes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout flutter
+        uses: actions/checkout@v4
+        with:
+          path: flutter
+      - name: Checkout docs
+        uses: actions/checkout@v4
+        with:
+          repository: smileidentity/docs
+          path: docs
+          token: ${{ secrets.GH_PAT }}
+      - name: Copy CHANGELOG.md to Release Notes
+        run: cp flutter/CHANGELOG.md docs/integration-options/mobile/flutter-v10/release-notes.md
+      - name: Create docs PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GH_PAT }}
+          path: docs
+          commit-message: Flutter ${{ github.event.release.tag_name }} Release Notes
+          title: Flutter ${{ github.event.release.tag_name }} Release Notes
+          body: Automated PR to update the release notes
+          branch: flutter-release-notes-${{ github.event.release.tag_name }}
+          labels: "release-notes"
+          team-reviewers: "smileidentity/mobile"

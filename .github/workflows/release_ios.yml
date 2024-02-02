@@ -20,7 +20,7 @@ jobs:
         run: |
           git checkout -b "ios-${{ github.event.inputs.ios_release_version }}"
           git push origin "ios-${{ github.event.inputs.ios_release_version }}"
-      - name: Read build.gradle
+      - name: Read version
         id: read-file
         run: |
           sed -i "s/s.version\s*=\s*'[^']*'/s.version = '$(echo "${{ github.event.inputs.ios_release_version }}" | cut -c 2-)'/g" ios/smile_id.podspec

@@ -20,7 +20,7 @@ jobs:
         run: |
           git checkout -b "android-${{ github.event.inputs.android_release_version }}"
           git push origin "android-${{ github.event.inputs.android_release_version }}"
-      - name: Read build.gradle
+      - name: Read version
         id: read-file
         run: |
           sed -i "s/\(version findProperty(\"SDK_VERSION\") ?: \).*/\1\"$(echo "${{ github.event.inputs.android_release_version }}" | cut -c 2-)\"/" android/build.gradle
