@@ -25,12 +25,15 @@ jobs:
         run: |
           sed -i "s/s.version\s*=\s*'[^']*'/s.version = '$(echo "${{ github.event.inputs.ios_release_version }}" | cut -c 2-)'/g" ios/smile_id.podspec
           sed -i "s/s.dependency\s*'SmileID'\s*,\s*'[^']*'/s.dependency 'SmileID', '$(echo "${{ github.event.inputs.ios_release_version }}" | cut -c 2-)'/g" ios/smile_id.podspec
+          cd example/ios
+          pod update smile_id SmileID
       - name: Commit and Push Changes
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
 
           git add ios/smile_id.podspec
+          git add example/ios/Podfile.lock
           git commit -m "Update iOS SDK version to ${{ github.event.inputs.ios_release_version }}"
           git push --set-upstream origin "ios-${{ github.event.inputs.ios_release_version }}"
       - name: Create Pull Request
