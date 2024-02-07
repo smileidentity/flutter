@@ -1,5 +1,10 @@
 # Release Notes
 
+## 10.0.7
+
+* Bump Android to 10.0.4 (https://github.com/smileidentity/android/releases/tag/v10.0.4)
+* Bump iOS to 10.0.8 (https://github.com/smileidentity/ios/releases/tag/v10.0.8)
+
 ## 10.0.6
 
 * Fixed a bug where Android builds would not compile when the partner app (or a library they consume) also uses `Pigeon` under the hood
