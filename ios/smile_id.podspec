@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
 A new Flutter project.
                        DESC
   s.homepage         = 'http://usesmileid.com'
-  s.author           = { 'Smile ID' => 'support@smileidentity.com' }
+  s.author           = { 'Smile ID' => 'support@usesmileid.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
