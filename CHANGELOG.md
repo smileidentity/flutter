@@ -1,5 +1,11 @@
 # Release Notes
 
+## 10.0.9 (Unreleased)
+
+## 10.0.8
+
+* Bump iOS to 10.0.10 (https://github.com/smileidentity/ios/releases/tag/v10.0.10)
+
 ## 10.0.7
 
 * Bump Android to 10.0.4 (https://github.com/smileidentity/android/releases/tag/v10.0.4)
