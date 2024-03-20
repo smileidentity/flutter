@@ -5,6 +5,7 @@
 </p>
 
 [![pub package](https://img.shields.io/pub/v/smile_id.svg)](https://pub.dev/packages/smile_id)
+[![Build](https://github.com/smileidentity/flutter/actions/workflows/build.yaml/badge.svg)](https://github.com/smileidentity/flutter/actions/workflows/build.yaml)
 
 Smile ID provides the best solutions for Real Time Digital KYC, Identity Verification, User
 Onboarding, and User Authentication across Africa.
@@ -17,7 +18,7 @@ Please see [CHANGELOG.md](CHANGELOG.md) or
 [Releases](https://github.com/smileidentity/android/releases) for the most recent version and
 release notes
 
-<a href='https://play.google.com/store/apps/details?id=com.smileidentity.sample&utm_source=github&utm_campaign=android&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img width="250" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
+<a href='https://play.google.com/store/apps/details?id=com.smileidentity.sample&utm_source=github&utm_campaign=flutter&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img width="250" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
 
 <a href="https://apps.apple.com/us/app/smile-id/id6448359701?itsct=apps_box_badge&amp;itscg=30200" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1710028800" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;"></a>
 
