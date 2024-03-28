@@ -5,6 +5,7 @@ import 'package:smile_id/smileid_messages.g.dart';
 import 'package:smile_id/smile_id.dart';
 import 'package:smile_id/smile_id_biometric_kyc.dart';
 import 'package:smile_id/smile_id_document_verification.dart';
+import 'package:smile_id/smile_id_enhanced_document_verification.dart';
 import 'package:smile_id/smile_id_smart_selfie_authentication.dart';
 import 'package:smile_id/smile_id_smart_selfie_enrollment.dart';
 
@@ -76,6 +77,7 @@ class MainContent extends StatelessWidget {
       children: [
         enhancedKycAsyncButton(),
         documentVerificationButton(context),
+        enhancedDocumentVerificationButton(context),
         smartSelfieEnrollmentButton(context),
         smartSelfieAuthenticationButton(context),
         biometricKycButton(context)
@@ -100,8 +102,7 @@ class MainContent extends StatelessWidget {
                             country: "GH",
                             idType: "DRIVERS_LICENSE",
                             idNumber: "B0000000",
-                            callbackUrl:
-                                "https://somedummyurl.com/demo",
+                            callbackUrl: "https://somedummyurl.com/demo",
                             partnerParams: FlutterPartnerParams(
                               jobType: FlutterJobType.enhancedKyc,
                               jobId: userId,
@@ -122,6 +123,35 @@ class MainContent extends StatelessWidget {
           MaterialPageRoute<void>(
             builder: (BuildContext context) => MyScaffold(
                 body: SmileIDDocumentVerification(
+              countryCode: "GH",
+              documentType: "DRIVERS_LICENSE",
+              onSuccess: (String? result) {
+                // Your success handling logic
+                final snackBar = SnackBar(content: Text("Success: $result"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.of(context).pop();
+              },
+              onError: (String errorMessage) {
+                // Your error handling logic
+                final snackBar = SnackBar(content: Text("Error: $errorMessage"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.of(context).pop();
+              },
+            )),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget enhancedDocumentVerificationButton(BuildContext context) {
+    return ElevatedButton(
+      child: const Text("Enhanced Document Verification"),
+      onPressed: () {
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => MyScaffold(
+                body: SmileIDEnhancedDocumentVerification(
               countryCode: "GH",
               documentType: "DRIVERS_LICENSE",
               onSuccess: (String? result) {
