@@ -58,6 +58,11 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
             SmileIDBiometricKYC.VIEW_TYPE_ID,
             SmileIDBiometricKYC.Factory(flutterPluginBinding.binaryMessenger),
         )
+
+        flutterPluginBinding.platformViewRegistry.registerViewFactory(
+            SmileIDEnhancedDocumentVerification.VIEW_TYPE_ID,
+            SmileIDEnhancedDocumentVerification.Factory(flutterPluginBinding.binaryMessenger),
+        )
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
