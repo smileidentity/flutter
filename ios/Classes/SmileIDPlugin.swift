@@ -18,6 +18,14 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             documentVerificationFactory,
             withId: SmileIDDocumentVerification.VIEW_TYPE_ID
         )
+        
+        let enhancedDocumentVerificationFactory = SmileIDEnhancedDocumentVerification.Factory(
+            messenger: registrar.messenger()
+        )
+        registrar.register(
+            enhancedDocumentVerificationFactory,
+            withId: SmileIDEnhancedDocumentVerification.VIEW_TYPE_ID
+        )
 
         let smartSelfieEnrollmentFactory = SmileIDSmartSelfieEnrollment.Factory(
             messenger: registrar.messenger()
