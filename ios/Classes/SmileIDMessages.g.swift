@@ -42,6 +42,10 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
 enum FlutterJobType: Int {
   case enhancedKyc = 0
   case documentVerification = 1
+  case biometricKyc = 2
+  case enhancedDocumentVerification = 3
+  case smartSelfieEnrollment = 4
+  case smartSelfieAuthentication = 5
 }
 
 enum FlutterImageType: Int {

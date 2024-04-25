@@ -44,7 +44,11 @@ class SmileFlutterError (
 
 enum class FlutterJobType(val raw: Int) {
   ENHANCEDKYC(0),
-  DOCUMENTVERIFICATION(1);
+  DOCUMENTVERIFICATION(1),
+  BIOMETRICKYC(2),
+  ENHANCEDDOCUMENTVERIFICATION(3),
+  SMARTSELFIEENROLLMENT(4),
+  SMARTSELFIEAUTHENTICATION(5);
 
   companion object {
     fun ofRaw(raw: Int): FlutterJobType? {

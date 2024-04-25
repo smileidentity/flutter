@@ -106,11 +106,19 @@ fun convertNonNullMapToNullable(map: Map<String, String>): Map<String?, String?>
 fun FlutterJobType.toRequest() = when (this) {
     FlutterJobType.ENHANCEDKYC -> JobType.EnhancedKyc
     FlutterJobType.DOCUMENTVERIFICATION -> JobType.DocumentVerification
+    FlutterJobType.BIOMETRICKYC -> JobType.BiometricKyc
+    FlutterJobType.ENHANCEDDOCUMENTVERIFICATION -> JobType.EnhancedDocumentVerification
+    FlutterJobType.SMARTSELFIEENROLLMENT -> JobType.SmartSelfieEnrollment
+    FlutterJobType.SMARTSELFIEAUTHENTICATION -> JobType.SmartSelfieAuthentication
 }
 
 fun JobType.toResponse() = when (this) {
     JobType.EnhancedKyc -> FlutterJobType.ENHANCEDKYC
     JobType.DocumentVerification -> FlutterJobType.DOCUMENTVERIFICATION
+    JobType.BiometricKyc -> FlutterJobType.BIOMETRICKYC
+    JobType.EnhancedDocumentVerification -> FlutterJobType.ENHANCEDDOCUMENTVERIFICATION
+    JobType.SmartSelfieEnrollment -> FlutterJobType.SMARTSELFIEENROLLMENT
+    JobType.SmartSelfieAuthentication -> FlutterJobType.SMARTSELFIEAUTHENTICATION
     else -> TODO("Not yet implemented")
 }
 

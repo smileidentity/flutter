@@ -9,7 +9,7 @@ import 'package:pigeon/pigeon.dart';
   swiftOptions: SwiftOptions(),
   dartPackageName: 'smileid',
 ))
-enum FlutterJobType { enhancedKyc, documentVerification }
+enum FlutterJobType { enhancedKyc, documentVerification, biometricKyc, enhancedDocumentVerification, smartSelfieEnrollment,smartSelfieAuthentication }
 
 ///  Custom values specific to partners can be placed in [extras]
 class FlutterPartnerParams {
