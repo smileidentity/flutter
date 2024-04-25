@@ -1,5 +1,9 @@
 # Release Notes
 
+## 10.0.10
+
+* Add missing jobtype enums for Flutter
+
 ## 10.0.9
 
 * Bump iOS to 10.0.11 (https://github.com/smileidentity/ios/releases/tag/v10.0.11)

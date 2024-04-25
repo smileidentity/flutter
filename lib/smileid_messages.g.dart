@@ -18,6 +18,10 @@ PlatformException _createConnectionError(String channelName) {
 enum FlutterJobType {
   enhancedKyc,
   documentVerification,
+  biometricKyc,
+  enhancedDocumentVerification,
+  smartSelfieEnrollment,
+  smartSelfieAuthentication,
 }
 
 enum FlutterImageType {

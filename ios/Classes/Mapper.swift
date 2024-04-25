@@ -53,6 +53,14 @@ extension FlutterJobType {
             return JobType.enhancedKyc
         case .documentVerification:
             return JobType.documentVerification
+        case .biometricKyc:
+            return JobType.biometricKyc
+        case .enhancedDocumentVerification:
+            return JobType.enhancedDocumentVerification
+        case .smartSelfieEnrollment:
+            return JobType.smartSelfieEnrollment
+        case .smartSelfieAuthentication:
+            return JobType.smartSelfieAuthentication
         }
     }
 }
@@ -64,6 +72,14 @@ extension JobType {
             return FlutterJobType.enhancedKyc
         case .documentVerification:
             return FlutterJobType.documentVerification
+        case .biometricKyc:
+            return FlutterJobType.biometricKyc
+        case .enhancedDocumentVerification:
+            return FlutterJobType.enhancedDocumentVerification
+        case .smartSelfieEnrollment:
+            return FlutterJobType.smartSelfieEnrollment
+        case .smartSelfieAuthentication:
+            return FlutterJobType.smartSelfieAuthentication
         default: fatalError("Not yet supported")
         }
     }
