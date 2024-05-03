@@ -1,4 +1,7 @@
 # Release Notes
+## 10.0.11
+
+* Fixed SmileIDSmartSelfieAuthentication so that it calls the correct method on ios
 
 ## 10.0.10
 

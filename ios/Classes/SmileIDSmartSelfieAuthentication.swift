@@ -23,7 +23,7 @@ class SmileIDSmartSelfieAuthentication : NSObject, FlutterPlatformView, SmartSel
         )
         _childViewController = nil
         super.init()
-        let screen = SmileID.smartSelfieEnrollmentScreen(
+        let screen = SmileID.smartSelfieAuthenticationScreen(
             userId: args["userId"] as? String ?? "user-\(UUID().uuidString)",
             jobId: args["jobId"] as? String ?? "job-\(UUID().uuidString)",
             allowNewEnroll: args["allowNewEnroll"] as? Bool ?? false,
