@@ -15,12 +15,16 @@ import FlutterProductsConfigRequest
 import FlutterProductsConfigResponse
 import FlutterServicesResponse
 import FlutterSmartSelfieJobStatusResponse
+import FlutterSmartSelfieRequest
+import FlutterSmartSelfieResponse
 import FlutterUploadRequest
 import FlutterValidDocumentsResponse
 import SmileIDApi
 import android.app.Activity
 import android.content.Context
 import com.smileidentity.SmileID
+import com.smileidentity.SmileIDOptIn
+import com.smileidentity.networking.doSmartSelfieEnrollment
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -129,6 +133,22 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         work = { SmileID.api.getSmartSelfieJobStatus(request.toRequest()).toResponse() },
         callback = callback,
     )
+
+    @OptIn(SmileIDOptIn::class)
+    override fun doSmartSelfieEnrollment(
+        request: FlutterSmartSelfieRequest,
+        callback: (Result<FlutterSmartSelfieResponse>) -> Unit,
+    ) = launch(
+        work = { SmileID.api.doSmartSelfieEnrollment(request.toRequest()).toResponse() },
+        callback = callback
+    )
+
+    override fun doSmartSelfieAuthentication(
+        request: FlutterSmartSelfieRequest,
+        callback: (Result<FlutterSmartSelfieResponse>) -> Unit,
+    ) {
+        TODO("Not yet implemented")
+    }
 
     override fun getDocumentVerificationJobStatus(
         request: FlutterJobStatusRequest,

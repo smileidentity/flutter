@@ -27,6 +27,7 @@ import FlutterImageLinks
 import FlutterImageType
 import FlutterJobStatusRequest
 import FlutterJobType
+import FlutterJobTypeV2
 import FlutterPartnerParams
 import FlutterPrepUploadRequest
 import FlutterPrepUploadResponse
@@ -35,6 +36,9 @@ import FlutterProductsConfigResponse
 import FlutterServicesResponse
 import FlutterSmartSelfieJobResult
 import FlutterSmartSelfieJobStatusResponse
+import FlutterSmartSelfieRequest
+import FlutterSmartSelfieResponse
+import FlutterSmartSelfieStatus
 import FlutterSuspectUser
 import FlutterUploadImageInfo
 import FlutterUploadRequest
@@ -68,6 +72,7 @@ import com.smileidentity.models.ImageType
 import com.smileidentity.models.JobResult
 import com.smileidentity.models.JobStatusRequest
 import com.smileidentity.models.JobType
+import com.smileidentity.models.v2.JobType as JobTypeV2
 import com.smileidentity.models.PartnerParams
 import com.smileidentity.models.PrepUploadRequest
 import com.smileidentity.models.PrepUploadResponse
@@ -81,6 +86,8 @@ import com.smileidentity.models.UploadImageInfo
 import com.smileidentity.models.UploadRequest
 import com.smileidentity.models.ValidDocument
 import com.smileidentity.models.ValidDocumentsResponse
+import com.smileidentity.models.v2.SmartSelfieResponse
+import com.smileidentity.models.v2.SmartSelfieStatus
 import java.io.File
 
 /**
@@ -119,6 +126,17 @@ fun JobType.toResponse() = when (this) {
     JobType.EnhancedDocumentVerification -> FlutterJobType.ENHANCEDDOCUMENTVERIFICATION
     JobType.SmartSelfieEnrollment -> FlutterJobType.SMARTSELFIEENROLLMENT
     JobType.SmartSelfieAuthentication -> FlutterJobType.SMARTSELFIEAUTHENTICATION
+    else -> TODO("Not yet implemented")
+}
+
+fun FlutterJobTypeV2.toRequest() = when (this) {
+    FlutterJobTypeV2.SMART_SELFIE_AUTHENTICATION -> JobTypeV2.SmartSelfieAuthentication
+    FlutterJobTypeV2.SMART_SELFIE_ENROLLMENT -> JobTypeV2.SmartSelfieEnrollment
+}
+
+fun JobTypeV2.toResponse() = when (this) {
+    JobTypeV2.SmartSelfieAuthentication -> FlutterJobTypeV2.SMART_SELFIE_AUTHENTICATION
+    JobTypeV2.SmartSelfieEnrollment -> FlutterJobTypeV2.SMART_SELFIE_ENROLLMENT
     else -> TODO("Not yet implemented")
 }
 
@@ -329,6 +347,28 @@ fun SmartSelfieJobResult.toResponse(): Any = when (this) {
         confidence = confidence,
     )
 }
+
+fun FlutterSmartSelfieRequest.toRequest() = SmartSelfieRequest()
+
+fun SmartSelfieStatus.toResponse() = when (this) {
+    SmartSelfieStatus.Approved -> FlutterSmartSelfieStatus.APPROVED
+    SmartSelfieStatus.Pending -> FlutterSmartSelfieStatus.PENDING
+    SmartSelfieStatus.Rejected -> FlutterSmartSelfieStatus.REJECTED
+    SmartSelfieStatus.Unknown -> FlutterSmartSelfieStatus.UNKNOWN
+}
+
+fun SmartSelfieResponse.toResponse() = FlutterSmartSelfieResponse(
+    code = code,
+    createdAt = createdAt,
+    jobId = jobId,
+    jobType = jobType.toResponse(),
+    message = message,
+    partnerId = partnerId,
+    partnerParams = convertNonNullMapToNullable(partnerParams),
+    status = status.toResponse(),
+    updatedAt = updatedAt,
+    userId = userId
+)
 
 fun DocumentVerificationJobStatusResponse.toResponse() =
     FlutterDocumentVerificationJobStatusResponse(
