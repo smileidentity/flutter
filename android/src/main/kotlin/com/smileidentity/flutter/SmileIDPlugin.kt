@@ -146,9 +146,10 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
     override fun doSmartSelfieAuthentication(
         request: FlutterSmartSelfieRequest,
         callback: (Result<FlutterSmartSelfieResponse>) -> Unit,
-    ) {
-        TODO("Not yet implemented")
-    }
+    ) = launch(
+            work = { SmileID.api.doSmartSelfieAuthentication(request.toRequest()).toResponse() },
+            callback = callback
+    )
 
     override fun getDocumentVerificationJobStatus(
         request: FlutterJobStatusRequest,
