@@ -9,7 +9,19 @@ import 'package:pigeon/pigeon.dart';
   swiftOptions: SwiftOptions(),
   dartPackageName: 'smileid',
 ))
-enum FlutterJobType { enhancedKyc, documentVerification, biometricKyc, enhancedDocumentVerification, smartSelfieEnrollment,smartSelfieAuthentication }
+enum FlutterJobType {
+  enhancedKyc,
+  documentVerification,
+  biometricKyc,
+  enhancedDocumentVerification,
+  smartSelfieEnrollment,
+  smartSelfieAuthentication
+}
+
+enum FlutterJobTypeV2 {
+  smart_selfie_authentication,
+  smart_selfie_enrollment
+}
 
 ///  Custom values specific to partners can be placed in [extras]
 class FlutterPartnerParams {
@@ -392,6 +404,58 @@ class FlutterSmartSelfieJobStatusResponse {
   });
 }
 
+class FlutterSmartSelfieRequest {
+  final FlutterUploadImageInfo selfieImage;
+  final List<FlutterUploadImageInfo?> livenessImages;
+  final String? userId;
+  final Map<String?, String?>? partnerParams;
+  final String? callbackUrl;
+  final int? sandboxResult;
+  final bool? allowNewEnroll;
+
+  FlutterSmartSelfieRequest(
+      {required this.selfieImage,
+      required this.livenessImages,
+      this.userId,
+      this.partnerParams,
+      this.callbackUrl,
+      this.sandboxResult,
+      this.allowNewEnroll});
+}
+
+enum FlutterSmartSelfieStatus {
+  approved,
+  pending,
+  rejected,
+  unknown
+}
+
+class FlutterSmartSelfieResponse {
+  final String code;
+  final String createdAt;
+  final String jobId;
+  final FlutterJobTypeV2 jobType;
+  final String message;
+  final String partnerId;
+  final Map<String?, String?>? partnerParams;
+  final FlutterSmartSelfieStatus status;
+  final String updatedAt;
+  final String userId;
+
+  FlutterSmartSelfieResponse({
+    required this.code, 
+    required this.createdAt, 
+    required this.jobId, 
+    required this.jobType, 
+    required this.message, 
+    required this.partnerId, 
+    required this.partnerParams, 
+    required this.status, 
+    required this.updatedAt, 
+    required this.userId,
+  });
+}
+
 class FlutterDocumentVerificationJobResult {
   final FlutterActions actions;
   final String resultCode;
@@ -755,7 +819,8 @@ abstract class SmileIDApi {
   void setCallbackUrl(String callbackUrl);
 
   @async
-  FlutterAuthenticationResponse authenticate(FlutterAuthenticationRequest request);
+  FlutterAuthenticationResponse authenticate(
+      FlutterAuthenticationRequest request);
 
   @async
   FlutterPrepUploadResponse prepUpload(FlutterPrepUploadRequest request);
@@ -767,25 +832,40 @@ abstract class SmileIDApi {
   FlutterEnhancedKycResponse doEnhancedKyc(FlutterEnhancedKycRequest request);
 
   @async
-  FlutterEnhancedKycAsyncResponse doEnhancedKycAsync(FlutterEnhancedKycRequest request);
+  FlutterEnhancedKycAsyncResponse doEnhancedKycAsync(
+      FlutterEnhancedKycRequest request);
 
   @async
-  FlutterSmartSelfieJobStatusResponse getSmartSelfieJobStatus(FlutterJobStatusRequest request);
+  FlutterSmartSelfieJobStatusResponse getSmartSelfieJobStatus(
+      FlutterJobStatusRequest request);
 
   @async
-  FlutterDocumentVerificationJobStatusResponse getDocumentVerificationJobStatus(FlutterJobStatusRequest request);
+  FlutterSmartSelfieResponse doSmartSelfieEnrollment(
+      FlutterSmartSelfieRequest request);
 
   @async
-  FlutterBiometricKycJobStatusResponse getBiometricKycJobStatus(FlutterJobStatusRequest request);
+  FlutterSmartSelfieResponse doSmartSelfieAuthentication(
+      FlutterSmartSelfieRequest request);
 
   @async
-  FlutterEnhancedDocumentVerificationJobStatusResponse getEnhancedDocumentVerificationJobStatus(FlutterJobStatusRequest request);
+  FlutterDocumentVerificationJobStatusResponse getDocumentVerificationJobStatus(
+      FlutterJobStatusRequest request);
 
   @async
-  FlutterProductsConfigResponse getProductsConfig(FlutterProductsConfigRequest request);
+  FlutterBiometricKycJobStatusResponse getBiometricKycJobStatus(
+      FlutterJobStatusRequest request);
 
   @async
-  FlutterValidDocumentsResponse getValidDocuments(FlutterProductsConfigRequest request);
+  FlutterEnhancedDocumentVerificationJobStatusResponse
+      getEnhancedDocumentVerificationJobStatus(FlutterJobStatusRequest request);
+
+  @async
+  FlutterProductsConfigResponse getProductsConfig(
+      FlutterProductsConfigRequest request);
+
+  @async
+  FlutterValidDocumentsResponse getValidDocuments(
+      FlutterProductsConfigRequest request);
 
   @async
   FlutterServicesResponse getServices();

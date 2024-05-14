@@ -50,6 +50,18 @@ class SmileIDService {
     return platformInterface.getSmartSelfieJobStatus(request);
   }
 
+  /// Perform a synchronous SmartSelfie Enrollment. The response will include the final result of
+  /// the enrollment.
+  Future<FlutterSmartSelfieResponse> doSmartSelfieEnrollment(FlutterSmartSelfieRequest request) {
+    return platformInterface.doSmartSelfieEnrollment(request);
+  }
+
+  /// Perform a synchronous SmartSelfie Authentication. The response will include the final result
+  /// of the authentication.
+  Future<FlutterSmartSelfieResponse> doSmartSelfieAuthentication(FlutterSmartSelfieRequest request) {
+    return platformInterface.doSmartSelfieAuthentication(request);
+  }
+
   /// Fetches the status of a Job. This can be used to check if a Job is complete, and if so,
   /// whether it was successful. This should be called when the Job is known to be a
   /// Document Verification.
