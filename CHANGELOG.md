@@ -1,4 +1,9 @@
 # Release Notes
+
+## 10.0.12
+
+* Fixed a bug where SmartSelfieEnrollment and SmartSelfieAuthentication would return invalid `livenessImages` in `onSuccess`
+
 ## 10.0.11
 
 * Fixed SmileIDSmartSelfieAuthentication so that it calls the correct method on ios

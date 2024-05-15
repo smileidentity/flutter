@@ -60,7 +60,7 @@ class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieR
         let jsonData = try! encoder.encode(jobStatusResponse)
         _channel.invokeMethod("onSuccess", arguments: """
         {"selfieFile": "\(selfieImage.absoluteString)",
-        "livenessImages": "\(livenessImages.map{ $0.absoluteString })",
+        "livenessImages": \(livenessImages.map{ $0.absoluteString }),
         "jobStatusResponse": \(jobStatusResponseJson)}
         """)
     }
