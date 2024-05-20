@@ -2482,4 +2482,112 @@ class SmileIDApi {
       return (__pigeon_replyList[0] as FlutterServicesResponse?)!;
     }
   }
+
+  Future<FlutterSmartSelfieJobStatusResponse> pollSmartSelfieJobStatus(FlutterJobStatusRequest request, int interval, int numAttempts) async {
+    const String __pigeon_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.pollSmartSelfieJobStatus';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+      __pigeon_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: __pigeon_binaryMessenger,
+    );
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(<Object?>[request, interval, numAttempts]) as List<Object?>?;
+    if (__pigeon_replyList == null) {
+      throw _createConnectionError(__pigeon_channelName);
+    } else if (__pigeon_replyList.length > 1) {
+      throw PlatformException(
+        code: __pigeon_replyList[0]! as String,
+        message: __pigeon_replyList[1] as String?,
+        details: __pigeon_replyList[2],
+      );
+    } else if (__pigeon_replyList[0] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (__pigeon_replyList[0] as FlutterSmartSelfieJobStatusResponse?)!;
+    }
+  }
+
+  Future<FlutterDocumentVerificationJobStatusResponse> pollDocumentVerificationJobStatus(FlutterJobStatusRequest request, int interval, int numAttempts) async {
+    const String __pigeon_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.pollDocumentVerificationJobStatus';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+      __pigeon_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: __pigeon_binaryMessenger,
+    );
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(<Object?>[request, interval, numAttempts]) as List<Object?>?;
+    if (__pigeon_replyList == null) {
+      throw _createConnectionError(__pigeon_channelName);
+    } else if (__pigeon_replyList.length > 1) {
+      throw PlatformException(
+        code: __pigeon_replyList[0]! as String,
+        message: __pigeon_replyList[1] as String?,
+        details: __pigeon_replyList[2],
+      );
+    } else if (__pigeon_replyList[0] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (__pigeon_replyList[0] as FlutterDocumentVerificationJobStatusResponse?)!;
+    }
+  }
+
+  Future<FlutterBiometricKycJobStatusResponse> pollBiometricKycJobStatus(FlutterJobStatusRequest request, int interval, int numAttempts) async {
+    const String __pigeon_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.pollBiometricKycJobStatus';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+      __pigeon_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: __pigeon_binaryMessenger,
+    );
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(<Object?>[request, interval, numAttempts]) as List<Object?>?;
+    if (__pigeon_replyList == null) {
+      throw _createConnectionError(__pigeon_channelName);
+    } else if (__pigeon_replyList.length > 1) {
+      throw PlatformException(
+        code: __pigeon_replyList[0]! as String,
+        message: __pigeon_replyList[1] as String?,
+        details: __pigeon_replyList[2],
+      );
+    } else if (__pigeon_replyList[0] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (__pigeon_replyList[0] as FlutterBiometricKycJobStatusResponse?)!;
+    }
+  }
+
+  Future<FlutterEnhancedDocumentVerificationJobStatusResponse> pollEnhancedDocumentVerificationJobStatus(FlutterJobStatusRequest request, int interval, int numAttempts) async {
+    const String __pigeon_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.pollEnhancedDocumentVerificationJobStatus';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+      __pigeon_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: __pigeon_binaryMessenger,
+    );
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(<Object?>[request, interval, numAttempts]) as List<Object?>?;
+    if (__pigeon_replyList == null) {
+      throw _createConnectionError(__pigeon_channelName);
+    } else if (__pigeon_replyList.length > 1) {
+      throw PlatformException(
+        code: __pigeon_replyList[0]! as String,
+        message: __pigeon_replyList[1] as String?,
+        details: __pigeon_replyList[2],
+      );
+    } else if (__pigeon_replyList[0] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (__pigeon_replyList[0] as FlutterEnhancedDocumentVerificationJobStatusResponse?)!;
+    }
+  }
 }

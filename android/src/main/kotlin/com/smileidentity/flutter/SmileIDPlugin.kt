@@ -21,14 +21,21 @@ import SmileIDApi
 import android.app.Activity
 import android.content.Context
 import com.smileidentity.SmileID
+import com.smileidentity.networking.pollBiometricKycJobStatus
+import com.smileidentity.networking.pollDocumentVerificationJobStatus
+import com.smileidentity.networking.pollEnhancedDocumentVerificationJobStatus
+import com.smileidentity.networking.pollSmartSelfieJobStatus
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.launch
 import java.net.URL
+import kotlin.time.Duration.Companion.seconds
 
 class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
 
@@ -176,6 +183,82 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         callback: (Result<FlutterServicesResponse>) -> Unit,
     ) = launch(
         work = { SmileID.api.getServices().toResponse() },
+        callback = callback,
+    )
+
+    fun pollSmartSelfieJobStatus(
+        request: FlutterJobStatusRequest,
+        interval: Int = 1,
+        numAttempts: Int = 30,
+        callback: (Result<FlutterSmartSelfieJobStatusResponse>) -> Unit,
+    ) = launch(
+        work = {
+            SmileID.api.pollSmartSelfieJobStatus(request.toRequest(), interval.toLong().seconds, numAttempts)
+                .map { smartSelfieJobStatusResponse ->
+                    smartSelfieJobStatusResponse.toResponse()
+                }
+                .single()
+        },
+        callback = callback,
+    )
+
+    fun pollDocumentVerificationJobStatus(
+        request: FlutterJobStatusRequest,
+        interval: Int = 1,
+        numAttempts: Int = 30,
+        callback: (Result<FlutterDocumentVerificationJobStatusResponse>) -> Unit,
+    ) = launch(
+        work = {
+            SmileID.api.pollDocumentVerificationJobStatus(
+                request.toRequest(),
+                interval.toLong().seconds,
+                numAttempts,
+            )
+                .map { documentVerificationJobStatusReponse ->
+                    documentVerificationJobStatusReponse.toResponse()
+                }
+                .single()
+        },
+        callback = callback,
+    )
+
+    fun pollBiometricKycJobStatus(
+        request: FlutterJobStatusRequest,
+        interval: Int = 1,
+        numAttempts: Int = 30,
+        callback: (Result<FlutterBiometricKycJobStatusResponse>) -> Unit,
+    ) = launch(
+        work = {
+            SmileID.api.pollBiometricKycJobStatus(
+                request.toRequest(),
+                interval.toLong().seconds,
+                numAttempts,
+            )
+                .map { biometricJobStatusResponse ->
+                    biometricJobStatusResponse.toResponse()
+                }
+                .single()
+        },
+        callback = callback,
+    )
+
+    fun pollEnhancedDocumentVerificationJobStatus(
+        request: FlutterJobStatusRequest,
+        interval: Int = 1,
+        numAttempts: Int = 30,
+        callback: (Result<FlutterEnhancedDocumentVerificationJobStatusResponse>) -> Unit,
+    ) = launch(
+        work = {
+            SmileID.api.pollEnhancedDocumentVerificationJobStatus(
+                request.toRequest(),
+                interval.toLong().seconds,
+                numAttempts,
+            )
+                .map { enhancedDocumentVerificationJobStatus ->
+                    enhancedDocumentVerificationJobStatus.toResponse()
+                }
+                .single()
+        },
         callback = callback,
     )
 

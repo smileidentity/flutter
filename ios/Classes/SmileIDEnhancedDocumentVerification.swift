@@ -4,6 +4,7 @@ import SmileID
 import SwiftUI
 
 class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, EnhancedDocumentVerificationResultDelegate {
+    
     private var _view: UIView
     private var _channel: FlutterMethodChannel
     private var _childViewController: UIViewController?
@@ -70,6 +71,16 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
         "documentFrontFile": "\(documentFrontImage.absoluteString)",
         "documentBackFile": \(documentBackFileJson),
         "jobStatusResponse": \(String(data: jsonData, encoding: .utf8)!)}
+        """)
+    }
+    
+    func didSucceed(selfie: URL, documentFrontImage: URL, documentBackImage: URL?, didSubmitEnhancedDocVJob: Bool) {
+        _childViewController?.removeFromParent()
+        _channel.invokeMethod("onSuccess", arguments: """
+        {"selfieFile": "\(selfie.absoluteString)",
+        "documentFrontImage": \(documentFrontImage.absoluteString),
+        "documentBackImage": \(documentBackImage?.absoluteString ?? ""),
+        "didSubmitEnhancedDocVJob": \(didSubmitEnhancedDocVJob),
         """)
     }
 

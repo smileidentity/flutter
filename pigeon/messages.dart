@@ -9,7 +9,14 @@ import 'package:pigeon/pigeon.dart';
   swiftOptions: SwiftOptions(),
   dartPackageName: 'smileid',
 ))
-enum FlutterJobType { enhancedKyc, documentVerification, biometricKyc, enhancedDocumentVerification, smartSelfieEnrollment,smartSelfieAuthentication }
+enum FlutterJobType {
+  enhancedKyc,
+  documentVerification,
+  biometricKyc,
+  enhancedDocumentVerification,
+  smartSelfieEnrollment,
+  smartSelfieAuthentication
+}
 
 ///  Custom values specific to partners can be placed in [extras]
 class FlutterPartnerParams {
@@ -773,13 +780,15 @@ abstract class SmileIDApi {
   FlutterSmartSelfieJobStatusResponse getSmartSelfieJobStatus(FlutterJobStatusRequest request);
 
   @async
-  FlutterDocumentVerificationJobStatusResponse getDocumentVerificationJobStatus(FlutterJobStatusRequest request);
+  FlutterDocumentVerificationJobStatusResponse getDocumentVerificationJobStatus(
+      FlutterJobStatusRequest request);
 
   @async
   FlutterBiometricKycJobStatusResponse getBiometricKycJobStatus(FlutterJobStatusRequest request);
 
   @async
-  FlutterEnhancedDocumentVerificationJobStatusResponse getEnhancedDocumentVerificationJobStatus(FlutterJobStatusRequest request);
+  FlutterEnhancedDocumentVerificationJobStatusResponse getEnhancedDocumentVerificationJobStatus(
+      FlutterJobStatusRequest request);
 
   @async
   FlutterProductsConfigResponse getProductsConfig(FlutterProductsConfigRequest request);
@@ -789,4 +798,20 @@ abstract class SmileIDApi {
 
   @async
   FlutterServicesResponse getServices();
+
+  @async
+  FlutterSmartSelfieJobStatusResponse pollSmartSelfieJobStatus(
+      FlutterJobStatusRequest request, int interval, int numAttempts);
+
+  @async
+  FlutterDocumentVerificationJobStatusResponse pollDocumentVerificationJobStatus(
+      FlutterJobStatusRequest request, int interval, int numAttempts);
+
+  @async
+  FlutterBiometricKycJobStatusResponse pollBiometricKycJobStatus(
+      FlutterJobStatusRequest request, int interval, int numAttempts);
+
+  @async
+  FlutterEnhancedDocumentVerificationJobStatusResponse pollEnhancedDocumentVerificationJobStatus(
+      FlutterJobStatusRequest request, int interval, int numAttempts);
 }
