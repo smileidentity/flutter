@@ -38,7 +38,6 @@ import java.net.URL
 import kotlin.time.Duration.Companion.seconds
 
 class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
-
     private var activity: Activity? = null
     private lateinit var appContext: Context
 
@@ -179,21 +178,24 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         callback = callback,
     )
 
-    override fun getServices(
-        callback: (Result<FlutterServicesResponse>) -> Unit,
-    ) = launch(
-        work = { SmileID.api.getServices().toResponse() },
-        callback = callback,
-    )
+    override fun getServices(callback: (Result<FlutterServicesResponse>) -> Unit) =
+        launch(
+            work = { SmileID.api.getServices().toResponse() },
+            callback = callback,
+        )
 
     override fun pollSmartSelfieJobStatus(
         request: FlutterJobStatusRequest,
-        interval: Long ,
+        interval: Long,
         numAttempts: Long,
         callback: (Result<FlutterSmartSelfieJobStatusResponse>) -> Unit,
     ) = launch(
         work = {
-            SmileID.api.pollSmartSelfieJobStatus(request.toRequest(), interval.seconds, numAttempts.toInt())
+            SmileID.api.pollSmartSelfieJobStatus(
+                request.toRequest(),
+                interval.seconds,
+                numAttempts.toInt(),
+            )
                 .map { smartSelfieJobStatusResponse ->
                     smartSelfieJobStatusResponse.toResponse()
                 }
@@ -204,7 +206,7 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
 
     override fun pollDocumentVerificationJobStatus(
         request: FlutterJobStatusRequest,
-        interval: Long ,
+        interval: Long,
         numAttempts: Long,
         callback: (Result<FlutterDocumentVerificationJobStatusResponse>) -> Unit,
     ) = launch(
@@ -224,7 +226,7 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
 
     override fun pollBiometricKycJobStatus(
         request: FlutterJobStatusRequest,
-        interval: Long ,
+        interval: Long,
         numAttempts: Long,
         callback: (Result<FlutterBiometricKycJobStatusResponse>) -> Unit,
     ) = launch(
@@ -244,7 +246,7 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
 
     override fun pollEnhancedDocumentVerificationJobStatus(
         request: FlutterJobStatusRequest,
-        interval: Long ,
+        interval: Long,
         numAttempts: Long,
         callback: (Result<FlutterEnhancedDocumentVerificationJobStatusResponse>) -> Unit,
     ) = launch(
@@ -288,9 +290,10 @@ private fun <T> launch(
     callback: (Result<T>) -> Unit,
     scope: CoroutineScope = CoroutineScope(Dispatchers.IO),
 ) {
-    val handler = CoroutineExceptionHandler { _, throwable ->
-        callback.invoke(Result.failure(throwable))
-    }
+    val handler =
+        CoroutineExceptionHandler { _, throwable ->
+            callback.invoke(Result.failure(throwable))
+        }
     scope.launch(handler) {
         callback.invoke(Result.success(work()))
     }
