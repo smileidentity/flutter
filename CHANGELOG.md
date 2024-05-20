@@ -1,5 +1,13 @@
 # Release Notes
 
+## 10.1.0
+
+* Introduced polling methods for products
+  * Smartselfie 
+  * Biometric kyc
+  * Document verification
+  * Enhanced document verification
+
 ## 10.0.12
 
 * Fixed a bug where SmartSelfieEnrollment and SmartSelfieAuthentication would return invalid `livenessImages` in `onSuccess`
