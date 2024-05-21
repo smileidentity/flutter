@@ -2,8 +2,9 @@
 
 ## 10.1.0
 
+* Moved SmartSelfie enrollment and authentication to synchronous endpoints 
 * Introduced polling methods for products
-  * Smartselfie 
+  * SmartSelfie 
   * Biometric kyc
   * Document verification
   * Enhanced document verification

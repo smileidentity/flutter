@@ -31,11 +31,14 @@ import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.net.URL
-import kotlin.time.Duration.Companion.seconds
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 
 class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
     private var activity: Activity? = null
@@ -191,15 +194,13 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         callback: (Result<FlutterSmartSelfieJobStatusResponse>) -> Unit,
     ) = launch(
         work = {
-            SmileID.api.pollSmartSelfieJobStatus(
-                request.toRequest(),
-                interval.seconds,
-                numAttempts.toInt(),
+            pollJobStatus(
+                apiCall = SmileID.api::pollSmartSelfieJobStatus,
+                request = request.toRequest(),
+                interval = interval,
+                numAttempts = numAttempts,
+                transform = { it.toResponse() },
             )
-                .map { smartSelfieJobStatusResponse ->
-                    smartSelfieJobStatusResponse.toResponse()
-                }
-                .single()
         },
         callback = callback,
     )
@@ -211,15 +212,13 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         callback: (Result<FlutterDocumentVerificationJobStatusResponse>) -> Unit,
     ) = launch(
         work = {
-            SmileID.api.pollDocumentVerificationJobStatus(
-                request.toRequest(),
-                interval.seconds,
-                numAttempts.toInt(),
+            pollJobStatus(
+                apiCall = SmileID.api::pollDocumentVerificationJobStatus,
+                request = request.toRequest(),
+                interval = interval,
+                numAttempts = numAttempts,
+                transform = { it.toResponse() },
             )
-                .map { documentVerificationJobStatusReponse ->
-                    documentVerificationJobStatusReponse.toResponse()
-                }
-                .single()
         },
         callback = callback,
     )
@@ -231,15 +230,13 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         callback: (Result<FlutterBiometricKycJobStatusResponse>) -> Unit,
     ) = launch(
         work = {
-            SmileID.api.pollBiometricKycJobStatus(
-                request.toRequest(),
-                interval.seconds,
-                numAttempts.toInt(),
+            pollJobStatus(
+                apiCall = SmileID.api::pollBiometricKycJobStatus,
+                request = request.toRequest(),
+                interval = interval,
+                numAttempts = numAttempts,
+                transform = { it.toResponse() },
             )
-                .map { biometricJobStatusResponse ->
-                    biometricJobStatusResponse.toResponse()
-                }
-                .single()
         },
         callback = callback,
     )
@@ -251,18 +248,36 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         callback: (Result<FlutterEnhancedDocumentVerificationJobStatusResponse>) -> Unit,
     ) = launch(
         work = {
-            SmileID.api.pollEnhancedDocumentVerificationJobStatus(
-                request.toRequest(),
-                interval.seconds,
-                numAttempts.toInt(),
+            pollJobStatus(
+                apiCall = SmileID.api::pollEnhancedDocumentVerificationJobStatus,
+                request = request.toRequest(),
+                interval = interval,
+                numAttempts = numAttempts,
+                transform = { it.toResponse() },
             )
-                .map { enhancedDocumentVerificationJobStatus ->
-                    enhancedDocumentVerificationJobStatus.toResponse()
-                }
-                .single()
         },
         callback = callback,
     )
+
+    private suspend fun <RequestType, ResponseType, FlutterResponseType> pollJobStatus(
+        apiCall: suspend (RequestType, Duration, Int) -> Flow<ResponseType>,
+        request: RequestType,
+        interval: Long,
+        numAttempts: Long,
+        transform: (ResponseType) -> FlutterResponseType,
+    ): FlutterResponseType {
+        return try {
+            val response =
+                withContext(Dispatchers.IO) {
+                    apiCall(request, interval.milliseconds, numAttempts.toInt())
+                        .map { transform(it) }
+                        .single()
+                }
+            response
+        } catch (e: Exception) {
+            throw e
+        }
+    }
 
     /**
      * https://stackoverflow.com/a/62206235
