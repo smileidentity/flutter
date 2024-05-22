@@ -183,7 +183,6 @@ class MainContent extends StatelessWidget {
                 body: SmileIDSmartSelfieEnrollment(
               onSuccess: (String? result) {
                 // Your success handling logic
-                print("Japhet Ndhlovu is here with result $result");
                 final snackBar = SnackBar(content: Text("Success: $result"));
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 Navigator.of(context).pop();
