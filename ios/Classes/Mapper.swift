@@ -1,5 +1,16 @@
 import SmileID
 
+func convertNullableMapToNonNull(data: [String? : String?]?) -> [String : String]? {
+  guard let unwrappedData = data else { return nil }
+  var convertedDictionary = [String : String]()
+  for (key, value) in unwrappedData {
+    if let unwrappedKey = key, let unwrappedValue = value {
+      convertedDictionary[unwrappedKey] = unwrappedValue
+    }
+  }
+  return convertedDictionary
+}
+
 extension FlutterPartnerParams {
     func toRequest() -> PartnerParams {
         PartnerParams(
@@ -211,6 +222,23 @@ extension EnhancedKycResponse {
 extension EnhancedKycAsyncResponse {
     func toResponse() -> FlutterEnhancedKycAsyncResponse {
         FlutterEnhancedKycAsyncResponse(success: success)
+    }
+}
+
+extension SmartSelfieResponse {
+    func toResponse() -> FlutterSmartSelfieResponse {
+        FlutterSmartSelfieResponse(
+            code: code,
+            createdAt: createdAt,
+            jobId: jobId,
+            jobType: jobType,
+            message: message,
+            partnerId: partnerId,
+            partnerParams: partnerParams,
+            status: SmartSelfieStatus.,
+            updatedAt: updatedAt,
+            userId: userId
+        )
     }
 }
 

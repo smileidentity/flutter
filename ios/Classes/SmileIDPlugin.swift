@@ -157,6 +157,74 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             })
             .store(in: &subscribers)
     }
+    
+    func doSmartSelfieEnrollment(
+        signature: String,
+        timestamp: String,
+        selfieImage: FlutterUploadImageInfo,
+        livenessImages: [FlutterUploadImageInfo],
+        userId: String,
+        partnerParams: [String? : String?]?,
+        callbackUrl: String?,
+        sandboxResult: Int64?,
+        allowNewEnroll: Bool?,
+        completion: @escaping (Result<FlutterSmartSelfieResponse, any Error>) -> Void
+    ) {
+        SmileID.api.doSmartSelfieEnrollment(
+            signature: signature,
+            timestamp: timestamp,
+            selfieImage: selfieImage,
+            livenessImages: livenessImages,
+            userId: userId,
+            partnerParams: convertNullableMapToNonNull(data: partnerParams),
+            callbackUrl: callbackUrl,
+            sandboxResult: sandboxResult,
+            allowNewEnroll: allowNewEnroll
+        ).sink(receiveCompletion: { status in
+            switch status {
+            case .failure(let error):
+                completion(.failure(error))
+            default:
+                break
+            }
+            
+        }, receiveValue: { response in
+            completion(.success(response.toResponse()))
+        }).store(in: &subscribers)
+    }
+    
+    func doSmartSelfieAuthentication(
+        signature: String,
+        timestamp: String,
+        selfieImage: FlutterUploadImageInfo,
+        livenessImages: [FlutterUploadImageInfo],
+        userId: String,
+        partnerParams: [String? : String?]?,
+        callbackUrl: String?,
+        sandboxResult: Int64?,
+        completion: @escaping (Result<FlutterSmartSelfieResponse, any Error>) -> Void
+    ) {
+        SmileID.api.doSmartSelfieAuthentication(
+            signature: signature,
+            timestamp: timestamp,
+            userId: userId,
+            selfieImage: selfieImage,
+            livenessImages: livenessImages,
+            partnerParams: convertNullableMapToNonNull(data: partnerParams),
+            callbackUrl: callbackUrl,
+            sandboxResult: Int?(sandboxResult)
+        ).sink(receiveCompletion: { status in
+            switch status {
+            case .failure(let error):
+                completion(.failure(error))
+            default:
+                break
+            }
+            
+        }, receiveValue: { response in
+            completion(.success(response.toResponse()))
+        }).store(in: &subscribers)
+    }
 
     func getSmartSelfieJobStatus(
         request: FlutterJobStatusRequest,
