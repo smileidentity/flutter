@@ -52,14 +52,52 @@ class SmileIDService {
 
   /// Perform a synchronous SmartSelfie Enrollment. The response will include the final result of
   /// the enrollment.
-  Future<FlutterSmartSelfieResponse> doSmartSelfieEnrollment(FlutterSmartSelfieRequest request) {
-    return platformInterface.doSmartSelfieEnrollment(request);
+  Future<FlutterSmartSelfieResponse> doSmartSelfieEnrollment(
+      String signature,
+      String timestamp,
+      FlutterUploadImageInfo selfieImage,
+      List<FlutterUploadImageInfo> livenessImages,
+      String userId,
+      Map<String?, String?>? partnerParams,
+      String? callbackUrl,
+      int? sandboxResult,
+      bool? allowNewEnroll
+      ) {
+    return platformInterface.doSmartSelfieEnrollment(
+        signature,
+        timestamp,
+        selfieImage,
+        livenessImages,
+        userId,
+        partnerParams,
+        callbackUrl,
+        sandboxResult,
+        allowNewEnroll
+    );
   }
 
   /// Perform a synchronous SmartSelfie Authentication. The response will include the final result
   /// of the authentication.
-  Future<FlutterSmartSelfieResponse> doSmartSelfieAuthentication(FlutterSmartSelfieRequest request) {
-    return platformInterface.doSmartSelfieAuthentication(request);
+  Future<FlutterSmartSelfieResponse> doSmartSelfieAuthentication(
+      String signature,
+      String timestamp,
+      FlutterUploadImageInfo selfieImage,
+      List<FlutterUploadImageInfo> livenessImages,
+      String userId,
+      Map<String?, String?>? partnerParams,
+      String? callbackUrl,
+      int? sandboxResult,
+      ) {
+    return platformInterface.doSmartSelfieAuthentication(
+        signature,
+        timestamp,
+        selfieImage,
+        livenessImages,
+        userId,
+        partnerParams,
+        callbackUrl,
+        sandboxResult
+    );
   }
 
   /// Fetches the status of a Job. This can be used to check if a Job is complete, and if so,
