@@ -958,57 +958,6 @@ class FlutterSmartSelfieJobStatusResponse {
   }
 }
 
-class FlutterSmartSelfieRequest {
-  FlutterSmartSelfieRequest({
-    required this.selfieImage,
-    required this.livenessImages,
-    this.userId,
-    this.partnerParams,
-    this.callbackUrl,
-    this.sandboxResult,
-    this.allowNewEnroll,
-  });
-
-  FlutterUploadImageInfo selfieImage;
-
-  List<FlutterUploadImageInfo?> livenessImages;
-
-  String? userId;
-
-  Map<String?, String?>? partnerParams;
-
-  String? callbackUrl;
-
-  int? sandboxResult;
-
-  bool? allowNewEnroll;
-
-  Object encode() {
-    return <Object?>[
-      selfieImage.encode(),
-      livenessImages,
-      userId,
-      partnerParams,
-      callbackUrl,
-      sandboxResult,
-      allowNewEnroll,
-    ];
-  }
-
-  static FlutterSmartSelfieRequest decode(Object result) {
-    result as List<Object?>;
-    return FlutterSmartSelfieRequest(
-      selfieImage: FlutterUploadImageInfo.decode(result[0]! as List<Object?>),
-      livenessImages: (result[1] as List<Object?>?)!.cast<FlutterUploadImageInfo?>(),
-      userId: result[2] as String?,
-      partnerParams: (result[3] as Map<Object?, Object?>?)?.cast<String?, String?>(),
-      callbackUrl: result[4] as String?,
-      sandboxResult: result[5] as int?,
-      allowNewEnroll: result[6] as bool?,
-    );
-  }
-}
-
 class FlutterSmartSelfieResponse {
   FlutterSmartSelfieResponse({
     required this.code,
@@ -2106,29 +2055,26 @@ class _SmileIDApiCodec extends StandardMessageCodec {
     } else if (value is FlutterSmartSelfieJobStatusResponse) {
       buffer.putUint8(163);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterSmartSelfieRequest) {
+    } else if (value is FlutterSmartSelfieResponse) {
       buffer.putUint8(164);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterSmartSelfieResponse) {
+    } else if (value is FlutterSuspectUser) {
       buffer.putUint8(165);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterSuspectUser) {
+    } else if (value is FlutterUploadImageInfo) {
       buffer.putUint8(166);
       writeValue(buffer, value.encode());
     } else if (value is FlutterUploadImageInfo) {
       buffer.putUint8(167);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterUploadImageInfo) {
+    } else if (value is FlutterUploadRequest) {
       buffer.putUint8(168);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterUploadRequest) {
+    } else if (value is FlutterValidDocument) {
       buffer.putUint8(169);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterValidDocument) {
-      buffer.putUint8(170);
-      writeValue(buffer, value.encode());
     } else if (value is FlutterValidDocumentsResponse) {
-      buffer.putUint8(171);
+      buffer.putUint8(170);
       writeValue(buffer, value.encode());
     } else {
       super.writeValue(buffer, value);
@@ -2211,20 +2157,18 @@ class _SmileIDApiCodec extends StandardMessageCodec {
       case 163: 
         return FlutterSmartSelfieJobStatusResponse.decode(readValue(buffer)!);
       case 164: 
-        return FlutterSmartSelfieRequest.decode(readValue(buffer)!);
-      case 165: 
         return FlutterSmartSelfieResponse.decode(readValue(buffer)!);
-      case 166: 
+      case 165: 
         return FlutterSuspectUser.decode(readValue(buffer)!);
+      case 166: 
+        return FlutterUploadImageInfo.decode(readValue(buffer)!);
       case 167: 
         return FlutterUploadImageInfo.decode(readValue(buffer)!);
       case 168: 
-        return FlutterUploadImageInfo.decode(readValue(buffer)!);
-      case 169: 
         return FlutterUploadRequest.decode(readValue(buffer)!);
-      case 170: 
+      case 169: 
         return FlutterValidDocument.decode(readValue(buffer)!);
-      case 171: 
+      case 170: 
         return FlutterValidDocumentsResponse.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);
@@ -2465,7 +2409,7 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterSmartSelfieResponse> doSmartSelfieEnrollment(FlutterSmartSelfieRequest request) async {
+  Future<FlutterSmartSelfieResponse> doSmartSelfieEnrollment(String signature, String timestamp, FlutterUploadImageInfo selfieImage, List<FlutterUploadImageInfo?> livenessImages, String userId, Map<String?, String?>? partnerParams, String? callbackUrl, int? sandboxResult, bool? allowNewEnroll) async {
     const String __pigeon_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.doSmartSelfieEnrollment';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -2473,7 +2417,7 @@ class SmileIDApi {
       binaryMessenger: __pigeon_binaryMessenger,
     );
     final List<Object?>? __pigeon_replyList =
-        await __pigeon_channel.send(<Object?>[request]) as List<Object?>?;
+        await __pigeon_channel.send(<Object?>[signature, timestamp, selfieImage, livenessImages, userId, partnerParams, callbackUrl, sandboxResult, allowNewEnroll]) as List<Object?>?;
     if (__pigeon_replyList == null) {
       throw _createConnectionError(__pigeon_channelName);
     } else if (__pigeon_replyList.length > 1) {
@@ -2492,7 +2436,7 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterSmartSelfieResponse> doSmartSelfieAuthentication(FlutterSmartSelfieRequest request) async {
+  Future<FlutterSmartSelfieResponse> doSmartSelfieAuthentication(String signature, String timestamp, FlutterUploadImageInfo selfieImage, List<FlutterUploadImageInfo?> livenessImages, String userId, Map<String?, String?>? partnerParams, String? callbackUrl, int? sandboxResult) async {
     const String __pigeon_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.doSmartSelfieAuthentication';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -2500,7 +2444,7 @@ class SmileIDApi {
       binaryMessenger: __pigeon_binaryMessenger,
     );
     final List<Object?>? __pigeon_replyList =
-        await __pigeon_channel.send(<Object?>[request]) as List<Object?>?;
+        await __pigeon_channel.send(<Object?>[signature, timestamp, selfieImage, livenessImages, userId, partnerParams, callbackUrl, sandboxResult]) as List<Object?>?;
     if (__pigeon_replyList == null) {
       throw _createConnectionError(__pigeon_channelName);
     } else if (__pigeon_replyList.length > 1) {

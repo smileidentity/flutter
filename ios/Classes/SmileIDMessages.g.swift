@@ -846,48 +846,6 @@ struct FlutterSmartSelfieJobStatusResponse {
 }
 
 /// Generated class from Pigeon that represents data sent in messages.
-struct FlutterSmartSelfieRequest {
-  var selfieImage: FlutterUploadImageInfo
-  var livenessImages: [FlutterUploadImageInfo?]
-  var userId: String? = nil
-  var partnerParams: [String?: String?]? = nil
-  var callbackUrl: String? = nil
-  var sandboxResult: Int64? = nil
-  var allowNewEnroll: Bool? = nil
-
-  static func fromList(_ list: [Any?]) -> FlutterSmartSelfieRequest? {
-    let selfieImage = FlutterUploadImageInfo.fromList(list[0] as! [Any?])!
-    let livenessImages = list[1] as! [FlutterUploadImageInfo?]
-    let userId: String? = nilOrValue(list[2])
-    let partnerParams: [String?: String?]? = nilOrValue(list[3])
-    let callbackUrl: String? = nilOrValue(list[4])
-    let sandboxResult: Int64? = isNullish(list[5]) ? nil : (list[5] is Int64? ? list[5] as! Int64? : Int64(list[5] as! Int32))
-    let allowNewEnroll: Bool? = nilOrValue(list[6])
-
-    return FlutterSmartSelfieRequest(
-      selfieImage: selfieImage,
-      livenessImages: livenessImages,
-      userId: userId,
-      partnerParams: partnerParams,
-      callbackUrl: callbackUrl,
-      sandboxResult: sandboxResult,
-      allowNewEnroll: allowNewEnroll
-    )
-  }
-  func toList() -> [Any?] {
-    return [
-      selfieImage.toList(),
-      livenessImages,
-      userId,
-      partnerParams,
-      callbackUrl,
-      sandboxResult,
-      allowNewEnroll,
-    ]
-  }
-}
-
-/// Generated class from Pigeon that represents data sent in messages.
 struct FlutterSmartSelfieResponse {
   var code: String
   var createdAt: String
@@ -1785,20 +1743,18 @@ private class SmileIDApiCodecReader: FlutterStandardReader {
     case 163:
       return FlutterSmartSelfieJobStatusResponse.fromList(self.readValue() as! [Any?])
     case 164:
-      return FlutterSmartSelfieRequest.fromList(self.readValue() as! [Any?])
-    case 165:
       return FlutterSmartSelfieResponse.fromList(self.readValue() as! [Any?])
-    case 166:
+    case 165:
       return FlutterSuspectUser.fromList(self.readValue() as! [Any?])
+    case 166:
+      return FlutterUploadImageInfo.fromList(self.readValue() as! [Any?])
     case 167:
       return FlutterUploadImageInfo.fromList(self.readValue() as! [Any?])
     case 168:
-      return FlutterUploadImageInfo.fromList(self.readValue() as! [Any?])
-    case 169:
       return FlutterUploadRequest.fromList(self.readValue() as! [Any?])
-    case 170:
+    case 169:
       return FlutterValidDocument.fromList(self.readValue() as! [Any?])
-    case 171:
+    case 170:
       return FlutterValidDocumentsResponse.fromList(self.readValue() as! [Any?])
     default:
       return super.readValue(ofType: type)
@@ -1916,29 +1872,26 @@ private class SmileIDApiCodecWriter: FlutterStandardWriter {
     } else if let value = value as? FlutterSmartSelfieJobStatusResponse {
       super.writeByte(163)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterSmartSelfieRequest {
+    } else if let value = value as? FlutterSmartSelfieResponse {
       super.writeByte(164)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterSmartSelfieResponse {
+    } else if let value = value as? FlutterSuspectUser {
       super.writeByte(165)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterSuspectUser {
+    } else if let value = value as? FlutterUploadImageInfo {
       super.writeByte(166)
       super.writeValue(value.toList())
     } else if let value = value as? FlutterUploadImageInfo {
       super.writeByte(167)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterUploadImageInfo {
+    } else if let value = value as? FlutterUploadRequest {
       super.writeByte(168)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterUploadRequest {
+    } else if let value = value as? FlutterValidDocument {
       super.writeByte(169)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterValidDocument {
-      super.writeByte(170)
-      super.writeValue(value.toList())
     } else if let value = value as? FlutterValidDocumentsResponse {
-      super.writeByte(171)
+      super.writeByte(170)
       super.writeValue(value.toList())
     } else {
       super.writeValue(value)
@@ -1971,8 +1924,8 @@ protocol SmileIDApi {
   func doEnhancedKyc(request: FlutterEnhancedKycRequest, completion: @escaping (Result<FlutterEnhancedKycResponse, Error>) -> Void)
   func doEnhancedKycAsync(request: FlutterEnhancedKycRequest, completion: @escaping (Result<FlutterEnhancedKycAsyncResponse, Error>) -> Void)
   func getSmartSelfieJobStatus(request: FlutterJobStatusRequest, completion: @escaping (Result<FlutterSmartSelfieJobStatusResponse, Error>) -> Void)
-  func doSmartSelfieEnrollment(request: FlutterSmartSelfieRequest, completion: @escaping (Result<FlutterSmartSelfieResponse, Error>) -> Void)
-  func doSmartSelfieAuthentication(request: FlutterSmartSelfieRequest, completion: @escaping (Result<FlutterSmartSelfieResponse, Error>) -> Void)
+  func doSmartSelfieEnrollment(signature: String, timestamp: String, selfieImage: FlutterUploadImageInfo, livenessImages: [FlutterUploadImageInfo], userId: String, partnerParams: [String?: String?]?, callbackUrl: String?, sandboxResult: Int64?, allowNewEnroll: Bool?, completion: @escaping (Result<FlutterSmartSelfieResponse, Error>) -> Void)
+  func doSmartSelfieAuthentication(signature: String, timestamp: String, selfieImage: FlutterUploadImageInfo, livenessImages: [FlutterUploadImageInfo], userId: String, partnerParams: [String?: String?]?, callbackUrl: String?, sandboxResult: Int64?, completion: @escaping (Result<FlutterSmartSelfieResponse, Error>) -> Void)
   func getDocumentVerificationJobStatus(request: FlutterJobStatusRequest, completion: @escaping (Result<FlutterDocumentVerificationJobStatusResponse, Error>) -> Void)
   func getBiometricKycJobStatus(request: FlutterJobStatusRequest, completion: @escaping (Result<FlutterBiometricKycJobStatusResponse, Error>) -> Void)
   func getEnhancedDocumentVerificationJobStatus(request: FlutterJobStatusRequest, completion: @escaping (Result<FlutterEnhancedDocumentVerificationJobStatusResponse, Error>) -> Void)
@@ -2137,8 +2090,16 @@ class SmileIDApiSetup {
     if let api = api {
       doSmartSelfieEnrollmentChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
-        let requestArg = args[0] as! FlutterSmartSelfieRequest
-        api.doSmartSelfieEnrollment(request: requestArg) { result in
+        let signatureArg = args[0] as! String
+        let timestampArg = args[1] as! String
+        let selfieImageArg = args[2] as! FlutterUploadImageInfo
+        let livenessImagesArg = args[3] as! [FlutterUploadImageInfo]
+        let userIdArg = args[4] as! String
+        let partnerParamsArg: [String?: String?]? = nilOrValue(args[5])
+        let callbackUrlArg: String? = nilOrValue(args[6])
+        let sandboxResultArg: Int64? = isNullish(args[7]) ? nil : (args[7] is Int64? ? args[7] as! Int64? : Int64(args[7] as! Int32))
+        let allowNewEnrollArg: Bool? = nilOrValue(args[8])
+        api.doSmartSelfieEnrollment(signature: signatureArg, timestamp: timestampArg, selfieImage: selfieImageArg, livenessImages: livenessImagesArg, userId: userIdArg, partnerParams: partnerParamsArg, callbackUrl: callbackUrlArg, sandboxResult: sandboxResultArg, allowNewEnroll: allowNewEnrollArg) { result in
           switch result {
           case .success(let res):
             reply(wrapResult(res))
@@ -2154,8 +2115,15 @@ class SmileIDApiSetup {
     if let api = api {
       doSmartSelfieAuthenticationChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
-        let requestArg = args[0] as! FlutterSmartSelfieRequest
-        api.doSmartSelfieAuthentication(request: requestArg) { result in
+        let signatureArg = args[0] as! String
+        let timestampArg = args[1] as! String
+        let selfieImageArg = args[2] as! FlutterUploadImageInfo
+        let livenessImagesArg = args[3] as! [FlutterUploadImageInfo]
+        let userIdArg = args[4] as! String
+        let partnerParamsArg: [String?: String?]? = nilOrValue(args[5])
+        let callbackUrlArg: String? = nilOrValue(args[6])
+        let sandboxResultArg: Int64? = isNullish(args[7]) ? nil : (args[7] is Int64? ? args[7] as! Int64? : Int64(args[7] as! Int32))
+        api.doSmartSelfieAuthentication(signature: signatureArg, timestamp: timestampArg, selfieImage: selfieImageArg, livenessImages: livenessImagesArg, userId: userIdArg, partnerParams: partnerParamsArg, callbackUrl: callbackUrlArg, sandboxResult: sandboxResultArg) { result in
           switch result {
           case .success(let res):
             reply(wrapResult(res))

@@ -3,7 +3,8 @@ import 'package:pigeon/pigeon.dart';
 @ConfigurePigeon(PigeonOptions(
   dartOut: 'lib/smileid_messages.g.dart',
   dartOptions: DartOptions(),
-  kotlinOut: 'android/src/main/kotlin/com/smileidentity/flutter/generated/SmileIDMessages.g.kt',
+  kotlinOut:
+      'android/src/main/kotlin/com/smileidentity/flutter/generated/SmileIDMessages.g.kt',
   kotlinOptions: KotlinOptions(errorClassName: "SmileFlutterError"),
   swiftOut: 'ios/Classes/SmileIDMessages.g.swift',
   swiftOptions: SwiftOptions(),
@@ -18,10 +19,7 @@ enum FlutterJobType {
   smartSelfieAuthentication
 }
 
-enum FlutterJobTypeV2 {
-  smart_selfie_authentication,
-  smart_selfie_enrollment
-}
+enum FlutterJobTypeV2 { smart_selfie_authentication, smart_selfie_enrollment }
 
 ///  Custom values specific to partners can be placed in [extras]
 class FlutterPartnerParams {
@@ -404,31 +402,7 @@ class FlutterSmartSelfieJobStatusResponse {
   });
 }
 
-class FlutterSmartSelfieRequest {
-  final FlutterUploadImageInfo selfieImage;
-  final List<FlutterUploadImageInfo?> livenessImages;
-  final String? userId;
-  final Map<String?, String?>? partnerParams;
-  final String? callbackUrl;
-  final int? sandboxResult;
-  final bool? allowNewEnroll;
-
-  FlutterSmartSelfieRequest(
-      {required this.selfieImage,
-      required this.livenessImages,
-      this.userId,
-      this.partnerParams,
-      this.callbackUrl,
-      this.sandboxResult,
-      this.allowNewEnroll});
-}
-
-enum FlutterSmartSelfieStatus {
-  approved,
-  pending,
-  rejected,
-  unknown
-}
+enum FlutterSmartSelfieStatus { approved, pending, rejected, unknown }
 
 class FlutterSmartSelfieResponse {
   final String code;
@@ -443,15 +417,15 @@ class FlutterSmartSelfieResponse {
   final String userId;
 
   FlutterSmartSelfieResponse({
-    required this.code, 
-    required this.createdAt, 
-    required this.jobId, 
-    required this.jobType, 
-    required this.message, 
-    required this.partnerId, 
-    required this.partnerParams, 
-    required this.status, 
-    required this.updatedAt, 
+    required this.code,
+    required this.createdAt,
+    required this.jobId,
+    required this.jobType,
+    required this.message,
+    required this.partnerId,
+    required this.partnerParams,
+    required this.status,
+    required this.updatedAt,
     required this.userId,
   });
 }
@@ -841,11 +815,28 @@ abstract class SmileIDApi {
 
   @async
   FlutterSmartSelfieResponse doSmartSelfieEnrollment(
-      FlutterSmartSelfieRequest request);
+    String signature,
+    String timestamp,
+    FlutterUploadImageInfo selfieImage,
+    List<FlutterUploadImageInfo> livenessImages,
+    String userId,
+    Map<String?, String?>? partnerParams,
+    String? callbackUrl,
+    int? sandboxResult,
+    bool? allowNewEnroll,
+  );
 
   @async
   FlutterSmartSelfieResponse doSmartSelfieAuthentication(
-      FlutterSmartSelfieRequest request);
+    String signature,
+    String timestamp,
+    FlutterUploadImageInfo selfieImage,
+    List<FlutterUploadImageInfo> livenessImages,
+    String userId,
+    Map<String?, String?>? partnerParams,
+    String? callbackUrl,
+    int? sandboxResult,
+  );
 
   @async
   FlutterDocumentVerificationJobStatusResponse getDocumentVerificationJobStatus(
