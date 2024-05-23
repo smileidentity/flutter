@@ -15,8 +15,8 @@ import FlutterProductsConfigRequest
 import FlutterProductsConfigResponse
 import FlutterServicesResponse
 import FlutterSmartSelfieJobStatusResponse
-import FlutterSmartSelfieRequest
 import FlutterSmartSelfieResponse
+import FlutterUploadImageInfo
 import FlutterUploadRequest
 import FlutterValidDocumentsResponse
 import SmileIDApi
@@ -24,7 +24,7 @@ import android.app.Activity
 import android.content.Context
 import com.smileidentity.SmileID
 import com.smileidentity.SmileIDOptIn
-import com.smileidentity.networking.doSmartSelfieEnrollment
+import com.smileidentity.networking.asFormDataPart
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -136,19 +136,66 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
 
     @OptIn(SmileIDOptIn::class)
     override fun doSmartSelfieEnrollment(
-        request: FlutterSmartSelfieRequest,
+        signature: String,
+        timestamp: String,
+        selfieImage: FlutterUploadImageInfo,
+        livenessImages: List<FlutterUploadImageInfo>,
+        userId: String,
+        partnerParams: Map<String?, String?>?,
+        callbackUrl: String?,
+        sandboxResult: Long?,
+        allowNewEnroll: Boolean?,
         callback: (Result<FlutterSmartSelfieResponse>) -> Unit,
     ) = launch(
-        work = { SmileID.api.doSmartSelfieEnrollment(request.toRequest()).toResponse() },
-        callback = callback
+        work = {
+            SmileID.api.doSmartSelfieEnrollment(
+                userId = userId,
+                selfieImage = selfieImage.toRequest().image.asFormDataPart(
+                    partName = "selfie_image",
+                    mediaType = "image/jpeg",
+                ),
+                livenessImages = livenessImages.map {
+                    it.toRequest().image.asFormDataPart(
+                        partName = "liveness_images",
+                        mediaType = "image/jpeg",
+                    )
+                },
+                partnerParams = convertNullableMapToNonNull(partnerParams),
+                callbackUrl = callbackUrl,
+                sandboxResult = sandboxResult?.toInt(),
+                allowNewEnroll = allowNewEnroll,
+            ).toResponse()
+        },
+        callback = callback,
     )
 
+    @OptIn(SmileIDOptIn::class)
     override fun doSmartSelfieAuthentication(
-        request: FlutterSmartSelfieRequest,
+        signature: String,
+        timestamp: String,
+        selfieImage: FlutterUploadImageInfo,
+        livenessImages: List<FlutterUploadImageInfo>,
+        userId: String,
+        partnerParams: Map<String?, String?>?,
+        callbackUrl: String?,
+        sandboxResult: Long?,
         callback: (Result<FlutterSmartSelfieResponse>) -> Unit,
     ) = launch(
-            work = { SmileID.api.doSmartSelfieAuthentication(request.toRequest()).toResponse() },
-            callback = callback
+        work = {
+            SmileID.api.doSmartSelfieAuthentication(
+                userId = userId,
+                selfieImage = selfieImage.toRequest().image
+                    .asFormDataPart("selfie_image", "image/jpeg"),
+                livenessImages = livenessImages.map {
+                    it.toRequest().image
+                        .asFormDataPart("liveness_images", "image/jpeg")
+                },
+                partnerParams = convertNullableMapToNonNull(partnerParams),
+                callbackUrl = callbackUrl,
+                sandboxResult = sandboxResult?.toInt(),
+            ).toResponse()
+        },
+        callback = callback,
     )
 
     override fun getDocumentVerificationJobStatus(

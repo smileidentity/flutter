@@ -36,7 +36,6 @@ import FlutterProductsConfigResponse
 import FlutterServicesResponse
 import FlutterSmartSelfieJobResult
 import FlutterSmartSelfieJobStatusResponse
-import FlutterSmartSelfieRequest
 import FlutterSmartSelfieResponse
 import FlutterSmartSelfieStatus
 import FlutterSuspectUser
@@ -347,8 +346,6 @@ fun SmartSelfieJobResult.toResponse(): Any = when (this) {
         confidence = confidence,
     )
 }
-
-fun FlutterSmartSelfieRequest.toRequest() = SmartSelfieRequest()
 
 fun SmartSelfieStatus.toResponse() = when (this) {
     SmartSelfieStatus.Approved -> FlutterSmartSelfieStatus.APPROVED
