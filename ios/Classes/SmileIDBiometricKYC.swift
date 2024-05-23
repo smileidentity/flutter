@@ -4,6 +4,7 @@ import SmileID
 import SwiftUI
 
 class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDelegate {
+    
     private var _view: UIView
     private var _channel: FlutterMethodChannel
     private var _childViewController: UIViewController?
@@ -58,14 +59,12 @@ class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDel
         return _view
     }
 
-    func didSucceed(selfieImage: URL, livenessImages: [URL], jobStatusResponse: BiometricKycJobStatusResponse) {
+    func didSucceed(selfieImage: URL, livenessImages: [URL], didSubmitBiometricJob: Bool) {
         _childViewController?.removeFromParent()
-        let encoder = JSONEncoder()
-        let jsonData = try! encoder.encode(jobStatusResponse)
         _channel.invokeMethod("onSuccess", arguments: """
         {"selfieFile": "\(selfieImage.absoluteString)",
-        "livenessImages": "\(livenessImages.map{ $0.absoluteString })",
-        "jobStatusResponse": \(String(data: jsonData, encoding: .utf8)!)}
+        "livenessImages": \(livenessImages.map{ $0.absoluteString }),
+        "didSubmitBiometricJob": \(didSubmitBiometricJob),
         """)
     }
 

@@ -21,17 +21,26 @@ import SmileIDApi
 import android.app.Activity
 import android.content.Context
 import com.smileidentity.SmileID
+import com.smileidentity.networking.pollBiometricKycJobStatus
+import com.smileidentity.networking.pollDocumentVerificationJobStatus
+import com.smileidentity.networking.pollEnhancedDocumentVerificationJobStatus
+import com.smileidentity.networking.pollSmartSelfieJobStatus
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.net.URL
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 
 class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
-
     private var activity: Activity? = null
     private lateinit var appContext: Context
 
@@ -172,12 +181,103 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         callback = callback,
     )
 
-    override fun getServices(
-        callback: (Result<FlutterServicesResponse>) -> Unit,
+    override fun getServices(callback: (Result<FlutterServicesResponse>) -> Unit) =
+        launch(
+            work = { SmileID.api.getServices().toResponse() },
+            callback = callback,
+        )
+
+    override fun pollSmartSelfieJobStatus(
+        request: FlutterJobStatusRequest,
+        interval: Long,
+        numAttempts: Long,
+        callback: (Result<FlutterSmartSelfieJobStatusResponse>) -> Unit,
     ) = launch(
-        work = { SmileID.api.getServices().toResponse() },
+        work = {
+            pollJobStatus(
+                apiCall = SmileID.api::pollSmartSelfieJobStatus,
+                request = request.toRequest(),
+                interval = interval,
+                numAttempts = numAttempts,
+                transform = { it.toResponse() },
+            )
+        },
         callback = callback,
     )
+
+    override fun pollDocumentVerificationJobStatus(
+        request: FlutterJobStatusRequest,
+        interval: Long,
+        numAttempts: Long,
+        callback: (Result<FlutterDocumentVerificationJobStatusResponse>) -> Unit,
+    ) = launch(
+        work = {
+            pollJobStatus(
+                apiCall = SmileID.api::pollDocumentVerificationJobStatus,
+                request = request.toRequest(),
+                interval = interval,
+                numAttempts = numAttempts,
+                transform = { it.toResponse() },
+            )
+        },
+        callback = callback,
+    )
+
+    override fun pollBiometricKycJobStatus(
+        request: FlutterJobStatusRequest,
+        interval: Long,
+        numAttempts: Long,
+        callback: (Result<FlutterBiometricKycJobStatusResponse>) -> Unit,
+    ) = launch(
+        work = {
+            pollJobStatus(
+                apiCall = SmileID.api::pollBiometricKycJobStatus,
+                request = request.toRequest(),
+                interval = interval,
+                numAttempts = numAttempts,
+                transform = { it.toResponse() },
+            )
+        },
+        callback = callback,
+    )
+
+    override fun pollEnhancedDocumentVerificationJobStatus(
+        request: FlutterJobStatusRequest,
+        interval: Long,
+        numAttempts: Long,
+        callback: (Result<FlutterEnhancedDocumentVerificationJobStatusResponse>) -> Unit,
+    ) = launch(
+        work = {
+            pollJobStatus(
+                apiCall = SmileID.api::pollEnhancedDocumentVerificationJobStatus,
+                request = request.toRequest(),
+                interval = interval,
+                numAttempts = numAttempts,
+                transform = { it.toResponse() },
+            )
+        },
+        callback = callback,
+    )
+
+    private suspend fun <RequestType, ResponseType, FlutterResponseType> pollJobStatus(
+        apiCall: suspend (RequestType, Duration, Int) -> Flow<ResponseType>,
+        request: RequestType,
+        interval: Long,
+        numAttempts: Long,
+        transform: (ResponseType) -> FlutterResponseType,
+    ): FlutterResponseType {
+        return try {
+            val response =
+                withContext(Dispatchers.IO) {
+                    apiCall(request, interval.milliseconds, numAttempts.toInt())
+                        .map { transform(it) }
+                        .single()
+                }
+            response
+        } catch (e: Exception) {
+            throw e
+        }
+    }
 
     /**
      * https://stackoverflow.com/a/62206235
@@ -205,9 +305,10 @@ private fun <T> launch(
     callback: (Result<T>) -> Unit,
     scope: CoroutineScope = CoroutineScope(Dispatchers.IO),
 ) {
-    val handler = CoroutineExceptionHandler { _, throwable ->
-        callback.invoke(Result.failure(throwable))
-    }
+    val handler =
+        CoroutineExceptionHandler { _, throwable ->
+            callback.invoke(Result.failure(throwable))
+        }
     scope.launch(handler) {
         callback.invoke(Result.success(work()))
     }

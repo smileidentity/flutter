@@ -1,5 +1,14 @@
 # Release Notes
 
+## 10.1.0
+
+* Moved SmartSelfie enrollment and authentication to synchronous endpoints 
+* Introduced polling methods for products
+  * SmartSelfie 
+  * Biometric kyc
+  * Document verification
+  * Enhanced document verification
+
 ## 10.0.12
 
 * Fixed a bug where SmartSelfieEnrollment and SmartSelfieAuthentication would return invalid `livenessImages` in `onSuccess`

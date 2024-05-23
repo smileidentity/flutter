@@ -4,6 +4,7 @@ import SmileID
 import SwiftUI
 
 class SmileIDSmartSelfieAuthentication : NSObject, FlutterPlatformView, SmartSelfieResultDelegate {
+    
     private var _view: UIView
     private var _channel: FlutterMethodChannel
     private var _childViewController: UIViewController?
@@ -47,20 +48,13 @@ class SmileIDSmartSelfieAuthentication : NSObject, FlutterPlatformView, SmartSel
         return _view
     }
 
-    func didSucceed(selfieImage: URL, livenessImages: [URL], jobStatusResponse: SmartSelfieJobStatusResponse?) {
+
+    func didSucceed(selfieImage: URL, livenessImages: [URL], didSubmitSmartSelfieJob: Bool) {
         _childViewController?.removeFromParent()
-        let encoder = JSONEncoder()
-        let jobStatusResponseJson: String
-        if let jobStatusResponse = jobStatusResponse {
-            let jsonData = try! encoder.encode(jobStatusResponse)
-            jobStatusResponseJson = String(data: jsonData, encoding: .utf8)!
-        } else {
-            jobStatusResponseJson = "null"
-        }
         _channel.invokeMethod("onSuccess", arguments: """
         {"selfieFile": "\(selfieImage.absoluteString)",
-        "livenessImages": \(livenessImages.map { $0.absoluteString }),
-        "jobStatusResponse": \(jobStatusResponseJson)}
+        "livenessImages": \(livenessImages.map{ $0.absoluteString }),
+        "didSubmitSmartSelfieJob": \(didSubmitSmartSelfieJob),
         """)
     }
 
