@@ -96,6 +96,18 @@ extension JobType {
     }
 }
 
+extension JobTypeV2 {
+    func toResponse() -> FlutterJobTypeV2 {
+        switch(self) {
+        case .smartSelfieAuthentication:
+            FlutterJobTypeV2.smartSelfieAuthentication
+        case .smartSelfieEnrollment:
+            FlutterJobTypeV2.smartSelfieEnrollment
+        default: fatalError("Not yet supported")
+        }
+    }
+}
+
 extension FlutterPrepUploadRequest {
     func toRequest() -> PrepUploadRequest {
         PrepUploadRequest(
@@ -225,17 +237,32 @@ extension EnhancedKycAsyncResponse {
     }
 }
 
+extension SmartSelfieStatus {
+    func toResponse() -> FlutterSmartSelfieStatus {
+        switch(self) {
+        case .approved:
+            FlutterSmartSelfieStatus.approved
+        case .pending:
+            FlutterSmartSelfieStatus.pending
+        case .rejected:
+            FlutterSmartSelfieStatus.rejected
+        case .unknown:
+            FlutterSmartSelfieStatus.unknown
+        }
+    }
+}
+
 extension SmartSelfieResponse {
     func toResponse() -> FlutterSmartSelfieResponse {
         FlutterSmartSelfieResponse(
             code: code,
             createdAt: createdAt,
             jobId: jobId,
-            jobType: jobType,
+            jobType: jobType.toResponse(),
             message: message,
             partnerId: partnerId,
             partnerParams: partnerParams,
-            status: SmartSelfieStatus.,
+            status: status.toResponse(),
             updatedAt: updatedAt,
             userId: userId
         )
