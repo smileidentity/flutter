@@ -4,6 +4,7 @@ import SmileID
 import SwiftUI
 
 class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerificationResultDelegate {
+    
     private var _view: UIView
     private var _channel: FlutterMethodChannel
     private var _childViewController: UIViewController?
@@ -55,21 +56,13 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerif
         return _view
     }
     
-    func didSucceed(
-        selfie: URL,
-        documentFrontImage: URL,
-        documentBackImage: URL?,
-        jobStatusResponse: DocumentVerificationJobStatusResponse
-    ) {
+    func didSucceed(selfie: URL, documentFrontImage: URL, documentBackImage: URL?, didSubmitDocumentVerificationJob: Bool) {
         _childViewController?.removeFromParent()
-        let encoder = JSONEncoder()
-        let jsonData = try! encoder.encode(jobStatusResponse)
-        let documentBackFileJson = documentBackImage.map{ "\"\($0.absoluteString)\"" } ?? "null"
         _channel.invokeMethod("onSuccess", arguments: """
         {"selfieFile": "\(selfie.absoluteString)",
-        "documentFrontFile": "\(documentFrontImage.absoluteString)",
-        "documentBackFile": \(documentBackFileJson),
-        "jobStatusResponse": \(String(data: jsonData, encoding: .utf8)!)}
+        "documentFrontImage": \(documentFrontImage.absoluteString),
+        "documentBackImage": \(documentBackImage?.absoluteString ?? ""),
+        "didSubmitDocumentVerificationJob": \(didSubmitDocumentVerificationJob),
         """)
     }
 

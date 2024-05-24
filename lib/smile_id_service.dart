@@ -46,7 +46,8 @@ class SmileIDService {
   /// Fetches the status of a Job. This can be used to check if a Job is complete, and if so,
   /// whether it was successful. This should be called when the Job is known to be a
   /// SmartSelfie Authentication/Registration.
-  Future<FlutterSmartSelfieJobStatusResponse> getSmartSelfieJobStatus(FlutterJobStatusRequest request) {
+  Future<FlutterSmartSelfieJobStatusResponse> getSmartSelfieJobStatus(
+      FlutterJobStatusRequest request) {
     return platformInterface.getSmartSelfieJobStatus(request);
   }
 
@@ -103,19 +104,22 @@ class SmileIDService {
   /// Fetches the status of a Job. This can be used to check if a Job is complete, and if so,
   /// whether it was successful. This should be called when the Job is known to be a
   /// Document Verification.
-  Future<FlutterDocumentVerificationJobStatusResponse> getDocumentVerificationJobStatus(FlutterJobStatusRequest request) {
+  Future<FlutterDocumentVerificationJobStatusResponse> getDocumentVerificationJobStatus(
+      FlutterJobStatusRequest request) {
     return platformInterface.getDocumentVerificationJobStatus(request);
   }
 
   /// Fetches the status of a Job. This can be used to check if a Job is complete, and if so,
   /// whether it was successful. This should be called when the Job is known to be a Biometric KYC.
-  Future<FlutterBiometricKycJobStatusResponse> getBiometricKycJobStatus(FlutterJobStatusRequest request) {
+  Future<FlutterBiometricKycJobStatusResponse> getBiometricKycJobStatus(
+      FlutterJobStatusRequest request) {
     return platformInterface.getBiometricKycJobStatus(request);
   }
 
   /// Fetches the status of a Job. This can be used to check if a Job is complete, and if so,
   /// whether it was successful. This should be called when the Job is known to be Enhanced DocV.
-  Future<FlutterEnhancedDocumentVerificationJobStatusResponse> getEnhancedDocumentVerificationJobStatus(FlutterJobStatusRequest request) {
+  Future<FlutterEnhancedDocumentVerificationJobStatusResponse>
+      getEnhancedDocumentVerificationJobStatus(FlutterJobStatusRequest request) {
     return platformInterface.getEnhancedDocumentVerificationJobStatus(request);
   }
 
@@ -133,5 +137,193 @@ class SmileIDService {
   /// Returns supported products and metadata
   Future<FlutterServicesResponse> getServices() {
     return platformInterface.getServices();
+  }
+
+  /// Polls the status of a Smart Selfie job.
+  ///
+  /// The function returns a [Future] that completes with a
+  /// [FlutterSmartSelfieJobStatusResponse], which contains the status of the job.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// var request = FlutterJobStatusRequest(/* parameters */);
+  /// var response = await pollSmartSelfieJobStatus(request, 1000, 5);
+  /// ```
+  ///
+  /// This example polls the job status every 1000 milliseconds (1 second) up to 5 times.
+  ///
+  /// The [FlutterJobStatusRequest] should be configured according to the job
+  /// requirements and platform interface specifications.
+  ///
+  /// The [interval] parameter specifies the duration (in milliseconds) between
+  /// each polling attempt.
+  ///
+  /// The [numAttempts] parameter defines the number of times the job status will
+  /// be polled before giving up.
+  ///
+  /// If the job status is successfully retrieved within the specified attempts,
+  /// the [Future] completes with the job status. If not, the [Future] may complete
+  /// with an error or the last status retrieved, depending on the platform interface
+  /// implementation.
+  ///
+  /// Throws:
+  /// - [PlatformException] if there is an error in the platform interface.
+  ///
+  /// Params:
+  /// - [request]: The request object containing the job status request details.
+  /// - [interval]: The interval duration (in milliseconds) between each polling attempt.
+  /// - [numAttempts]: The number of polling attempts before stopping.
+  ///
+  /// Returns:
+  /// - A [Future<FlutterSmartSelfieJobStatusResponse>] that completes with the job status.
+  ///
+  /// See also:
+  /// - [FlutterJobStatusRequest]
+  /// - [FlutterSmartSelfieJobStatusResponse]
+  /// ```
+  Future<FlutterSmartSelfieJobStatusResponse> pollSmartSelfieJobStatus(
+      FlutterJobStatusRequest request, int interval, int numAttempts) {
+    return platformInterface.pollSmartSelfieJobStatus(request, interval, numAttempts);
+  }
+
+  /// Polls the status of a document verification job
+  ///
+  /// The function returns a [Future] that completes with a
+  /// [FlutterDocumentVerificationJobStatusResponse], which contains the status of the job.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// var request = FlutterJobStatusRequest(/* parameters */);
+  /// var response = await pollDocumentVerificationJobStatus(request, 1000, 5);
+  /// ```
+  ///
+  /// This example polls the job status every 1000 milliseconds (1 second) up to 5 times.
+  ///
+  /// The [FlutterJobStatusRequest] should be configured according to the job
+  /// requirements and platform interface specifications.
+  ///
+  /// The [interval] parameter specifies the duration (in milliseconds) between
+  /// each polling attempt.
+  ///
+  /// The [numAttempts] parameter defines the number of times the job status will
+  /// be polled before giving up.
+  ///
+  /// If the job status is successfully retrieved within the specified attempts,
+  /// the [Future] completes with the job status. If not, the [Future] may complete
+  /// with an error or the last status retrieved, depending on the platform interface
+  /// implementation.
+  ///
+  /// Throws:
+  /// - [PlatformException] if there is an error in the platform interface.
+  ///
+  /// Params:
+  /// - [request]: The request object containing the job status request details.
+  /// - [interval]: The interval duration (in milliseconds) between each polling attempt.
+  /// - [numAttempts]: The number of polling attempts before stopping.
+  ///
+  /// Returns:
+  /// - A [Future<FlutterDocumentVerificationJobStatusResponse>] that completes with the job status.
+  ///
+  /// See also:
+  /// - [FlutterJobStatusRequest]
+  /// - [FlutterDocumentVerificationJobStatusResponse]
+  /// ```
+  Future<FlutterDocumentVerificationJobStatusResponse> pollDocumentVerificationJobStatus(
+      FlutterJobStatusRequest request, int interval, int numAttempts) {
+    return platformInterface.pollDocumentVerificationJobStatus(request, interval, numAttempts);
+  }
+
+  /// Polls the status of a biometric kyc job
+  ///
+  /// The function returns a [Future] that completes with a
+  /// [FlutterBiometricKycJobStatusResponse], which contains the status of the job.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// var request = FlutterJobStatusRequest(/* parameters */);
+  /// var response = await pollBiometricKycJobStatus(request, 1000, 5);
+  /// ```
+  ///
+  /// This example polls the job status every 1000 milliseconds (1 second) up to 5 times.
+  ///
+  /// The [FlutterJobStatusRequest] should be configured according to the job
+  /// requirements and platform interface specifications.
+  ///
+  /// The [interval] parameter specifies the duration (in milliseconds) between
+  /// each polling attempt.
+  ///
+  /// The [numAttempts] parameter defines the number of times the job status will
+  /// be polled before giving up.
+  ///
+  /// If the job status is successfully retrieved within the specified attempts,
+  /// the [Future] completes with the job status. If not, the [Future] may complete
+  /// with an error or the last status retrieved, depending on the platform interface
+  /// implementation.
+  ///
+  /// Throws:
+  /// - [PlatformException] if there is an error in the platform interface.
+  ///
+  /// Params:
+  /// - [request]: The request object containing the job status request details.
+  /// - [interval]: The interval duration (in milliseconds) between each polling attempt.
+  /// - [numAttempts]: The number of polling attempts before stopping.
+  ///
+  /// Returns:
+  /// - A [Future<FlutterBiometricKycJobStatusResponse>] that completes with the job status.
+  ///
+  /// See also:
+  /// - [FlutterJobStatusRequest]
+  /// - [FlutterBiometricKycJobStatusResponse]
+  /// ```
+  Future<FlutterBiometricKycJobStatusResponse> pollBiometricKycJobStatus(
+      FlutterJobStatusRequest request, int interval, int numAttempts) {
+    return platformInterface.pollBiometricKycJobStatus(request, interval, numAttempts);
+  }
+
+  /// Polls the status of a an enhanced document verification job
+  ///
+  /// The function returns a [Future] that completes with a
+  /// [FlutterEnhancedDocumentVerificationJobStatusResponse], which contains the status of the job.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// var request = FlutterJobStatusRequest(/* parameters */);
+  /// var response = await pollEnhancedDocumentVerificationJobStatus(request, 1000, 5);
+  /// ```
+  ///
+  /// This example polls the job status every 1000 milliseconds (1 second) up to 5 times.
+  ///
+  /// The [FlutterJobStatusRequest] should be configured according to the job
+  /// requirements and platform interface specifications.
+  ///
+  /// The [interval] parameter specifies the duration (in milliseconds) between
+  /// each polling attempt.
+  ///
+  /// The [numAttempts] parameter defines the number of times the job status will
+  /// be polled before giving up.
+  ///
+  /// If the job status is successfully retrieved within the specified attempts,
+  /// the [Future] completes with the job status. If not, the [Future] may complete
+  /// with an error or the last status retrieved, depending on the platform interface
+  /// implementation.
+  ///
+  /// Throws:
+  /// - [PlatformException] if there is an error in the platform interface.
+  ///
+  /// Params:
+  /// - [request]: The request object containing the job status request details.
+  /// - [interval]: The interval duration (in milliseconds) between each polling attempt.
+  /// - [numAttempts]: The number of polling attempts before stopping.
+  ///
+  /// Returns:
+  /// - A [Future<FlutterEnhancedDocumentVerificationJobStatusResponse>] that completes with the job status.
+  ///
+  /// See also:
+  /// - [FlutterJobStatusRequest]
+  /// - [FlutterEnhancedDocumentVerificationJobStatusResponse]
+  /// ```
+  Future<FlutterEnhancedDocumentVerificationJobStatusResponse> pollEnhancedDocumentVerificationJobStatus(
+      FlutterJobStatusRequest request, int interval, int numAttempts) {
+    return platformInterface.pollEnhancedDocumentVerificationJobStatus(request, interval, numAttempts);
   }
 }

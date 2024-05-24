@@ -1932,6 +1932,10 @@ protocol SmileIDApi {
   func getProductsConfig(request: FlutterProductsConfigRequest, completion: @escaping (Result<FlutterProductsConfigResponse, Error>) -> Void)
   func getValidDocuments(request: FlutterProductsConfigRequest, completion: @escaping (Result<FlutterValidDocumentsResponse, Error>) -> Void)
   func getServices(completion: @escaping (Result<FlutterServicesResponse, Error>) -> Void)
+  func pollSmartSelfieJobStatus(request: FlutterJobStatusRequest, interval: Int64, numAttempts: Int64, completion: @escaping (Result<FlutterSmartSelfieJobStatusResponse, Error>) -> Void)
+  func pollDocumentVerificationJobStatus(request: FlutterJobStatusRequest, interval: Int64, numAttempts: Int64, completion: @escaping (Result<FlutterDocumentVerificationJobStatusResponse, Error>) -> Void)
+  func pollBiometricKycJobStatus(request: FlutterJobStatusRequest, interval: Int64, numAttempts: Int64, completion: @escaping (Result<FlutterBiometricKycJobStatusResponse, Error>) -> Void)
+  func pollEnhancedDocumentVerificationJobStatus(request: FlutterJobStatusRequest, interval: Int64, numAttempts: Int64, completion: @escaping (Result<FlutterEnhancedDocumentVerificationJobStatusResponse, Error>) -> Void)
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -2234,6 +2238,82 @@ class SmileIDApiSetup {
       }
     } else {
       getServicesChannel.setMessageHandler(nil)
+    }
+    let pollSmartSelfieJobStatusChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.pollSmartSelfieJobStatus", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      pollSmartSelfieJobStatusChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let requestArg = args[0] as! FlutterJobStatusRequest
+        let intervalArg = args[1] is Int64 ? args[1] as! Int64 : Int64(args[1] as! Int32)
+        let numAttemptsArg = args[2] is Int64 ? args[2] as! Int64 : Int64(args[2] as! Int32)
+        api.pollSmartSelfieJobStatus(request: requestArg, interval: intervalArg, numAttempts: numAttemptsArg) { result in
+          switch result {
+          case .success(let res):
+            reply(wrapResult(res))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      pollSmartSelfieJobStatusChannel.setMessageHandler(nil)
+    }
+    let pollDocumentVerificationJobStatusChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.pollDocumentVerificationJobStatus", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      pollDocumentVerificationJobStatusChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let requestArg = args[0] as! FlutterJobStatusRequest
+        let intervalArg = args[1] is Int64 ? args[1] as! Int64 : Int64(args[1] as! Int32)
+        let numAttemptsArg = args[2] is Int64 ? args[2] as! Int64 : Int64(args[2] as! Int32)
+        api.pollDocumentVerificationJobStatus(request: requestArg, interval: intervalArg, numAttempts: numAttemptsArg) { result in
+          switch result {
+          case .success(let res):
+            reply(wrapResult(res))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      pollDocumentVerificationJobStatusChannel.setMessageHandler(nil)
+    }
+    let pollBiometricKycJobStatusChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.pollBiometricKycJobStatus", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      pollBiometricKycJobStatusChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let requestArg = args[0] as! FlutterJobStatusRequest
+        let intervalArg = args[1] is Int64 ? args[1] as! Int64 : Int64(args[1] as! Int32)
+        let numAttemptsArg = args[2] is Int64 ? args[2] as! Int64 : Int64(args[2] as! Int32)
+        api.pollBiometricKycJobStatus(request: requestArg, interval: intervalArg, numAttempts: numAttemptsArg) { result in
+          switch result {
+          case .success(let res):
+            reply(wrapResult(res))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      pollBiometricKycJobStatusChannel.setMessageHandler(nil)
+    }
+    let pollEnhancedDocumentVerificationJobStatusChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.pollEnhancedDocumentVerificationJobStatus", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      pollEnhancedDocumentVerificationJobStatusChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let requestArg = args[0] as! FlutterJobStatusRequest
+        let intervalArg = args[1] is Int64 ? args[1] as! Int64 : Int64(args[1] as! Int32)
+        let numAttemptsArg = args[2] is Int64 ? args[2] as! Int64 : Int64(args[2] as! Int32)
+        api.pollEnhancedDocumentVerificationJobStatus(request: requestArg, interval: intervalArg, numAttempts: numAttemptsArg) { result in
+          switch result {
+          case .success(let res):
+            reply(wrapResult(res))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      pollEnhancedDocumentVerificationJobStatusChannel.setMessageHandler(nil)
     }
   }
 }
