@@ -150,6 +150,11 @@ extension FlutterUploadImageInfo {
             fileName: imageName
         )
     }
+    func toMultiPartRequest() -> MultipartBody {
+        // do we need to expose a func that get's us a file here?
+        let dataUrl = try LocalStorage.getFileByType(jobId: <#T##String#>, fileType: imageTypeId.toRequest())
+        MultipartBody(withImage: Data(contentsOf: dataUrl), forKey: imageName, forName: imageName)
+    }
 }
 
 extension FlutterImageType {

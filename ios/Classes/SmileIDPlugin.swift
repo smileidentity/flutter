@@ -174,12 +174,12 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         SmileID.api.doSmartSelfieEnrollment(
             signature: signature,
             timestamp: timestamp,
-            selfieImage: selfieImage,
-            livenessImages: livenessImages,
+            selfieImage: selfieImage.toMultiPartRequest(),
+            livenessImages: livenessImages.map { $0.toMultiPartRequest() },
             userId: userId,
             partnerParams: convertNullableMapToNonNull(data: partnerParams),
             callbackUrl: callbackUrl,
-            sandboxResult: sandboxResult,
+            sandboxResult: sandboxResult.map { Int($0) },
             allowNewEnroll: allowNewEnroll
         ).sink(receiveCompletion: { status in
             switch status {
@@ -209,11 +209,11 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             signature: signature,
             timestamp: timestamp,
             userId: userId,
-            selfieImage: selfieImage,
-            livenessImages: livenessImages,
+            selfieImage: selfieImage.toMultiPartRequest(),
+            livenessImages: livenessImages.map { $0.toMultiPartRequest() },
             partnerParams: convertNullableMapToNonNull(data: partnerParams),
             callbackUrl: callbackUrl,
-            sandboxResult: Int?(sandboxResult)
+            sandboxResult: sandboxResult.map { Int($0) }
         ).sink(receiveCompletion: { status in
             switch status {
             case .failure(let error):

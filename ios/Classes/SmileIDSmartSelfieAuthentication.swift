@@ -48,13 +48,12 @@ class SmileIDSmartSelfieAuthentication : NSObject, FlutterPlatformView, SmartSel
         return _view
     }
 
-
-    func didSucceed(selfieImage: URL, livenessImages: [URL], didSubmitSmartSelfieJob: Bool) {
+    func didSucceed(selfieImage: URL, livenessImages: [URL], apiResponse: SmartSelfieResponse?) {
         _childViewController?.removeFromParent()
         _channel.invokeMethod("onSuccess", arguments: """
         {"selfieFile": "\(selfieImage.absoluteString)",
         "livenessImages": \(livenessImages.map{ $0.absoluteString }),
-        "didSubmitSmartSelfieJob": \(didSubmitSmartSelfieJob),
+        "apiResponse": \(apiResponse)},
         """)
     }
 
