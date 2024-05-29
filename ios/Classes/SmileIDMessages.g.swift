@@ -1749,12 +1749,10 @@ private class SmileIDApiCodecReader: FlutterStandardReader {
     case 166:
       return FlutterUploadImageInfo.fromList(self.readValue() as! [Any?])
     case 167:
-      return FlutterUploadImageInfo.fromList(self.readValue() as! [Any?])
-    case 168:
       return FlutterUploadRequest.fromList(self.readValue() as! [Any?])
-    case 169:
+    case 168:
       return FlutterValidDocument.fromList(self.readValue() as! [Any?])
-    case 170:
+    case 169:
       return FlutterValidDocumentsResponse.fromList(self.readValue() as! [Any?])
     default:
       return super.readValue(ofType: type)
@@ -1881,17 +1879,14 @@ private class SmileIDApiCodecWriter: FlutterStandardWriter {
     } else if let value = value as? FlutterUploadImageInfo {
       super.writeByte(166)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterUploadImageInfo {
+    } else if let value = value as? FlutterUploadRequest {
       super.writeByte(167)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterUploadRequest {
+    } else if let value = value as? FlutterValidDocument {
       super.writeByte(168)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterValidDocument {
-      super.writeByte(169)
-      super.writeValue(value.toList())
     } else if let value = value as? FlutterValidDocumentsResponse {
-      super.writeByte(170)
+      super.writeByte(169)
       super.writeValue(value.toList())
     } else {
       super.writeValue(value)
@@ -1924,8 +1919,8 @@ protocol SmileIDApi {
   func doEnhancedKyc(request: FlutterEnhancedKycRequest, completion: @escaping (Result<FlutterEnhancedKycResponse, Error>) -> Void)
   func doEnhancedKycAsync(request: FlutterEnhancedKycRequest, completion: @escaping (Result<FlutterEnhancedKycAsyncResponse, Error>) -> Void)
   func getSmartSelfieJobStatus(request: FlutterJobStatusRequest, completion: @escaping (Result<FlutterSmartSelfieJobStatusResponse, Error>) -> Void)
-  func doSmartSelfieEnrollment(signature: String, timestamp: String, selfieImage: FlutterUploadImageInfo, livenessImages: [FlutterUploadImageInfo], userId: String, partnerParams: [String?: String?]?, callbackUrl: String?, sandboxResult: Int64?, allowNewEnroll: Bool?, completion: @escaping (Result<FlutterSmartSelfieResponse, Error>) -> Void)
-  func doSmartSelfieAuthentication(signature: String, timestamp: String, selfieImage: FlutterUploadImageInfo, livenessImages: [FlutterUploadImageInfo], userId: String, partnerParams: [String?: String?]?, callbackUrl: String?, sandboxResult: Int64?, completion: @escaping (Result<FlutterSmartSelfieResponse, Error>) -> Void)
+  func doSmartSelfieEnrollment(signature: String, timestamp: String, selfieImage: String, livenessImages: [String], userId: String, partnerParams: [String?: String?]?, callbackUrl: String?, sandboxResult: Int64?, allowNewEnroll: Bool?, completion: @escaping (Result<FlutterSmartSelfieResponse, Error>) -> Void)
+  func doSmartSelfieAuthentication(signature: String, timestamp: String, selfieImage: String, livenessImages: [String], userId: String, partnerParams: [String?: String?]?, callbackUrl: String?, sandboxResult: Int64?, completion: @escaping (Result<FlutterSmartSelfieResponse, Error>) -> Void)
   func getDocumentVerificationJobStatus(request: FlutterJobStatusRequest, completion: @escaping (Result<FlutterDocumentVerificationJobStatusResponse, Error>) -> Void)
   func getBiometricKycJobStatus(request: FlutterJobStatusRequest, completion: @escaping (Result<FlutterBiometricKycJobStatusResponse, Error>) -> Void)
   func getEnhancedDocumentVerificationJobStatus(request: FlutterJobStatusRequest, completion: @escaping (Result<FlutterEnhancedDocumentVerificationJobStatusResponse, Error>) -> Void)
@@ -2096,8 +2091,8 @@ class SmileIDApiSetup {
         let args = message as! [Any?]
         let signatureArg = args[0] as! String
         let timestampArg = args[1] as! String
-        let selfieImageArg = args[2] as! FlutterUploadImageInfo
-        let livenessImagesArg = args[3] as! [FlutterUploadImageInfo]
+        let selfieImageArg = args[2] as! String
+        let livenessImagesArg = args[3] as! [String]
         let userIdArg = args[4] as! String
         let partnerParamsArg: [String?: String?]? = nilOrValue(args[5])
         let callbackUrlArg: String? = nilOrValue(args[6])
@@ -2121,8 +2116,8 @@ class SmileIDApiSetup {
         let args = message as! [Any?]
         let signatureArg = args[0] as! String
         let timestampArg = args[1] as! String
-        let selfieImageArg = args[2] as! FlutterUploadImageInfo
-        let livenessImagesArg = args[3] as! [FlutterUploadImageInfo]
+        let selfieImageArg = args[2] as! String
+        let livenessImagesArg = args[3] as! [String]
         let userIdArg = args[4] as! String
         let partnerParamsArg: [String?: String?]? = nilOrValue(args[5])
         let callbackUrlArg: String? = nilOrValue(args[6])

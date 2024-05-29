@@ -1730,20 +1730,15 @@ private object SmileIDApiCodec : StandardMessageCodec() {
       }
       167.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterUploadImageInfo.fromList(it)
+          FlutterUploadRequest.fromList(it)
         }
       }
       168.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterUploadRequest.fromList(it)
-        }
-      }
-      169.toByte() -> {
-        return (readValue(buffer) as? List<Any?>)?.let {
           FlutterValidDocument.fromList(it)
         }
       }
-      170.toByte() -> {
+      169.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
           FlutterValidDocumentsResponse.fromList(it)
         }
@@ -1909,20 +1904,16 @@ private object SmileIDApiCodec : StandardMessageCodec() {
         stream.write(166)
         writeValue(stream, value.toList())
       }
-      is FlutterUploadImageInfo -> {
+      is FlutterUploadRequest -> {
         stream.write(167)
         writeValue(stream, value.toList())
       }
-      is FlutterUploadRequest -> {
+      is FlutterValidDocument -> {
         stream.write(168)
         writeValue(stream, value.toList())
       }
-      is FlutterValidDocument -> {
-        stream.write(169)
-        writeValue(stream, value.toList())
-      }
       is FlutterValidDocumentsResponse -> {
-        stream.write(170)
+        stream.write(169)
         writeValue(stream, value.toList())
       }
       else -> super.writeValue(stream, value)
@@ -1941,8 +1932,8 @@ interface SmileIDApi {
   fun doEnhancedKyc(request: FlutterEnhancedKycRequest, callback: (Result<FlutterEnhancedKycResponse>) -> Unit)
   fun doEnhancedKycAsync(request: FlutterEnhancedKycRequest, callback: (Result<FlutterEnhancedKycAsyncResponse>) -> Unit)
   fun getSmartSelfieJobStatus(request: FlutterJobStatusRequest, callback: (Result<FlutterSmartSelfieJobStatusResponse>) -> Unit)
-  fun doSmartSelfieEnrollment(signature: String, timestamp: String, selfieImage: FlutterUploadImageInfo, livenessImages: List<FlutterUploadImageInfo>, userId: String, partnerParams: Map<String?, String?>?, callbackUrl: String?, sandboxResult: Long?, allowNewEnroll: Boolean?, callback: (Result<FlutterSmartSelfieResponse>) -> Unit)
-  fun doSmartSelfieAuthentication(signature: String, timestamp: String, selfieImage: FlutterUploadImageInfo, livenessImages: List<FlutterUploadImageInfo>, userId: String, partnerParams: Map<String?, String?>?, callbackUrl: String?, sandboxResult: Long?, callback: (Result<FlutterSmartSelfieResponse>) -> Unit)
+  fun doSmartSelfieEnrollment(signature: String, timestamp: String, selfieImage: String, livenessImages: List<String>, userId: String, partnerParams: Map<String?, String?>?, callbackUrl: String?, sandboxResult: Long?, allowNewEnroll: Boolean?, callback: (Result<FlutterSmartSelfieResponse>) -> Unit)
+  fun doSmartSelfieAuthentication(signature: String, timestamp: String, selfieImage: String, livenessImages: List<String>, userId: String, partnerParams: Map<String?, String?>?, callbackUrl: String?, sandboxResult: Long?, callback: (Result<FlutterSmartSelfieResponse>) -> Unit)
   fun getDocumentVerificationJobStatus(request: FlutterJobStatusRequest, callback: (Result<FlutterDocumentVerificationJobStatusResponse>) -> Unit)
   fun getBiometricKycJobStatus(request: FlutterJobStatusRequest, callback: (Result<FlutterBiometricKycJobStatusResponse>) -> Unit)
   fun getEnhancedDocumentVerificationJobStatus(request: FlutterJobStatusRequest, callback: (Result<FlutterEnhancedDocumentVerificationJobStatusResponse>) -> Unit)
@@ -2144,8 +2135,8 @@ interface SmileIDApi {
             val args = message as List<Any?>
             val signatureArg = args[0] as String
             val timestampArg = args[1] as String
-            val selfieImageArg = args[2] as FlutterUploadImageInfo
-            val livenessImagesArg = args[3] as List<FlutterUploadImageInfo>
+            val selfieImageArg = args[2] as String
+            val livenessImagesArg = args[3] as List<String>
             val userIdArg = args[4] as String
             val partnerParamsArg = args[5] as Map<String?, String?>?
             val callbackUrlArg = args[6] as String?
@@ -2172,8 +2163,8 @@ interface SmileIDApi {
             val args = message as List<Any?>
             val signatureArg = args[0] as String
             val timestampArg = args[1] as String
-            val selfieImageArg = args[2] as FlutterUploadImageInfo
-            val livenessImagesArg = args[3] as List<FlutterUploadImageInfo>
+            val selfieImageArg = args[2] as String
+            val livenessImagesArg = args[3] as List<String>
             val userIdArg = args[4] as String
             val partnerParamsArg = args[5] as Map<String?, String?>?
             val callbackUrlArg = args[6] as String?

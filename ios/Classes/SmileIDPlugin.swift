@@ -162,8 +162,8 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
     func doSmartSelfieEnrollment(
         signature: String,
         timestamp: String,
-        selfieImage: FlutterUploadImageInfo,
-        livenessImages: [FlutterUploadImageInfo],
+        selfieImage: String,
+        livenessImages: [String],
         userId: String,
         partnerParams: [String? : String?]?,
         callbackUrl: String?,
@@ -174,8 +174,18 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         SmileID.api.doSmartSelfieEnrollment(
             signature: signature,
             timestamp: timestamp,
-            selfieImage: selfieImage.toMultiPartRequest(),
-            livenessImages: livenessImages.map { $0.toMultiPartRequest() },
+            selfieImage: MultipartBody(
+                withImage: getFile(atPath: selfieImage)!,
+                forKey: URL(fileURLWithPath: selfieImage).lastPathComponent,
+                forName: URL(fileURLWithPath: selfieImage).lastPathComponent
+            )!,
+            livenessImages: livenessImages.map {
+                MultipartBody(
+                    withImage: getFile(atPath: $0)!,
+                    forKey: URL(fileURLWithPath: $0).lastPathComponent,
+                    forName: URL(fileURLWithPath: $0).lastPathComponent
+                )!
+            },
             userId: userId,
             partnerParams: convertNullableMapToNonNull(data: partnerParams),
             callbackUrl: callbackUrl,
@@ -197,8 +207,8 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
     func doSmartSelfieAuthentication(
         signature: String,
         timestamp: String,
-        selfieImage: FlutterUploadImageInfo,
-        livenessImages: [FlutterUploadImageInfo],
+        selfieImage: String,
+        livenessImages: [String],
         userId: String,
         partnerParams: [String? : String?]?,
         callbackUrl: String?,
@@ -209,8 +219,18 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             signature: signature,
             timestamp: timestamp,
             userId: userId,
-            selfieImage: selfieImage.toMultiPartRequest(),
-            livenessImages: livenessImages.map { $0.toMultiPartRequest() },
+            selfieImage: MultipartBody(
+                withImage: getFile(atPath: selfieImage)!,
+                forKey: URL(fileURLWithPath: selfieImage).lastPathComponent,
+                forName: URL(fileURLWithPath: selfieImage).lastPathComponent
+            )!,
+            livenessImages: livenessImages.map {
+                MultipartBody(
+                    withImage: getFile(atPath: $0)!,
+                    forKey: URL(fileURLWithPath: $0).lastPathComponent,
+                    forName: URL(fileURLWithPath: $0).lastPathComponent
+                )!
+            },
             partnerParams: convertNullableMapToNonNull(data: partnerParams),
             callbackUrl: callbackUrl,
             sandboxResult: sandboxResult.map { Int($0) }

@@ -818,8 +818,8 @@ abstract class SmileIDApi {
   FlutterSmartSelfieResponse doSmartSelfieEnrollment(
     String signature,
     String timestamp,
-    FlutterUploadImageInfo selfieImage,
-    List<FlutterUploadImageInfo> livenessImages,
+    String selfieImage,
+    List<String> livenessImages,
     String userId,
     Map<String?, String?>? partnerParams,
     String? callbackUrl,
@@ -831,8 +831,8 @@ abstract class SmileIDApi {
   FlutterSmartSelfieResponse doSmartSelfieAuthentication(
     String signature,
     String timestamp,
-    FlutterUploadImageInfo selfieImage,
-    List<FlutterUploadImageInfo> livenessImages,
+    String selfieImage,
+    List<String> livenessImages,
     String userId,
     Map<String?, String?>? partnerParams,
     String? callbackUrl,

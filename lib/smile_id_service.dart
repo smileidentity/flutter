@@ -56,8 +56,8 @@ class SmileIDService {
   Future<FlutterSmartSelfieResponse> doSmartSelfieEnrollment(
       String signature,
       String timestamp,
-      FlutterUploadImageInfo selfieImage,
-      List<FlutterUploadImageInfo> livenessImages,
+      String selfieImage,
+      List<String> livenessImages,
       String userId,
       Map<String?, String?>? partnerParams,
       String? callbackUrl,
@@ -82,8 +82,8 @@ class SmileIDService {
   Future<FlutterSmartSelfieResponse> doSmartSelfieAuthentication(
       String signature,
       String timestamp,
-      FlutterUploadImageInfo selfieImage,
-      List<FlutterUploadImageInfo> livenessImages,
+      String selfieImage,
+      List<String> livenessImages,
       String userId,
       Map<String?, String?>? partnerParams,
       String? callbackUrl,

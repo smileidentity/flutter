@@ -40,6 +40,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
 import java.net.URL
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
@@ -147,8 +148,8 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
     override fun doSmartSelfieEnrollment(
         signature: String,
         timestamp: String,
-        selfieImage: FlutterUploadImageInfo,
-        livenessImages: List<FlutterUploadImageInfo>,
+        selfieImage: String,
+        livenessImages: List<String>,
         userId: String,
         partnerParams: Map<String?, String?>?,
         callbackUrl: String?,
@@ -159,12 +160,12 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         work = {
             SmileID.api.doSmartSelfieEnrollment(
                 userId = userId,
-                selfieImage = selfieImage.toRequest().image.asFormDataPart(
+                selfieImage = File(selfieImage).asFormDataPart(
                     partName = "selfie_image",
                     mediaType = "image/jpeg",
                 ),
                 livenessImages = livenessImages.map {
-                    it.toRequest().image.asFormDataPart(
+                    File(selfieImage).asFormDataPart(
                         partName = "liveness_images",
                         mediaType = "image/jpeg",
                     )
@@ -182,8 +183,8 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
     override fun doSmartSelfieAuthentication(
         signature: String,
         timestamp: String,
-        selfieImage: FlutterUploadImageInfo,
-        livenessImages: List<FlutterUploadImageInfo>,
+        selfieImage: String,
+        livenessImages: List<String>,
         userId: String,
         partnerParams: Map<String?, String?>?,
         callbackUrl: String?,
@@ -193,11 +194,15 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         work = {
             SmileID.api.doSmartSelfieAuthentication(
                 userId = userId,
-                selfieImage = selfieImage.toRequest().image
-                    .asFormDataPart("selfie_image", "image/jpeg"),
+                selfieImage = File(selfieImage).asFormDataPart(
+                    partName = "selfie_image",
+                    mediaType = "image/jpeg",
+                ),
                 livenessImages = livenessImages.map {
-                    it.toRequest().image
-                        .asFormDataPart("liveness_images", "image/jpeg")
+                    File(selfieImage).asFormDataPart(
+                        partName = "liveness_images",
+                        mediaType = "image/jpeg",
+                    )
                 },
                 partnerParams = convertNullableMapToNonNull(partnerParams),
                 callbackUrl = callbackUrl,

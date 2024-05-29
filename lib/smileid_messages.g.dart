@@ -2064,17 +2064,14 @@ class _SmileIDApiCodec extends StandardMessageCodec {
     } else if (value is FlutterUploadImageInfo) {
       buffer.putUint8(166);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterUploadImageInfo) {
+    } else if (value is FlutterUploadRequest) {
       buffer.putUint8(167);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterUploadRequest) {
+    } else if (value is FlutterValidDocument) {
       buffer.putUint8(168);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterValidDocument) {
-      buffer.putUint8(169);
-      writeValue(buffer, value.encode());
     } else if (value is FlutterValidDocumentsResponse) {
-      buffer.putUint8(170);
+      buffer.putUint8(169);
       writeValue(buffer, value.encode());
     } else {
       super.writeValue(buffer, value);
@@ -2163,12 +2160,10 @@ class _SmileIDApiCodec extends StandardMessageCodec {
       case 166: 
         return FlutterUploadImageInfo.decode(readValue(buffer)!);
       case 167: 
-        return FlutterUploadImageInfo.decode(readValue(buffer)!);
-      case 168: 
         return FlutterUploadRequest.decode(readValue(buffer)!);
-      case 169: 
+      case 168: 
         return FlutterValidDocument.decode(readValue(buffer)!);
-      case 170: 
+      case 169: 
         return FlutterValidDocumentsResponse.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);
@@ -2409,7 +2404,7 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterSmartSelfieResponse> doSmartSelfieEnrollment(String signature, String timestamp, FlutterUploadImageInfo selfieImage, List<FlutterUploadImageInfo?> livenessImages, String userId, Map<String?, String?>? partnerParams, String? callbackUrl, int? sandboxResult, bool? allowNewEnroll) async {
+  Future<FlutterSmartSelfieResponse> doSmartSelfieEnrollment(String signature, String timestamp, String selfieImage, List<String?> livenessImages, String userId, Map<String?, String?>? partnerParams, String? callbackUrl, int? sandboxResult, bool? allowNewEnroll) async {
     const String __pigeon_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.doSmartSelfieEnrollment';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -2436,7 +2431,7 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterSmartSelfieResponse> doSmartSelfieAuthentication(String signature, String timestamp, FlutterUploadImageInfo selfieImage, List<FlutterUploadImageInfo?> livenessImages, String userId, Map<String?, String?>? partnerParams, String? callbackUrl, int? sandboxResult) async {
+  Future<FlutterSmartSelfieResponse> doSmartSelfieAuthentication(String signature, String timestamp, String selfieImage, List<String?> livenessImages, String userId, Map<String?, String?>? partnerParams, String? callbackUrl, int? sandboxResult) async {
     const String __pigeon_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.doSmartSelfieAuthentication';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,

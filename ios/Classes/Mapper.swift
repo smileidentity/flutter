@@ -11,6 +11,24 @@ func convertNullableMapToNonNull(data: [String? : String?]?) -> [String : String
   return convertedDictionary
 }
 
+func getFile(atPath path: String) -> Data? {
+    // Create a URL from the provided path
+    let fileURL = URL(fileURLWithPath: path)
+    do {
+        // Check if the file exists
+        let fileExists = try fileURL.checkResourceIsReachable()
+        if fileExists {
+            // Read the contents of the file
+            let fileData = try Data(contentsOf: fileURL)
+            return fileData
+        } else {
+            return nil
+        }
+    } catch {
+        return nil
+    }
+}
+
 extension FlutterPartnerParams {
     func toRequest() -> PartnerParams {
         PartnerParams(
@@ -149,11 +167,6 @@ extension FlutterUploadImageInfo {
             imageTypeId: imageTypeId.toRequest(),
             fileName: imageName
         )
-    }
-    func toMultiPartRequest() -> MultipartBody {
-        // do we need to expose a func that get's us a file here?
-        let dataUrl = try LocalStorage.getFileByType(jobId: <#T##String#>, fileType: imageTypeId.toRequest())
-        MultipartBody(withImage: Data(contentsOf: dataUrl), forKey: imageName, forName: imageName)
     }
 }
 
