@@ -43,6 +43,7 @@ import kotlin.time.Duration.Companion.milliseconds
 class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
     private var activity: Activity? = null
     private lateinit var appContext: Context
+    private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         SmileIDApi.setUp(flutterPluginBinding.binaryMessenger, this)
@@ -88,6 +89,28 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
 
     override fun setCallbackUrl(callbackUrl: String) {
         SmileID.setCallbackUrl(callbackUrl = URL(callbackUrl))
+    }
+
+    override fun setAllowOfflineMode(allowOfflineMode: Boolean) {
+        SmileID.setAllowOfflineMode(allowOfflineMode = allowOfflineMode)
+    }
+
+    override fun getSubmittedJobs(): List<String> = SmileID.getSubmittedJobs()
+
+    override fun getUnsubmittedJobs(): List<String> = SmileID.getUnsubmittedJobs()
+
+    override fun cleanup(jobId: String) {
+        SmileID.cleanup(jobId = jobId)
+    }
+
+    override fun cleanupJobs(jobIds: List<String>) {
+        SmileID.cleanup(jobIds = jobIds)
+    }
+
+    override fun submitJob(jobId: String, deleteFilesOnSuccess: Boolean) {
+        scope.launch {
+            SmileID.submitJob(jobId = jobId, deleteFilesOnSuccess = deleteFilesOnSuccess)
+        }
     }
 
     override fun authenticate(

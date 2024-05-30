@@ -66,6 +66,30 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         SmileID.setCallbackUrl(url: URL(string: callbackUrl))
     }
     
+    func setAllowOfflineMode(allowOfflineMode: Bool) {
+        SmileID.setAllowOfflineMode(allowOfflineMode: allowOfflineMode)
+    }
+    
+    func getSubmittedJobs() -> [String] {
+        SmileID.getSubmittedJobs()
+    }
+    
+    func getUnsubmittedJobs() -> [String] {
+        SmileID.getUnsubmittedJobs()
+    }
+    
+    func cleanup(jobId: String) throws {
+        try SmileID.cleanup(jobId: jobId)
+    }
+    
+    func cleanupJobs(jobIds: [String]) throws {
+        try SmileID.cleanup(jobIds: jobIds)
+    }
+    
+    func submitJob(jobId: String, deleteFilesOnSuccess: Bool) throws {
+        try SmileID.submitJob(jobId: jobId, deleteFilesOnSuccess: deleteFilesOnSuccess)
+    }
+    
     func authenticate(
         request: FlutterAuthenticationRequest,
         completion: @escaping (Result<FlutterAuthenticationResponse, Error>) -> Void
