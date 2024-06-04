@@ -20,7 +20,7 @@ enum FlutterJobType {
   smartSelfieAuthentication
 }
 
-enum FlutterJobTypeV2 { smart_selfie_authentication, smart_selfie_enrollment }
+enum FlutterJobTypeV2 { smartSelfieAuthentication, smartSelfieEnrollment }
 
 ///  Custom values specific to partners can be placed in [extras]
 class FlutterPartnerParams {

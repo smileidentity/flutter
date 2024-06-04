@@ -58,8 +58,8 @@ enum class FlutterJobType(val raw: Int) {
 }
 
 enum class FlutterJobTypeV2(val raw: Int) {
-  SMART_SELFIE_AUTHENTICATION(0),
-  SMART_SELFIE_ENROLLMENT(1);
+  SMARTSELFIEAUTHENTICATION(0),
+  SMARTSELFIEENROLLMENT(1);
 
   companion object {
     fun ofRaw(raw: Int): FlutterJobTypeV2? {

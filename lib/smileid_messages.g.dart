@@ -25,8 +25,8 @@ enum FlutterJobType {
 }
 
 enum FlutterJobTypeV2 {
-  smart_selfie_authentication,
-  smart_selfie_enrollment,
+  smartSelfieAuthentication,
+  smartSelfieEnrollment,
 }
 
 enum FlutterImageType {

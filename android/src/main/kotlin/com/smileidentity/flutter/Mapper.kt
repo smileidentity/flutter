@@ -129,13 +129,13 @@ fun JobType.toResponse() = when (this) {
 }
 
 fun FlutterJobTypeV2.toRequest() = when (this) {
-    FlutterJobTypeV2.SMART_SELFIE_AUTHENTICATION -> JobTypeV2.SmartSelfieAuthentication
-    FlutterJobTypeV2.SMART_SELFIE_ENROLLMENT -> JobTypeV2.SmartSelfieEnrollment
+    FlutterJobTypeV2.SMARTSELFIEAUTHENTICATION -> JobTypeV2.SmartSelfieAuthentication
+    FlutterJobTypeV2.SMARTSELFIEENROLLMENT -> JobTypeV2.SmartSelfieEnrollment
 }
 
 fun JobTypeV2.toResponse() = when (this) {
-    JobTypeV2.SmartSelfieAuthentication -> FlutterJobTypeV2.SMART_SELFIE_AUTHENTICATION
-    JobTypeV2.SmartSelfieEnrollment -> FlutterJobTypeV2.SMART_SELFIE_ENROLLMENT
+    JobTypeV2.SmartSelfieAuthentication -> FlutterJobTypeV2.SMARTSELFIEAUTHENTICATION
+    JobTypeV2.SmartSelfieEnrollment -> FlutterJobTypeV2.SMARTSELFIEENROLLMENT
     else -> TODO("Not yet implemented")
 }
 
