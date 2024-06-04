@@ -11,8 +11,8 @@ import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
-import kotlinx.collections.immutable.toImmutableMap
 import java.io.File
+import kotlinx.collections.immutable.toImmutableMap
 
 internal class SmileIDDocumentVerification private constructor(
     context: Context,

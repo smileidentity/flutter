@@ -71,7 +71,6 @@ import com.smileidentity.models.ImageType
 import com.smileidentity.models.JobResult
 import com.smileidentity.models.JobStatusRequest
 import com.smileidentity.models.JobType
-import com.smileidentity.models.v2.JobType as JobTypeV2
 import com.smileidentity.models.PartnerParams
 import com.smileidentity.models.PrepUploadRequest
 import com.smileidentity.models.PrepUploadResponse
@@ -85,6 +84,7 @@ import com.smileidentity.models.UploadImageInfo
 import com.smileidentity.models.UploadRequest
 import com.smileidentity.models.ValidDocument
 import com.smileidentity.models.ValidDocumentsResponse
+import com.smileidentity.models.v2.JobType as JobTypeV2
 import com.smileidentity.models.v2.SmartSelfieResponse
 import com.smileidentity.models.v2.SmartSelfieStatus
 import java.io.File
@@ -364,7 +364,7 @@ fun SmartSelfieResponse.toResponse() = FlutterSmartSelfieResponse(
     partnerParams = convertNonNullMapToNullable(partnerParams),
     status = status.toResponse(),
     updatedAt = updatedAt,
-    userId = userId
+    userId = userId,
 )
 
 fun DocumentVerificationJobStatusResponse.toResponse() =
