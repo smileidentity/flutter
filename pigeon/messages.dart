@@ -761,6 +761,18 @@ abstract class SmileIDApi {
 
   void setCallbackUrl(String callbackUrl);
 
+  void setAllowOfflineMode(bool allowOfflineMode);
+
+  List<String> getSubmittedJobs();
+
+  List<String> getUnsubmittedJobs();
+
+  void cleanup(String jobId);
+
+  void cleanupJobs(List<String> jobIds);
+
+  void submitJob(String jobId, bool deleteFilesOnSuccess);
+
   @async
   FlutterAuthenticationResponse authenticate(FlutterAuthenticationRequest request);
 

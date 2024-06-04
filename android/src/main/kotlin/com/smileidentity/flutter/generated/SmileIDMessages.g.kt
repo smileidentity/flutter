@@ -1847,6 +1847,12 @@ interface SmileIDApi {
   fun initialize()
   fun setEnvironment(useSandbox: Boolean)
   fun setCallbackUrl(callbackUrl: String)
+  fun setAllowOfflineMode(allowOfflineMode: Boolean)
+  fun getSubmittedJobs(): List<String>
+  fun getUnsubmittedJobs(): List<String>
+  fun cleanup(jobId: String)
+  fun cleanupJobs(jobIds: List<String>)
+  fun submitJob(jobId: String, deleteFilesOnSuccess: Boolean)
   fun authenticate(request: FlutterAuthenticationRequest, callback: (Result<FlutterAuthenticationResponse>) -> Unit)
   fun prepUpload(request: FlutterPrepUploadRequest, callback: (Result<FlutterPrepUploadResponse>) -> Unit)
   fun upload(url: String, request: FlutterUploadRequest, callback: (Result<Unit>) -> Unit)
@@ -1917,6 +1923,115 @@ interface SmileIDApi {
             var wrapped: List<Any?>
             try {
               api.setCallbackUrl(callbackUrlArg)
+              wrapped = listOf<Any?>(null)
+            } catch (exception: Throwable) {
+              wrapped = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.setAllowOfflineMode", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val allowOfflineModeArg = args[0] as Boolean
+            var wrapped: List<Any?>
+            try {
+              api.setAllowOfflineMode(allowOfflineModeArg)
+              wrapped = listOf<Any?>(null)
+            } catch (exception: Throwable) {
+              wrapped = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.getSubmittedJobs", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            var wrapped: List<Any?>
+            try {
+              wrapped = listOf<Any?>(api.getSubmittedJobs())
+            } catch (exception: Throwable) {
+              wrapped = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.getUnsubmittedJobs", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            var wrapped: List<Any?>
+            try {
+              wrapped = listOf<Any?>(api.getUnsubmittedJobs())
+            } catch (exception: Throwable) {
+              wrapped = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.cleanup", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val jobIdArg = args[0] as String
+            var wrapped: List<Any?>
+            try {
+              api.cleanup(jobIdArg)
+              wrapped = listOf<Any?>(null)
+            } catch (exception: Throwable) {
+              wrapped = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.cleanupJobs", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val jobIdsArg = args[0] as List<String>
+            var wrapped: List<Any?>
+            try {
+              api.cleanupJobs(jobIdsArg)
+              wrapped = listOf<Any?>(null)
+            } catch (exception: Throwable) {
+              wrapped = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.submitJob", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val jobIdArg = args[0] as String
+            val deleteFilesOnSuccessArg = args[1] as Boolean
+            var wrapped: List<Any?>
+            try {
+              api.submitJob(jobIdArg, deleteFilesOnSuccessArg)
               wrapped = listOf<Any?>(null)
             } catch (exception: Throwable) {
               wrapped = wrapError(exception)
