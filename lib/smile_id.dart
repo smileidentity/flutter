@@ -20,4 +20,28 @@ class SmileID {
   static void setCallbackUrl({required Uri callbackUrl}) {
     platformInterface.setCallbackUrl(callbackUrl.toString());
   }
+
+  static void setAllowOfflineMode({required bool allowOfflineMode}) {
+    platformInterface.setAllowOfflineMode(allowOfflineMode);
+  }
+
+  Future<List<String?>> getSubmittedJobs() {
+    return platformInterface.getSubmittedJobs();
+  }
+
+  Future<List<String?>> getUnsubmittedJobs() {
+    return platformInterface.getUnsubmittedJobs();
+  }
+
+  static void cleanup(String jobId) {
+    platformInterface.cleanup(jobId);
+  }
+
+  static void cleanupJobs(List<String> jobIds) {
+    platformInterface.cleanupJobs(jobIds);
+  }
+
+  static void submitJob(String jobId, bool deleteFilesOnSuccess) {
+    platformInterface.submitJob(jobId, deleteFilesOnSuccess);
+  }
 }

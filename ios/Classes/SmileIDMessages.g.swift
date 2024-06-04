@@ -1913,6 +1913,12 @@ protocol SmileIDApi {
   func initialize() throws
   func setEnvironment(useSandbox: Bool) throws
   func setCallbackUrl(callbackUrl: String) throws
+  func setAllowOfflineMode(allowOfflineMode: Bool) throws
+  func getSubmittedJobs() throws -> [String]
+  func getUnsubmittedJobs() throws -> [String]
+  func cleanup(jobId: String) throws
+  func cleanupJobs(jobIds: [String]) throws
+  func submitJob(jobId: String, deleteFilesOnSuccess: Bool) throws
   func authenticate(request: FlutterAuthenticationRequest, completion: @escaping (Result<FlutterAuthenticationResponse, Error>) -> Void)
   func prepUpload(request: FlutterPrepUploadRequest, completion: @escaping (Result<FlutterPrepUploadResponse, Error>) -> Void)
   func upload(url: String, request: FlutterUploadRequest, completion: @escaping (Result<Void, Error>) -> Void)
@@ -1981,6 +1987,93 @@ class SmileIDApiSetup {
       }
     } else {
       setCallbackUrlChannel.setMessageHandler(nil)
+    }
+    let setAllowOfflineModeChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.setAllowOfflineMode", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      setAllowOfflineModeChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let allowOfflineModeArg = args[0] as! Bool
+        do {
+          try api.setAllowOfflineMode(allowOfflineMode: allowOfflineModeArg)
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      setAllowOfflineModeChannel.setMessageHandler(nil)
+    }
+    let getSubmittedJobsChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.getSubmittedJobs", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      getSubmittedJobsChannel.setMessageHandler { _, reply in
+        do {
+          let result = try api.getSubmittedJobs()
+          reply(wrapResult(result))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      getSubmittedJobsChannel.setMessageHandler(nil)
+    }
+    let getUnsubmittedJobsChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.getUnsubmittedJobs", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      getUnsubmittedJobsChannel.setMessageHandler { _, reply in
+        do {
+          let result = try api.getUnsubmittedJobs()
+          reply(wrapResult(result))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      getUnsubmittedJobsChannel.setMessageHandler(nil)
+    }
+    let cleanupChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.cleanup", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      cleanupChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let jobIdArg = args[0] as! String
+        do {
+          try api.cleanup(jobId: jobIdArg)
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      cleanupChannel.setMessageHandler(nil)
+    }
+    let cleanupJobsChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.cleanupJobs", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      cleanupJobsChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let jobIdsArg = args[0] as! [String]
+        do {
+          try api.cleanupJobs(jobIds: jobIdsArg)
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      cleanupJobsChannel.setMessageHandler(nil)
+    }
+    let submitJobChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.submitJob", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      submitJobChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let jobIdArg = args[0] as! String
+        let deleteFilesOnSuccessArg = args[1] as! Bool
+        do {
+          try api.submitJob(jobId: jobIdArg, deleteFilesOnSuccess: deleteFilesOnSuccessArg)
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      submitJobChannel.setMessageHandler(nil)
     }
     let authenticateChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.authenticate", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
