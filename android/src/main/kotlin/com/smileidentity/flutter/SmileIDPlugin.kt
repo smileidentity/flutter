@@ -16,7 +16,6 @@ import FlutterProductsConfigResponse
 import FlutterServicesResponse
 import FlutterSmartSelfieJobStatusResponse
 import FlutterSmartSelfieResponse
-import FlutterUploadImageInfo
 import FlutterUploadRequest
 import FlutterValidDocumentsResponse
 import SmileIDApi
