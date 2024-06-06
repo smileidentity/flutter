@@ -9,6 +9,7 @@
   * Document verification
   * Enhanced document verification
 * Added an Offline Mode, enabled by calling `SmileID.setAllowOfflineMode(true)`. If a job is attempted while the device is offline, and offline mode has been enabled, the UI will complete successfully and the job can be submitted at a later time by calling `SmileID.submitJob(jobId)`
+* Improved SmartSelfie Enrollment and Authentication times by moving to a synchronous API endpoint
 
 ## 10.0.12
 
