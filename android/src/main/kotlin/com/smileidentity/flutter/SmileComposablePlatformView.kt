@@ -25,7 +25,6 @@ internal abstract class SmileComposablePlatformView(
     messenger: BinaryMessenger,
     args: Map<String, Any?>,
 ) : PlatformView {
-
     private val methodChannel = MethodChannel(messenger, "${viewTypeId}_$viewId")
 
     /**
@@ -34,17 +33,19 @@ internal abstract class SmileComposablePlatformView(
      * Activity level and since we don't have a full Compose app or nav graph, the same viewModel
      * ends up getting re-used
      */
-    private val viewModelStoreOwner = object : ViewModelStoreOwner {
-        override val viewModelStore = ViewModelStore()
-    }
+    private val viewModelStoreOwner =
+        object : ViewModelStoreOwner {
+            override val viewModelStore = ViewModelStore()
+        }
 
-    private var view: ComposeView? = ComposeView(context).apply {
-        setContent {
-            CompositionLocalProvider(LocalViewModelStoreOwner provides viewModelStoreOwner) {
-                Content(args)
+    private var view: ComposeView? =
+        ComposeView(context).apply {
+            setContent {
+                CompositionLocalProvider(LocalViewModelStoreOwner provides viewModelStoreOwner) {
+                    Content(args)
+                }
             }
         }
-    }
 
     /**
      * Implement this method to provide the actual Composable content for the view
@@ -53,7 +54,7 @@ internal abstract class SmileComposablePlatformView(
      * ensure the correct types are provided by the Flutter view and that they are parsed correctly
      */
     @Composable
-    abstract fun Content(args: Map<String, Any?>)
+    abstract fun content(args: Map<String, Any?>)
 
     /**
      * Delivers a successful result back to Flutter as JSON. It is the flutter code's responsibility
@@ -67,15 +68,16 @@ internal abstract class SmileComposablePlatformView(
         // possibility of the JSON serializing erroring for whatever reason -- if such a thing
         // happens, we still want to tell the caller that the overall operation was successful.
         // However, we just may not be able to provide the result JSON.
-        val json = try {
-            SmileID.moshi
-                .adapter(T::class.java)
-                .toJson(result)
-        } catch (e: Exception) {
-            Log.e("SmileComposablePlatformView", "Error serializing result", e)
-            Log.v("SmileComposablePlatformView", "Result is: $result")
-            "null"
-        }
+        val json =
+            try {
+                SmileID.moshi
+                    .adapter(T::class.java)
+                    .toJson(result)
+            } catch (e: Exception) {
+                Log.e("SmileComposablePlatformView", "Error serializing result", e)
+                Log.v("SmileComposablePlatformView", "Result is: $result")
+                "null"
+            }
         methodChannel.invokeMethod("onSuccess", json)
     }
 
