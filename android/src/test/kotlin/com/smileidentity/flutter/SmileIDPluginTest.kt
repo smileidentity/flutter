@@ -19,7 +19,6 @@ import kotlin.test.Test
  * you can run them directly from IDEs that support JUnit such as Android Studio.
  */
 internal class SmileIDPluginTest {
-
     @Test
     fun `when we call authenticate and pass a request object, we get a successful callback`() {
         val request = mockk<FlutterAuthenticationRequest>()

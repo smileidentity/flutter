@@ -1,5 +1,6 @@
 package com.smileidentity.flutter
 
+import java.io.File
 import android.content.Context
 import androidx.compose.runtime.Composable
 import com.smileidentity.SmileID
@@ -11,7 +12,6 @@ import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
-import java.io.File
 import kotlinx.collections.immutable.toImmutableMap
 
 internal class SmileIDDocumentVerification private constructor(
