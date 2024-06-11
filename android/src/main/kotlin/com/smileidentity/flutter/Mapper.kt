@@ -84,10 +84,10 @@ import com.smileidentity.models.UploadImageInfo
 import com.smileidentity.models.UploadRequest
 import com.smileidentity.models.ValidDocument
 import com.smileidentity.models.ValidDocumentsResponse
-import com.smileidentity.models.v2.JobType as JobTypeV2
 import com.smileidentity.models.v2.SmartSelfieResponse
 import com.smileidentity.models.v2.SmartSelfieStatus
 import java.io.File
+import com.smileidentity.models.v2.JobType as JobTypeV2
 
 /**
  * Pigeon does not allow non nullable types in this example here
