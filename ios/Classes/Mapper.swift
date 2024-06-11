@@ -1,5 +1,34 @@
 import SmileID
 
+func convertNullableMapToNonNull(data: [String? : String?]?) -> [String : String]? {
+  guard let unwrappedData = data else { return nil }
+  var convertedDictionary = [String : String]()
+  for (key, value) in unwrappedData {
+    if let unwrappedKey = key, let unwrappedValue = value {
+      convertedDictionary[unwrappedKey] = unwrappedValue
+    }
+  }
+  return convertedDictionary
+}
+
+func getFile(atPath path: String) -> Data? {
+    // Create a URL from the provided path
+    let fileURL = URL(fileURLWithPath: path)
+    do {
+        // Check if the file exists
+        let fileExists = try fileURL.checkResourceIsReachable()
+        if fileExists {
+            // Read the contents of the file
+            let fileData = try Data(contentsOf: fileURL)
+            return fileData
+        } else {
+            return nil
+        }
+    } catch {
+        return nil
+    }
+}
+
 extension FlutterPartnerParams {
     func toRequest() -> PartnerParams {
         PartnerParams(
@@ -80,6 +109,18 @@ extension JobType {
             return FlutterJobType.smartSelfieEnrollment
         case .smartSelfieAuthentication:
             return FlutterJobType.smartSelfieAuthentication
+        default: fatalError("Not yet supported")
+        }
+    }
+}
+
+extension JobTypeV2 {
+    func toResponse() -> FlutterJobTypeV2 {
+        switch(self) {
+        case .smartSelfieAuthentication:
+            FlutterJobTypeV2.smartSelfieAuthentication
+        case .smartSelfieEnrollment:
+            FlutterJobTypeV2.smartSelfieEnrollment
         default: fatalError("Not yet supported")
         }
     }
@@ -211,6 +252,38 @@ extension EnhancedKycResponse {
 extension EnhancedKycAsyncResponse {
     func toResponse() -> FlutterEnhancedKycAsyncResponse {
         FlutterEnhancedKycAsyncResponse(success: success)
+    }
+}
+
+extension SmartSelfieStatus {
+    func toResponse() -> FlutterSmartSelfieStatus {
+        switch(self) {
+        case .approved:
+            FlutterSmartSelfieStatus.approved
+        case .pending:
+            FlutterSmartSelfieStatus.pending
+        case .rejected:
+            FlutterSmartSelfieStatus.rejected
+        case .unknown:
+            FlutterSmartSelfieStatus.unknown
+        }
+    }
+}
+
+extension SmartSelfieResponse {
+    func toResponse() -> FlutterSmartSelfieResponse {
+        FlutterSmartSelfieResponse(
+            code: code,
+            createdAt: createdAt,
+            jobId: jobId,
+            jobType: jobType.toResponse(),
+            message: message,
+            partnerId: partnerId,
+            partnerParams: partnerParams,
+            status: status.toResponse(),
+            updatedAt: updatedAt,
+            userId: userId
+        )
     }
 }
 

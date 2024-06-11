@@ -57,6 +57,17 @@ enum class FlutterJobType(val raw: Int) {
   }
 }
 
+enum class FlutterJobTypeV2(val raw: Int) {
+  SMARTSELFIEAUTHENTICATION(0),
+  SMARTSELFIEENROLLMENT(1);
+
+  companion object {
+    fun ofRaw(raw: Int): FlutterJobTypeV2? {
+      return values().firstOrNull { it.raw == raw }
+    }
+  }
+}
+
 enum class FlutterImageType(val raw: Int) {
   SELFIEJPGFILE(0),
   IDCARDJPGFILE(1),
@@ -94,6 +105,19 @@ enum class FlutterActionResult(val raw: Int) {
 
   companion object {
     fun ofRaw(raw: Int): FlutterActionResult? {
+      return values().firstOrNull { it.raw == raw }
+    }
+  }
+}
+
+enum class FlutterSmartSelfieStatus(val raw: Int) {
+  APPROVED(0),
+  PENDING(1),
+  REJECTED(2),
+  UNKNOWN(3);
+
+  companion object {
+    fun ofRaw(raw: Int): FlutterSmartSelfieStatus? {
       return values().firstOrNull { it.raw == raw }
     }
   }
@@ -782,6 +806,52 @@ data class FlutterSmartSelfieJobStatusResponse (
       resultString,
       history,
       imageLinks?.toList(),
+    )
+  }
+}
+
+/** Generated class from Pigeon that represents data sent in messages. */
+data class FlutterSmartSelfieResponse (
+  val code: String,
+  val createdAt: String,
+  val jobId: String,
+  val jobType: FlutterJobTypeV2,
+  val message: String,
+  val partnerId: String,
+  val partnerParams: Map<String?, String?>? = null,
+  val status: FlutterSmartSelfieStatus,
+  val updatedAt: String,
+  val userId: String
+
+) {
+  companion object {
+    @Suppress("UNCHECKED_CAST")
+    fun fromList(list: List<Any?>): FlutterSmartSelfieResponse {
+      val code = list[0] as String
+      val createdAt = list[1] as String
+      val jobId = list[2] as String
+      val jobType = FlutterJobTypeV2.ofRaw(list[3] as Int)!!
+      val message = list[4] as String
+      val partnerId = list[5] as String
+      val partnerParams = list[6] as Map<String?, String?>?
+      val status = FlutterSmartSelfieStatus.ofRaw(list[7] as Int)!!
+      val updatedAt = list[8] as String
+      val userId = list[9] as String
+      return FlutterSmartSelfieResponse(code, createdAt, jobId, jobType, message, partnerId, partnerParams, status, updatedAt, userId)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf<Any?>(
+      code,
+      createdAt,
+      jobId,
+      jobType.raw,
+      message,
+      partnerId,
+      partnerParams,
+      status.raw,
+      updatedAt,
+      userId,
     )
   }
 }
@@ -1645,25 +1715,30 @@ private object SmileIDApiCodec : StandardMessageCodec() {
       }
       164.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterSuspectUser.fromList(it)
+          FlutterSmartSelfieResponse.fromList(it)
         }
       }
       165.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterUploadImageInfo.fromList(it)
+          FlutterSuspectUser.fromList(it)
         }
       }
       166.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterUploadRequest.fromList(it)
+          FlutterUploadImageInfo.fromList(it)
         }
       }
       167.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterValidDocument.fromList(it)
+          FlutterUploadRequest.fromList(it)
         }
       }
       168.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
+          FlutterValidDocument.fromList(it)
+        }
+      }
+      169.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
           FlutterValidDocumentsResponse.fromList(it)
         }
@@ -1817,24 +1892,28 @@ private object SmileIDApiCodec : StandardMessageCodec() {
         stream.write(163)
         writeValue(stream, value.toList())
       }
-      is FlutterSuspectUser -> {
+      is FlutterSmartSelfieResponse -> {
         stream.write(164)
         writeValue(stream, value.toList())
       }
-      is FlutterUploadImageInfo -> {
+      is FlutterSuspectUser -> {
         stream.write(165)
         writeValue(stream, value.toList())
       }
-      is FlutterUploadRequest -> {
+      is FlutterUploadImageInfo -> {
         stream.write(166)
         writeValue(stream, value.toList())
       }
-      is FlutterValidDocument -> {
+      is FlutterUploadRequest -> {
         stream.write(167)
         writeValue(stream, value.toList())
       }
-      is FlutterValidDocumentsResponse -> {
+      is FlutterValidDocument -> {
         stream.write(168)
+        writeValue(stream, value.toList())
+      }
+      is FlutterValidDocumentsResponse -> {
+        stream.write(169)
         writeValue(stream, value.toList())
       }
       else -> super.writeValue(stream, value)
@@ -1859,6 +1938,8 @@ interface SmileIDApi {
   fun doEnhancedKyc(request: FlutterEnhancedKycRequest, callback: (Result<FlutterEnhancedKycResponse>) -> Unit)
   fun doEnhancedKycAsync(request: FlutterEnhancedKycRequest, callback: (Result<FlutterEnhancedKycAsyncResponse>) -> Unit)
   fun getSmartSelfieJobStatus(request: FlutterJobStatusRequest, callback: (Result<FlutterSmartSelfieJobStatusResponse>) -> Unit)
+  fun doSmartSelfieEnrollment(signature: String, timestamp: String, selfieImage: String, livenessImages: List<String>, userId: String, partnerParams: Map<String?, String?>?, callbackUrl: String?, sandboxResult: Long?, allowNewEnroll: Boolean?, callback: (Result<FlutterSmartSelfieResponse>) -> Unit)
+  fun doSmartSelfieAuthentication(signature: String, timestamp: String, selfieImage: String, livenessImages: List<String>, userId: String, partnerParams: Map<String?, String?>?, callbackUrl: String?, sandboxResult: Long?, callback: (Result<FlutterSmartSelfieResponse>) -> Unit)
   fun getDocumentVerificationJobStatus(request: FlutterJobStatusRequest, callback: (Result<FlutterDocumentVerificationJobStatusResponse>) -> Unit)
   fun getBiometricKycJobStatus(request: FlutterJobStatusRequest, callback: (Result<FlutterBiometricKycJobStatusResponse>) -> Unit)
   fun getEnhancedDocumentVerificationJobStatus(request: FlutterJobStatusRequest, callback: (Result<FlutterEnhancedDocumentVerificationJobStatusResponse>) -> Unit)
@@ -2149,6 +2230,61 @@ interface SmileIDApi {
             val args = message as List<Any?>
             val requestArg = args[0] as FlutterJobStatusRequest
             api.getSmartSelfieJobStatus(requestArg) { result: Result<FlutterSmartSelfieJobStatusResponse> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.doSmartSelfieEnrollment", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val signatureArg = args[0] as String
+            val timestampArg = args[1] as String
+            val selfieImageArg = args[2] as String
+            val livenessImagesArg = args[3] as List<String>
+            val userIdArg = args[4] as String
+            val partnerParamsArg = args[5] as Map<String?, String?>?
+            val callbackUrlArg = args[6] as String?
+            val sandboxResultArg = args[7].let { if (it is Int) it.toLong() else it as Long? }
+            val allowNewEnrollArg = args[8] as Boolean?
+            api.doSmartSelfieEnrollment(signatureArg, timestampArg, selfieImageArg, livenessImagesArg, userIdArg, partnerParamsArg, callbackUrlArg, sandboxResultArg, allowNewEnrollArg) { result: Result<FlutterSmartSelfieResponse> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.doSmartSelfieAuthentication", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val signatureArg = args[0] as String
+            val timestampArg = args[1] as String
+            val selfieImageArg = args[2] as String
+            val livenessImagesArg = args[3] as List<String>
+            val userIdArg = args[4] as String
+            val partnerParamsArg = args[5] as Map<String?, String?>?
+            val callbackUrlArg = args[6] as String?
+            val sandboxResultArg = args[7].let { if (it is Int) it.toLong() else it as Long? }
+            api.doSmartSelfieAuthentication(signatureArg, timestampArg, selfieImageArg, livenessImagesArg, userIdArg, partnerParamsArg, callbackUrlArg, sandboxResultArg) { result: Result<FlutterSmartSelfieResponse> ->
               val error = result.exceptionOrNull()
               if (error != null) {
                 reply.reply(wrapError(error))
