@@ -16,7 +16,7 @@ import io.flutter.plugin.platform.PlatformView
 /**
  * Base class for hosting Smile ID Composables in Flutter. This class handles flutter<>android
  * result delivery, view initialization (incl. view model store), and boilerplate. Subclasses should
- * implement [content] to provide the actual Composable content.
+ * implement [Content] to provide the actual Composable content.
  */
 internal abstract class SmileComposablePlatformView(
     context: Context,
