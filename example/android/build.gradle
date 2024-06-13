@@ -1,6 +1,3 @@
-group "com.smileidentity.flutter"
-version findProperty("SDK_VERSION") ?: "10.1.5"
-
 buildscript {
     ext.kotlin_version = "1.9.10"
     repositories {
@@ -10,7 +7,7 @@ buildscript {
     }
 
     dependencies {
-        classpath "com.android.tools.build:gradle:8.1.4"
+        classpath 'com.android.tools.build:gradle:8.1.4'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jlleitschuh.gradle:ktlint-gradle:12.1.1"
     }
@@ -23,58 +20,16 @@ allprojects {
     }
 }
 
-apply plugin: "com.android.library"
-apply plugin: "kotlin-android"
-apply plugin: "org.jlleitschuh.gradle.ktlint"
+rootProject.buildDir = "../build"
 
-android {
-    namespace group
-    compileSdk 34
-
-    defaultConfig {
-        minSdk 21
-    }
-
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-        test.java.srcDirs += 'src/test/kotlin'
-    }
-
-    testOptions {
-        unitTests.all {
-            useJUnitPlatform()
-
-            testLogging {
-                events "passed", "skipped", "failed", "standardOut", "standardError"
-                outputs.upToDateWhen { false }
-                showStandardStreams = true
-            }
-        }
-    }
-
-    buildFeatures.compose = true
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
-    }
-
-    dependencies {
-        implementation "com.smileidentity:android-sdk:${version}"
-        implementation "androidx.core:core-ktx"
-        implementation "androidx.compose.ui:ui"
-        implementation 'androidx.lifecycle:lifecycle-viewmodel-compose'
-        implementation "androidx.compose.material3:material3"
-        implementation "androidx.fragment:fragment-ktx"
-        implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core"
-        implementation "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.6"
-
-        testImplementation "org.jetbrains.kotlin:kotlin-test"
-        testImplementation "io.mockk:mockk:1.13.11"
-    }
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
 
-ktlint {
-    android = true
-    filter {
-        exclude { it.file.path.contains(".g.kt") }
-    }
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
 }
