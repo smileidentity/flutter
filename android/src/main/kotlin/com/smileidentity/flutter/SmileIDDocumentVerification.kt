@@ -33,7 +33,7 @@ internal class SmileIDDocumentVerification private constructor(
             idAspectRatio = (args["idAspectRatio"] as Double?)?.toFloat(),
             captureBothSides = args["captureBothSides"] as? Boolean ?: true,
             bypassSelfieCaptureWithFile =
-            (args["bypassSelfieCaptureWithFile"] as? String)?.let { File(it) },
+                (args["bypassSelfieCaptureWithFile"] as? String)?.let { File(it) },
             userId = args["userId"] as? String ?: randomUserId(),
             jobId = args["jobId"] as? String ?: randomJobId(),
             allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
@@ -53,7 +53,11 @@ internal class SmileIDDocumentVerification private constructor(
     class Factory(
         private val messenger: BinaryMessenger,
     ) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
-        override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
+        override fun create(
+            context: Context,
+            viewId: Int,
+            args: Any?,
+        ): PlatformView {
             @Suppress("UNCHECKED_CAST")
             return SmileIDDocumentVerification(
                 context,

@@ -47,9 +47,8 @@ internal class SmileIDPluginTest {
         confirmVerified(api)
     }
 
-    // ktlint-disable max-line-length
     @Test
-    fun `when we call doEnhancedKycAsync and pass a request object, we get a successful callback`() {
+    fun `when we call doEnhancedKycAsync with a request object, we get a successful callback`() {
         val request = mockk<FlutterEnhancedKycRequest>()
         val callback = mockk<(Result<FlutterEnhancedKycAsyncResponse>) -> Unit>()
         val api = mockk<SmileIDApi>()
