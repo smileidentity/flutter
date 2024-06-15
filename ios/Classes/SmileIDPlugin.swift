@@ -1,11 +1,8 @@
 import Flutter
 import UIKit
 import SmileID
-import Combine
 
 public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
-    
-    private var subscribers = Set<AnyCancellable>()
     
     public static func register(with registrar: FlutterPluginRegistrar) {
         let messenger: FlutterBinaryMessenger = registrar.messenger()
@@ -94,36 +91,24 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         request: FlutterAuthenticationRequest,
         completion: @escaping (Result<FlutterAuthenticationResponse, Error>) -> Void
     ) {
-        SmileID.api.authenticate(request: request.toRequest())
-            .sink(receiveCompletion: { status in
-                switch status {
-                case .failure(let error):
-                    completion(.failure(error))
-                default:
-                    break
-                }
-            }, receiveValue: { response in
-                completion(.success(response.toResponse()))
-            })
-            .store(in: &subscribers)
+        do {
+            let response = try await SmileID.api.authenticate(request: request.toRequest())
+            completion(.success(response.toResponse()))
+        } catch {
+            completion(.failure(error))
+        }
     }
     
     func prepUpload(
         request: FlutterPrepUploadRequest,
         completion: @escaping (Result<FlutterPrepUploadResponse, Error>) -> Void
     ) {
-        SmileID.api.prepUpload(request: request.toRequest())
-            .sink(receiveCompletion: { status in
-                switch status {
-                case .failure(let error):
-                    completion(.failure(error))
-                default:
-                    break
-                }
-            }, receiveValue: { response in
-                completion(.success(response.toResponse()))
-            })
-            .store(in: &subscribers)
+        do {
+            let response = try await SmileID.api.prepUpload(request: request.toRequest())
+            completion(.success(response.toResponse()))
+        } catch {
+            completion(.failure(error))
+        }
     }
     
     func upload(
@@ -132,16 +117,8 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         completion: @escaping (Result<Void, Error>) -> Void
     ) {
         do {
-            SmileID.api.upload(zip: try request.toRequest(), to: url)
-                .sink(receiveCompletion: { status in
-                    switch status {
-                    case .failure(let error):
-                        completion(.failure(error))
-                    case .finished:
-                        completion(.success(()))
-                    }
-                }, receiveValue: { _ in })
-                .store(in: &subscribers)
+            try await SmileID.api.upload(zip: try request.toRequest(), to: url)
+            completion(.success(()))
         } catch {
             completion(.failure(error))
         }
@@ -151,36 +128,24 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         request: FlutterEnhancedKycRequest,
         completion: @escaping (Result<FlutterEnhancedKycResponse, Error>) -> Void
     ) {
-        SmileID.api.doEnhancedKyc(request: request.toRequest())
-            .sink(receiveCompletion: { status in
-                switch status {
-                case .failure(let error):
-                    completion(.failure(error))
-                default:
-                    break
-                }
-            }, receiveValue: { response in
-                completion(.success(response.toResponse()))
-            })
-            .store(in: &subscribers)
+        do {
+            let response = try await SmileID.api.doEnhancedKyc(request: request.toRequest())
+            completion(.success(response.toResponse()))
+        } catch {
+            completion(.failure(error))
+        }
     }
     
     func doEnhancedKycAsync(
         request: FlutterEnhancedKycRequest,
         completion: @escaping (Result<FlutterEnhancedKycAsyncResponse, Error>) -> Void
     ) {
-        SmileID.api.doEnhancedKycAsync(request: request.toRequest())
-            .sink(receiveCompletion: { status in
-                switch status {
-                case .failure(let error):
-                    completion(.failure(error))
-                default:
-                    break
-                }
-            }, receiveValue: { response in
-                completion(.success(response.toResponse()))
-            })
-            .store(in: &subscribers)
+        do {
+            let response = try await SmileID.api.doEnhancedKycAsync(request: request.toRequest())
+            completion(.success(response.toResponse()))
+        } catch {
+            completion(.failure(error))
+        }
     }
     
     func doSmartSelfieEnrollment(
@@ -195,37 +160,32 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         allowNewEnroll: Bool?,
         completion: @escaping (Result<FlutterSmartSelfieResponse, any Error>) -> Void
     ) {
-        SmileID.api.doSmartSelfieEnrollment(
-            signature: signature,
-            timestamp: timestamp,
-            selfieImage: MultipartBody(
-                withImage: getFile(atPath: selfieImage)!,
-                forKey: URL(fileURLWithPath: selfieImage).lastPathComponent,
-                forName: URL(fileURLWithPath: selfieImage).lastPathComponent
-            )!,
-            livenessImages: livenessImages.map {
-                MultipartBody(
-                    withImage: getFile(atPath: $0)!,
-                    forKey: URL(fileURLWithPath: $0).lastPathComponent,
-                    forName: URL(fileURLWithPath: $0).lastPathComponent
-                )!
-            },
-            userId: userId,
-            partnerParams: convertNullableMapToNonNull(data: partnerParams),
-            callbackUrl: callbackUrl,
-            sandboxResult: sandboxResult.map { Int($0) },
-            allowNewEnroll: allowNewEnroll
-        ).sink(receiveCompletion: { status in
-            switch status {
-            case .failure(let error):
-                completion(.failure(error))
-            default:
-                break
-            }
-            
-        }, receiveValue: { response in
+        do {
+            let response = try await SmileID.api.doSmartSelfieEnrollment(
+                signature: signature,
+                timestamp: timestamp,
+                selfieImage: MultipartBody(
+                    withImage: getFile(atPath: selfieImage)!,
+                    forKey: URL(fileURLWithPath: selfieImage).lastPathComponent,
+                    forName: URL(fileURLWithPath: selfieImage).lastPathComponent
+                )!,
+                livenessImages: livenessImages.map {
+                    MultipartBody(
+                        withImage: getFile(atPath: $0)!,
+                        forKey: URL(fileURLWithPath: $0).lastPathComponent,
+                        forName: URL(fileURLWithPath: $0).lastPathComponent
+                    )!
+                },
+                userId: userId,
+                partnerParams: convertNullableMapToNonNull(data: partnerParams),
+                callbackUrl: callbackUrl,
+                sandboxResult: sandboxResult.map { Int($0) },
+                allowNewEnroll: allowNewEnroll
+            )
             completion(.success(response.toResponse()))
-        }).store(in: &subscribers)
+        } catch {
+            completion(.failure(error))
+        }
     }
     
     func doSmartSelfieAuthentication(
@@ -239,161 +199,114 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         sandboxResult: Int64?,
         completion: @escaping (Result<FlutterSmartSelfieResponse, any Error>) -> Void
     ) {
-        SmileID.api.doSmartSelfieAuthentication(
-            signature: signature,
-            timestamp: timestamp,
-            userId: userId,
-            selfieImage: MultipartBody(
-                withImage: getFile(atPath: selfieImage)!,
-                forKey: URL(fileURLWithPath: selfieImage).lastPathComponent,
-                forName: URL(fileURLWithPath: selfieImage).lastPathComponent
-            )!,
-            livenessImages: livenessImages.map {
-                MultipartBody(
-                    withImage: getFile(atPath: $0)!,
-                    forKey: URL(fileURLWithPath: $0).lastPathComponent,
-                    forName: URL(fileURLWithPath: $0).lastPathComponent
-                )!
-            },
-            partnerParams: convertNullableMapToNonNull(data: partnerParams),
-            callbackUrl: callbackUrl,
-            sandboxResult: sandboxResult.map { Int($0) }
-        ).sink(receiveCompletion: { status in
-            switch status {
-            case .failure(let error):
-                completion(.failure(error))
-            default:
-                break
-            }
-            
-        }, receiveValue: { response in
+        do {
+            let response = try await SmileID.api.doSmartSelfieAuthentication(
+                signature: signature,
+                timestamp: timestamp,
+                userId: userId,
+                selfieImage: MultipartBody(
+                    withImage: getFile(atPath: selfieImage)!,
+                    forKey: URL(fileURLWithPath: selfieImage).lastPathComponent,
+                    forName: URL(fileURLWithPath: selfieImage).lastPathComponent
+                )!,
+                livenessImages: livenessImages.map {
+                    MultipartBody(
+                        withImage: getFile(atPath: $0)!,
+                        forKey: URL(fileURLWithPath: $0).lastPathComponent,
+                        forName: URL(fileURLWithPath: $0).lastPathComponent
+                    )!
+                },
+                partnerParams: convertNullableMapToNonNull(data: partnerParams),
+                callbackUrl: callbackUrl,
+                sandboxResult: sandboxResult.map { Int($0) }
+            )
             completion(.success(response.toResponse()))
-        }).store(in: &subscribers)
+        } catch {
+            completion(.failure(error))
+        }
     }
 
     func getSmartSelfieJobStatus(
         request: FlutterJobStatusRequest,
         completion: @escaping (Result<FlutterSmartSelfieJobStatusResponse, Error>) -> Void
     ) {
-        SmileID.api.getJobStatus(request: request.toRequest())
-            .sink(receiveCompletion: { status in
-                switch status {
-                case .failure(let error):
-                    completion(.failure(error))
-                default:
-                    break
-                }
-            }, receiveValue: { response in
-                completion(.success(response.toResponse()))
-            })
-            .store(in: &subscribers)
+        do {
+            let response = try await SmileID.api.getJobStatus(request: request.toRequest())
+            completion(.success(response.toResponse()))
+        } catch {
+            completion(.failure(error))
+        }
     }
     
     func getDocumentVerificationJobStatus(
         request: FlutterJobStatusRequest,
         completion: @escaping (Result<FlutterDocumentVerificationJobStatusResponse, Error>) -> Void
     ) {
-        SmileID.api.getJobStatus(request: request.toRequest())
-            .sink(receiveCompletion: { status in
-                switch status {
-                case .failure(let error):
-                    completion(.failure(error))
-                default:
-                    break
-                }
-            }, receiveValue: { response in
-                completion(.success(response.toResponse()))
-            })
-            .store(in: &subscribers)
+        do {
+            let response = try await SmileID.api.getJobStatus(request: request.toRequest())
+            completion(.success(response.toResponse()))
+        } catch {
+            completion(.failure(error))
+        }
     }
     
     func getBiometricKycJobStatus(
         request: FlutterJobStatusRequest,
         completion: @escaping (Result<FlutterBiometricKycJobStatusResponse, Error>) -> Void
     ) {
-        SmileID.api.getJobStatus(request: request.toRequest())
-            .sink(receiveCompletion: { status in
-                switch status {
-                case .failure(let error):
-                    completion(.failure(error))
-                default:
-                    break
-                }
-            }, receiveValue: { response in
-                completion(.success(response.toResponse()))
-            })
-            .store(in: &subscribers)
+        do {
+            let response = try await SmileID.api.getJobStatus(request: request.toRequest())
+            completion(.success(response.toResponse()))
+        } catch {
+            completion(.failure(error))
+        }
     }
     
     func getEnhancedDocumentVerificationJobStatus(
         request: FlutterJobStatusRequest,
         completion: @escaping (Result<FlutterEnhancedDocumentVerificationJobStatusResponse, Error>) -> Void
     ) {
-        SmileID.api.getJobStatus(request: request.toRequest())
-            .sink(receiveCompletion: { status in
-                switch status {
-                case .failure(let error):
-                    completion(.failure(error))
-                default:
-                    break
-                }
-            }, receiveValue: { response in
-                completion(.success(response.toResponse()))
-            })
-            .store(in: &subscribers)
+        do {
+            let response = try await SmileID.api.getJobStatus(request: request.toRequest())
+            completion(.success(response.toResponse()))
+        } catch {
+            completion(.failure(error))
+        }
     }
     
     func getProductsConfig(
         request: FlutterProductsConfigRequest,
         completion: @escaping (Result<FlutterProductsConfigResponse, Error>) -> Void
     ) {
-        SmileID.api.getProductsConfig(request: request.toRequest())
-            .sink(receiveCompletion: { status in
-                switch status {
-                case .failure(let error):
-                    completion(.failure(error))
-                default:
-                    break
-                }
-            }, receiveValue: { response in
-                completion(.success(response.toResponse()))
-            })
-            .store(in: &subscribers)
+        do {
+            let response = try await SmileID.api.getProductsConfig(request: request.toRequest())
+            completion(.success(response.toResponse()))
+        } catch {
+            completion(.failure(error))
+        }
     }
     
     func getValidDocuments(
         request: FlutterProductsConfigRequest,
         completion: @escaping (Result<FlutterValidDocumentsResponse, Error>) -> Void
     ) {
-        SmileID.api.getValidDocuments(request: request.toRequest())
-            .sink(receiveCompletion: { status in
-                switch status {
-                case .failure(let error):
-                    completion(.failure(error))
-                default:
-                    break
-                }
-            }, receiveValue: { response in
-                completion(.success(response.toResponse()))
-            })
-            .store(in: &subscribers)
+        do {
+            let response = try await SmileID.api.getValidDocuments(request: request.toRequest())
+            completion(.success(response.toResponse()))
+        } catch {
+            completion(.failure(error))
+        }
     }
     
     func getServices(
         completion: @escaping (Result<FlutterServicesResponse, Error>) -> Void
     ) {
-        SmileID.api.getServices()
-            .sink(receiveCompletion: { status in
-                switch status {
-                case .failure(let error):
-                    completion(.failure(error))
-                default:
-                    break
-                }
-            }, receiveValue: { response in
-                completion(.success(response.toResponse()))
-            })
-            .store(in: &subscribers)
+        do {
+            let response = try await SmileID.api.getServices()
+            completion(.success(response.toResponse()))
+        } catch {
+            completion(.failure(error))
+        }
     }
     
     
@@ -490,7 +403,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
     }
     
     func pollJobStatus<RequestType, ResponseType>(
-        apiCall: @escaping (RequestType, TimeInterval, Int) -> AnyPublisher<ResponseType, Error>,
+        apiCall: @escaping (RequestType, TimeInterval, Int) async throws -> ResponseType,
         request: RequestType,
         interval: Int64,
         numAttempts: Int64,
@@ -501,19 +414,13 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             completion(.failure(NSError(domain: "Invalid numAttempts value", code: -1, userInfo: nil)))
             return
         }
-        
-        apiCall(request, timeInterval, numAttemptsInt)
-            .sink(receiveCompletion: { status in
-                switch status {
-                case .failure(let error):
-                    completion(.failure(error))
-                case .finished:
-                    break
-                }
-            }, receiveValue: { response in
-                completion(.success(response))
-            })
-            .store(in: &subscribers)
+
+        do {
+            let response = try await apiCall(request, timeInterval, numAttemptsInt)
+            completion(.success(response))
+        } catch {
+            completion(.failure(error))
+        }
     }
     
     func convertToTimeInterval(milliSeconds:Int64) -> TimeInterval {
