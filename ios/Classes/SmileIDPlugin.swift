@@ -246,8 +246,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
     ) {
         Task {
             do {
-                let response = try await SmileID.api.getJobStatus(request: request.toRequest())
-                completion(.success(response.toResponse()))
+                completion(.success(try await SmileID.api.getJobStatus(request: request.toRequest()).toResponse()))
             } catch {
                 completion(.failure(error))
             }
@@ -260,8 +259,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
     ) {
         Task {
             do {
-                let response = try await SmileID.api.getJobStatus(request: request.toRequest())
-                completion(.success(response.toResponse()))
+                completion(.success(try await SmileID.api.getJobStatus(request: request.toRequest()).toResponse()))
             } catch {
                 completion(.failure(error))
             }
@@ -274,8 +272,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
     ) {
         Task {
             do {
-                let response = try await SmileID.api.getJobStatus(request: request.toRequest())
-                completion(.success(response.toResponse()))
+                completion(.success(try await SmileID.api.getJobStatus(request: request.toRequest()).toResponse()))
             } catch {
                 completion(.failure(error))
             }
@@ -288,8 +285,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
     ) {
         Task {
             do {
-                let response = try await SmileID.api.getJobStatus(request: request.toRequest())
-                completion(.success(response.toResponse()))
+                completion(.success(try await SmileID.api.getJobStatus(request: request.toRequest()).toResponse()))
             } catch {
                 completion(.failure(error))
             }
