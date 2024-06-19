@@ -1,5 +1,9 @@
 # Release Notes
 
+## 10.1.1
+
+* Bump to iOS 10.2.0
+
 ## 10.1.0
 
 * Moved SmartSelfie enrollment and authentication to synchronous endpoints 
