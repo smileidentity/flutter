@@ -246,7 +246,8 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
     ) {
         Task {
             do {
-                completion(.success(try await SmileID.api.getJobStatus(request: request.toRequest()).toResponse()))
+                let response: SmartSelfieJobStatusResponse = try await SmileID.api.getJobStatus(request: request.toRequest())
+                completion(.success(response.toResponse()))
             } catch {
                 completion(.failure(error))
             }
@@ -259,7 +260,8 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
     ) {
         Task {
             do {
-                completion(.success(try await SmileID.api.getJobStatus(request: request.toRequest()).toResponse()))
+                let response: DocumentVerificationJobStatusResponse = try await SmileID.api.getJobStatus(request: request.toRequest())
+                completion(.success(response.toResponse()))
             } catch {
                 completion(.failure(error))
             }
@@ -272,7 +274,8 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
     ) {
         Task {
             do {
-                completion(.success(try await SmileID.api.getJobStatus(request: request.toRequest()).toResponse()))
+                let response: BiometricKycJobStatusResponse = try await SmileID.api.getJobStatus(request: request.toRequest())
+                completion(.success(response.toResponse()))
             } catch {
                 completion(.failure(error))
             }
@@ -285,7 +288,8 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
     ) {
         Task {
             do {
-                completion(.success(try await SmileID.api.getJobStatus(request: request.toRequest()).toResponse()))
+                let response: EnhancedDocumentVerificationJobStatusResponse = try await SmileID.api.getJobStatus(request: request.toRequest())
+                completion(.success(response.toResponse()))
             } catch {
                 completion(.failure(error))
             }
