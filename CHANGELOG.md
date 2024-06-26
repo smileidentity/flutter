@@ -1,5 +1,9 @@
 # Release Notes
 
+## 10.1.2
+
+* Set jvmTarget to 17 in Gradle to fix android specific build issues
+
 ## 10.1.1
 
 * Bump to iOS 10.2.0
