@@ -30,15 +30,6 @@ android {
     namespace "com.smileidentity.flutter.sample"
     compileSdk 34
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
-    }
-
-    kotlin {
-        jvmToolchain(17)
-    }
-
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
