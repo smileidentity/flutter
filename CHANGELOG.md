@@ -1,5 +1,10 @@
 # Release Notes
 
+## 10.1.3
+
+* Bump iOS to 10.2.1 (https://github.com/smileidentity/ios/releases/tag/v10.2.1)
+* Bump Android to 10.1.7 (https://github.com/smileidentity/android/releases/tag/v10.1.7)
+
 ## 10.1.2
 
 * Set jvmTarget to 17 in Gradle to fix android specific build issues
