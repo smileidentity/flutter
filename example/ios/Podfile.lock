@@ -3,10 +3,10 @@ PODS:
   - integration_test (0.0.1):
     - Flutter
   - lottie-ios (4.4.3)
-  - smile_id (10.2.1):
+  - smile_id (10.2.2):
     - Flutter
-    - SmileID (= 10.2.1)
-  - SmileID (10.2.1):
+    - SmileID (= 10.2.2)
+  - SmileID (10.2.2):
     - lottie-ios (~> 4.4.2)
     - Zip (~> 2.1.0)
   - Zip (2.1.2)
@@ -34,8 +34,8 @@ SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   integration_test: 13825b8a9334a850581300559b8839134b124670
   lottie-ios: fcb5e73e17ba4c983140b7d21095c834b3087418
-  smile_id: c34f97e0a5fbea7b3ba0e763db17fd10d72a6090
-  SmileID: 01d8a31a80e3ed5634a6cda5ffdae211a8427213
+  smile_id: 6d62c54b3fcf0e2fb685c33b28c868477244ac54
+  SmileID: 9d95463475f933422b2ce136474813b528dbedb7
   Zip: b3fef584b147b6e582b2256a9815c897d60ddc67
 
 PODFILE CHECKSUM: 929954fb8941cef06249e96bd1516fd2a22ed7a5
