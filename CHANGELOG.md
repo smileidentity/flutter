@@ -1,5 +1,9 @@
 # Release Notes
 
+## 10.1.4
+
+* Bump iOS to 10.2.2 (https://github.com/smileidentity/ios/releases/tag/v10.2.2) which fixes retry crash)
+
 ## 10.1.3
 
 * Bump iOS to 10.2.1 (https://github.com/smileidentity/ios/releases/tag/v10.2.1)
