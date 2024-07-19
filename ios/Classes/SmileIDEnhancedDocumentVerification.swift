@@ -42,24 +42,7 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
             extraPartnerParams: args["extraPartnerParams"] as? [String: String] ?? [:],
             delegate: self
         )
-        let childViewController = UIHostingController(rootView: screen)
-        
-        childViewController.view.frame = frame
-        childViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        _view.addSubview(childViewController.view)
-
-        if let navigationController = UIApplication.shared.windows.first?.rootViewController as? UINavigationController,
-            let flutterViewController = navigationController.viewControllers.first as? FlutterViewController {
-                flutterViewController.addChild(childViewController)
-                _view.addSubview(childViewController.view)
-                childViewController.view.setNeedsLayout()
-                childViewController.view.layoutIfNeeded()
-                _childViewController = childViewController
-        } else {
-            let rootViewController = UIApplication.shared.windows.first?.rootViewController
-            rootViewController?.addChild(childViewController)
-            _childViewController = childViewController
-        }
+        _childViewController = embedView(screen, in: _view, frame: frame)
     }
 
     func view() -> UIView {
