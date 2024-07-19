@@ -1,5 +1,9 @@
 # Release Notes
 
+## 10.1.5
+
+* Fix navigation issue on iOS Flutter app 
+
 ## 10.1.4
 
 * Bump iOS to 10.2.2 (https://github.com/smileidentity/ios/releases/tag/v10.2.2) which fixes retry crash)

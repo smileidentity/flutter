@@ -42,14 +42,7 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerif
             extraPartnerParams: args["extraPartnerParams"] as? [String: String] ?? [:],
             delegate: self
         )
-        let childViewController = UIHostingController(rootView: screen)
-        
-        childViewController.view.frame = frame
-        childViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        _view.addSubview(childViewController.view)
-        let rootViewController = UIApplication.shared.windows.first?.rootViewController
-        rootViewController?.addChild(childViewController)
-        _childViewController = childViewController
+        _childViewController = embedView(screen, in: _view, frame: frame)
     }
 
     func view() -> UIView {
