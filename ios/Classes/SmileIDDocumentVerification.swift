@@ -55,7 +55,7 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerif
         {"selfieFile": "\(selfie.absoluteString)",
         "documentFrontImage": \(documentFrontImage.absoluteString),
         "documentBackImage": \(documentBackImage?.absoluteString ?? ""),
-        "didSubmitDocumentVerificationJob": \(didSubmitDocumentVerificationJob),
+        "didSubmitDocumentVerificationJob": \(didSubmitDocumentVerificationJob)},
         """)
     }
 
