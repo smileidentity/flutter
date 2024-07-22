@@ -80,7 +80,9 @@ enum FlutterActionResult: Int {
   case notVerified = 12
   case notDone = 13
   case issuerUnavailable = 14
-  case unknown = 15
+  case idAuthorityPhotoNotAvailable = 15
+  case sentToHumanReview = 16
+  case unknown = 17
 }
 
 enum FlutterSmartSelfieStatus: Int {

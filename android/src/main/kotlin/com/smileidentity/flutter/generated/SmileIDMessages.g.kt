@@ -101,7 +101,9 @@ enum class FlutterActionResult(val raw: Int) {
   NOTVERIFIED(12),
   NOTDONE(13),
   ISSUERUNAVAILABLE(14),
-  UNKNOWN(15);
+  IDAUTHORITYPHOTONOTAVAILABLE(15),
+  SENTTOHUMANREVIEW(16),
+  UNKNOWN(17);
 
   companion object {
     fun ofRaw(raw: Int): FlutterActionResult? {
