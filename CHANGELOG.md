@@ -1,5 +1,10 @@
 # Release Notes
 
+## 10.1.6
+
+* Fixed wrong json responses
+* Bump iOS to 10.2.3 (https://github.com/smileidentity/ios/releases/tag/v10.2.3)
+
 ## 10.1.5
 
 * Fix navigation issue on iOS Flutter app 
