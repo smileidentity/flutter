@@ -318,6 +318,9 @@ fun ActionResult.toResponse() =
         ActionResult.NotVerified -> FlutterActionResult.NOTVERIFIED
         ActionResult.NotDone -> FlutterActionResult.NOTDONE
         ActionResult.IssuerUnavailable -> FlutterActionResult.ISSUERUNAVAILABLE
+        ActionResult.IdAuthorityPhotoNotAvailable ->
+            FlutterActionResult.IDAUTHORITYPHOTONOTAVAILABLE
+        ActionResult.SentToHumanReview -> FlutterActionResult.SENTTOHUMANREVIEW
         ActionResult.Unknown -> FlutterActionResult.UNKNOWN
     }
 
