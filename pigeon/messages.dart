@@ -266,6 +266,8 @@ enum FlutterActionResult {
   notVerified,
   notDone,
   issuerUnavailable,
+  idAuthorityPhotoNotAvailable,
+  sentToHumanReview,
   unknown, // Placeholder for unsupported values
 }
 

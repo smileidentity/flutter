@@ -19,7 +19,7 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
     ) {
         _view = UIView()
         _channel = FlutterMethodChannel(
-            name: "\(SmileIDDocumentVerification.VIEW_TYPE_ID)_\(viewId)",
+            name: "\(SmileIDEnhancedDocumentVerification.VIEW_TYPE_ID)_\(viewId)",
             binaryMessenger: messenger
         )
         _childViewController = nil
@@ -48,33 +48,23 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
     func view() -> UIView {
         return _view
     }
-    
-    func didSucceed(
-        selfie: URL,
-        documentFrontImage: URL,
-        documentBackImage: URL?,
-        jobStatusResponse: EnhancedDocumentVerificationJobStatusResponse
-    ) {
-        _childViewController?.removeFromParent()
-        let encoder = JSONEncoder()
-        let jsonData = try! encoder.encode(jobStatusResponse)
-        let documentBackFileJson = documentBackImage.map{ "\"\($0.absoluteString)\"" } ?? "null"
-        _channel.invokeMethod("onSuccess", arguments: """
-        {"selfieFile": "\(selfie.absoluteString)",
-        "documentFrontFile": "\(documentFrontImage.absoluteString)",
-        "documentBackFile": \(documentBackFileJson),
-        "jobStatusResponse": \(String(data: jsonData, encoding: .utf8)!)}
-        """)
-    }
-    
+
     func didSucceed(selfie: URL, documentFrontImage: URL, documentBackImage: URL?, didSubmitEnhancedDocVJob: Bool) {
         _childViewController?.removeFromParent()
-        _channel.invokeMethod("onSuccess", arguments: """
-        {"selfieFile": "\(selfie.absoluteString)",
-        "documentFrontImage": \(documentFrontImage.absoluteString),
-        "documentBackImage": \(documentBackImage?.absoluteString ?? ""),
-        "didSubmitEnhancedDocVJob": \(didSubmitEnhancedDocVJob),
-        """)
+        let arguments: [String: Any] = [
+            "selfieFile": selfie.absoluteString,
+            "documentFrontFile": documentFrontImage.absoluteString,
+            "documentBackFile": documentBackImage?.absoluteString ?? "",
+            "didSubmitEnhancedDocVJob": didSubmitEnhancedDocVJob
+        ]
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: arguments, options: [])
+            if let jsonString = String(data: jsonData, encoding: .utf8) {
+             _channel.invokeMethod("onSuccess", arguments: jsonString)
+           }
+        } catch {
+            didError(error: error)
+        }
     }
 
     func didError(error: Error) {
@@ -101,7 +91,7 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
                 binaryMessenger: messenger
             )
         }
-        
+
         public func createArgsCodec() -> FlutterMessageCodec & NSObjectProtocol {
               return FlutterStandardMessageCodec.sharedInstance()
         }

@@ -344,6 +344,12 @@ extension ActionResult {
             return .notDone
         case .issuerUnavailable:
             return .issuerUnavailable
+        case .idAuthorityPhotoNotAvailable:
+            return .idAuthorityPhotoNotAvailable
+        case .sentToHumanReview:
+            return .sentToHumanReview
+        case .unknown:
+            return .unknown
         }
     }
 }

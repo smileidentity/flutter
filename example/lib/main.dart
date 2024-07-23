@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:smile_id/smileid_messages.g.dart';
@@ -127,7 +128,9 @@ class MainContent extends StatelessWidget {
               documentType: "DRIVERS_LICENSE",
               onSuccess: (String? result) {
                 // Your success handling logic
-                final snackBar = SnackBar(content: Text("Success: $result"));
+                Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
+                String formattedResult = jsonEncode(jsonResult);
+                final snackBar = SnackBar(content: Text("Success: $formattedResult"));
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 Navigator.of(context).pop();
               },
@@ -156,7 +159,9 @@ class MainContent extends StatelessWidget {
               documentType: "DRIVERS_LICENSE",
               onSuccess: (String? result) {
                 // Your success handling logic
-                final snackBar = SnackBar(content: Text("Success: $result"));
+                Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
+                String formattedResult = jsonEncode(jsonResult);
+                final snackBar = SnackBar(content: Text("Success: $formattedResult"));
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 Navigator.of(context).pop();
               },
@@ -183,7 +188,9 @@ class MainContent extends StatelessWidget {
                 body: SmileIDSmartSelfieEnrollment(
               onSuccess: (String? result) {
                 // Your success handling logic
-                final snackBar = SnackBar(content: Text("Success: $result"));
+                Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
+                String formattedResult = jsonEncode(jsonResult);
+                final snackBar = SnackBar(content: Text("Success: $formattedResult"));
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 Navigator.of(context).pop();
               },
@@ -210,7 +217,9 @@ class MainContent extends StatelessWidget {
                 body: SmileIDSmartSelfieAuthentication(
               onSuccess: (String? result) {
                 // Your success handling logic
-                final snackBar = SnackBar(content: Text("Success: $result"));
+                Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
+                String formattedResult = jsonEncode(jsonResult);
+                final snackBar = SnackBar(content: Text("Success: $formattedResult"));
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 Navigator.of(context).pop();
               },
@@ -240,7 +249,9 @@ class MainContent extends StatelessWidget {
               idNumber: "12345678",
               onSuccess: (String? result) {
                 // Your success handling logic
-                final snackBar = SnackBar(content: Text("Success: $result"));
+                Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
+                String formattedResult = jsonEncode(jsonResult);
+                final snackBar = SnackBar(content: Text("Success: $formattedResult"));
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 Navigator.of(context).pop();
               },
