@@ -19,7 +19,7 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
     ) {
         _view = UIView()
         _channel = FlutterMethodChannel(
-            name: "\(SmileIDDocumentVerification.VIEW_TYPE_ID)_\(viewId)",
+            name: "\(SmileIDEnhancedDocumentVerification.VIEW_TYPE_ID)_\(viewId)",
             binaryMessenger: messenger
         )
         _childViewController = nil
@@ -60,8 +60,8 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: arguments, options: [])
             if let jsonString = String(data: jsonData, encoding: .utf8) {
-                _channel.invokeMethod("onSuccess", arguments: jsonString)
-            }
+             _channel.invokeMethod("onSuccess", arguments: jsonString)
+           }
         } catch {
             didError(error: error)
         }
@@ -91,7 +91,7 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
                 binaryMessenger: messenger
             )
         }
-        
+
         public func createArgsCodec() -> FlutterMessageCodec & NSObjectProtocol {
               return FlutterStandardMessageCodec.sharedInstance()
         }
