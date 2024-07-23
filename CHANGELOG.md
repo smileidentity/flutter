@@ -2,8 +2,11 @@
 
 ## 10.1.6
 
-* Fixed wrong json responses
-* Bump iOS to 10.2.3 (https://github.com/smileidentity/ios/releases/tag/v10.2.3)
+* Fixed badly formatted json responses
+* Normalize the responses between android and iOS
+* Fixed broken EnhancedDocV Flow on iOS
+* Bump iOS to 10.2.4 (https://github.com/smileidentity/ios/releases/tag/v10.2.4)
+* Bump Android to 10.2.3 (https://github.com/smileidentity/android/releases/tag/v10.2.3)
 
 ## 10.1.5
 
