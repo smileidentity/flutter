@@ -45,7 +45,7 @@ class SmileIDSmartSelfieAuthentication : NSObject, FlutterPlatformView, SmartSel
         _childViewController?.removeFromParent()
         _channel.invokeMethod("onSuccess", arguments: """
         {"selfieFile": "\(selfieImage.absoluteString)",
-        "livenessImages": \(livenessImages.map{ $0.absoluteString }),
+        "livenessFiles": \(livenessImages.map{ $0.absoluteString }),
         "apiResponse": \(apiResponse)},
         """)
     }

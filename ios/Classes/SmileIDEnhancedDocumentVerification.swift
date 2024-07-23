@@ -53,8 +53,8 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
         _childViewController?.removeFromParent()
         _channel.invokeMethod("onSuccess", arguments: """
         {"selfieFile": "\(selfie.absoluteString)",
-        "documentFrontImage": \(documentFrontImage.absoluteString),
-        "documentBackImage": \(documentBackImage?.absoluteString ?? ""),
+        "documentFrontFile": \(documentFrontImage.absoluteString),
+        "documentBackFile": \(documentBackImage?.absoluteString ?? ""),
         "didSubmitEnhancedDocVJob": \(didSubmitEnhancedDocVJob)},
         """)
     }

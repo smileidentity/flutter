@@ -56,8 +56,8 @@ class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDel
         _childViewController?.removeFromParent()
         _channel.invokeMethod("onSuccess", arguments: """
         {"selfieFile": "\(selfieImage.absoluteString)",
-        "livenessImages": \(livenessImages.map{ $0.absoluteString }),
-        "didSubmitBiometricJob": \(didSubmitBiometricJob)},
+        "livenessFiles": \(livenessImages.map{ $0.absoluteString }),
+        "didSubmitBiometricKycJob": \(didSubmitBiometricJob)},
         """)
     }
 
