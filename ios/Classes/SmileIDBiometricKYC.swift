@@ -54,11 +54,19 @@ class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDel
 
     func didSucceed(selfieImage: URL, livenessImages: [URL], didSubmitBiometricJob: Bool) {
         _childViewController?.removeFromParent()
-        _channel.invokeMethod("onSuccess", arguments: """
-        {"selfieFile": "\(selfieImage.absoluteString)",
-        "livenessFiles": \(livenessImages.map{ $0.absoluteString }),
-        "didSubmitBiometricKycJob": \(didSubmitBiometricJob)},
-        """)
+        let arguments: [String: Any] = [
+            "selfieFile": selfieImage.absoluteString,
+            "livenessFiles": livenessImages.map { $0.absoluteString },
+            "didSubmitBiometricKycJob": didSubmitBiometricJob
+        ]
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: arguments, options: [])
+            if let jsonString = String(data: jsonData, encoding: .utf8) {
+                _channel.invokeMethod("onSuccess", arguments: jsonString)
+            }
+        } catch {
+            didError(error: error)
+        }
     }
 
     func didError(error: Error) {

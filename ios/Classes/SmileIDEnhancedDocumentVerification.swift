@@ -51,12 +51,20 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
 
     func didSucceed(selfie: URL, documentFrontImage: URL, documentBackImage: URL?, didSubmitEnhancedDocVJob: Bool) {
         _childViewController?.removeFromParent()
-        _channel.invokeMethod("onSuccess", arguments: """
-        {"selfieFile": "\(selfie.absoluteString)",
-        "documentFrontFile": \(documentFrontImage.absoluteString),
-        "documentBackFile": \(documentBackImage?.absoluteString ?? ""),
-        "didSubmitEnhancedDocVJob": \(didSubmitEnhancedDocVJob)},
-        """)
+        let arguments: [String: Any] = [
+            "selfieFile": selfie.absoluteString,
+            "documentFrontFile": documentFrontImage.absoluteString,
+            "documentBackFile": documentBackImage?.absoluteString ?? "",
+            "didSubmitEnhancedDocVJob": didSubmitEnhancedDocVJob
+        ]
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: arguments, options: [])
+            if let jsonString = String(data: jsonData, encoding: .utf8) {
+                _channel.invokeMethod("onSuccess", arguments: jsonString)
+            }
+        } catch {
+            didError(error: error)
+        }
     }
 
     func didError(error: Error) {

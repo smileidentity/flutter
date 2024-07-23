@@ -51,12 +51,20 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerif
     
     func didSucceed(selfie: URL, documentFrontImage: URL, documentBackImage: URL?, didSubmitDocumentVerificationJob: Bool) {
         _childViewController?.removeFromParent()
-        _channel.invokeMethod("onSuccess", arguments: """
-        {"selfieFile": "\(selfie.absoluteString)",
-        "documentFrontFile": \(documentFrontImage.absoluteString),
-        "documentBackFile": \(documentBackImage?.absoluteString ?? ""),
-        "didSubmitDocumentVerificationJob": \(didSubmitDocumentVerificationJob)},
-        """)
+        let arguments: [String: Any] = [
+            "selfieFile": selfie.absoluteString,
+            "documentFrontFile": documentFrontImage.absoluteString,
+            "documentBackFile": documentBackImage?.absoluteString ?? "",
+            "didSubmitDocumentVerificationJob": didSubmitDocumentVerificationJob
+        ]
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: arguments, options: [])
+            if let jsonString = String(data: jsonData, encoding: .utf8) {
+                _channel.invokeMethod("onSuccess", arguments: jsonString)
+            }
+        } catch {
+            didError(error: error)
+        }
     }
 
     func didError(error: Error) {
