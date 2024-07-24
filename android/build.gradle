@@ -1,5 +1,5 @@
 group "com.smileidentity.flutter"
-version findProperty("SDK_VERSION") ?: "10.2.3"
+version findProperty("SDK_VERSION") ?: "10.2.4"
 
 buildscript {
     ext.kotlin_version = "1.9.10"
