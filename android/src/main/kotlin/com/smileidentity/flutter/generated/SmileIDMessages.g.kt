@@ -1926,7 +1926,6 @@ private object SmileIDApiCodec : StandardMessageCodec() {
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface SmileIDApi {
   fun initialize()
-  fun setEnvironment(useSandbox: Boolean)
   fun setCallbackUrl(callbackUrl: String)
   fun setAllowOfflineMode(allowOfflineMode: Boolean)
   fun getSubmittedJobs(): List<String>
@@ -1968,25 +1967,6 @@ interface SmileIDApi {
             var wrapped: List<Any?>
             try {
               api.initialize()
-              wrapped = listOf<Any?>(null)
-            } catch (exception: Throwable) {
-              wrapped = wrapError(exception)
-            }
-            reply.reply(wrapped)
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.setEnvironment", codec)
-        if (api != null) {
-          channel.setMessageHandler { message, reply ->
-            val args = message as List<Any?>
-            val useSandboxArg = args[0] as Boolean
-            var wrapped: List<Any?>
-            try {
-              api.setEnvironment(useSandboxArg)
               wrapped = listOf<Any?>(null)
             } catch (exception: Throwable) {
               wrapped = wrapError(exception)

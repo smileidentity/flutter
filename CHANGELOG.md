@@ -1,5 +1,9 @@
 # Release Notes
 
+## 10.1.7
+
+* Removed `SmileID.setEnvironment()` since the API Keys are no longer shared between environments
+
 ## 10.1.6
 
 * Fixed badly formatted json responses

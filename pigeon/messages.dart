@@ -791,8 +791,6 @@ class FlutterAvailableIdType {
 abstract class SmileIDApi {
   void initialize();
 
-  void setEnvironment(bool useSandbox);
-
   void setCallbackUrl(String callbackUrl);
 
   void setAllowOfflineMode(bool allowOfflineMode);

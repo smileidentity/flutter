@@ -55,10 +55,6 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         SmileID.initialize()
     }
     
-    func setEnvironment(useSandbox: Bool) {
-        SmileID.setEnvironment(useSandbox: useSandbox)
-    }
-    
     func setCallbackUrl(callbackUrl: String) {
         SmileID.setCallbackUrl(url: URL(string: callbackUrl))
     }
