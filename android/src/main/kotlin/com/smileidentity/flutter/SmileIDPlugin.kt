@@ -95,20 +95,20 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
             apiKey = apiKey,
             config = config.toRequest(),
             useSandbox = useSandbox,
-            enableCrashReporting = false
+            enableCrashReporting = false,
         )
     }
 
     override fun initialize(
         config: FlutterConfig,
         useSandbox: Boolean,
-        enableCrashReporting: Boolean
+        enableCrashReporting: Boolean,
     ) {
         SmileID.initialize(
             context = appContext,
             config = config.toRequest(),
             useSandbox = useSandbox,
-            enableCrashReporting = false
+            enableCrashReporting = false,
         )
     }
 

@@ -614,5 +614,5 @@ fun FlutterConfig.toRequest() =
         partnerId = partnerId,
         authToken = authToken,
         prodBaseUrl = prodBaseUrl,
-        sandboxBaseUrl = sandboxBaseUrl
+        sandboxBaseUrl = sandboxBaseUrl,
     )
