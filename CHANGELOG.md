@@ -1,5 +1,9 @@
 # Release Notes
 
+## 10.1.7
+
+* Extend API config initialise function
+
 ## 10.1.6
 
 * Fixed badly formatted json responses
