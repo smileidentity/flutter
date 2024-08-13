@@ -1531,6 +1531,34 @@ data class FlutterAvailableIdType (
   }
 }
 
+/** Generated class from Pigeon that represents data sent in messages. */
+data class FlutterConfig (
+  val partnerId: String,
+  val authToken: String,
+  val prodBaseUrl: String,
+  val sandboxBaseUrl: String
+
+) {
+  companion object {
+    @Suppress("UNCHECKED_CAST")
+    fun fromList(list: List<Any?>): FlutterConfig {
+      val partnerId = list[0] as String
+      val authToken = list[1] as String
+      val prodBaseUrl = list[2] as String
+      val sandboxBaseUrl = list[3] as String
+      return FlutterConfig(partnerId, authToken, prodBaseUrl, sandboxBaseUrl)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf<Any?>(
+      partnerId,
+      authToken,
+      prodBaseUrl,
+      sandboxBaseUrl,
+    )
+  }
+}
+
 @Suppress("UNCHECKED_CAST")
 private object SmileIDApiCodec : StandardMessageCodec() {
   override fun readValueOfType(type: Byte, buffer: ByteBuffer): Any? {
@@ -1582,22 +1610,22 @@ private object SmileIDApiCodec : StandardMessageCodec() {
       }
       137.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterConsentInfo.fromList(it)
+          FlutterConfig.fromList(it)
         }
       }
       138.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterCountry.fromList(it)
+          FlutterConsentInfo.fromList(it)
         }
       }
       139.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterCountryInfo.fromList(it)
+          FlutterCountry.fromList(it)
         }
       }
       140.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterDocumentVerificationJobResult.fromList(it)
+          FlutterCountryInfo.fromList(it)
         }
       }
       141.toByte() -> {
@@ -1607,12 +1635,12 @@ private object SmileIDApiCodec : StandardMessageCodec() {
       }
       142.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterDocumentVerificationJobStatusResponse.fromList(it)
+          FlutterDocumentVerificationJobResult.fromList(it)
         }
       }
       143.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterEnhancedDocumentVerificationJobResult.fromList(it)
+          FlutterDocumentVerificationJobStatusResponse.fromList(it)
         }
       }
       144.toByte() -> {
@@ -1622,87 +1650,87 @@ private object SmileIDApiCodec : StandardMessageCodec() {
       }
       145.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterEnhancedDocumentVerificationJobStatusResponse.fromList(it)
+          FlutterEnhancedDocumentVerificationJobResult.fromList(it)
         }
       }
       146.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterEnhancedKycAsyncResponse.fromList(it)
+          FlutterEnhancedDocumentVerificationJobStatusResponse.fromList(it)
         }
       }
       147.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterEnhancedKycRequest.fromList(it)
+          FlutterEnhancedKycAsyncResponse.fromList(it)
         }
       }
       148.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterEnhancedKycResponse.fromList(it)
+          FlutterEnhancedKycRequest.fromList(it)
         }
       }
       149.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterHostedWeb.fromList(it)
+          FlutterEnhancedKycResponse.fromList(it)
         }
       }
       150.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterIdInfo.fromList(it)
+          FlutterHostedWeb.fromList(it)
         }
       }
       151.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterIdSelection.fromList(it)
+          FlutterIdInfo.fromList(it)
         }
       }
       152.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterIdType.fromList(it)
+          FlutterIdSelection.fromList(it)
         }
       }
       153.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterImageLinks.fromList(it)
+          FlutterIdType.fromList(it)
         }
       }
       154.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterJobStatusRequest.fromList(it)
+          FlutterImageLinks.fromList(it)
         }
       }
       155.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterPartnerParams.fromList(it)
+          FlutterJobStatusRequest.fromList(it)
         }
       }
       156.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterPrepUploadRequest.fromList(it)
+          FlutterPartnerParams.fromList(it)
         }
       }
       157.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterPrepUploadResponse.fromList(it)
+          FlutterPrepUploadRequest.fromList(it)
         }
       }
       158.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterProductsConfigRequest.fromList(it)
+          FlutterPrepUploadResponse.fromList(it)
         }
       }
       159.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterProductsConfigResponse.fromList(it)
+          FlutterProductsConfigRequest.fromList(it)
         }
       }
       160.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterServicesResponse.fromList(it)
+          FlutterProductsConfigResponse.fromList(it)
         }
       }
       161.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterSmartSelfieJobResult.fromList(it)
+          FlutterServicesResponse.fromList(it)
         }
       }
       162.toByte() -> {
@@ -1712,35 +1740,40 @@ private object SmileIDApiCodec : StandardMessageCodec() {
       }
       163.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterSmartSelfieJobStatusResponse.fromList(it)
+          FlutterSmartSelfieJobResult.fromList(it)
         }
       }
       164.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterSmartSelfieResponse.fromList(it)
+          FlutterSmartSelfieJobStatusResponse.fromList(it)
         }
       }
       165.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterSuspectUser.fromList(it)
+          FlutterSmartSelfieResponse.fromList(it)
         }
       }
       166.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterUploadImageInfo.fromList(it)
+          FlutterSuspectUser.fromList(it)
         }
       }
       167.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterUploadRequest.fromList(it)
+          FlutterUploadImageInfo.fromList(it)
         }
       }
       168.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterValidDocument.fromList(it)
+          FlutterUploadRequest.fromList(it)
         }
       }
       169.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
+          FlutterValidDocument.fromList(it)
+        }
+      }
+      170.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
           FlutterValidDocumentsResponse.fromList(it)
         }
@@ -1786,19 +1819,19 @@ private object SmileIDApiCodec : StandardMessageCodec() {
         stream.write(136)
         writeValue(stream, value.toList())
       }
-      is FlutterConsentInfo -> {
+      is FlutterConfig -> {
         stream.write(137)
         writeValue(stream, value.toList())
       }
-      is FlutterCountry -> {
+      is FlutterConsentInfo -> {
         stream.write(138)
         writeValue(stream, value.toList())
       }
-      is FlutterCountryInfo -> {
+      is FlutterCountry -> {
         stream.write(139)
         writeValue(stream, value.toList())
       }
-      is FlutterDocumentVerificationJobResult -> {
+      is FlutterCountryInfo -> {
         stream.write(140)
         writeValue(stream, value.toList())
       }
@@ -1806,11 +1839,11 @@ private object SmileIDApiCodec : StandardMessageCodec() {
         stream.write(141)
         writeValue(stream, value.toList())
       }
-      is FlutterDocumentVerificationJobStatusResponse -> {
+      is FlutterDocumentVerificationJobResult -> {
         stream.write(142)
         writeValue(stream, value.toList())
       }
-      is FlutterEnhancedDocumentVerificationJobResult -> {
+      is FlutterDocumentVerificationJobStatusResponse -> {
         stream.write(143)
         writeValue(stream, value.toList())
       }
@@ -1818,71 +1851,71 @@ private object SmileIDApiCodec : StandardMessageCodec() {
         stream.write(144)
         writeValue(stream, value.toList())
       }
-      is FlutterEnhancedDocumentVerificationJobStatusResponse -> {
+      is FlutterEnhancedDocumentVerificationJobResult -> {
         stream.write(145)
         writeValue(stream, value.toList())
       }
-      is FlutterEnhancedKycAsyncResponse -> {
+      is FlutterEnhancedDocumentVerificationJobStatusResponse -> {
         stream.write(146)
         writeValue(stream, value.toList())
       }
-      is FlutterEnhancedKycRequest -> {
+      is FlutterEnhancedKycAsyncResponse -> {
         stream.write(147)
         writeValue(stream, value.toList())
       }
-      is FlutterEnhancedKycResponse -> {
+      is FlutterEnhancedKycRequest -> {
         stream.write(148)
         writeValue(stream, value.toList())
       }
-      is FlutterHostedWeb -> {
+      is FlutterEnhancedKycResponse -> {
         stream.write(149)
         writeValue(stream, value.toList())
       }
-      is FlutterIdInfo -> {
+      is FlutterHostedWeb -> {
         stream.write(150)
         writeValue(stream, value.toList())
       }
-      is FlutterIdSelection -> {
+      is FlutterIdInfo -> {
         stream.write(151)
         writeValue(stream, value.toList())
       }
-      is FlutterIdType -> {
+      is FlutterIdSelection -> {
         stream.write(152)
         writeValue(stream, value.toList())
       }
-      is FlutterImageLinks -> {
+      is FlutterIdType -> {
         stream.write(153)
         writeValue(stream, value.toList())
       }
-      is FlutterJobStatusRequest -> {
+      is FlutterImageLinks -> {
         stream.write(154)
         writeValue(stream, value.toList())
       }
-      is FlutterPartnerParams -> {
+      is FlutterJobStatusRequest -> {
         stream.write(155)
         writeValue(stream, value.toList())
       }
-      is FlutterPrepUploadRequest -> {
+      is FlutterPartnerParams -> {
         stream.write(156)
         writeValue(stream, value.toList())
       }
-      is FlutterPrepUploadResponse -> {
+      is FlutterPrepUploadRequest -> {
         stream.write(157)
         writeValue(stream, value.toList())
       }
-      is FlutterProductsConfigRequest -> {
+      is FlutterPrepUploadResponse -> {
         stream.write(158)
         writeValue(stream, value.toList())
       }
-      is FlutterProductsConfigResponse -> {
+      is FlutterProductsConfigRequest -> {
         stream.write(159)
         writeValue(stream, value.toList())
       }
-      is FlutterServicesResponse -> {
+      is FlutterProductsConfigResponse -> {
         stream.write(160)
         writeValue(stream, value.toList())
       }
-      is FlutterSmartSelfieJobResult -> {
+      is FlutterServicesResponse -> {
         stream.write(161)
         writeValue(stream, value.toList())
       }
@@ -1890,32 +1923,36 @@ private object SmileIDApiCodec : StandardMessageCodec() {
         stream.write(162)
         writeValue(stream, value.toList())
       }
-      is FlutterSmartSelfieJobStatusResponse -> {
+      is FlutterSmartSelfieJobResult -> {
         stream.write(163)
         writeValue(stream, value.toList())
       }
-      is FlutterSmartSelfieResponse -> {
+      is FlutterSmartSelfieJobStatusResponse -> {
         stream.write(164)
         writeValue(stream, value.toList())
       }
-      is FlutterSuspectUser -> {
+      is FlutterSmartSelfieResponse -> {
         stream.write(165)
         writeValue(stream, value.toList())
       }
-      is FlutterUploadImageInfo -> {
+      is FlutterSuspectUser -> {
         stream.write(166)
         writeValue(stream, value.toList())
       }
-      is FlutterUploadRequest -> {
+      is FlutterUploadImageInfo -> {
         stream.write(167)
         writeValue(stream, value.toList())
       }
-      is FlutterValidDocument -> {
+      is FlutterUploadRequest -> {
         stream.write(168)
         writeValue(stream, value.toList())
       }
-      is FlutterValidDocumentsResponse -> {
+      is FlutterValidDocument -> {
         stream.write(169)
+        writeValue(stream, value.toList())
+      }
+      is FlutterValidDocumentsResponse -> {
+        stream.write(170)
         writeValue(stream, value.toList())
       }
       else -> super.writeValue(stream, value)
@@ -1925,7 +1962,8 @@ private object SmileIDApiCodec : StandardMessageCodec() {
 
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface SmileIDApi {
-  fun initialize()
+  fun initializeWithApiKey(apiKey: String, config: FlutterConfig, useSandbox: Boolean, enableCrashReporting: Boolean)
+  fun initialize(config: FlutterConfig, useSandbox: Boolean, enableCrashReporting: Boolean)
   fun setEnvironment(useSandbox: Boolean)
   fun setCallbackUrl(callbackUrl: String)
   fun setAllowOfflineMode(allowOfflineMode: Boolean)
@@ -1962,12 +2000,38 @@ interface SmileIDApi {
     @Suppress("UNCHECKED_CAST")
     fun setUp(binaryMessenger: BinaryMessenger, api: SmileIDApi?) {
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.initialize", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.initializeWithApiKey", codec)
         if (api != null) {
-          channel.setMessageHandler { _, reply ->
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val apiKeyArg = args[0] as String
+            val configArg = args[1] as FlutterConfig
+            val useSandboxArg = args[2] as Boolean
+            val enableCrashReportingArg = args[3] as Boolean
             var wrapped: List<Any?>
             try {
-              api.initialize()
+              api.initializeWithApiKey(apiKeyArg, configArg, useSandboxArg, enableCrashReportingArg)
+              wrapped = listOf<Any?>(null)
+            } catch (exception: Throwable) {
+              wrapped = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.initialize", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val configArg = args[0] as FlutterConfig
+            val useSandboxArg = args[1] as Boolean
+            val enableCrashReportingArg = args[2] as Boolean
+            var wrapped: List<Any?>
+            try {
+              api.initialize(configArg, useSandboxArg, enableCrashReportingArg)
               wrapped = listOf<Any?>(null)
             } catch (exception: Throwable) {
               wrapped = wrapError(exception)

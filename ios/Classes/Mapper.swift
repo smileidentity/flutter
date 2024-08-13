@@ -660,3 +660,16 @@ extension AvailableIdType {
         )
     }
 }
+
+extension FlutterConfig {
+    func toRequest() -> Config {
+        Config(
+            partnerId: partnerId,
+            authToken: authToken,
+            prodUrl: prodBaseUrl, // todo - delete
+            testUrl: sandboxBaseUrl, // todo - delete
+            prodLambdaUrl: prodBaseUrl,
+            testLambdaUrl: sandboxBaseUrl
+        )
+    }
+}

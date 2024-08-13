@@ -9,8 +9,21 @@ class SmileID {
   static SmileIDApi platformInterface = SmileIDApi();
   static SmileIDService api = SmileIDService(platformInterface);
 
-  static void initialize() {
-    platformInterface.initialize();
+  static void initializeWithApiKey({
+    required String apiKey,
+    required FlutterConfig config,
+    required bool useSandbox,
+    required bool enableCrashReporting
+  }){
+    platformInterface.initializeWithApiKey(apiKey, config, useSandbox, enableCrashReporting);
+  }
+
+  static void initialize({
+    required FlutterConfig config,
+    required bool useSandbox,
+    required bool enableCrashReporting
+  }) {
+    platformInterface.initialize(config, useSandbox, enableCrashReporting);
   }
 
   static void setEnvironment({required bool useSandbox}) {

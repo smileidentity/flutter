@@ -36,7 +36,17 @@ class _MyAppState extends State<MyApp> {
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
     if (!mounted) return;
-    SmileID.initialize();
+    // replace with your own credentials
+    SmileID.initialize(
+        config: FlutterConfig(
+            partnerId: "partnerId",
+            authToken: "authToken",
+            prodBaseUrl: "prodBaseUrl",
+            sandboxBaseUrl: "sandboxBaseUrl"
+        ),
+        useSandbox: false,
+        enableCrashReporting: true
+    );
   }
 
   @override
@@ -90,7 +100,17 @@ class MainContent extends StatelessWidget {
     return ElevatedButton(
         child: const Text("Enhanced KYC (Async)"),
         onPressed: () {
-          SmileID.initialize();
+          // replace with your own credentials
+          SmileID.initialize(
+              config: FlutterConfig(
+                  partnerId: "partnerId",
+                  authToken: "authToken",
+                  prodBaseUrl: "prodBaseUrl",
+                  sandboxBaseUrl: "sandboxBaseUrl"
+              ),
+              useSandbox: false,
+              enableCrashReporting: true
+          );
           var userId = "<your user's user ID>";
           SmileID.api
               .authenticate(FlutterAuthenticationRequest(

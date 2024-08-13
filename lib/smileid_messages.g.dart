@@ -1945,6 +1945,42 @@ class FlutterAvailableIdType {
   }
 }
 
+class FlutterConfig {
+  FlutterConfig({
+    required this.partnerId,
+    required this.authToken,
+    required this.prodBaseUrl,
+    required this.sandboxBaseUrl,
+  });
+
+  String partnerId;
+
+  String authToken;
+
+  String prodBaseUrl;
+
+  String sandboxBaseUrl;
+
+  Object encode() {
+    return <Object?>[
+      partnerId,
+      authToken,
+      prodBaseUrl,
+      sandboxBaseUrl,
+    ];
+  }
+
+  static FlutterConfig decode(Object result) {
+    result as List<Object?>;
+    return FlutterConfig(
+      partnerId: result[0]! as String,
+      authToken: result[1]! as String,
+      prodBaseUrl: result[2]! as String,
+      sandboxBaseUrl: result[3]! as String,
+    );
+  }
+}
+
 class _SmileIDApiCodec extends StandardMessageCodec {
   const _SmileIDApiCodec();
   @override
@@ -1976,104 +2012,107 @@ class _SmileIDApiCodec extends StandardMessageCodec {
     } else if (value is FlutterBiometricKycJobStatusResponse) {
       buffer.putUint8(136);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterConsentInfo) {
+    } else if (value is FlutterConfig) {
       buffer.putUint8(137);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterCountry) {
+    } else if (value is FlutterConsentInfo) {
       buffer.putUint8(138);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterCountryInfo) {
+    } else if (value is FlutterCountry) {
       buffer.putUint8(139);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterDocumentVerificationJobResult) {
+    } else if (value is FlutterCountryInfo) {
       buffer.putUint8(140);
       writeValue(buffer, value.encode());
     } else if (value is FlutterDocumentVerificationJobResult) {
       buffer.putUint8(141);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterDocumentVerificationJobStatusResponse) {
+    } else if (value is FlutterDocumentVerificationJobResult) {
       buffer.putUint8(142);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterEnhancedDocumentVerificationJobResult) {
+    } else if (value is FlutterDocumentVerificationJobStatusResponse) {
       buffer.putUint8(143);
       writeValue(buffer, value.encode());
     } else if (value is FlutterEnhancedDocumentVerificationJobResult) {
       buffer.putUint8(144);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterEnhancedDocumentVerificationJobStatusResponse) {
+    } else if (value is FlutterEnhancedDocumentVerificationJobResult) {
       buffer.putUint8(145);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterEnhancedKycAsyncResponse) {
+    } else if (value is FlutterEnhancedDocumentVerificationJobStatusResponse) {
       buffer.putUint8(146);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterEnhancedKycRequest) {
+    } else if (value is FlutterEnhancedKycAsyncResponse) {
       buffer.putUint8(147);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterEnhancedKycResponse) {
+    } else if (value is FlutterEnhancedKycRequest) {
       buffer.putUint8(148);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterHostedWeb) {
+    } else if (value is FlutterEnhancedKycResponse) {
       buffer.putUint8(149);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterIdInfo) {
+    } else if (value is FlutterHostedWeb) {
       buffer.putUint8(150);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterIdSelection) {
+    } else if (value is FlutterIdInfo) {
       buffer.putUint8(151);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterIdType) {
+    } else if (value is FlutterIdSelection) {
       buffer.putUint8(152);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterImageLinks) {
+    } else if (value is FlutterIdType) {
       buffer.putUint8(153);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterJobStatusRequest) {
+    } else if (value is FlutterImageLinks) {
       buffer.putUint8(154);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterPartnerParams) {
+    } else if (value is FlutterJobStatusRequest) {
       buffer.putUint8(155);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterPrepUploadRequest) {
+    } else if (value is FlutterPartnerParams) {
       buffer.putUint8(156);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterPrepUploadResponse) {
+    } else if (value is FlutterPrepUploadRequest) {
       buffer.putUint8(157);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterProductsConfigRequest) {
+    } else if (value is FlutterPrepUploadResponse) {
       buffer.putUint8(158);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterProductsConfigResponse) {
+    } else if (value is FlutterProductsConfigRequest) {
       buffer.putUint8(159);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterServicesResponse) {
+    } else if (value is FlutterProductsConfigResponse) {
       buffer.putUint8(160);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterSmartSelfieJobResult) {
+    } else if (value is FlutterServicesResponse) {
       buffer.putUint8(161);
       writeValue(buffer, value.encode());
     } else if (value is FlutterSmartSelfieJobResult) {
       buffer.putUint8(162);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterSmartSelfieJobStatusResponse) {
+    } else if (value is FlutterSmartSelfieJobResult) {
       buffer.putUint8(163);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterSmartSelfieResponse) {
+    } else if (value is FlutterSmartSelfieJobStatusResponse) {
       buffer.putUint8(164);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterSuspectUser) {
+    } else if (value is FlutterSmartSelfieResponse) {
       buffer.putUint8(165);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterUploadImageInfo) {
+    } else if (value is FlutterSuspectUser) {
       buffer.putUint8(166);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterUploadRequest) {
+    } else if (value is FlutterUploadImageInfo) {
       buffer.putUint8(167);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterValidDocument) {
+    } else if (value is FlutterUploadRequest) {
       buffer.putUint8(168);
       writeValue(buffer, value.encode());
-    } else if (value is FlutterValidDocumentsResponse) {
+    } else if (value is FlutterValidDocument) {
       buffer.putUint8(169);
+      writeValue(buffer, value.encode());
+    } else if (value is FlutterValidDocumentsResponse) {
+      buffer.putUint8(170);
       writeValue(buffer, value.encode());
     } else {
       super.writeValue(buffer, value);
@@ -2102,70 +2141,72 @@ class _SmileIDApiCodec extends StandardMessageCodec {
       case 136: 
         return FlutterBiometricKycJobStatusResponse.decode(readValue(buffer)!);
       case 137: 
-        return FlutterConsentInfo.decode(readValue(buffer)!);
+        return FlutterConfig.decode(readValue(buffer)!);
       case 138: 
-        return FlutterCountry.decode(readValue(buffer)!);
+        return FlutterConsentInfo.decode(readValue(buffer)!);
       case 139: 
-        return FlutterCountryInfo.decode(readValue(buffer)!);
+        return FlutterCountry.decode(readValue(buffer)!);
       case 140: 
-        return FlutterDocumentVerificationJobResult.decode(readValue(buffer)!);
+        return FlutterCountryInfo.decode(readValue(buffer)!);
       case 141: 
         return FlutterDocumentVerificationJobResult.decode(readValue(buffer)!);
       case 142: 
-        return FlutterDocumentVerificationJobStatusResponse.decode(readValue(buffer)!);
+        return FlutterDocumentVerificationJobResult.decode(readValue(buffer)!);
       case 143: 
-        return FlutterEnhancedDocumentVerificationJobResult.decode(readValue(buffer)!);
+        return FlutterDocumentVerificationJobStatusResponse.decode(readValue(buffer)!);
       case 144: 
         return FlutterEnhancedDocumentVerificationJobResult.decode(readValue(buffer)!);
       case 145: 
-        return FlutterEnhancedDocumentVerificationJobStatusResponse.decode(readValue(buffer)!);
+        return FlutterEnhancedDocumentVerificationJobResult.decode(readValue(buffer)!);
       case 146: 
-        return FlutterEnhancedKycAsyncResponse.decode(readValue(buffer)!);
+        return FlutterEnhancedDocumentVerificationJobStatusResponse.decode(readValue(buffer)!);
       case 147: 
-        return FlutterEnhancedKycRequest.decode(readValue(buffer)!);
+        return FlutterEnhancedKycAsyncResponse.decode(readValue(buffer)!);
       case 148: 
-        return FlutterEnhancedKycResponse.decode(readValue(buffer)!);
+        return FlutterEnhancedKycRequest.decode(readValue(buffer)!);
       case 149: 
-        return FlutterHostedWeb.decode(readValue(buffer)!);
+        return FlutterEnhancedKycResponse.decode(readValue(buffer)!);
       case 150: 
-        return FlutterIdInfo.decode(readValue(buffer)!);
+        return FlutterHostedWeb.decode(readValue(buffer)!);
       case 151: 
-        return FlutterIdSelection.decode(readValue(buffer)!);
+        return FlutterIdInfo.decode(readValue(buffer)!);
       case 152: 
-        return FlutterIdType.decode(readValue(buffer)!);
+        return FlutterIdSelection.decode(readValue(buffer)!);
       case 153: 
-        return FlutterImageLinks.decode(readValue(buffer)!);
+        return FlutterIdType.decode(readValue(buffer)!);
       case 154: 
-        return FlutterJobStatusRequest.decode(readValue(buffer)!);
+        return FlutterImageLinks.decode(readValue(buffer)!);
       case 155: 
-        return FlutterPartnerParams.decode(readValue(buffer)!);
+        return FlutterJobStatusRequest.decode(readValue(buffer)!);
       case 156: 
-        return FlutterPrepUploadRequest.decode(readValue(buffer)!);
+        return FlutterPartnerParams.decode(readValue(buffer)!);
       case 157: 
-        return FlutterPrepUploadResponse.decode(readValue(buffer)!);
+        return FlutterPrepUploadRequest.decode(readValue(buffer)!);
       case 158: 
-        return FlutterProductsConfigRequest.decode(readValue(buffer)!);
+        return FlutterPrepUploadResponse.decode(readValue(buffer)!);
       case 159: 
-        return FlutterProductsConfigResponse.decode(readValue(buffer)!);
+        return FlutterProductsConfigRequest.decode(readValue(buffer)!);
       case 160: 
-        return FlutterServicesResponse.decode(readValue(buffer)!);
+        return FlutterProductsConfigResponse.decode(readValue(buffer)!);
       case 161: 
-        return FlutterSmartSelfieJobResult.decode(readValue(buffer)!);
+        return FlutterServicesResponse.decode(readValue(buffer)!);
       case 162: 
         return FlutterSmartSelfieJobResult.decode(readValue(buffer)!);
       case 163: 
-        return FlutterSmartSelfieJobStatusResponse.decode(readValue(buffer)!);
+        return FlutterSmartSelfieJobResult.decode(readValue(buffer)!);
       case 164: 
-        return FlutterSmartSelfieResponse.decode(readValue(buffer)!);
+        return FlutterSmartSelfieJobStatusResponse.decode(readValue(buffer)!);
       case 165: 
-        return FlutterSuspectUser.decode(readValue(buffer)!);
+        return FlutterSmartSelfieResponse.decode(readValue(buffer)!);
       case 166: 
-        return FlutterUploadImageInfo.decode(readValue(buffer)!);
+        return FlutterSuspectUser.decode(readValue(buffer)!);
       case 167: 
-        return FlutterUploadRequest.decode(readValue(buffer)!);
+        return FlutterUploadImageInfo.decode(readValue(buffer)!);
       case 168: 
-        return FlutterValidDocument.decode(readValue(buffer)!);
+        return FlutterUploadRequest.decode(readValue(buffer)!);
       case 169: 
+        return FlutterValidDocument.decode(readValue(buffer)!);
+      case 170: 
         return FlutterValidDocumentsResponse.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);
@@ -2183,7 +2224,29 @@ class SmileIDApi {
 
   static const MessageCodec<Object?> pigeonChannelCodec = _SmileIDApiCodec();
 
-  Future<void> initialize() async {
+  Future<void> initializeWithApiKey(String apiKey, FlutterConfig config, bool useSandbox, bool enableCrashReporting) async {
+    const String __pigeon_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.initializeWithApiKey';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+      __pigeon_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: __pigeon_binaryMessenger,
+    );
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(<Object?>[apiKey, config, useSandbox, enableCrashReporting]) as List<Object?>?;
+    if (__pigeon_replyList == null) {
+      throw _createConnectionError(__pigeon_channelName);
+    } else if (__pigeon_replyList.length > 1) {
+      throw PlatformException(
+        code: __pigeon_replyList[0]! as String,
+        message: __pigeon_replyList[1] as String?,
+        details: __pigeon_replyList[2],
+      );
+    } else {
+      return;
+    }
+  }
+
+  Future<void> initialize(FlutterConfig config, bool useSandbox, bool enableCrashReporting) async {
     const String __pigeon_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.initialize';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -2191,7 +2254,7 @@ class SmileIDApi {
       binaryMessenger: __pigeon_binaryMessenger,
     );
     final List<Object?>? __pigeon_replyList =
-        await __pigeon_channel.send(null) as List<Object?>?;
+        await __pigeon_channel.send(<Object?>[config, useSandbox, enableCrashReporting]) as List<Object?>?;
     if (__pigeon_replyList == null) {
       throw _createConnectionError(__pigeon_channelName);
     } else if (__pigeon_replyList.length > 1) {

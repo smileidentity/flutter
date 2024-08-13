@@ -3,6 +3,7 @@ package com.smileidentity.flutter
 import FlutterAuthenticationRequest
 import FlutterAuthenticationResponse
 import FlutterBiometricKycJobStatusResponse
+import FlutterConfig
 import FlutterDocumentVerificationJobStatusResponse
 import FlutterEnhancedDocumentVerificationJobStatusResponse
 import FlutterEnhancedKycAsyncResponse
@@ -83,12 +84,32 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         SmileIDApi.setUp(binding.binaryMessenger, null)
     }
 
-    override fun initialize() {
-        SmileID.initialize(context = appContext, enableCrashReporting = false)
+    override fun initializeWithApiKey(
+        apiKey: String,
+        config: FlutterConfig,
+        useSandbox: Boolean,
+        enableCrashReporting: Boolean,
+    ) {
+        SmileID.initialize(
+            context = appContext,
+            apiKey = apiKey,
+            config = config.toRequest(),
+            useSandbox = useSandbox,
+            enableCrashReporting = false
+        )
     }
 
-    override fun setEnvironment(useSandbox: Boolean) {
-        SmileID.setEnvironment(useSandbox = useSandbox)
+    override fun initialize(
+        config: FlutterConfig,
+        useSandbox: Boolean,
+        enableCrashReporting: Boolean
+    ) {
+        SmileID.initialize(
+            context = appContext,
+            config = config.toRequest(),
+            useSandbox = useSandbox,
+            enableCrashReporting = false
+        )
     }
 
     override fun setCallbackUrl(callbackUrl: String) {
