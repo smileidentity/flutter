@@ -87,10 +87,6 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         SmileID.initialize(context = appContext, enableCrashReporting = false)
     }
 
-    override fun setEnvironment(useSandbox: Boolean) {
-        SmileID.setEnvironment(useSandbox = useSandbox)
-    }
-
     override fun setCallbackUrl(callbackUrl: String) {
         SmileID.setCallbackUrl(callbackUrl = URL(callbackUrl))
     }
