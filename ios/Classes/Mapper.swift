@@ -693,8 +693,6 @@ extension FlutterConfig {
         Config(
             partnerId: partnerId,
             authToken: authToken,
-            prodUrl: prodBaseUrl, // todo - delete
-            testUrl: sandboxBaseUrl, // todo - delete
             prodLambdaUrl: prodBaseUrl,
             testLambdaUrl: sandboxBaseUrl
         )
