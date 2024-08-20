@@ -11,6 +11,32 @@ func convertNullableMapToNonNull(data: [String? : String?]?) -> [String : String
   return convertedDictionary
 }
 
+func convertFlexibleDictionaryToOptionalStringDictionary(
+    _ flexDict: FlexibleDictionary?
+) -> [String? : String?]? {
+    guard let flexDict = flexDict else {
+        return nil
+    }
+    
+    guard let data = try? JSONEncoder().encode(flexDict),
+          let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []),
+          let dictionary = jsonObject as? [String: Any] else {
+        return nil
+    }
+    
+    let convertedDict = dictionary.mapValues { value -> String? in
+        if let stringValue = value as? String {
+            return stringValue
+        } else if let boolValue = value as? Bool {
+            return String(boolValue)
+        } else {
+            return nil
+        }
+    }
+    
+    return convertedDict.isEmpty ? nil : convertedDict
+}
+
 func getFile(atPath path: String) -> Data? {
     // Create a URL from the provided path
     let fileURL = URL(fileURLWithPath: path)
@@ -150,16 +176,17 @@ extension PrepUploadResponse {
     }
 }
 
-extension FlutterUploadRequest {
-    func toRequest() throws -> Data {
-        let uploadRequest = UploadRequest(
-            images: images.compactMap { $0?.toRequest() },
-            idInfo: idInfo?.toRequest()
-        )
-        let dataUrl = try LocalStorage.toZip(uploadRequest: uploadRequest)
-        return try Data(contentsOf: dataUrl)
-    }
-}
+// todo rework this again
+//extension FlutterUploadRequest {
+//    func toRequest() throws -> Data {
+//        let uploadRequest = UploadRequest(
+//            images: images.compactMap { $0?.toRequest() },
+//            idInfo: idInfo?.toRequest()
+//        )
+//        let dataUrl = try LocalStorage.toZip(uploadRequest: uploadRequest)
+//        return try Data(contentsOf: dataUrl)
+//    }
+//}
 
 extension FlutterUploadImageInfo {
     func toRequest() -> UploadImageInfo {
@@ -489,7 +516,7 @@ extension BiometricKycJobResult {
             address: address,
             country: country,
             documentImageBase64: documentImageBase64,
-            fullData: fullData,
+            fullData: convertFlexibleDictionaryToOptionalStringDictionary(fullData),
             fullName: fullName,
             idNumber: idNumber,
             phoneNumber: phoneNumber,
@@ -530,7 +557,7 @@ extension EnhancedDocumentVerificationJobResult {
             address: address,
             country: country,
             documentImageBase64: documentImageBase64,
-            fullData: fullData,
+            fullData: convertFlexibleDictionaryToOptionalStringDictionary(fullData),
             fullName: fullName,
             idNumber: idNumber,
             phoneNumber: phoneNumber,
@@ -666,8 +693,6 @@ extension FlutterConfig {
         Config(
             partnerId: partnerId,
             authToken: authToken,
-            prodUrl: prodBaseUrl, // todo - delete
-            testUrl: sandboxBaseUrl, // todo - delete
             prodLambdaUrl: prodBaseUrl,
             testLambdaUrl: sandboxBaseUrl
         )

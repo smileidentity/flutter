@@ -1,14 +1,13 @@
 import Flutter
-import UIKit
 import SmileID
+import UIKit
 
 public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
-    
     public static func register(with registrar: FlutterPluginRegistrar) {
         let messenger: FlutterBinaryMessenger = registrar.messenger()
         let api: SmileIDApi & NSObjectProtocol = SmileIDPlugin()
         SmileIDApiSetup.setUp(binaryMessenger: messenger, api: api)
-        
+
         let documentVerificationFactory = SmileIDDocumentVerification.Factory(
             messenger: registrar.messenger()
         )
@@ -16,7 +15,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             documentVerificationFactory,
             withId: SmileIDDocumentVerification.VIEW_TYPE_ID
         )
-        
+
         let enhancedDocumentVerificationFactory = SmileIDEnhancedDocumentVerification.Factory(
             messenger: registrar.messenger()
         )
@@ -24,7 +23,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             enhancedDocumentVerificationFactory,
             withId: SmileIDEnhancedDocumentVerification.VIEW_TYPE_ID
         )
-        
+
         let smartSelfieEnrollmentFactory = SmileIDSmartSelfieEnrollment.Factory(
             messenger: registrar.messenger()
         )
@@ -32,7 +31,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             smartSelfieEnrollmentFactory,
             withId: SmileIDSmartSelfieEnrollment.VIEW_TYPE_ID
         )
-        
+
         let smartSelfieAuthenticationFactory = SmileIDSmartSelfieAuthentication.Factory(
             messenger: registrar.messenger()
         )
@@ -40,7 +39,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             smartSelfieAuthenticationFactory,
             withId: SmileIDSmartSelfieAuthentication.VIEW_TYPE_ID
         )
-        
+
         let biometricKYCFactory = SmileIDBiometricKYC.Factory(
             messenger: registrar.messenger()
         )
@@ -48,7 +47,6 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             biometricKYCFactory,
             withId: SmileIDBiometricKYC.VIEW_TYPE_ID
         )
-        
     }
     
     func initializeWithApiKey(
@@ -74,35 +72,35 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             useSandbox: useSandbox
         )
     }
-    
+
     func setCallbackUrl(callbackUrl: String) {
         SmileID.setCallbackUrl(url: URL(string: callbackUrl))
     }
-    
+
     func setAllowOfflineMode(allowOfflineMode: Bool) {
         SmileID.setAllowOfflineMode(allowOfflineMode: allowOfflineMode)
     }
-    
+
     func getSubmittedJobs() -> [String] {
         SmileID.getSubmittedJobs()
     }
-    
+
     func getUnsubmittedJobs() -> [String] {
         SmileID.getUnsubmittedJobs()
     }
-    
+
     func cleanup(jobId: String) throws {
         try SmileID.cleanup(jobId: jobId)
     }
-    
+
     func cleanupJobs(jobIds: [String]) throws {
         try SmileID.cleanup(jobIds: jobIds)
     }
-    
+
     func submitJob(jobId: String, deleteFilesOnSuccess: Bool) throws {
         try SmileID.submitJob(jobId: jobId, deleteFilesOnSuccess: deleteFilesOnSuccess)
     }
-    
+
     func authenticate(
         request: FlutterAuthenticationRequest,
         completion: @escaping (Result<FlutterAuthenticationResponse, Error>) -> Void
@@ -116,7 +114,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             }
         }
     }
-    
+
     func prepUpload(
         request: FlutterPrepUploadRequest,
         completion: @escaping (Result<FlutterPrepUploadResponse, Error>) -> Void
@@ -130,22 +128,22 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             }
         }
     }
-    
+
     func upload(
-        url: String,
-        request: FlutterUploadRequest,
+        url _: String,
+        request _: FlutterUploadRequest,
         completion: @escaping (Result<Void, Error>) -> Void
     ) {
         Task {
             do {
-                try await SmileID.api.upload(zip: try request.toRequest(), to: url)
+                //                try await SmileID.api.upload(zip: try request.toRequest(), to: url)
                 completion(.success(()))
             } catch {
                 completion(.failure(error))
             }
         }
     }
-    
+
     func doEnhancedKyc(
         request: FlutterEnhancedKycRequest,
         completion: @escaping (Result<FlutterEnhancedKycResponse, Error>) -> Void
@@ -159,7 +157,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             }
         }
     }
-    
+
     func doEnhancedKycAsync(
         request: FlutterEnhancedKycRequest,
         completion: @escaping (Result<FlutterEnhancedKycAsyncResponse, Error>) -> Void
@@ -173,14 +171,14 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             }
         }
     }
-    
+
     func doSmartSelfieEnrollment(
         signature: String,
         timestamp: String,
         selfieImage: String,
         livenessImages: [String],
         userId: String,
-        partnerParams: [String? : String?]?,
+        partnerParams: [String?: String?]?,
         callbackUrl: String?,
         sandboxResult: Int64?,
         allowNewEnroll: Bool?,
@@ -215,14 +213,14 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             }
         }
     }
-    
+
     func doSmartSelfieAuthentication(
         signature: String,
         timestamp: String,
         selfieImage: String,
         livenessImages: [String],
         userId: String,
-        partnerParams: [String? : String?]?,
+        partnerParams: [String?: String?]?,
         callbackUrl: String?,
         sandboxResult: Int64?,
         completion: @escaping (Result<FlutterSmartSelfieResponse, any Error>) -> Void
@@ -269,7 +267,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             }
         }
     }
-    
+
     func getDocumentVerificationJobStatus(
         request: FlutterJobStatusRequest,
         completion: @escaping (Result<FlutterDocumentVerificationJobStatusResponse, Error>) -> Void
@@ -283,7 +281,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             }
         }
     }
-    
+
     func getBiometricKycJobStatus(
         request: FlutterJobStatusRequest,
         completion: @escaping (Result<FlutterBiometricKycJobStatusResponse, Error>) -> Void
@@ -297,7 +295,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             }
         }
     }
-    
+
     func getEnhancedDocumentVerificationJobStatus(
         request: FlutterJobStatusRequest,
         completion: @escaping (Result<FlutterEnhancedDocumentVerificationJobStatusResponse, Error>) -> Void
@@ -311,7 +309,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             }
         }
     }
-    
+
     func getProductsConfig(
         request: FlutterProductsConfigRequest,
         completion: @escaping (Result<FlutterProductsConfigResponse, Error>) -> Void
@@ -325,7 +323,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             }
         }
     }
-    
+
     func getValidDocuments(
         request: FlutterProductsConfigRequest,
         completion: @escaping (Result<FlutterValidDocumentsResponse, Error>) -> Void
@@ -339,7 +337,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             }
         }
     }
-    
+
     func getServices(
         completion: @escaping (Result<FlutterServicesResponse, Error>) -> Void
     ) {
@@ -352,8 +350,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             }
         }
     }
-    
-    
+
     func pollSmartSelfieJobStatus(
         request: FlutterJobStatusRequest,
         interval: Int64,
@@ -367,15 +364,15 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             numAttempts: numAttempts,
             completion: { result in
                 switch result {
-                case .success(let response):
+                case let .success(response):
                     completion(.success(response.toResponse()))
-                case .failure(let error):
+                case let .failure(error):
                     completion(.failure(error))
                 }
             }
         )
     }
-    
+
     func pollDocumentVerificationJobStatus(
         request: FlutterJobStatusRequest,
         interval: Int64,
@@ -389,16 +386,15 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             numAttempts: numAttempts,
             completion: { result in
                 switch result {
-                case .success(let response):
+                case let .success(response):
                     completion(.success(response.toResponse()))
-                case .failure(let error):
+                case let .failure(error):
                     completion(.failure(error))
                 }
             }
         )
     }
-    
-    
+
     func pollBiometricKycJobStatus(
         request: FlutterJobStatusRequest,
         interval: Int64,
@@ -412,15 +408,15 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             numAttempts: numAttempts,
             completion: { result in
                 switch result {
-                case .success(let response):
+                case let .success(response):
                     completion(.success(response.toResponse()))
-                case .failure(let error):
+                case let .failure(error):
                     completion(.failure(error))
                 }
             }
         )
     }
-    
+
     func pollEnhancedDocumentVerificationJobStatus(
         request: FlutterJobStatusRequest,
         interval: Int64,
@@ -434,40 +430,50 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             numAttempts: numAttempts,
             completion: { result in
                 switch result {
-                case .success(let response):
+                case let .success(response):
                     completion(.success(response.toResponse()))
-                case .failure(let error):
+                case let .failure(error):
                     completion(.failure(error))
                 }
             }
         )
     }
-    
-    func pollJobStatus<RequestType, ResponseType>(
-        apiCall: @escaping (RequestType, TimeInterval, Int) async throws -> ResponseType,
+
+    func pollJobStatus<RequestType, T: JobResult>(
+        apiCall: @escaping (RequestType, TimeInterval, Int) async throws -> AsyncThrowingStream<JobStatusResponse<T>, Error>,
         request: RequestType,
         interval: Int64,
         numAttempts: Int64,
-        completion: @escaping (Result<ResponseType, Error>) -> Void
+        completion: @escaping (Result<JobStatusResponse<T>, Error>) -> Void
     ) {
-        let timeInterval = convertToTimeInterval(milliSeconds: interval)
-        guard let numAttemptsInt = Int(exactly: numAttempts) else {
-            completion(.failure(NSError(domain: "Invalid numAttempts value", code: -1, userInfo: nil)))
-            return
-        }
-
         Task {
             do {
-                let response = try await apiCall(request, timeInterval, numAttemptsInt)
-                completion(.success(response))
+                let timeInterval = convertToTimeInterval(milliSeconds: interval)
+                guard let numAttemptsInt = Int(exactly: numAttempts) else {
+                    completion(.failure(NSError(domain: "Invalid numAttempts value", code: -1, userInfo: nil)))
+                    return
+                }
+
+                let pollStream = try await apiCall(request, timeInterval, numAttemptsInt)
+                var result: JobStatusResponse<T>? = nil
+
+                for try await res in pollStream {
+                    result = res
+                }
+
+                if let finalResult = result {
+                    completion(.success(finalResult))
+                } else {
+                    completion(.failure(NSError(domain: "Polling completed without a result", code: -1, userInfo: nil)))
+                }
             } catch {
                 completion(.failure(error))
             }
         }
     }
-    
-    func convertToTimeInterval(milliSeconds:Int64) -> TimeInterval {
-        let seconds = milliSeconds/1000
+
+    func convertToTimeInterval(milliSeconds: Int64) -> TimeInterval {
+        let seconds = milliSeconds / 1000
         return TimeInterval(seconds)
     }
 }

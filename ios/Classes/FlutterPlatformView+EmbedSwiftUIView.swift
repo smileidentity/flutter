@@ -40,7 +40,7 @@ extension FlutterPlatformView {
             let rootViewController = UIApplication.shared.windows.first?.rootViewController
             rootViewController?.addChild(hostingController)
         }
-        
+        hostingController.overrideUserInterfaceStyle = .light
         return hostingController
     }
 }
