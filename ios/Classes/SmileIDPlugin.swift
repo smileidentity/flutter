@@ -48,9 +48,29 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             withId: SmileIDBiometricKYC.VIEW_TYPE_ID
         )
     }
-
-    func initialize() {
-        SmileID.initialize()
+    
+    func initializeWithApiKey(
+        apiKey: String,
+        config: FlutterConfig,
+        useSandbox: Bool,
+        enableCrashReporting: Bool
+    ) {
+        SmileID.initialize(
+            apiKey: apiKey,
+            config: config.toRequest(),
+            useSandbox: useSandbox
+        )
+    }
+    
+    func initialize(
+        config: FlutterConfig,
+        useSandbox: Bool,
+        enableCrashReporting: Bool
+    ) {
+        SmileID.initialize(
+            config: config.toRequest(),
+            useSandbox: useSandbox
+        )
     }
 
     func setCallbackUrl(callbackUrl: String) {
