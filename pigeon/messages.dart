@@ -787,9 +787,34 @@ class FlutterAvailableIdType {
   });
 }
 
+class FlutterConfig {
+  final String partnerId;
+  final String authToken;
+  final String prodBaseUrl;
+  final String sandboxBaseUrl;
+
+  FlutterConfig({
+    required this.partnerId,
+    required this.authToken,
+    required this.prodBaseUrl,
+    required this.sandboxBaseUrl,
+  });
+}
+
 @HostApi()
 abstract class SmileIDApi {
-  void initialize();
+  void initializeWithApiKey(
+      String apiKey,
+      FlutterConfig config,
+      bool useSandbox,
+      bool enableCrashReporting
+  );
+
+  void initialize(
+      FlutterConfig config,
+      bool useSandbox,
+      bool enableCrashReporting
+  );
 
   void setCallbackUrl(String callbackUrl);
 

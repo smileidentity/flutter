@@ -32,7 +32,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  integration_test: ce0a3ffa1de96d1a89ca0ac26fca7ea18a749ef4
+  integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
   lottie-ios: fcb5e73e17ba4c983140b7d21095c834b3087418
   smile_id: 96b93395620895ce5a484e26960a2977c99602f3
   SmileID: d36a5ed65e9c2ee44b5199bc97bb0f174834c326

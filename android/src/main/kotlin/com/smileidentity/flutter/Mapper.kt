@@ -9,6 +9,7 @@ import FlutterAvailableIdType
 import FlutterBankCode
 import FlutterBiometricKycJobResult
 import FlutterBiometricKycJobStatusResponse
+import FlutterConfig
 import FlutterConsentInfo
 import FlutterCountry
 import FlutterCountryInfo
@@ -52,6 +53,7 @@ import com.smileidentity.models.AvailableIdType
 import com.smileidentity.models.BankCode
 import com.smileidentity.models.BiometricKycJobResult
 import com.smileidentity.models.BiometricKycJobStatusResponse
+import com.smileidentity.models.Config
 import com.smileidentity.models.ConsentInfo
 import com.smileidentity.models.Country
 import com.smileidentity.models.CountryInfo
@@ -605,4 +607,12 @@ fun AvailableIdType.toResponse() =
         requiredFields = requiredFields.map { it.name },
         testData = testData,
         idNumberRegex = idNumberRegex,
+    )
+
+fun FlutterConfig.toRequest() =
+    Config(
+        partnerId = partnerId,
+        authToken = authToken,
+        prodBaseUrl = prodBaseUrl,
+        sandboxBaseUrl = sandboxBaseUrl,
     )

@@ -1669,6 +1669,36 @@ struct FlutterAvailableIdType {
   }
 }
 
+/// Generated class from Pigeon that represents data sent in messages.
+struct FlutterConfig {
+  var partnerId: String
+  var authToken: String
+  var prodBaseUrl: String
+  var sandboxBaseUrl: String
+
+  static func fromList(_ list: [Any?]) -> FlutterConfig? {
+    let partnerId = list[0] as! String
+    let authToken = list[1] as! String
+    let prodBaseUrl = list[2] as! String
+    let sandboxBaseUrl = list[3] as! String
+
+    return FlutterConfig(
+      partnerId: partnerId,
+      authToken: authToken,
+      prodBaseUrl: prodBaseUrl,
+      sandboxBaseUrl: sandboxBaseUrl
+    )
+  }
+  func toList() -> [Any?] {
+    return [
+      partnerId,
+      authToken,
+      prodBaseUrl,
+      sandboxBaseUrl,
+    ]
+  }
+}
+
 private class SmileIDApiCodecReader: FlutterStandardReader {
   override func readValue(ofType type: UInt8) -> Any? {
     switch type {
@@ -1691,70 +1721,72 @@ private class SmileIDApiCodecReader: FlutterStandardReader {
     case 136:
       return FlutterBiometricKycJobStatusResponse.fromList(self.readValue() as! [Any?])
     case 137:
-      return FlutterConsentInfo.fromList(self.readValue() as! [Any?])
+      return FlutterConfig.fromList(self.readValue() as! [Any?])
     case 138:
-      return FlutterCountry.fromList(self.readValue() as! [Any?])
+      return FlutterConsentInfo.fromList(self.readValue() as! [Any?])
     case 139:
-      return FlutterCountryInfo.fromList(self.readValue() as! [Any?])
+      return FlutterCountry.fromList(self.readValue() as! [Any?])
     case 140:
-      return FlutterDocumentVerificationJobResult.fromList(self.readValue() as! [Any?])
+      return FlutterCountryInfo.fromList(self.readValue() as! [Any?])
     case 141:
       return FlutterDocumentVerificationJobResult.fromList(self.readValue() as! [Any?])
     case 142:
-      return FlutterDocumentVerificationJobStatusResponse.fromList(self.readValue() as! [Any?])
+      return FlutterDocumentVerificationJobResult.fromList(self.readValue() as! [Any?])
     case 143:
-      return FlutterEnhancedDocumentVerificationJobResult.fromList(self.readValue() as! [Any?])
+      return FlutterDocumentVerificationJobStatusResponse.fromList(self.readValue() as! [Any?])
     case 144:
       return FlutterEnhancedDocumentVerificationJobResult.fromList(self.readValue() as! [Any?])
     case 145:
-      return FlutterEnhancedDocumentVerificationJobStatusResponse.fromList(self.readValue() as! [Any?])
+      return FlutterEnhancedDocumentVerificationJobResult.fromList(self.readValue() as! [Any?])
     case 146:
-      return FlutterEnhancedKycAsyncResponse.fromList(self.readValue() as! [Any?])
+      return FlutterEnhancedDocumentVerificationJobStatusResponse.fromList(self.readValue() as! [Any?])
     case 147:
-      return FlutterEnhancedKycRequest.fromList(self.readValue() as! [Any?])
+      return FlutterEnhancedKycAsyncResponse.fromList(self.readValue() as! [Any?])
     case 148:
-      return FlutterEnhancedKycResponse.fromList(self.readValue() as! [Any?])
+      return FlutterEnhancedKycRequest.fromList(self.readValue() as! [Any?])
     case 149:
-      return FlutterHostedWeb.fromList(self.readValue() as! [Any?])
+      return FlutterEnhancedKycResponse.fromList(self.readValue() as! [Any?])
     case 150:
-      return FlutterIdInfo.fromList(self.readValue() as! [Any?])
+      return FlutterHostedWeb.fromList(self.readValue() as! [Any?])
     case 151:
-      return FlutterIdSelection.fromList(self.readValue() as! [Any?])
+      return FlutterIdInfo.fromList(self.readValue() as! [Any?])
     case 152:
-      return FlutterIdType.fromList(self.readValue() as! [Any?])
+      return FlutterIdSelection.fromList(self.readValue() as! [Any?])
     case 153:
-      return FlutterImageLinks.fromList(self.readValue() as! [Any?])
+      return FlutterIdType.fromList(self.readValue() as! [Any?])
     case 154:
-      return FlutterJobStatusRequest.fromList(self.readValue() as! [Any?])
+      return FlutterImageLinks.fromList(self.readValue() as! [Any?])
     case 155:
-      return FlutterPartnerParams.fromList(self.readValue() as! [Any?])
+      return FlutterJobStatusRequest.fromList(self.readValue() as! [Any?])
     case 156:
-      return FlutterPrepUploadRequest.fromList(self.readValue() as! [Any?])
+      return FlutterPartnerParams.fromList(self.readValue() as! [Any?])
     case 157:
-      return FlutterPrepUploadResponse.fromList(self.readValue() as! [Any?])
+      return FlutterPrepUploadRequest.fromList(self.readValue() as! [Any?])
     case 158:
-      return FlutterProductsConfigRequest.fromList(self.readValue() as! [Any?])
+      return FlutterPrepUploadResponse.fromList(self.readValue() as! [Any?])
     case 159:
-      return FlutterProductsConfigResponse.fromList(self.readValue() as! [Any?])
+      return FlutterProductsConfigRequest.fromList(self.readValue() as! [Any?])
     case 160:
-      return FlutterServicesResponse.fromList(self.readValue() as! [Any?])
+      return FlutterProductsConfigResponse.fromList(self.readValue() as! [Any?])
     case 161:
-      return FlutterSmartSelfieJobResult.fromList(self.readValue() as! [Any?])
+      return FlutterServicesResponse.fromList(self.readValue() as! [Any?])
     case 162:
       return FlutterSmartSelfieJobResult.fromList(self.readValue() as! [Any?])
     case 163:
-      return FlutterSmartSelfieJobStatusResponse.fromList(self.readValue() as! [Any?])
+      return FlutterSmartSelfieJobResult.fromList(self.readValue() as! [Any?])
     case 164:
-      return FlutterSmartSelfieResponse.fromList(self.readValue() as! [Any?])
+      return FlutterSmartSelfieJobStatusResponse.fromList(self.readValue() as! [Any?])
     case 165:
-      return FlutterSuspectUser.fromList(self.readValue() as! [Any?])
+      return FlutterSmartSelfieResponse.fromList(self.readValue() as! [Any?])
     case 166:
-      return FlutterUploadImageInfo.fromList(self.readValue() as! [Any?])
+      return FlutterSuspectUser.fromList(self.readValue() as! [Any?])
     case 167:
-      return FlutterUploadRequest.fromList(self.readValue() as! [Any?])
+      return FlutterUploadImageInfo.fromList(self.readValue() as! [Any?])
     case 168:
-      return FlutterValidDocument.fromList(self.readValue() as! [Any?])
+      return FlutterUploadRequest.fromList(self.readValue() as! [Any?])
     case 169:
+      return FlutterValidDocument.fromList(self.readValue() as! [Any?])
+    case 170:
       return FlutterValidDocumentsResponse.fromList(self.readValue() as! [Any?])
     default:
       return super.readValue(ofType: type)
@@ -1791,104 +1823,107 @@ private class SmileIDApiCodecWriter: FlutterStandardWriter {
     } else if let value = value as? FlutterBiometricKycJobStatusResponse {
       super.writeByte(136)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterConsentInfo {
+    } else if let value = value as? FlutterConfig {
       super.writeByte(137)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterCountry {
+    } else if let value = value as? FlutterConsentInfo {
       super.writeByte(138)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterCountryInfo {
+    } else if let value = value as? FlutterCountry {
       super.writeByte(139)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterDocumentVerificationJobResult {
+    } else if let value = value as? FlutterCountryInfo {
       super.writeByte(140)
       super.writeValue(value.toList())
     } else if let value = value as? FlutterDocumentVerificationJobResult {
       super.writeByte(141)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterDocumentVerificationJobStatusResponse {
+    } else if let value = value as? FlutterDocumentVerificationJobResult {
       super.writeByte(142)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterEnhancedDocumentVerificationJobResult {
+    } else if let value = value as? FlutterDocumentVerificationJobStatusResponse {
       super.writeByte(143)
       super.writeValue(value.toList())
     } else if let value = value as? FlutterEnhancedDocumentVerificationJobResult {
       super.writeByte(144)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterEnhancedDocumentVerificationJobStatusResponse {
+    } else if let value = value as? FlutterEnhancedDocumentVerificationJobResult {
       super.writeByte(145)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterEnhancedKycAsyncResponse {
+    } else if let value = value as? FlutterEnhancedDocumentVerificationJobStatusResponse {
       super.writeByte(146)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterEnhancedKycRequest {
+    } else if let value = value as? FlutterEnhancedKycAsyncResponse {
       super.writeByte(147)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterEnhancedKycResponse {
+    } else if let value = value as? FlutterEnhancedKycRequest {
       super.writeByte(148)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterHostedWeb {
+    } else if let value = value as? FlutterEnhancedKycResponse {
       super.writeByte(149)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterIdInfo {
+    } else if let value = value as? FlutterHostedWeb {
       super.writeByte(150)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterIdSelection {
+    } else if let value = value as? FlutterIdInfo {
       super.writeByte(151)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterIdType {
+    } else if let value = value as? FlutterIdSelection {
       super.writeByte(152)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterImageLinks {
+    } else if let value = value as? FlutterIdType {
       super.writeByte(153)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterJobStatusRequest {
+    } else if let value = value as? FlutterImageLinks {
       super.writeByte(154)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterPartnerParams {
+    } else if let value = value as? FlutterJobStatusRequest {
       super.writeByte(155)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterPrepUploadRequest {
+    } else if let value = value as? FlutterPartnerParams {
       super.writeByte(156)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterPrepUploadResponse {
+    } else if let value = value as? FlutterPrepUploadRequest {
       super.writeByte(157)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterProductsConfigRequest {
+    } else if let value = value as? FlutterPrepUploadResponse {
       super.writeByte(158)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterProductsConfigResponse {
+    } else if let value = value as? FlutterProductsConfigRequest {
       super.writeByte(159)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterServicesResponse {
+    } else if let value = value as? FlutterProductsConfigResponse {
       super.writeByte(160)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterSmartSelfieJobResult {
+    } else if let value = value as? FlutterServicesResponse {
       super.writeByte(161)
       super.writeValue(value.toList())
     } else if let value = value as? FlutterSmartSelfieJobResult {
       super.writeByte(162)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterSmartSelfieJobStatusResponse {
+    } else if let value = value as? FlutterSmartSelfieJobResult {
       super.writeByte(163)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterSmartSelfieResponse {
+    } else if let value = value as? FlutterSmartSelfieJobStatusResponse {
       super.writeByte(164)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterSuspectUser {
+    } else if let value = value as? FlutterSmartSelfieResponse {
       super.writeByte(165)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterUploadImageInfo {
+    } else if let value = value as? FlutterSuspectUser {
       super.writeByte(166)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterUploadRequest {
+    } else if let value = value as? FlutterUploadImageInfo {
       super.writeByte(167)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterValidDocument {
+    } else if let value = value as? FlutterUploadRequest {
       super.writeByte(168)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterValidDocumentsResponse {
+    } else if let value = value as? FlutterValidDocument {
       super.writeByte(169)
+      super.writeValue(value.toList())
+    } else if let value = value as? FlutterValidDocumentsResponse {
+      super.writeByte(170)
       super.writeValue(value.toList())
     } else {
       super.writeValue(value)
@@ -1912,7 +1947,8 @@ class SmileIDApiCodec: FlutterStandardMessageCodec {
 
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol SmileIDApi {
-  func initialize() throws
+  func initializeWithApiKey(apiKey: String, config: FlutterConfig, useSandbox: Bool, enableCrashReporting: Bool) throws
+  func initialize(config: FlutterConfig, useSandbox: Bool, enableCrashReporting: Bool) throws
   func setCallbackUrl(callbackUrl: String) throws
   func setAllowOfflineMode(allowOfflineMode: Bool) throws
   func getSubmittedJobs() throws -> [String]
@@ -1946,11 +1982,33 @@ class SmileIDApiSetup {
   static var codec: FlutterStandardMessageCodec { SmileIDApiCodec.shared }
   /// Sets up an instance of `SmileIDApi` to handle messages through the `binaryMessenger`.
   static func setUp(binaryMessenger: FlutterBinaryMessenger, api: SmileIDApi?) {
+    let initializeWithApiKeyChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.initializeWithApiKey", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      initializeWithApiKeyChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let apiKeyArg = args[0] as! String
+        let configArg = args[1] as! FlutterConfig
+        let useSandboxArg = args[2] as! Bool
+        let enableCrashReportingArg = args[3] as! Bool
+        do {
+          try api.initializeWithApiKey(apiKey: apiKeyArg, config: configArg, useSandbox: useSandboxArg, enableCrashReporting: enableCrashReportingArg)
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      initializeWithApiKeyChannel.setMessageHandler(nil)
+    }
     let initializeChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.initialize", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
-      initializeChannel.setMessageHandler { _, reply in
+      initializeChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let configArg = args[0] as! FlutterConfig
+        let useSandboxArg = args[1] as! Bool
+        let enableCrashReportingArg = args[2] as! Bool
         do {
-          try api.initialize()
+          try api.initialize(config: configArg, useSandbox: useSandboxArg, enableCrashReporting: enableCrashReportingArg)
           reply(wrapResult(nil))
         } catch {
           reply(wrapError(error))
