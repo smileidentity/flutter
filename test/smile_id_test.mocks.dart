@@ -221,16 +221,6 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
       ) as _i3.Future<void>);
 
   @override
-  _i3.Future<void> setEnvironment(bool? useSandbox) => (super.noSuchMethod(
-        Invocation.method(
-          #setEnvironment,
-          [useSandbox],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
-
-  @override
   _i3.Future<void> setCallbackUrl(String? callbackUrl) => (super.noSuchMethod(
         Invocation.method(
           #setCallbackUrl,
