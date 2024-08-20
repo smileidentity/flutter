@@ -4,6 +4,7 @@
 
 * Extend API config initialise function
 * Removed `SmileID.setEnvironment()` since the API Keys are no longer shared between environments
+* Bump iOS to 10.2.7 (https://github.com/smileidentity/ios/releases/tag/v10.2.7)
 
 ## 10.1.6
 
