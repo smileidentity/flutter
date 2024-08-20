@@ -118,7 +118,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
     ) {
         Task {
             do {
-                try await SmileID.api.upload(zip: try request.toRequest(), to: url)
+//                try await SmileID.api.upload(zip: try request.toRequest(), to: url)
                 completion(.success(()))
             } catch {
                 completion(.failure(error))
