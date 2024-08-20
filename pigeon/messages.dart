@@ -816,8 +816,6 @@ abstract class SmileIDApi {
       bool enableCrashReporting
   );
 
-  void setEnvironment(bool useSandbox);
-
   void setCallbackUrl(String callbackUrl);
 
   void setAllowOfflineMode(bool allowOfflineMode);

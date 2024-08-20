@@ -3,6 +3,7 @@
 ## 10.1.7
 
 * Extend API config initialise function
+* Removed `SmileID.setEnvironment()` since the API Keys are no longer shared between environments
 
 ## 10.1.6
 

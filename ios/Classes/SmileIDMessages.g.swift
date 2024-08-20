@@ -1949,7 +1949,6 @@ class SmileIDApiCodec: FlutterStandardMessageCodec {
 protocol SmileIDApi {
   func initializeWithApiKey(apiKey: String, config: FlutterConfig, useSandbox: Bool, enableCrashReporting: Bool) throws
   func initialize(config: FlutterConfig, useSandbox: Bool, enableCrashReporting: Bool) throws
-  func setEnvironment(useSandbox: Bool) throws
   func setCallbackUrl(callbackUrl: String) throws
   func setAllowOfflineMode(allowOfflineMode: Bool) throws
   func getSubmittedJobs() throws -> [String]
@@ -2017,21 +2016,6 @@ class SmileIDApiSetup {
       }
     } else {
       initializeChannel.setMessageHandler(nil)
-    }
-    let setEnvironmentChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.setEnvironment", binaryMessenger: binaryMessenger, codec: codec)
-    if let api = api {
-      setEnvironmentChannel.setMessageHandler { message, reply in
-        let args = message as! [Any?]
-        let useSandboxArg = args[0] as! Bool
-        do {
-          try api.setEnvironment(useSandbox: useSandboxArg)
-          reply(wrapResult(nil))
-        } catch {
-          reply(wrapError(error))
-        }
-      }
-    } else {
-      setEnvironmentChannel.setMessageHandler(nil)
     }
     let setCallbackUrlChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.setCallbackUrl", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
