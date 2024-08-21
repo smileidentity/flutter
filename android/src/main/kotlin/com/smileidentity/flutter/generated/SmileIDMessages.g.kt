@@ -1963,7 +1963,8 @@ private object SmileIDApiCodec : StandardMessageCodec() {
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface SmileIDApi {
   fun initializeWithApiKey(apiKey: String, config: FlutterConfig, useSandbox: Boolean, enableCrashReporting: Boolean)
-  fun initialize(config: FlutterConfig, useSandbox: Boolean, enableCrashReporting: Boolean)
+  fun initializeWithConfig(config: FlutterConfig, useSandbox: Boolean, enableCrashReporting: Boolean)
+  fun initialize(useSandbox: Boolean)
   fun setCallbackUrl(callbackUrl: String)
   fun setAllowOfflineMode(allowOfflineMode: Boolean)
   fun getSubmittedJobs(): List<String>
@@ -2021,7 +2022,7 @@ interface SmileIDApi {
         }
       }
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.initialize", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.initializeWithConfig", codec)
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>
@@ -2030,7 +2031,26 @@ interface SmileIDApi {
             val enableCrashReportingArg = args[2] as Boolean
             var wrapped: List<Any?>
             try {
-              api.initialize(configArg, useSandboxArg, enableCrashReportingArg)
+              api.initializeWithConfig(configArg, useSandboxArg, enableCrashReportingArg)
+              wrapped = listOf<Any?>(null)
+            } catch (exception: Throwable) {
+              wrapped = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.initialize", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val useSandboxArg = args[0] as Boolean
+            var wrapped: List<Any?>
+            try {
+              api.initialize(useSandboxArg)
               wrapped = listOf<Any?>(null)
             } catch (exception: Throwable) {
               wrapped = wrapError(exception)

@@ -2246,8 +2246,8 @@ class SmileIDApi {
     }
   }
 
-  Future<void> initialize(FlutterConfig config, bool useSandbox, bool enableCrashReporting) async {
-    const String __pigeon_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.initialize';
+  Future<void> initializeWithConfig(FlutterConfig config, bool useSandbox, bool enableCrashReporting) async {
+    const String __pigeon_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.initializeWithConfig';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,
@@ -2255,6 +2255,28 @@ class SmileIDApi {
     );
     final List<Object?>? __pigeon_replyList =
         await __pigeon_channel.send(<Object?>[config, useSandbox, enableCrashReporting]) as List<Object?>?;
+    if (__pigeon_replyList == null) {
+      throw _createConnectionError(__pigeon_channelName);
+    } else if (__pigeon_replyList.length > 1) {
+      throw PlatformException(
+        code: __pigeon_replyList[0]! as String,
+        message: __pigeon_replyList[1] as String?,
+        details: __pigeon_replyList[2],
+      );
+    } else {
+      return;
+    }
+  }
+
+  Future<void> initialize(bool useSandbox) async {
+    const String __pigeon_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.initialize';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+      __pigeon_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: __pigeon_binaryMessenger,
+    );
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(<Object?>[useSandbox]) as List<Object?>?;
     if (__pigeon_replyList == null) {
       throw _createConnectionError(__pigeon_channelName);
     } else if (__pigeon_replyList.length > 1) {

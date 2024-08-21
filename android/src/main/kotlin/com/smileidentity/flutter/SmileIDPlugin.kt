@@ -99,7 +99,7 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         )
     }
 
-    override fun initialize(
+    override fun initializeWithConfig(
         config: FlutterConfig,
         useSandbox: Boolean,
         enableCrashReporting: Boolean,
@@ -109,6 +109,15 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
             config = config.toRequest(),
             useSandbox = useSandbox,
             enableCrashReporting = false,
+        )
+    }
+
+    override fun initialize(
+        useSandbox: Boolean,
+    ) {
+        SmileID.initialize(
+            context = appContext,
+            useSandbox = useSandbox,
         )
     }
 

@@ -18,12 +18,18 @@ class SmileID {
     platformInterface.initializeWithApiKey(apiKey, config, useSandbox, enableCrashReporting);
   }
 
-  static void initialize({
+  static void initializeWithConfig({
     required FlutterConfig config,
     required bool useSandbox,
     required bool enableCrashReporting
   }) {
-    platformInterface.initialize(config, useSandbox, enableCrashReporting);
+    platformInterface.initializeWithConfig(config, useSandbox, enableCrashReporting);
+  }
+
+  static void initialize({
+    required bool useSandbox,
+  }) {
+    platformInterface.initialize(useSandbox);
   }
 
   static void setCallbackUrl({required Uri callbackUrl}) {

@@ -62,13 +62,21 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         )
     }
     
-    func initialize(
+    func initializeWithConfig(
         config: FlutterConfig,
         useSandbox: Bool,
         enableCrashReporting: Bool
     ) {
         SmileID.initialize(
             config: config.toRequest(),
+            useSandbox: useSandbox
+        )
+    }
+    
+    func initialize(
+        useSandbox: Bool
+    ) {
+        SmileID.initialize(
             useSandbox: useSandbox
         )
     }

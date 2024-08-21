@@ -810,10 +810,14 @@ abstract class SmileIDApi {
       bool enableCrashReporting
   );
 
-  void initialize(
+  void initializeWithConfig(
       FlutterConfig config,
       bool useSandbox,
       bool enableCrashReporting
+  );
+
+  void initialize(
+      bool useSandbox
   );
 
   void setCallbackUrl(String callbackUrl);
