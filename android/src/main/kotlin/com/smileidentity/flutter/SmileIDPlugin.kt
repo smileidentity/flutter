@@ -112,9 +112,7 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         )
     }
 
-    override fun initialize(
-        useSandbox: Boolean,
-    ) {
+    override fun initialize(useSandbox: Boolean) {
         SmileID.initialize(
             context = appContext,
             useSandbox = useSandbox,
