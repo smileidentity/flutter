@@ -1,5 +1,9 @@
 # Release Notes
 
+## 10.1.8
+
+* Fix API Config to provide different options to configure SmileID
+
 ## 10.1.7
 
 * Extend API config initialise function
