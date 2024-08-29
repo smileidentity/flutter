@@ -130,13 +130,14 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
     }
 
     func upload(
-        url _: String,
-        request _: FlutterUploadRequest,
+        url : String,
+        request : FlutterUploadRequest,
         completion: @escaping (Result<Void, Error>) -> Void
     ) {
         Task {
             do {
-                //                try await SmileID.api.upload(zip: try request.toRequest(), to: url)
+                let zipData = try request.toRequest()
+                try await SmileID.api.upload(zip: zipData,to : url)
                 completion(.success(()))
             } catch {
                 completion(.failure(error))
