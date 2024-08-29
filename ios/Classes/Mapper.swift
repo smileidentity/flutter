@@ -176,17 +176,15 @@ extension PrepUploadResponse {
     }
 }
 
-// todo rework this again
-//extension FlutterUploadRequest {
-//    func toRequest() throws -> Data {
-//        let uploadRequest = UploadRequest(
-//            images: images.compactMap { $0?.toRequest() },
-//            idInfo: idInfo?.toRequest()
-//        )
-//        let dataUrl = try LocalStorage.toZip(uploadRequest: uploadRequest)
-//        return try Data(contentsOf: dataUrl)
-//    }
-//}
+extension FlutterUploadRequest {
+    func toRequest() throws -> Data {
+        let uploadRequest = UploadRequest(
+            images: images.compactMap { $0?.toRequest() },
+            idInfo: idInfo?.toRequest()
+        )
+        return try LocalStorage.toZip(uploadRequest: uploadRequest)
+    }
+}
 
 extension FlutterUploadImageInfo {
     func toRequest() -> UploadImageInfo {
