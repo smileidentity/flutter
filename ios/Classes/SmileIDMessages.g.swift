@@ -1948,7 +1948,8 @@ class SmileIDApiCodec: FlutterStandardMessageCodec {
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol SmileIDApi {
   func initializeWithApiKey(apiKey: String, config: FlutterConfig, useSandbox: Bool, enableCrashReporting: Bool) throws
-  func initialize(config: FlutterConfig, useSandbox: Bool, enableCrashReporting: Bool) throws
+  func initializeWithConfig(config: FlutterConfig, useSandbox: Bool, enableCrashReporting: Bool) throws
+  func initialize(useSandbox: Bool) throws
   func setCallbackUrl(callbackUrl: String) throws
   func setAllowOfflineMode(allowOfflineMode: Bool) throws
   func getSubmittedJobs() throws -> [String]
@@ -2000,15 +2001,30 @@ class SmileIDApiSetup {
     } else {
       initializeWithApiKeyChannel.setMessageHandler(nil)
     }
-    let initializeChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.initialize", binaryMessenger: binaryMessenger, codec: codec)
+    let initializeWithConfigChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.initializeWithConfig", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
-      initializeChannel.setMessageHandler { message, reply in
+      initializeWithConfigChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
         let configArg = args[0] as! FlutterConfig
         let useSandboxArg = args[1] as! Bool
         let enableCrashReportingArg = args[2] as! Bool
         do {
-          try api.initialize(config: configArg, useSandbox: useSandboxArg, enableCrashReporting: enableCrashReportingArg)
+          try api.initializeWithConfig(config: configArg, useSandbox: useSandboxArg, enableCrashReporting: enableCrashReportingArg)
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      initializeWithConfigChannel.setMessageHandler(nil)
+    }
+    let initializeChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.initialize", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      initializeChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let useSandboxArg = args[0] as! Bool
+        do {
+          try api.initialize(useSandbox: useSandboxArg)
           reply(wrapResult(nil))
         } catch {
           reply(wrapError(error))

@@ -38,14 +38,7 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
     // replace with your own credentials
     SmileID.initialize(
-        config: FlutterConfig(
-            partnerId: "partnerId",
-            authToken: "authToken",
-            prodBaseUrl: "prodBaseUrl",
-            sandboxBaseUrl: "sandboxBaseUrl"
-        ),
         useSandbox: false,
-        enableCrashReporting: true
     );
   }
 
@@ -102,14 +95,7 @@ class MainContent extends StatelessWidget {
         onPressed: () {
           // replace with your own credentials
           SmileID.initialize(
-              config: FlutterConfig(
-                  partnerId: "partnerId",
-                  authToken: "authToken",
-                  prodBaseUrl: "prodBaseUrl",
-                  sandboxBaseUrl: "sandboxBaseUrl"
-              ),
               useSandbox: false,
-              enableCrashReporting: true
           );
           var userId = "<your user's user ID>";
           SmileID.api

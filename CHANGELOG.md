@@ -1,6 +1,7 @@
 # Release Notes
 
 ## 10.1.8
+* Fix API Config to provide different options to configure SmileID
 * Bump ios to 10.2.8 (https://github.com/smileidentity/ios/releases/tag/v10.2.8) In memory zip file handling
 
 ## 10.1.7

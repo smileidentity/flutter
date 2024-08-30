@@ -202,19 +202,29 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
       ) as _i3.Future<void>);
 
   @override
-  _i3.Future<void> initialize(
+  _i3.Future<void> initializeWithConfig(
     _i2.FlutterConfig? config,
     bool? useSandbox,
     bool? enableCrashReporting,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
-          #initialize,
+          #initializeWithConfig,
           [
             config,
             useSandbox,
             enableCrashReporting,
           ],
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
+
+  @override
+  _i3.Future<void> initialize(bool? useSandbox) => (super.noSuchMethod(
+        Invocation.method(
+          #initialize,
+          [useSandbox],
         ),
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),

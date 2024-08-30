@@ -17,18 +17,10 @@ void main() {
   });
 
   test("initialize call is proxied", () {
-    final FlutterConfig config = FlutterConfig(
-        partnerId: "partnerId",
-        authToken: "authToken",
-        prodBaseUrl: "prodBaseUrl",
-        sandboxBaseUrl: "sandboxBaseUrl"
-    );
     SmileID.initialize(
-        config: config,
-        useSandbox: true,
-        enableCrashReporting: true
+        useSandbox: true
     );
-    verify(SmileID.platformInterface.initialize(config, true, true));
+    verify(SmileID.platformInterface.initialize(true));
   });
 
   test("authenticate call is proxied", () {
