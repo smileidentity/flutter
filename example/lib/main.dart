@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:smile_id/smile_id_document_capture_view.dart';
+import 'package:smile_id/smile_id_smart_selfie_capture_view.dart';
 import 'package:smile_id/smileid_messages.g.dart';
 import 'package:smile_id/smile_id.dart';
 import 'package:smile_id/smile_id_biometric_kyc.dart';
@@ -38,7 +40,7 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
     // replace with your own credentials
     SmileID.initialize(
-        useSandbox: false,
+      useSandbox: false,
     );
   }
 
@@ -84,7 +86,9 @@ class MainContent extends StatelessWidget {
         enhancedDocumentVerificationButton(context),
         smartSelfieEnrollmentButton(context),
         smartSelfieAuthenticationButton(context),
-        biometricKycButton(context)
+        biometricKycButton(context),
+        selfieCaptureButton(context),
+        documentCaptureButton(context)
       ],
     )));
   }
@@ -95,7 +99,7 @@ class MainContent extends StatelessWidget {
         onPressed: () {
           // replace with your own credentials
           SmileID.initialize(
-              useSandbox: false,
+            useSandbox: false,
           );
           var userId = "<your user's user ID>";
           SmileID.api
@@ -268,6 +272,70 @@ class MainContent extends StatelessWidget {
                 Navigator.of(context).pop();
               },
             )),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget selfieCaptureButton(BuildContext context) {
+    return ElevatedButton(
+      child: const Text("Selfie Capture"),
+      onPressed: () {
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => MyScaffold(
+                body: SmileIDSmartSelfieCaptureView(
+              showConfirmation: true,
+              allowAgentMode: false,
+              showAttribution: true,
+              onSuccess: (String? result) {
+                // Your success handling logic
+                Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
+                String formattedResult = jsonEncode(jsonResult);
+                final snackBar = SnackBar(content: Text("Success: $formattedResult"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.of(context).pop();
+              },
+              onError: (String errorMessage) {
+                // Your error handling logic
+                final snackBar = SnackBar(content: Text("Error: $errorMessage"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.of(context).pop();
+              },
+            )),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget documentCaptureButton(BuildContext context) {
+    return ElevatedButton(
+      child: const Text("Document Capture"),
+      onPressed: () {
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => MyScaffold(
+                body: SmileIDDocumentCaptureView(
+                  showInstructions: true,
+                  showAttribution: true,
+                  allowGalleryUpload: false,
+                  onSuccess: (String? result) {
+                    // Your success handling logic
+                    Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
+                    String formattedResult = jsonEncode(jsonResult);
+                    final snackBar = SnackBar(content: Text("Success: $formattedResult"));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Navigator.of(context).pop();
+                  },
+                  onError: (String errorMessage) {
+                    // Your error handling logic
+                    final snackBar = SnackBar(content: Text("Error: $errorMessage"));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Navigator.of(context).pop();
+                  },
+                )),
           ),
         );
       },
