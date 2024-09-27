@@ -1,5 +1,9 @@
 # Release Notes
 
+## 10.1.10
+* Added selfie capture screens
+* Added document capture screens
+
 ## 10.1.9
 * Bump Android to 10.3.1 (https://github.com/smileidentity/android/releases/tag/v10.3.1)
 * Bump iOS to 10.2.10 (https://github.com/smileidentity/ios/releases/tag/v10.2.10)
