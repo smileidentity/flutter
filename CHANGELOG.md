@@ -1,5 +1,9 @@
 # Release Notes
 
+## 10.1.9
+* Bump Android to 10.3.1 (https://github.com/smileidentity/android/releases/tag/v10.3.1)
+* Bump iOS to 10.2.10 (https://github.com/smileidentity/ios/releases/tag/v10.2.10)
+
 ## 10.1.8
 * Fix API Config to provide different options to configure SmileID
 * Bump ios to 10.2.8 (https://github.com/smileidentity/ios/releases/tag/v10.2.8) In memory zip file handling
