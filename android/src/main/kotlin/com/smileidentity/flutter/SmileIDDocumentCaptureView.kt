@@ -17,6 +17,7 @@ import com.smileidentity.SmileID
 import com.smileidentity.compose.document.DocumentCaptureScreen
 import com.smileidentity.compose.document.DocumentCaptureSide
 import com.smileidentity.compose.theme.colorScheme
+import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
 import com.smileidentity.util.randomJobId
 import com.squareup.moshi.JsonClass
 import io.flutter.plugin.common.BinaryMessenger
@@ -25,8 +26,10 @@ import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 import java.io.File
 
-@JsonClass(generateAdapter = true)
-data class DocumentCaptureResult(val documentFile: File?)
+data class DocumentCaptureResult(
+    val documentFrontFile: File? = null,
+    val documentBackFile: File? = null
+)
 
 internal class SmileIDDocumentCaptureView private constructor(
     context: Context,
@@ -61,6 +64,8 @@ internal class SmileIDDocumentCaptureView private constructor(
         }
     }
 
+
+
     @Composable
     private fun RenderDocumentCaptureScreen(
         jobId: String, front: Boolean,
@@ -86,11 +91,33 @@ internal class SmileIDDocumentCaptureView private constructor(
             instructionsSubtitleText = stringResource(instructionSubTitle),
             captureTitleText = stringResource(captureTitleText),
             knownIdAspectRatio = idAspectRatio,
-            onConfirm = { file -> onSuccess(DocumentCaptureResult(file)) },
+            onConfirm = { file -> handleConfirmation(front,file) },
             onError = { throwable -> onError(throwable) },
             onSkip = { },
         )
     }
+
+    private fun handleConfirmation(front: Boolean,file: File) {
+        val newMoshi = SmileID.moshi.newBuilder()
+            .add(DocumentCaptureResultAdapter.FACTORY)
+            .build()
+        val result = DocumentCaptureResult(
+            documentFrontFile = if (front) file else null,
+            documentBackFile =  if (!front) file else null,
+        )
+        val json = try {
+            newMoshi
+                .adapter(DocumentCaptureResult::class.java)
+                .toJson(result)
+        } catch (e: Exception) {
+            onError(e)
+            return
+        }
+        json?.let {
+            onSuccessJson(it)
+        }
+    }
+
 
     class Factory(
         private val messenger: BinaryMessenger,

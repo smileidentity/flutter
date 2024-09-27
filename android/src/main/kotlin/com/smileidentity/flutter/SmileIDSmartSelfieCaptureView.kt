@@ -17,12 +17,14 @@ import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.smileidentity.R
 import com.smileidentity.SmileID
 import com.smileidentity.SmileIDOptIn
 import com.smileidentity.compose.components.ImageCaptureConfirmationDialog
 import com.smileidentity.compose.components.LocalMetadata
 import com.smileidentity.compose.selfie.SelfieCaptureScreen
 import com.smileidentity.compose.theme.colorScheme
+import com.smileidentity.flutter.utils.SelfieCaptureResultAdapter
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
@@ -33,7 +35,12 @@ import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
-import com.smileidentity.R
+import java.io.File
+
+data class SmartSelfieCaptureResult(
+    val selfieFile: File? = null,
+    val livenessFiles: List<File>? = null,
+)
 
 internal class SmileIDSmartSelfieCaptureView private constructor(
     context: Context,
@@ -143,10 +150,30 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
 
     @Composable
     private fun HandleProcessingState(viewModel: SelfieViewModel) {
-        viewModel.onFinished { result ->
-            when (result) {
-                is SmileIDResult.Success -> onSuccess(result.data)
-                is SmileIDResult.Error -> onError(result.throwable)
+        viewModel.onFinished { res ->
+            when (res) {
+                is SmileIDResult.Success -> {
+                    val result = SmartSelfieCaptureResult(
+                        selfieFile = res.data.selfieFile,
+                        livenessFiles = res.data.livenessFiles,
+                    )
+                    val newMoshi = SmileID.moshi.newBuilder()
+                        .add(SelfieCaptureResultAdapter.FACTORY)
+                        .build()
+                    val json = try {
+                        newMoshi
+                            .adapter(SmartSelfieCaptureResult::class.java)
+                            .toJson(result)
+                    } catch (e: Exception) {
+                        onError(e)
+                        return@onFinished
+                    }
+                    json?.let { js ->
+                        onSuccessJson(js)
+                    }
+                }
+
+                is SmileIDResult.Error -> onError(res.throwable)
             }
         }
     }
