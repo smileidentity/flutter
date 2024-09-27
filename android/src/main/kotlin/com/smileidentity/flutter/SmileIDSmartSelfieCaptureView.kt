@@ -57,37 +57,42 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
     override fun Content(args: Map<String, Any?>) {
         val colorScheme = SmileID.colorScheme.copy(background = Color.White)
         Box(
-            modifier = Modifier
-                .background(color = colorScheme.background)
-                .windowInsetsPadding(WindowInsets.statusBars)
-                .consumeWindowInsets(WindowInsets.statusBars)
-                .fillMaxSize(),
+            modifier =
+                Modifier
+                    .background(color = colorScheme.background)
+                    .windowInsetsPadding(WindowInsets.statusBars)
+                    .consumeWindowInsets(WindowInsets.statusBars)
+                    .fillMaxSize(),
         ) {
             val userId = args["userId"] as? String ?: randomUserId()
             val jobId = args["jobId"] as? String ?: randomJobId()
             val showConfirmation = args["showConfirmation"] as? Boolean ?: true
             val allowAgentMode = args["allowAgentMode"] as? Boolean ?: true
             val metadata = LocalMetadata.current
-            val viewModel: SelfieViewModel = viewModel(
-                factory = viewModelFactory {
-                    SelfieViewModel(
-                        isEnroll = false,
-                        userId = userId,
-                        jobId = jobId,
-                        allowNewEnroll = false,
-                        skipApiSubmission = true,
-                        metadata = metadata,
-                    )
-                },
-            )
+            val viewModel: SelfieViewModel =
+                viewModel(
+                    factory =
+                        viewModelFactory {
+                            SelfieViewModel(
+                                isEnroll = false,
+                                userId = userId,
+                                jobId = jobId,
+                                allowNewEnroll = false,
+                                skipApiSubmission = true,
+                                metadata = metadata,
+                            )
+                        },
+                )
             val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
 
             when {
                 uiState.processingState != null -> HandleProcessingState(viewModel)
-                uiState.selfieToConfirm != null -> HandleSelfieConfirmation(
-                    showConfirmation,
-                    uiState, viewModel,
-                )
+                uiState.selfieToConfirm != null ->
+                    HandleSelfieConfirmation(
+                        showConfirmation,
+                        uiState,
+                        viewModel,
+                    )
 
                 else -> RenderSelfieCaptureScreen(userId, jobId, allowAgentMode, viewModel)
             }
@@ -102,15 +107,17 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
         viewModel: SelfieViewModel,
     ) {
         Box(
-            modifier = Modifier
-                .background(color = Color.White)
-                .windowInsetsPadding(WindowInsets.statusBars)
-                .consumeWindowInsets(WindowInsets.statusBars)
-                .fillMaxSize(),
+            modifier =
+                Modifier
+                    .background(color = Color.White)
+                    .windowInsetsPadding(WindowInsets.statusBars)
+                    .consumeWindowInsets(WindowInsets.statusBars)
+                    .fillMaxSize(),
         ) {
             SelfieCaptureScreen(
-                modifier = Modifier
-                    .background(color = Color.White),
+                modifier =
+                    Modifier
+                        .background(color = Color.White),
                 userId = userId,
                 jobId = jobId,
                 allowAgentMode = allowAgentMode ?: true,
@@ -130,16 +137,27 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
         if (showConfirmation) {
             ImageCaptureConfirmationDialog(
                 titleText = stringResource(R.string.si_smart_selfie_confirmation_dialog_title),
-                subtitleText = stringResource(R.string.si_smart_selfie_confirmation_dialog_subtitle),
-                painter = BitmapPainter(
-                    BitmapFactory.decodeFile(uiState.selfieToConfirm!!.absolutePath)
-                        .asImageBitmap(),
-                ),
-                confirmButtonText = stringResource(R.string.si_smart_selfie_confirmation_dialog_confirm_button),
+                subtitleText =
+                    stringResource(
+                        R.string.si_smart_selfie_confirmation_dialog_subtitle,
+                    ),
+                painter =
+                    BitmapPainter(
+                        BitmapFactory
+                            .decodeFile(uiState.selfieToConfirm!!.absolutePath)
+                            .asImageBitmap(),
+                    ),
+                confirmButtonText =
+                    stringResource(
+                        R.string.si_smart_selfie_confirmation_dialog_confirm_button,
+                    ),
                 onConfirm = {
                     viewModel.submitJob()
                 },
-                retakeButtonText = stringResource(R.string.si_smart_selfie_confirmation_dialog_retake_button),
+                retakeButtonText =
+                    stringResource(
+                        R.string.si_smart_selfie_confirmation_dialog_retake_button,
+                    ),
                 onRetake = viewModel::onSelfieRejected,
                 scaleFactor = 1.25f,
             )
@@ -153,21 +171,25 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
         viewModel.onFinished { res ->
             when (res) {
                 is SmileIDResult.Success -> {
-                    val result = SmartSelfieCaptureResult(
-                        selfieFile = res.data.selfieFile,
-                        livenessFiles = res.data.livenessFiles,
-                    )
-                    val newMoshi = SmileID.moshi.newBuilder()
-                        .add(SelfieCaptureResultAdapter.FACTORY)
-                        .build()
-                    val json = try {
-                        newMoshi
-                            .adapter(SmartSelfieCaptureResult::class.java)
-                            .toJson(result)
-                    } catch (e: Exception) {
-                        onError(e)
-                        return@onFinished
-                    }
+                    val result =
+                        SmartSelfieCaptureResult(
+                            selfieFile = res.data.selfieFile,
+                            livenessFiles = res.data.livenessFiles,
+                        )
+                    val newMoshi =
+                        SmileID.moshi
+                            .newBuilder()
+                            .add(SelfieCaptureResultAdapter.FACTORY)
+                            .build()
+                    val json =
+                        try {
+                            newMoshi
+                                .adapter(SmartSelfieCaptureResult::class.java)
+                                .toJson(result)
+                        } catch (e: Exception) {
+                            onError(e)
+                            return@onFinished
+                        }
                     json?.let { js ->
                         onSuccessJson(js)
                     }

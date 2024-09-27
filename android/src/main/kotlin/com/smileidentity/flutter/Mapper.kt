@@ -102,13 +102,15 @@ import com.smileidentity.models.v2.JobType as JobTypeV2
  *  The fix is these two helper functions to convert maps to nullable types, and vice versa
  */
 fun convertNullableMapToNonNull(map: Map<String?, String?>?): Map<String, String> =
-    map?.filterKeys { it != null }
+    map
+        ?.filterKeys { it != null }
         ?.filterValues { it != null }
         ?.mapKeys { it.key!! }
         ?.mapValues { it.value!! } ?: mapOf()
 
 fun convertNonNullMapToNullable(map: Map<String, String>): Map<String?, String?> =
-    map.mapKeys { it.key }
+    map
+        .mapKeys { it.key }
         .mapValues { it.value }
 
 fun FlutterJobType.toRequest() =
@@ -577,19 +579,24 @@ fun HostedWeb.toResponse() =
     FlutterHostedWeb(
         basicKyc = basicKyc.groupBy { it.countryCode }.mapValues { it.value.first().toResponse() },
         biometricKyc =
-            biometricKyc.groupBy { it.countryCode }
+            biometricKyc
+                .groupBy { it.countryCode }
                 .mapValues { it.value.first().toResponse() },
         enhancedKyc =
-            enhancedKyc.groupBy { it.countryCode }
+            enhancedKyc
+                .groupBy { it.countryCode }
                 .mapValues { it.value.first().toResponse() },
         documentVerification =
-            docVerification.groupBy { it.countryCode }
+            docVerification
+                .groupBy { it.countryCode }
                 .mapValues { it.value.first().toResponse() },
         enhancedKycSmartSelfie =
-            enhancedKycSmartSelfie.groupBy { it.countryCode }
+            enhancedKycSmartSelfie
+                .groupBy { it.countryCode }
                 .mapValues { it.value.first().toResponse() },
         enhancedDocumentVerification =
-            enhancedDocumentVerification.groupBy { it.countryCode }
+            enhancedDocumentVerification
+                .groupBy { it.countryCode }
                 .mapValues { it.value.first().toResponse() },
     )
 

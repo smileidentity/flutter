@@ -81,7 +81,6 @@ internal abstract class SmileComposablePlatformView(
         methodChannel.invokeMethod("onSuccess", json)
     }
 
-
     /**
      * Delivers a successful result back to Flutter as JSON. It is the flutter code's responsibility
      * to parse this JSON string into the appropriate object

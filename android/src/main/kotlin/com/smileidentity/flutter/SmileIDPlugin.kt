@@ -45,7 +45,10 @@ import java.net.URL
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
-class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
+class SmileIDPlugin :
+    FlutterPlugin,
+    SmileIDApi,
+    ActivityAware {
     private var activity: Activity? = null
     private lateinit var appContext: Context
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
@@ -221,25 +224,26 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         callback: (Result<FlutterSmartSelfieResponse>) -> Unit,
     ) = launch(
         work = {
-            SmileID.api.doSmartSelfieEnrollment(
-                userId = userId,
-                selfieImage =
-                    File(selfieImage).asFormDataPart(
-                        partName = "selfie_image",
-                        mediaType = "image/jpeg",
-                    ),
-                livenessImages =
-                    livenessImages.map {
+            SmileID.api
+                .doSmartSelfieEnrollment(
+                    userId = userId,
+                    selfieImage =
                         File(selfieImage).asFormDataPart(
-                            partName = "liveness_images",
+                            partName = "selfie_image",
                             mediaType = "image/jpeg",
-                        )
-                    },
-                partnerParams = convertNullableMapToNonNull(partnerParams),
-                callbackUrl = callbackUrl,
-                sandboxResult = sandboxResult?.toInt(),
-                allowNewEnroll = allowNewEnroll,
-            ).toResponse()
+                        ),
+                    livenessImages =
+                        livenessImages.map {
+                            File(selfieImage).asFormDataPart(
+                                partName = "liveness_images",
+                                mediaType = "image/jpeg",
+                            )
+                        },
+                    partnerParams = convertNullableMapToNonNull(partnerParams),
+                    callbackUrl = callbackUrl,
+                    sandboxResult = sandboxResult?.toInt(),
+                    allowNewEnroll = allowNewEnroll,
+                ).toResponse()
         },
         callback = callback,
     )
@@ -257,24 +261,25 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         callback: (Result<FlutterSmartSelfieResponse>) -> Unit,
     ) = launch(
         work = {
-            SmileID.api.doSmartSelfieAuthentication(
-                userId = userId,
-                selfieImage =
-                    File(selfieImage).asFormDataPart(
-                        partName = "selfie_image",
-                        mediaType = "image/jpeg",
-                    ),
-                livenessImages =
-                    livenessImages.map {
+            SmileID.api
+                .doSmartSelfieAuthentication(
+                    userId = userId,
+                    selfieImage =
                         File(selfieImage).asFormDataPart(
-                            partName = "liveness_images",
+                            partName = "selfie_image",
                             mediaType = "image/jpeg",
-                        )
-                    },
-                partnerParams = convertNullableMapToNonNull(partnerParams),
-                callbackUrl = callbackUrl,
-                sandboxResult = sandboxResult?.toInt(),
-            ).toResponse()
+                        ),
+                    livenessImages =
+                        livenessImages.map {
+                            File(selfieImage).asFormDataPart(
+                                partName = "liveness_images",
+                                mediaType = "image/jpeg",
+                            )
+                        },
+                    partnerParams = convertNullableMapToNonNull(partnerParams),
+                    callbackUrl = callbackUrl,
+                    sandboxResult = sandboxResult?.toInt(),
+                ).toResponse()
         },
         callback = callback,
     )
@@ -405,8 +410,8 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         interval: Long,
         numAttempts: Long,
         transform: (ResponseType) -> FlutterResponseType,
-    ): FlutterResponseType {
-        return try {
+    ): FlutterResponseType =
+        try {
             val response =
                 withContext(Dispatchers.IO) {
                     apiCall(request, interval.milliseconds, numAttempts.toInt())
@@ -417,7 +422,6 @@ class SmileIDPlugin : FlutterPlugin, SmileIDApi, ActivityAware {
         } catch (e: Exception) {
             throw e
         }
-    }
 
     /**
      * https://stackoverflow.com/a/62206235

@@ -19,7 +19,6 @@ import com.smileidentity.compose.document.DocumentCaptureSide
 import com.smileidentity.compose.theme.colorScheme
 import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
 import com.smileidentity.util.randomJobId
-import com.squareup.moshi.JsonClass
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
@@ -28,7 +27,7 @@ import java.io.File
 
 data class DocumentCaptureResult(
     val documentFrontFile: File? = null,
-    val documentBackFile: File? = null
+    val documentBackFile: File? = null,
 )
 
 internal class SmileIDDocumentCaptureView private constructor(
@@ -45,11 +44,12 @@ internal class SmileIDDocumentCaptureView private constructor(
     override fun Content(args: Map<String, Any?>) {
         val colorScheme = SmileID.colorScheme.copy(background = Color.White)
         Box(
-            modifier = Modifier
-                .background(color = colorScheme.background)
-                .windowInsetsPadding(WindowInsets.statusBars)
-                .consumeWindowInsets(WindowInsets.statusBars)
-                .fillMaxSize(),
+            modifier =
+                Modifier
+                    .background(color = colorScheme.background)
+                    .windowInsetsPadding(WindowInsets.statusBars)
+                    .consumeWindowInsets(WindowInsets.statusBars)
+                    .fillMaxSize(),
         ) {
             val jobId = args["jobId"] as? String ?: randomJobId()
             val front = args["front"] as? Boolean ?: true
@@ -58,27 +58,44 @@ internal class SmileIDDocumentCaptureView private constructor(
             val allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false
             val idAspectRatio = (args["idAspectRatio"] as Double?)?.toFloat()
             RenderDocumentCaptureScreen(
-                jobId, front, showInstructions,
-                showAttribution, allowGalleryUpload, idAspectRatio,
+                jobId,
+                front,
+                showInstructions,
+                showAttribution,
+                allowGalleryUpload,
+                idAspectRatio,
             )
         }
     }
 
-
-
     @Composable
     private fun RenderDocumentCaptureScreen(
-        jobId: String, front: Boolean,
-        showInstructions: Boolean, showAttribution: Boolean,
-        allowGalleryUpload: Boolean, idAspectRatio: Float?,
+        jobId: String,
+        front: Boolean,
+        showInstructions: Boolean,
+        showAttribution: Boolean,
+        allowGalleryUpload: Boolean,
+        idAspectRatio: Float?,
     ) {
         val hero = if (front) R.drawable.si_doc_v_front_hero else R.drawable.si_doc_v_back_hero
-        val instructionTitle = if (front) R.string.si_doc_v_instruction_title else
-            R.string.si_doc_v_instruction_back_title
-        val instructionSubTitle = if (front) R.string.si_verify_identity_instruction_subtitle else
-            R.string.si_doc_v_instruction_back_subtitle
-        val captureTitleText = if (front) R.string.si_doc_v_capture_instructions_front_title else
-            R.string.si_doc_v_capture_instructions_back_title
+        val instructionTitle =
+            if (front) {
+                R.string.si_doc_v_instruction_title
+            } else {
+                R.string.si_doc_v_instruction_back_title
+            }
+        val instructionSubTitle =
+            if (front) {
+                R.string.si_verify_identity_instruction_subtitle
+            } else {
+                R.string.si_doc_v_instruction_back_subtitle
+            }
+        val captureTitleText =
+            if (front) {
+                R.string.si_doc_v_capture_instructions_front_title
+            } else {
+                R.string.si_doc_v_capture_instructions_back_title
+            }
         DocumentCaptureScreen(
             jobId = jobId,
             side = if (front) DocumentCaptureSide.Front else DocumentCaptureSide.Back,
@@ -91,33 +108,39 @@ internal class SmileIDDocumentCaptureView private constructor(
             instructionsSubtitleText = stringResource(instructionSubTitle),
             captureTitleText = stringResource(captureTitleText),
             knownIdAspectRatio = idAspectRatio,
-            onConfirm = { file -> handleConfirmation(front,file) },
+            onConfirm = { file -> handleConfirmation(front, file) },
             onError = { throwable -> onError(throwable) },
             onSkip = { },
         )
     }
 
-    private fun handleConfirmation(front: Boolean,file: File) {
-        val newMoshi = SmileID.moshi.newBuilder()
-            .add(DocumentCaptureResultAdapter.FACTORY)
-            .build()
-        val result = DocumentCaptureResult(
-            documentFrontFile = if (front) file else null,
-            documentBackFile =  if (!front) file else null,
-        )
-        val json = try {
-            newMoshi
-                .adapter(DocumentCaptureResult::class.java)
-                .toJson(result)
-        } catch (e: Exception) {
-            onError(e)
-            return
-        }
+    private fun handleConfirmation(
+        front: Boolean,
+        file: File,
+    ) {
+        val newMoshi =
+            SmileID.moshi
+                .newBuilder()
+                .add(DocumentCaptureResultAdapter.FACTORY)
+                .build()
+        val result =
+            DocumentCaptureResult(
+                documentFrontFile = if (front) file else null,
+                documentBackFile = if (!front) file else null,
+            )
+        val json =
+            try {
+                newMoshi
+                    .adapter(DocumentCaptureResult::class.java)
+                    .toJson(result)
+            } catch (e: Exception) {
+                onError(e)
+                return
+            }
         json?.let {
             onSuccessJson(it)
         }
     }
-
 
     class Factory(
         private val messenger: BinaryMessenger,

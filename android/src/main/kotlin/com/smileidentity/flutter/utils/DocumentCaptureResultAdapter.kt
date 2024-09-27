@@ -10,7 +10,6 @@ import java.io.File
 import java.lang.reflect.Type
 
 class DocumentCaptureResultAdapter : JsonAdapter<DocumentCaptureResult>() {
-
     @FromJson
     override fun fromJson(reader: JsonReader): DocumentCaptureResult {
         reader.beginObject()
@@ -28,7 +27,10 @@ class DocumentCaptureResultAdapter : JsonAdapter<DocumentCaptureResult>() {
     }
 
     @ToJson
-    override fun toJson(writer: JsonWriter, value: DocumentCaptureResult?) {
+    override fun toJson(
+        writer: JsonWriter,
+        value: DocumentCaptureResult?,
+    ) {
         if (value == null) {
             writer.nullValue()
             return
@@ -40,14 +42,20 @@ class DocumentCaptureResultAdapter : JsonAdapter<DocumentCaptureResult>() {
     }
 
     companion object {
-        val FACTORY = object : Factory {
-            override fun create(
-                type: Type,
-                annotations: Set<Annotation>,
-                moshi: Moshi
-            ): JsonAdapter<*>? {
-                return if (type == DocumentCaptureResult::class.java) DocumentCaptureResultAdapter() else null
+        val FACTORY =
+            object : Factory {
+                override fun create(
+                    type: Type,
+                    annotations: Set<Annotation>,
+                    moshi: Moshi,
+                ): JsonAdapter<*>? =
+                    if (type ==
+                        DocumentCaptureResult::class.java
+                    ) {
+                        DocumentCaptureResultAdapter()
+                    } else {
+                        null
+                    }
             }
-        }
     }
 }
