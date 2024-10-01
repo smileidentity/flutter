@@ -80,12 +80,12 @@ struct SmileIDRootView: View {
                         retakeButtonText: SmileIDResourcesHelper.localizedString(for: "Confirmation.Retake"),
                         onRetake: viewModel.onSelfieRejected,
                         scaleFactor: 1.25
-                    )
+                    ).preferredColorScheme(.light)
                 } else {
                     SelfieCaptureScreen(
                         allowAgentMode: allowAgentMode,
                         viewModel: viewModel
-                    )
+                    ).preferredColorScheme(.light)
                 }
             }
         }

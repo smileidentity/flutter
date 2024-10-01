@@ -86,7 +86,7 @@ struct SmileIDDocumentRootView: View {
                 onConfirm: onConfirmed,
                 onError: didError,
                 onSkip: onSkip
-            )
+            ).preferredColorScheme(.light)
         }.environmentObject(localMetadata)
     }
     
