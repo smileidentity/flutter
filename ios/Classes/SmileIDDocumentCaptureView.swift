@@ -15,30 +15,29 @@ class SmileIDDocumentCaptureView: NSObject, FlutterPlatformView {
         arguments args: [String: Any?],
         binaryMessenger messenger: FlutterBinaryMessenger
     ) {
-
-        let front = args["front"] as? Bool ?? true
-        let jobId = args["jobId"] as? String ?? "job-\(UUID().uuidString)"
-        let showConfirmation = args["showConfirmation"] as? Bool ?? true
+        let jobId = generateJobId()
+        let isDocumentFrontSide = args["isDocumentFrontSide"] as? Bool ?? true
         let showInstructions = args["showInstructions"] as? Bool ?? true
         let showAttribution = args["showAttribution"] as? Bool ?? true
         let allowGalleryUpload = args["allowGalleryUpload"] as? Bool ?? false
         let idAspectRatio = args["idAspectRatio"] as? Double
-        
-        
+        let showConfirmationDialog = args["showConfirmationDialog"] as? Bool ?? true
+
         self._channel = FlutterMethodChannel(
             name: "\(SmileIDDocumentCaptureView.VIEW_TYPE_ID)_\(viewId)",
             binaryMessenger: messenger
         )
         
         let rootView = SmileIDDocumentRootView(
-            showConfirmation:showConfirmation,
-            front: front,
+            showConfirmationDialog:showConfirmationDialog,
+            isDocumentFrontSide: isDocumentFrontSide,
             showInstructions: showInstructions,
             showAttribution: showAttribution,
             jobId: jobId,
             idAspectRatio: idAspectRatio,
             allowGalleryUpload: allowGalleryUpload,
-            channel: _channel)
+            channel: _channel
+        )
         self._childViewController = UIHostingController(rootView: AnyView(rootView))
         
         super.init()
@@ -57,8 +56,8 @@ class SmileIDDocumentCaptureView: NSObject, FlutterPlatformView {
 }
 
 struct SmileIDDocumentRootView: View {
-    let showConfirmation: Bool
-    let front: Bool
+    let showConfirmationDialog: Bool
+    let isDocumentFrontSide: Bool
     let showInstructions: Bool
     let showAttribution: Bool
     let jobId: String
@@ -70,17 +69,17 @@ struct SmileIDDocumentRootView: View {
     var body: some View {
         NavigationView {
             DocumentCaptureScreen(
-                side: front ? .front : .back,
+                side: isDocumentFrontSide ? .front : .back,
                 showInstructions: showInstructions,
                 showAttribution: showAttribution,
                 allowGallerySelection: allowGalleryUpload,
                 showSkipButton: false,
-                instructionsHeroImage: front ? SmileIDResourcesHelper.DocVFrontHero : SmileIDResourcesHelper.DocVBackHero,
+                instructionsHeroImage: isDocumentFrontSide ? SmileIDResourcesHelper.DocVFrontHero : SmileIDResourcesHelper.DocVBackHero,
                 instructionsTitleText: SmileIDResourcesHelper.localizedString(
-                    for: front ? "Instructions.Document.Front.Header": "Instructions.Document.Back.Header"
+                    for: isDocumentFrontSide ? "Instructions.Document.Front.Header": "Instructions.Document.Back.Header"
                 ),
                 instructionsSubtitleText: SmileIDResourcesHelper.localizedString(
-                    for: front ? "Instructions.Document.Front.Callout": "Instructions.Document.Back.Callout"
+                    for: isDocumentFrontSide ? "Instructions.Document.Front.Callout": "Instructions.Document.Back.Callout"
                 ),
                 captureTitleText: SmileIDResourcesHelper.localizedString(for: "Action.TakePhoto"),
                 knownIdAspectRatio: idAspectRatio,
@@ -96,11 +95,11 @@ struct SmileIDDocumentRootView: View {
             // Attempt to create the document file
             let url = try LocalStorage.createDocumentFile(
                 jobId:jobId,
-                fileType: front ? FileType.documentFront : FileType.documentBack,
+                fileType: isDocumentFrontSide ? FileType.documentFront : FileType.documentBack,
                 document: data
             )
             
-            let documentKey = front ? "documentFrontImage" : "documentBackImage"
+            let documentKey = isDocumentFrontSide ? "documentFrontImage" : "documentBackImage"
             let arguments: [String: Any] = [
                 documentKey: url.absoluteString
             ]

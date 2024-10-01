@@ -16,14 +16,14 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView {
         arguments args: [String: Any?],
         binaryMessenger messenger: FlutterBinaryMessenger
     ) {
-        let allowNewEnroll = args["allowNewEnroll"] as? Bool ?? false
-        let showConfirmation = args["showConfirmation"] as? Bool ?? false
+        let showConfirmationDialog = args["showConfirmationDialog"] as? Bool ?? true
+        let allowAgentMode = args["allowAgentMode"] as? Bool ?? true
         
         self._viewModel = SelfieViewModel(
             isEnroll: false,
-            userId: args["userId"] as? String ?? "user-\(UUID().uuidString)",
-            jobId: args["jobId"] as? String ?? "job-\(UUID().uuidString)",
-            allowNewEnroll: allowNewEnroll,
+            userId: generateUserId(),
+            jobId: generateJobId(),
+            allowNewEnroll: false,
             skipApiSubmission: true,
             extraPartnerParams: [:],
             localMetadata: LocalMetadata()
@@ -34,7 +34,12 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView {
             binaryMessenger: messenger
         )
         
-        let rootView = SmileIDRootView(viewModel: _viewModel, allowNewEnroll: allowNewEnroll, showConfirmation: showConfirmation, channel: _channel)
+        let rootView = SmileIDRootView(
+            viewModel: _viewModel,
+            showConfirmationDialog: showConfirmationDialog,
+            allowAgentMode: allowAgentMode,
+            channel: _channel
+        )
         self._childViewController = UIHostingController(rootView: AnyView(rootView))
         
         super.init()
@@ -54,8 +59,8 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView {
 
 struct SmileIDRootView: View {
     @ObservedObject var viewModel: SelfieViewModel
-    let allowNewEnroll: Bool
-    let showConfirmation: Bool
+    let showConfirmationDialog: Bool
+    let allowAgentMode: Bool
     let channel: FlutterMethodChannel
     
     var body: some View {
@@ -65,7 +70,7 @@ struct SmileIDRootView: View {
                     Color.clear.onAppear {
                         self.viewModel.onFinished(callback: self)
                     }
-                } else if let selfieToConfirm = viewModel.selfieToConfirm, showConfirmation {
+                } else if let selfieToConfirm = viewModel.selfieToConfirm, showConfirmationDialog {
                     ImageCaptureConfirmationDialog(
                         title: SmileIDResourcesHelper.localizedString(for: "Confirmation.GoodSelfie"),
                         subtitle: SmileIDResourcesHelper.localizedString(for: "Confirmation.FaceClear"),
@@ -78,7 +83,7 @@ struct SmileIDRootView: View {
                     )
                 } else {
                     SelfieCaptureScreen(
-                        allowAgentMode: allowNewEnroll,
+                        allowAgentMode: allowAgentMode,
                         viewModel: viewModel
                     )
                 }
