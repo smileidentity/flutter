@@ -36,6 +36,16 @@ import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 import java.io.File
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import com.smileidentity.compose.theme.colorScheme
+import com.smileidentity.compose.theme.typography
+import androidx.compose.material3.Typography
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.toMutableStateList
+import com.smileidentity.models.v2.Metadata
 
 data class SmartSelfieCaptureResult(
     val selfieFile: File? = null,
@@ -55,46 +65,47 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
     @OptIn(SmileIDOptIn::class)
     @Composable
     override fun Content(args: Map<String, Any?>) {
-        val colorScheme = SmileID.colorScheme.copy(background = Color.White)
-        Box(
-            modifier =
-                Modifier
-                    .background(color = colorScheme.background)
-                    .windowInsetsPadding(WindowInsets.statusBars)
-                    .consumeWindowInsets(WindowInsets.statusBars)
-                    .fillMaxSize(),
+        CompositionLocalProvider(
+            LocalMetadata provides remember { Metadata.default().items.toMutableStateList() },
         ) {
-            val userId = args["userId"] as? String ?: randomUserId()
-            val jobId = args["jobId"] as? String ?: randomJobId()
-            val showConfirmation = args["showConfirmation"] as? Boolean ?: true
-            val allowAgentMode = args["allowAgentMode"] as? Boolean ?: true
-            val metadata = LocalMetadata.current
-            val viewModel: SelfieViewModel =
-                viewModel(
-                    factory =
-                        viewModelFactory {
-                            SelfieViewModel(
-                                isEnroll = false,
-                                userId = userId,
-                                jobId = jobId,
-                                allowNewEnroll = false,
-                                skipApiSubmission = true,
-                                metadata = metadata,
+            MaterialTheme(
+                colorScheme = SmileID.colorScheme,
+                typography = SmileID.typography
+            ) {
+                Surface{
+                    val userId = randomUserId()
+                    val jobId = randomJobId()
+                    val showConfirmationDialog = args["showConfirmationDialog"] as? Boolean ?: true
+                    val allowAgentMode = args["allowAgentMode"] as? Boolean ?: true
+                    val metadata = LocalMetadata.current
+                    val viewModel: SelfieViewModel =
+                        viewModel(
+                            factory =
+                            viewModelFactory {
+                                SelfieViewModel(
+                                    isEnroll = false,
+                                    userId = userId,
+                                    jobId = jobId,
+                                    allowNewEnroll = false,
+                                    skipApiSubmission = true,
+                                    metadata = metadata,
+                                )
+                            },
+                        )
+                    val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
+
+                    when {
+                        uiState.processingState != null -> HandleProcessingState(viewModel)
+                        uiState.selfieToConfirm != null ->
+                            HandleSelfieConfirmation(
+                                showConfirmationDialog,
+                                uiState,
+                                viewModel,
                             )
-                        },
-                )
-            val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
 
-            when {
-                uiState.processingState != null -> HandleProcessingState(viewModel)
-                uiState.selfieToConfirm != null ->
-                    HandleSelfieConfirmation(
-                        showConfirmation,
-                        uiState,
-                        viewModel,
-                    )
-
-                else -> RenderSelfieCaptureScreen(userId, jobId, allowAgentMode, viewModel)
+                        else -> RenderSelfieCaptureScreen(userId, jobId, allowAgentMode, viewModel)
+                    }
+                }
             }
         }
     }
@@ -130,11 +141,11 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
 
     @Composable
     private fun HandleSelfieConfirmation(
-        showConfirmation: Boolean,
+        showConfirmationDialog: Boolean,
         uiState: SelfieUiState,
         viewModel: SelfieViewModel,
     ) {
-        if (showConfirmation) {
+        if (showConfirmationDialog) {
             ImageCaptureConfirmationDialog(
                 titleText = stringResource(R.string.si_smart_selfie_confirmation_dialog_title),
                 subtitleText =

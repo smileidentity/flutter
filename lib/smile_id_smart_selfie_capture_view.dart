@@ -8,7 +8,7 @@ class SmileIDSmartSelfieCaptureView extends StatelessWidget {
   static const String viewType = "SmileIDSmartSelfieCaptureView";
   final Map<String, dynamic> creationParams;
 
-  /// Called when the user successfully completes the smart selfie enrollment flow. The result is a
+  /// Called when the user successfully completes the selfie capture flow. The result is a
   /// JSON string.
   final Function(String) onSuccess;
   final Function(String) onError;
@@ -21,11 +21,7 @@ class SmileIDSmartSelfieCaptureView extends StatelessWidget {
 
   factory SmileIDSmartSelfieCaptureView({
     Key? key,
-    // userId and jobId can't actually be null in the native SDK but we delegate their creation to
-    // the native platform code, since that's where the random ID creation happens
-    String? userId,
-    String? jobId,
-    bool showConfirmation = false,
+    bool showConfirmationDialog = false,
     bool allowAgentMode = false,
     bool showAttribution = true,
     Map<String, String>? extraPartnerParams,
@@ -36,9 +32,7 @@ class SmileIDSmartSelfieCaptureView extends StatelessWidget {
       onSuccess: onSuccess,
       onError: onError,
       creationParams: {
-        "userId": userId,
-        "jobId": jobId,
-        "showConfirmation": showConfirmation,
+        "showConfirmationDialog": showConfirmationDialog,
         "allowAgentMode": allowAgentMode,
         "showAttribution": showAttribution,
       },
