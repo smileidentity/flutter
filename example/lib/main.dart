@@ -318,6 +318,7 @@ class MainContent extends StatelessWidget {
           MaterialPageRoute<void>(
             builder: (BuildContext context) => MyScaffold(
                 body: SmileIDDocumentCaptureView(
+                  isDocumentFrontSide: false,
                   showInstructions: true,
                   showAttribution: true,
                   allowGalleryUpload: false,

@@ -1,23 +1,24 @@
 package com.smileidentity.flutter
 
 import android.content.Context
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.smileidentity.R
 import com.smileidentity.SmileID
+import com.smileidentity.compose.components.LocalMetadata
 import com.smileidentity.compose.document.DocumentCaptureScreen
 import com.smileidentity.compose.document.DocumentCaptureSide
 import com.smileidentity.compose.theme.colorScheme
+import com.smileidentity.compose.theme.typography
 import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
+import com.smileidentity.models.v2.Metadata
 import com.smileidentity.util.randomJobId
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.StandardMessageCodec
@@ -42,63 +43,72 @@ internal class SmileIDDocumentCaptureView private constructor(
 
     @Composable
     override fun Content(args: Map<String, Any?>) {
-        val colorScheme = SmileID.colorScheme.copy(background = Color.White)
-        Box(
-            modifier =
-                Modifier
-                    .background(color = colorScheme.background)
-                    .windowInsetsPadding(WindowInsets.statusBars)
-                    .consumeWindowInsets(WindowInsets.statusBars)
-                    .fillMaxSize(),
+        CompositionLocalProvider(
+            LocalMetadata provides remember { Metadata.default().items.toMutableStateList() },
         ) {
-            val jobId = args["jobId"] as? String ?: randomJobId()
-            val front = args["front"] as? Boolean ?: true
-            val showInstructions = args["showInstructions"] as? Boolean ?: true
-            val showAttribution = args["showAttribution"] as? Boolean ?: true
-            val allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false
-            val idAspectRatio = (args["idAspectRatio"] as Double?)?.toFloat()
-            RenderDocumentCaptureScreen(
-                jobId,
-                front,
-                showInstructions,
-                showAttribution,
-                allowGalleryUpload,
-                idAspectRatio,
-            )
+            MaterialTheme(
+                colorScheme = SmileID.colorScheme,
+                typography = SmileID.typography,
+            ) {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                ) {
+                    val jobId = randomJobId()
+                    val isDocumentFrontSide = args["isDocumentFrontSide"] as? Boolean ?: true
+                    val showInstructions = args["showInstructions"] as? Boolean ?: true
+                    val showAttribution = args["showAttribution"] as? Boolean ?: true
+                    val allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false
+                    val idAspectRatio = (args["idAspectRatio"] as Double?)?.toFloat()
+                    RenderDocumentCaptureScreen(
+                        jobId = jobId,
+                        isDocumentFrontSide = isDocumentFrontSide,
+                        showInstructions = showInstructions,
+                        showAttribution = showAttribution,
+                        allowGalleryUpload = allowGalleryUpload,
+                        idAspectRatio = idAspectRatio,
+                    )
+                }
+            }
         }
     }
 
     @Composable
     private fun RenderDocumentCaptureScreen(
         jobId: String,
-        front: Boolean,
+        isDocumentFrontSide: Boolean,
         showInstructions: Boolean,
         showAttribution: Boolean,
         allowGalleryUpload: Boolean,
         idAspectRatio: Float?,
     ) {
-        val hero = if (front) R.drawable.si_doc_v_front_hero else R.drawable.si_doc_v_back_hero
+        val hero =
+            if (isDocumentFrontSide) {
+                R.drawable.si_doc_v_front_hero
+            } else {
+                R.drawable.si_doc_v_back_hero
+            }
         val instructionTitle =
-            if (front) {
+            if (isDocumentFrontSide) {
                 R.string.si_doc_v_instruction_title
             } else {
                 R.string.si_doc_v_instruction_back_title
             }
         val instructionSubTitle =
-            if (front) {
+            if (isDocumentFrontSide) {
                 R.string.si_verify_identity_instruction_subtitle
             } else {
                 R.string.si_doc_v_instruction_back_subtitle
             }
         val captureTitleText =
-            if (front) {
+            if (isDocumentFrontSide) {
                 R.string.si_doc_v_capture_instructions_front_title
             } else {
                 R.string.si_doc_v_capture_instructions_back_title
             }
         DocumentCaptureScreen(
+            modifier = Modifier.fillMaxSize(),
             jobId = jobId,
-            side = if (front) DocumentCaptureSide.Front else DocumentCaptureSide.Back,
+            side = if (isDocumentFrontSide) DocumentCaptureSide.Front else DocumentCaptureSide.Back,
             showInstructions = showInstructions,
             showAttribution = showAttribution,
             allowGallerySelection = allowGalleryUpload,
@@ -108,29 +118,29 @@ internal class SmileIDDocumentCaptureView private constructor(
             instructionsSubtitleText = stringResource(instructionSubTitle),
             captureTitleText = stringResource(captureTitleText),
             knownIdAspectRatio = idAspectRatio,
-            onConfirm = { file -> handleConfirmation(front, file) },
+            onConfirm = { file -> handleConfirmation(isDocumentFrontSide, file) },
             onError = { throwable -> onError(throwable) },
             onSkip = { },
         )
     }
 
     private fun handleConfirmation(
-        front: Boolean,
+        isDocumentFrontSide: Boolean,
         file: File,
     ) {
-        val newMoshi =
+        val moshi =
             SmileID.moshi
                 .newBuilder()
                 .add(DocumentCaptureResultAdapter.FACTORY)
                 .build()
         val result =
             DocumentCaptureResult(
-                documentFrontFile = if (front) file else null,
-                documentBackFile = if (!front) file else null,
+                documentFrontFile = if (isDocumentFrontSide) file else null,
+                documentBackFile = if (!isDocumentFrontSide) file else null,
             )
         val json =
             try {
-                newMoshi
+                moshi
                     .adapter(DocumentCaptureResult::class.java)
                     .toJson(result)
             } catch (e: Exception) {

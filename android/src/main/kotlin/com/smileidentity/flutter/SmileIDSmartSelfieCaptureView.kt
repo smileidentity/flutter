@@ -2,16 +2,14 @@ package com.smileidentity.flutter
 
 import android.content.Context
 import android.graphics.BitmapFactory
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.res.stringResource
@@ -24,7 +22,9 @@ import com.smileidentity.compose.components.ImageCaptureConfirmationDialog
 import com.smileidentity.compose.components.LocalMetadata
 import com.smileidentity.compose.selfie.SelfieCaptureScreen
 import com.smileidentity.compose.theme.colorScheme
+import com.smileidentity.compose.theme.typography
 import com.smileidentity.flutter.utils.SelfieCaptureResultAdapter
+import com.smileidentity.models.v2.Metadata
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
@@ -36,16 +36,6 @@ import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 import java.io.File
-import androidx.compose.material3.ColorScheme
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import com.smileidentity.compose.theme.colorScheme
-import com.smileidentity.compose.theme.typography
-import androidx.compose.material3.Typography
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.toMutableStateList
-import com.smileidentity.models.v2.Metadata
 
 data class SmartSelfieCaptureResult(
     val selfieFile: File? = null,
@@ -70,9 +60,11 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
         ) {
             MaterialTheme(
                 colorScheme = SmileID.colorScheme,
-                typography = SmileID.typography
+                typography = SmileID.typography,
             ) {
-                Surface{
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                ) {
                     val userId = randomUserId()
                     val jobId = randomJobId()
                     val showConfirmationDialog = args["showConfirmationDialog"] as? Boolean ?: true
@@ -81,29 +73,38 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                     val viewModel: SelfieViewModel =
                         viewModel(
                             factory =
-                            viewModelFactory {
-                                SelfieViewModel(
-                                    isEnroll = false,
-                                    userId = userId,
-                                    jobId = jobId,
-                                    allowNewEnroll = false,
-                                    skipApiSubmission = true,
-                                    metadata = metadata,
-                                )
-                            },
+                                viewModelFactory {
+                                    SelfieViewModel(
+                                        isEnroll = false,
+                                        userId = userId,
+                                        jobId = jobId,
+                                        allowNewEnroll = false,
+                                        skipApiSubmission = true,
+                                        metadata = metadata,
+                                    )
+                                },
                         )
                     val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
 
                     when {
-                        uiState.processingState != null -> HandleProcessingState(viewModel)
+                        uiState.processingState != null ->
+                            HandleProcessingState(
+                                viewModel = viewModel,
+                            )
                         uiState.selfieToConfirm != null ->
                             HandleSelfieConfirmation(
-                                showConfirmationDialog,
-                                uiState,
-                                viewModel,
+                                showConfirmationDialog = showConfirmationDialog,
+                                uiState = uiState,
+                                viewModel = viewModel,
                             )
 
-                        else -> RenderSelfieCaptureScreen(userId, jobId, allowAgentMode, viewModel)
+                        else ->
+                            RenderSelfieCaptureScreen(
+                                userId = userId,
+                                jobId = jobId,
+                                allowAgentMode = allowAgentMode,
+                                viewModel = viewModel,
+                            )
                     }
                 }
             }
@@ -117,26 +118,15 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
         allowAgentMode: Boolean,
         viewModel: SelfieViewModel,
     ) {
-        Box(
-            modifier =
-                Modifier
-                    .background(color = Color.White)
-                    .windowInsetsPadding(WindowInsets.statusBars)
-                    .consumeWindowInsets(WindowInsets.statusBars)
-                    .fillMaxSize(),
-        ) {
-            SelfieCaptureScreen(
-                modifier =
-                    Modifier
-                        .background(color = Color.White),
-                userId = userId,
-                jobId = jobId,
-                allowAgentMode = allowAgentMode ?: true,
-                allowNewEnroll = false,
-                skipApiSubmission = true,
-                viewModel = viewModel,
-            )
-        }
+        SelfieCaptureScreen(
+            modifier = Modifier.fillMaxSize(),
+            userId = userId,
+            jobId = jobId,
+            allowAgentMode = allowAgentMode ?: true,
+            allowNewEnroll = false,
+            skipApiSubmission = true,
+            viewModel = viewModel,
+        )
     }
 
     @Composable

@@ -24,7 +24,6 @@ class SmileIDSmartSelfieCaptureView extends StatelessWidget {
     bool showConfirmationDialog = false,
     bool allowAgentMode = false,
     bool showAttribution = true,
-    Map<String, String>? extraPartnerParams,
     required Function(String resultJson) onSuccess,
     required Function(String errorMessage) onError,
   }) {

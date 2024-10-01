@@ -21,10 +21,7 @@ class SmileIDDocumentCaptureView extends StatelessWidget {
 
   factory SmileIDDocumentCaptureView({
     Key? key,
-    //jobId can't actually be null in the native SDK but we delegate creation to
-    // the native platform code, since that's where the random ID creation happens
-    String? jobId,
-    bool front = true,
+    bool isDocumentFrontSide = true,
     bool showInstructions = true,
     bool showAttribution = true,
     bool allowGalleryUpload = true,
@@ -36,8 +33,7 @@ class SmileIDDocumentCaptureView extends StatelessWidget {
       onSuccess: onSuccess,
       onError: onError,
       creationParams: {
-        "jobId": jobId,
-        "front": front,
+        "isDocumentFrontSide": isDocumentFrontSide,
         "showInstructions": showInstructions,
         "showAttribution": showAttribution,
         "allowGalleryUpload": allowGalleryUpload,
