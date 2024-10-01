@@ -286,7 +286,7 @@ class MainContent extends StatelessWidget {
           MaterialPageRoute<void>(
             builder: (BuildContext context) => MyScaffold(
                 body: SmileIDSmartSelfieCaptureView(
-              showConfirmation: true,
+              showConfirmationDialog: true,
               allowAgentMode: false,
               showAttribution: true,
               onSuccess: (String? result) {
