@@ -21,9 +21,10 @@ class SmileIDSmartSelfieCaptureView extends StatelessWidget {
 
   factory SmileIDSmartSelfieCaptureView({
     Key? key,
-    bool showConfirmationDialog = false,
-    bool allowAgentMode = false,
+    bool showConfirmationDialog = true,
+    bool showInstructions = true,
     bool showAttribution = true,
+    bool allowAgentMode = true,
     required Function(String resultJson) onSuccess,
     required Function(String errorMessage) onError,
   }) {
@@ -32,8 +33,9 @@ class SmileIDSmartSelfieCaptureView extends StatelessWidget {
       onError: onError,
       creationParams: {
         "showConfirmationDialog": showConfirmationDialog,
-        "allowAgentMode": allowAgentMode,
+        "showInstructions": showInstructions,
         "showAttribution": showAttribution,
+        "allowAgentMode": allowAgentMode,
       },
     );
   }

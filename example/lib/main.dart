@@ -287,8 +287,9 @@ class MainContent extends StatelessWidget {
             builder: (BuildContext context) => MyScaffold(
                 body: SmileIDSmartSelfieCaptureView(
               showConfirmationDialog: true,
-              allowAgentMode: false,
-              showAttribution: true,
+              showInstructions: true,
+              showAttribution: false,
+              allowAgentMode: true,
               onSuccess: (String? result) {
                 // Your success handling logic
                 Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
@@ -318,25 +319,25 @@ class MainContent extends StatelessWidget {
           MaterialPageRoute<void>(
             builder: (BuildContext context) => MyScaffold(
                 body: SmileIDDocumentCaptureView(
-                  isDocumentFrontSide: false,
-                  showInstructions: true,
-                  showAttribution: true,
-                  allowGalleryUpload: false,
-                  onSuccess: (String? result) {
-                    // Your success handling logic
-                    Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
-                    String formattedResult = jsonEncode(jsonResult);
-                    final snackBar = SnackBar(content: Text("Success: $formattedResult"));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    Navigator.of(context).pop();
-                  },
-                  onError: (String errorMessage) {
-                    // Your error handling logic
-                    final snackBar = SnackBar(content: Text("Error: $errorMessage"));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    Navigator.of(context).pop();
-                  },
-                )),
+              isDocumentFrontSide: true,
+              showInstructions: true,
+              showAttribution: false,
+              allowGalleryUpload: true,
+              onSuccess: (String? result) {
+                // Your success handling logic
+                Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
+                String formattedResult = jsonEncode(jsonResult);
+                final snackBar = SnackBar(content: Text("Success: $formattedResult"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.of(context).pop();
+              },
+              onError: (String errorMessage) {
+                // Your error handling logic
+                final snackBar = SnackBar(content: Text("Error: $errorMessage"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.of(context).pop();
+              },
+            )),
           ),
         );
       },

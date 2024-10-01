@@ -53,14 +53,13 @@ internal class SmileIDDocumentCaptureView private constructor(
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                 ) {
-                    val jobId = randomJobId()
                     val isDocumentFrontSide = args["isDocumentFrontSide"] as? Boolean ?: true
                     val showInstructions = args["showInstructions"] as? Boolean ?: true
                     val showAttribution = args["showAttribution"] as? Boolean ?: true
                     val allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false
                     val idAspectRatio = (args["idAspectRatio"] as Double?)?.toFloat()
                     RenderDocumentCaptureScreen(
-                        jobId = jobId,
+                        jobId = randomJobId(),
                         isDocumentFrontSide = isDocumentFrontSide,
                         showInstructions = showInstructions,
                         showAttribution = showAttribution,
