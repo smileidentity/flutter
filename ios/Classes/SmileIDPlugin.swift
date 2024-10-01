@@ -230,7 +230,8 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
                     partnerParams: convertNullableMapToNonNull(data: partnerParams),
                     callbackUrl: callbackUrl,
                     sandboxResult: sandboxResult.map { Int($0) },
-                    allowNewEnroll: allowNewEnroll, metadata: Metadata.default()
+                    allowNewEnroll: allowNewEnroll,
+                    metadata: Metadata.default()
                 )
                 completion(.success(response.toResponse()))
             } catch {
@@ -270,7 +271,8 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
                     },
                     partnerParams: convertNullableMapToNonNull(data: partnerParams),
                     callbackUrl: callbackUrl,
-                    sandboxResult: sandboxResult.map { Int($0) }, metadata: Metadata.default()
+                    sandboxResult: sandboxResult.map { Int($0) },
+                    metadata: Metadata.default()
                 )
                 completion(.success(response.toResponse()))
             } catch {
