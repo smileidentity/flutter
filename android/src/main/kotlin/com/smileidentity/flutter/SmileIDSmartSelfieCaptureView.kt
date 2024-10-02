@@ -79,16 +79,16 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
         val viewModel: SelfieViewModel =
             viewModel(
                 factory =
-                viewModelFactory {
-                    SelfieViewModel(
-                        isEnroll = false,
-                        userId = userId,
-                        jobId = jobId,
-                        allowNewEnroll = false,
-                        skipApiSubmission = true,
-                        metadata = metadata,
-                    )
-                },
+                    viewModelFactory {
+                        SelfieViewModel(
+                            isEnroll = false,
+                            userId = userId,
+                            jobId = jobId,
+                            allowNewEnroll = false,
+                            skipApiSubmission = true,
+                            metadata = metadata,
+                        )
+                    },
             )
         val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
         CompositionLocalProvider(
@@ -97,11 +97,12 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
             MaterialTheme(colorScheme = SmileID.colorScheme, typography = SmileID.typography) {
                 Surface(content = {
                     when {
-                        showInstructions && !acknowledgedInstructions -> SmartSelfieInstructionsScreen(
-                            showAttribution = showAttribution,
-                        ) {
-                            acknowledgedInstructions = true
-                        }
+                        showInstructions && !acknowledgedInstructions ->
+                            SmartSelfieInstructionsScreen(
+                                showAttribution = showAttribution,
+                            ) {
+                                acknowledgedInstructions = true
+                            }
                         uiState.processingState != null -> HandleProcessingState(viewModel)
                         uiState.selfieToConfirm != null ->
                             HandleSelfieConfirmation(
