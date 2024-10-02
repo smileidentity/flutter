@@ -57,6 +57,7 @@ internal class SmileIDDocumentCaptureView private constructor(
                     val showInstructions = args["showInstructions"] as? Boolean ?: true
                     val showAttribution = args["showAttribution"] as? Boolean ?: true
                     val allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false
+                    val showConfirmationDialog = args["showConfirmationDialog"] as? Boolean ?: true
                     val idAspectRatio = (args["idAspectRatio"] as Double?)?.toFloat()
                     RenderDocumentCaptureScreen(
                         jobId = randomJobId(),
@@ -64,6 +65,7 @@ internal class SmileIDDocumentCaptureView private constructor(
                         showInstructions = showInstructions,
                         showAttribution = showAttribution,
                         allowGalleryUpload = allowGalleryUpload,
+                        showConfirmationDialog = showConfirmationDialog,
                         idAspectRatio = idAspectRatio,
                     )
                 }
@@ -78,6 +80,7 @@ internal class SmileIDDocumentCaptureView private constructor(
         showInstructions: Boolean,
         showAttribution: Boolean,
         allowGalleryUpload: Boolean,
+        showConfirmationDialog: Boolean,
         idAspectRatio: Float?,
     ) {
         val hero =
@@ -113,6 +116,7 @@ internal class SmileIDDocumentCaptureView private constructor(
             allowGallerySelection = allowGalleryUpload,
             showSkipButton = false,
             instructionsHeroImage = hero,
+            showConfirmation = showConfirmationDialog,
             instructionsTitleText = stringResource(instructionTitle),
             instructionsSubtitleText = stringResource(instructionSubTitle),
             captureTitleText = stringResource(captureTitleText),

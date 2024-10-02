@@ -25,6 +25,7 @@ class SmileIDDocumentCaptureView extends StatelessWidget {
     bool showInstructions = true,
     bool showAttribution = true,
     bool allowGalleryUpload = true,
+    bool showConfirmationDialog = true,
     double? idAspectRatio,
     required Function(String resultJson) onSuccess,
     required Function(String errorMessage) onError,
@@ -37,6 +38,7 @@ class SmileIDDocumentCaptureView extends StatelessWidget {
         "showInstructions": showInstructions,
         "showAttribution": showAttribution,
         "allowGalleryUpload": allowGalleryUpload,
+        "showConfirmationDialog": showConfirmationDialog,
         "idAspectRatio": idAspectRatio,
       },
     );

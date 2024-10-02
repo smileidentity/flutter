@@ -286,10 +286,10 @@ class MainContent extends StatelessWidget {
           MaterialPageRoute<void>(
             builder: (BuildContext context) => MyScaffold(
                 body: SmileIDSmartSelfieCaptureView(
-              showConfirmationDialog: true,
+              showConfirmationDialog: false,
               showInstructions: true,
               showAttribution: false,
-              allowAgentMode: true,
+              allowAgentMode: false,
               onSuccess: (String? result) {
                 // Your success handling logic
                 Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
@@ -319,10 +319,11 @@ class MainContent extends StatelessWidget {
           MaterialPageRoute<void>(
             builder: (BuildContext context) => MyScaffold(
                 body: SmileIDDocumentCaptureView(
-              isDocumentFrontSide: true,
+              isDocumentFrontSide: false,
+              showConfirmationDialog: true,
               showInstructions: true,
               showAttribution: false,
-              allowGalleryUpload: true,
+              allowGalleryUpload: false,
               onSuccess: (String? result) {
                 // Your success handling logic
                 Map<String, dynamic> jsonResult = json.decode(result ?? '{}');

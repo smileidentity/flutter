@@ -83,6 +83,7 @@ struct SmileIDDocumentRootView: View {
                 ),
                 captureTitleText: SmileIDResourcesHelper.localizedString(for: "Action.TakePhoto"),
                 knownIdAspectRatio: idAspectRatio,
+                showConfirmation:showConfirmationDialog,
                 onConfirm: onConfirmed,
                 onError: didError,
                 onSkip: onSkip
