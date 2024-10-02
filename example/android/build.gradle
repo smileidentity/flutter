@@ -1,7 +1,7 @@
 buildscript {
     ext.kotlin_version = "1.9.10"
-    // Get AGP version from environment variable or default to 8.1.4
-    ext.agp_version = System.getenv("AGP_VERSION") ?: "8.1.4"
+    // Get AGP version from environment variable or default to 8.7.0
+    ext.agp_version = System.getenv("AGP_VERSION") ?: "8.7.0"
     repositories {
         google()
         mavenCentral()
