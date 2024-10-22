@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import com.smileidentity.SmileID
 import com.smileidentity.compose.SmartSelfieAuthentication
 import com.smileidentity.results.SmileIDResult
-import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.StandardMessageCodec
@@ -28,7 +27,6 @@ internal class SmileIDSmartSelfieAuthentication private constructor(
         val extraPartnerParams = args["extraPartnerParams"] as? Map<String, String> ?: emptyMap()
         SmileID.SmartSelfieAuthentication(
             userId = args["userId"] as? String ?: randomUserId(),
-            jobId = args["jobId"] as? String ?: randomJobId(),
             allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
             allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
             showAttribution = args["showAttribution"] as? Boolean ?: true,
