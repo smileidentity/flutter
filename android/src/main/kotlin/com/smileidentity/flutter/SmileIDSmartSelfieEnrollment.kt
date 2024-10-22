@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import com.smileidentity.SmileID
 import com.smileidentity.compose.SmartSelfieEnrollment
 import com.smileidentity.results.SmileIDResult
-import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.StandardMessageCodec
