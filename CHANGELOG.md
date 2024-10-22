@@ -1,5 +1,8 @@
 # Release Notes
 
+## 10.1.11
+* Remove `jobId` in selfie jobs. This is now passed inside `extraPartnerParams`
+
 ## 10.1.10
 * Added selfie capture screens
 * Added document capture screens

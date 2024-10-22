@@ -28,7 +28,6 @@ internal class SmileIDSmartSelfieEnrollment private constructor(
         val extraPartnerParams = args["extraPartnerParams"] as? Map<String, String> ?: emptyMap()
         SmileID.SmartSelfieEnrollment(
             userId = args["userId"] as? String ?: randomUserId(),
-            jobId = args["jobId"] as? String ?: randomJobId(),
             allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
             allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
             showAttribution = args["showAttribution"] as? Boolean ?: true,

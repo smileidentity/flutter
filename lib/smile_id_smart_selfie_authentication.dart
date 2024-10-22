@@ -21,10 +21,9 @@ class SmileIDSmartSelfieAuthentication extends StatelessWidget {
 
   factory SmileIDSmartSelfieAuthentication({
     Key? key,
-    // userId and jobId can't actually be null in the native SDK but we delegate their creation to
+    // userId can't actually be null in the native SDK but we delegate their creation to
     // the native platform code, since that's where the random ID creation happens
     String? userId,
-    String? jobId,
     bool allowNewEnroll = false,
     bool allowAgentMode = false,
     bool showAttribution = true,
@@ -38,7 +37,6 @@ class SmileIDSmartSelfieAuthentication extends StatelessWidget {
       onError: onError,
       creationParams: {
         "userId": userId,
-        "jobId": jobId,
         "allowNewEnroll": allowNewEnroll,
         "allowAgentMode": allowAgentMode,
         "showAttribution": showAttribution,
