@@ -17,6 +17,7 @@ import com.smileidentity.compose.document.DocumentCaptureScreen
 import com.smileidentity.compose.document.DocumentCaptureSide
 import com.smileidentity.compose.theme.colorScheme
 import com.smileidentity.compose.theme.typography
+import com.smileidentity.flutter.results.DocumentCaptureResult
 import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
 import com.smileidentity.models.v2.Metadata
 import com.smileidentity.util.randomJobId
@@ -25,11 +26,6 @@ import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 import java.io.File
-
-data class DocumentCaptureResult(
-    val documentFrontFile: File? = null,
-    val documentBackFile: File? = null,
-)
 
 internal class SmileIDDocumentCaptureView private constructor(
     context: Context,

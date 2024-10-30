@@ -36,6 +36,7 @@ import com.smileidentity.compose.selfie.SelfieCaptureScreen
 import com.smileidentity.compose.selfie.SmartSelfieInstructionsScreen
 import com.smileidentity.compose.theme.colorScheme
 import com.smileidentity.compose.theme.typography
+import com.smileidentity.flutter.results.SmartSelfieCaptureResult
 import com.smileidentity.flutter.utils.SelfieCaptureResultAdapter
 import com.smileidentity.models.v2.Metadata
 import com.smileidentity.results.SmileIDResult
@@ -49,11 +50,6 @@ import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 import java.io.File
-
-data class SmartSelfieCaptureResult(
-    val selfieFile: File? = null,
-    val livenessFiles: List<File>? = null,
-)
 
 internal class SmileIDSmartSelfieCaptureView private constructor(
     context: Context,

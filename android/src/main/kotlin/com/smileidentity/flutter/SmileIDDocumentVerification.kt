@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.compose.runtime.Composable
 import com.smileidentity.SmileID
 import com.smileidentity.compose.DocumentVerification
+import com.smileidentity.flutter.results.DocumentCaptureResult
+import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
@@ -44,7 +46,34 @@ internal class SmileIDDocumentVerification private constructor(
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {
             when (it) {
-                is SmileIDResult.Success -> onSuccess(it.data)
+                is SmileIDResult.Success -> {
+                    val result =
+                        DocumentCaptureResult(
+                            selfieFile = it.data.selfieFile,
+                            documentFrontFile = it.data.documentFrontFile,
+                            livenessFiles = it.data.livenessFiles,
+                            documentBackFile = it.data.documentBackFile,
+                            didSubmitDocumentVerificationJob = it.data.didSubmitDocumentVerificationJob,
+                        )
+                    val newMoshi =
+                        SmileID.moshi
+                            .newBuilder()
+                            .add(DocumentCaptureResultAdapter.FACTORY)
+                            .build()
+                    val json =
+                        try {
+                            newMoshi
+                                .adapter(DocumentCaptureResult::class.java)
+                                .toJson(result)
+                        } catch (e: Exception) {
+                            onError(e)
+                            return@DocumentVerification
+                        }
+                    json?.let { js ->
+                        onSuccessJson(js)
+                    }
+                }
+
                 is SmileIDResult.Error -> onError(it.throwable)
             }
         }

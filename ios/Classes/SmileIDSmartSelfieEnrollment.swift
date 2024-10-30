@@ -3,8 +3,8 @@ import UIKit
 import SmileID
 import SwiftUI
 
-class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieResultDelegate {
-    
+class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieResultDelegate,SmileIDFileUtilsProtocol {
+    var fileManager: FileManager = Foundation.FileManager.default
     private var _view: UIView
     private var _channel: FlutterMethodChannel
     private var _childViewController: UIViewController?
@@ -43,8 +43,10 @@ class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieR
     func didSucceed(selfieImage: URL, livenessImages: [URL], apiResponse: SmartSelfieResponse?) {
         _childViewController?.removeFromParent()
         var arguments: [String: Any] = [
-            "selfieFile": selfieImage.absoluteString,
-            "livenessFiles": livenessImages.map { $0.absoluteString }
+            "selfieFile": getFilePath(fileName: selfieImage.absoluteString),
+            "livenessFiles": livenessImages.map {
+              getFilePath(fileName: $0.absoluteString)
+            }
         ]
         if let apiResponse = apiResponse {
             let encoder = JSONEncoder()

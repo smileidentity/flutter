@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.compose.runtime.Composable
 import com.smileidentity.SmileID
 import com.smileidentity.compose.BiometricKYC
+import com.smileidentity.flutter.results.SmartSelfieCaptureResult
+import com.smileidentity.flutter.utils.SelfieCaptureResultAdapter
 import com.smileidentity.models.IdInfo
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
@@ -29,17 +31,17 @@ internal class SmileIDBiometricKYC private constructor(
         val extraPartnerParams = args["extraPartnerParams"] as? Map<String, String> ?: emptyMap()
         SmileID.BiometricKYC(
             idInfo =
-                IdInfo(
-                    country = args["country"] as? String ?: "",
-                    idType = args["idType"] as? String?,
-                    idNumber = args["idNumber"] as? String?,
-                    firstName = args["firstName"] as? String?,
-                    middleName = args["middleName"] as? String?,
-                    lastName = args["lastName"] as? String?,
-                    dob = args["dob"] as? String?,
-                    bankCode = args["bankCode"] as? String?,
-                    entered = args["entered"] as? Boolean?,
-                ),
+            IdInfo(
+                country = args["country"] as? String ?: "",
+                idType = args["idType"] as? String?,
+                idNumber = args["idNumber"] as? String?,
+                firstName = args["firstName"] as? String?,
+                middleName = args["middleName"] as? String?,
+                lastName = args["lastName"] as? String?,
+                dob = args["dob"] as? String?,
+                bankCode = args["bankCode"] as? String?,
+                entered = args["entered"] as? Boolean?,
+            ),
             userId = args["userId"] as? String ?: randomUserId(),
             jobId = args["jobId"] as? String ?: randomJobId(),
             allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
@@ -49,7 +51,32 @@ internal class SmileIDBiometricKYC private constructor(
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {
             when (it) {
-                is SmileIDResult.Success -> onSuccess(it.data)
+                is SmileIDResult.Success -> {
+                    val result =
+                        SmartSelfieCaptureResult(
+                            selfieFile = it.data.selfieFile,
+                            livenessFiles = it.data.livenessFiles,
+                            didSubmitBiometricKycJob = it.data.didSubmitBiometricKycJob,
+                        )
+                    val newMoshi =
+                        SmileID.moshi
+                            .newBuilder()
+                            .add(SelfieCaptureResultAdapter.FACTORY)
+                            .build()
+                    val json =
+                        try {
+                            newMoshi
+                                .adapter(SmartSelfieCaptureResult::class.java)
+                                .toJson(result)
+                        } catch (e: Exception) {
+                            onError(e)
+                            return@BiometricKYC
+                        }
+                    json?.let { js ->
+                        onSuccessJson(js)
+                    }
+                }
+
                 is SmileIDResult.Error -> onError(it.throwable)
             }
         }
