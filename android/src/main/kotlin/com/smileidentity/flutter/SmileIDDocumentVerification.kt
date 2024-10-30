@@ -55,7 +55,8 @@ internal class SmileIDDocumentVerification private constructor(
                             documentFrontFile = it.data.documentFrontFile,
                             livenessFiles = it.data.livenessFiles,
                             documentBackFile = it.data.documentBackFile,
-                            didSubmitDocumentVerificationJob = it.data.didSubmitDocumentVerificationJob,
+                            didSubmitDocumentVerificationJob =
+                                it.data.didSubmitDocumentVerificationJob,
                         )
                     val newMoshi =
                         SmileID.moshi
