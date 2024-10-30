@@ -1,21 +1,30 @@
 # Release Notes
 
+## 10.2.1
+
+* Fix Consistent file paths for all products and capture screens
+
 ## 10.2.0
+
 * Remove `jobId` in selfie jobs. This is now passed inside `extraPartnerParams`
 
 ## 10.1.10
+
 * Added selfie capture screens
 * Added document capture screens
 * Bump iOS to 10.2.12 (https://github.com/smileidentity/ios/releases/tag/v10.2.12)
 * Update AGP versions
 
-## 10.1.9 
+## 10.1.9
+
 * Bump Android to 10.3.1 (https://github.com/smileidentity/android/releases/tag/v10.3.1)
 * Bump iOS to 10.2.10 (https://github.com/smileidentity/ios/releases/tag/v10.2.10)
 
 ## 10.1.8
+
 * Fix API Config to provide different options to configure SmileID
-* Bump ios to 10.2.8 (https://github.com/smileidentity/ios/releases/tag/v10.2.8) In memory zip file handling
+* Bump ios to 10.2.8 (https://github.com/smileidentity/ios/releases/tag/v10.2.8) In memory zip file
+  handling
 
 ## 10.1.7
 
@@ -33,11 +42,12 @@
 
 ## 10.1.5
 
-* Fix navigation issue on iOS Flutter app 
+* Fix navigation issue on iOS Flutter app
 
 ## 10.1.4
 
-* Bump iOS to 10.2.2 (https://github.com/smileidentity/ios/releases/tag/v10.2.2) which fixes retry crash)
+* Bump iOS to 10.2.2 (https://github.com/smileidentity/ios/releases/tag/v10.2.2) which fixes retry
+  crash)
 
 ## 10.1.3
 
@@ -54,13 +64,15 @@
 
 ## 10.1.0
 
-* Moved SmartSelfie enrollment and authentication to synchronous endpoints 
+* Moved SmartSelfie enrollment and authentication to synchronous endpoints
 * Introduced polling methods for products
-  * SmartSelfie 
+  * SmartSelfie
   * Biometric kyc
   * Document verification
   * Enhanced document verification
-* Added an Offline Mode, enabled by calling `SmileID.setAllowOfflineMode(true)`. If a job is attempted while the device is offline, and offline mode has been enabled, the UI will complete successfully and the job can be submitted at a later time by calling `SmileID.submitJob(jobId)`
+* Added an Offline Mode, enabled by calling `SmileID.setAllowOfflineMode(true)`. If a job is
+  attempted while the device is offline, and offline mode has been enabled, the UI will complete
+  successfully and the job can be submitted at a later time by calling `SmileID.submitJob(jobId)`
 * Improved SmartSelfie Enrollment and Authentication times by moving to a synchronous API endpoint
 * Update generic errors with actual platform errors
 * Bump iOS to 10.1.6 (https://github.com/smileidentity/ios/releases/tag/v10.1.6)
@@ -68,7 +80,8 @@
 
 ## 10.0.12
 
-* Fixed a bug where SmartSelfieEnrollment and SmartSelfieAuthentication would return invalid `livenessImages` in `onSuccess`
+* Fixed a bug where SmartSelfieEnrollment and SmartSelfieAuthentication would return invalid
+  `livenessImages` in `onSuccess`
 
 ## 10.0.11
 
@@ -94,12 +107,14 @@
 
 ## 10.0.6
 
-* Fixed a bug where Android builds would not compile when the partner app (or a library they consume) also uses `Pigeon` under the hood
+* Fixed a bug where Android builds would not compile when the partner app (or a library they
+  consume) also uses `Pigeon` under the hood
 * Updated generated files naming to prefix `SmileID` and prevent build duplicate class erros
 
 ## 10.0.5
 
-* Fixed a bug where Android builds would not compile when the partner app (or a library they consume) also uses `Pigeon` under the hood
+* Fixed a bug where Android builds would not compile when the partner app (or a library they
+  consume) also uses `Pigeon` under the hood
 * Bumped Android and iOS versions
 
 ## 10.0.4
@@ -147,7 +162,8 @@
 
 * \[Android] Added `extras` as optional params on all job types
 * \[Android] Added `idAuthorityBypassPhoto` on Sandbox BiometricKYC jobs
-* \[Android] Added `allowAgentMode` option on Document Verification and Enhanced Document Verification
+* \[Android] Added `allowAgentMode` option on Document Verification and Enhanced Document
+  Verification
 * \[Flutter] Fixed wrong iOS decoding bug on success
 
 ## 10.0.0-beta05
