@@ -1,5 +1,6 @@
 package com.smileidentity.flutter.utils
-import com.smileidentity.react.results.DocumentCaptureResult
+
+import com.smileidentity.flutter.results.DocumentCaptureResult
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonReader
@@ -10,7 +11,6 @@ import java.io.File
 import java.lang.reflect.Type
 
 class DocumentCaptureResultAdapter : JsonAdapter<DocumentCaptureResult>() {
-
     @FromJson
     override fun fromJson(reader: JsonReader): DocumentCaptureResult {
         reader.beginObject()
@@ -50,7 +50,7 @@ class DocumentCaptureResultAdapter : JsonAdapter<DocumentCaptureResult>() {
             documentBackFile = backFile,
             livenessFiles = livenessFiles,
             didSubmitDocumentVerificationJob = didSubmitDocumentVerificationJob,
-            didSubmitEnhancedDocVJob = didSubmitEnhancedDocVJob
+            didSubmitEnhancedDocVJob = didSubmitEnhancedDocVJob,
         )
     }
 
@@ -77,7 +77,8 @@ class DocumentCaptureResultAdapter : JsonAdapter<DocumentCaptureResult>() {
             writer.endArray()
         }
 
-        writer.name("didSubmitDocumentVerificationJob").value(value.didSubmitDocumentVerificationJob)
+        writer.name("didSubmitDocumentVerificationJob")
+            .value(value.didSubmitDocumentVerificationJob)
         writer.name("didSubmitEnhancedDocVJob").value(value.didSubmitEnhancedDocVJob)
 
         writer.endObject()
@@ -88,7 +89,7 @@ class DocumentCaptureResultAdapter : JsonAdapter<DocumentCaptureResult>() {
             override fun create(
                 type: Type,
                 annotations: Set<Annotation>,
-                moshi: Moshi
+                moshi: Moshi,
             ): JsonAdapter<*>? {
                 return if (type == DocumentCaptureResult::class.java) DocumentCaptureResultAdapter() else null
             }

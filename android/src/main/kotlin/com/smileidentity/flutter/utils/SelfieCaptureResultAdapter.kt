@@ -1,8 +1,8 @@
 package com.smileidentity.flutter.utils
 
 import com.smileidentity.SmileID
+import com.smileidentity.flutter.results.SmartSelfieCaptureResult
 import com.smileidentity.models.v2.SmartSelfieResponse
-import com.smileidentity.react.results.SmartSelfieCaptureResult
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonAdapter.Factory
