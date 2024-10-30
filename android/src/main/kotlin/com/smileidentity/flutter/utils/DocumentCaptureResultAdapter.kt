@@ -35,8 +35,9 @@ class DocumentCaptureResultAdapter : JsonAdapter<DocumentCaptureResult>() {
                     reader.endArray()
                 }
 
-                "didSubmitDocumentVerificationJob" -> didSubmitDocumentVerificationJob =
-                    reader.nextBoolean()
+                "didSubmitDocumentVerificationJob" ->
+                    didSubmitDocumentVerificationJob =
+                        reader.nextBoolean()
 
                 "didSubmitEnhancedDocVJob" -> didSubmitEnhancedDocVJob = reader.nextBoolean()
                 else -> reader.skipValue()
@@ -80,7 +81,8 @@ class DocumentCaptureResultAdapter : JsonAdapter<DocumentCaptureResult>() {
             writer.endArray()
         }
 
-        writer.name("didSubmitDocumentVerificationJob")
+        writer
+            .name("didSubmitDocumentVerificationJob")
             .value(value.didSubmitDocumentVerificationJob)
         writer.name("didSubmitEnhancedDocVJob").value(value.didSubmitEnhancedDocVJob)
 
@@ -88,16 +90,18 @@ class DocumentCaptureResultAdapter : JsonAdapter<DocumentCaptureResult>() {
     }
 
     companion object {
-        val FACTORY = object : Factory {
-            override fun create(
-                type: Type,
-                annotations: Set<Annotation>,
-                moshi: Moshi,
-            ): JsonAdapter<*>? = if (type == DocumentCaptureResult::class.java) {
-                DocumentCaptureResultAdapter()
-            } else {
-                null
+        val FACTORY =
+            object : Factory {
+                override fun create(
+                    type: Type,
+                    annotations: Set<Annotation>,
+                    moshi: Moshi,
+                ): JsonAdapter<*>? =
+                    if (type == DocumentCaptureResult::class.java) {
+                        DocumentCaptureResultAdapter()
+                    } else {
+                        null
+                    }
             }
-        }
     }
 }
