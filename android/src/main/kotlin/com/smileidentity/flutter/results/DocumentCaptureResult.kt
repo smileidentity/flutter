@@ -8,5 +8,5 @@ data class DocumentCaptureResult(
     val livenessFiles: List<File>? = null,
     val documentBackFile: File? = null,
     val didSubmitDocumentVerificationJob: Boolean? = null,
-    val didSubmitEnhancedDocVJob: Boolean? = null
+    val didSubmitEnhancedDocVJob: Boolean? = null,
 )

@@ -12,7 +12,6 @@ import com.squareup.moshi.ToJson
 import java.io.File
 
 class SelfieCaptureResultAdapter : JsonAdapter<SmartSelfieCaptureResult>() {
-
     @FromJson
     override fun fromJson(reader: JsonReader): SmartSelfieCaptureResult {
         reader.beginObject()
@@ -34,8 +33,9 @@ class SelfieCaptureResultAdapter : JsonAdapter<SmartSelfieCaptureResult>() {
                     livenessFiles = files
                 }
 
-                "apiResponse" -> apiResponse =
-                    SmileID.moshi.adapter(SmartSelfieResponse::class.java).fromJson(reader)
+                "apiResponse" ->
+                    apiResponse =
+                        SmileID.moshi.adapter(SmartSelfieResponse::class.java).fromJson(reader)
 
                 else -> reader.skipValue()
             }
@@ -45,12 +45,15 @@ class SelfieCaptureResultAdapter : JsonAdapter<SmartSelfieCaptureResult>() {
         return SmartSelfieCaptureResult(
             selfieFile = selfieFile,
             livenessFiles = livenessFiles,
-            apiResponse = apiResponse
+            apiResponse = apiResponse,
         )
     }
 
     @ToJson
-    override fun toJson(writer: JsonWriter, value: SmartSelfieCaptureResult?) {
+    override fun toJson(
+        writer: JsonWriter,
+        value: SmartSelfieCaptureResult?,
+    ) {
         if (value == null) {
             writer.nullValue()
             return
@@ -73,6 +76,15 @@ class SelfieCaptureResultAdapter : JsonAdapter<SmartSelfieCaptureResult>() {
     }
 
     companion object {
-        val FACTORY = Factory { type, annotations, moshi -> if (type == SmartSelfieCaptureResult::class.java) SelfieCaptureResultAdapter() else null }
+        val FACTORY =
+            Factory { type, annotations, moshi ->
+                if (type ==
+                    SmartSelfieCaptureResult::class.java
+                ) {
+                    SelfieCaptureResultAdapter()
+                } else {
+                    null
+                }
+            }
     }
 }
