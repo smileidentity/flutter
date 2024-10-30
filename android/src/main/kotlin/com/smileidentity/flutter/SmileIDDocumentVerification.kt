@@ -34,8 +34,9 @@ internal class SmileIDDocumentVerification private constructor(
             documentType = args["documentType"] as? String,
             idAspectRatio = (args["idAspectRatio"] as Double?)?.toFloat(),
             captureBothSides = args["captureBothSides"] as? Boolean ?: true,
-            bypassSelfieCaptureWithFile =
-                (args["bypassSelfieCaptureWithFile"] as? String)?.let { File(it) },
+            bypassSelfieCaptureWithFile = (args["bypassSelfieCaptureWithFile"] as? String)?.let {
+                File(it)
+            },
             userId = args["userId"] as? String ?: randomUserId(),
             jobId = args["jobId"] as? String ?: randomJobId(),
             allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
@@ -47,28 +48,21 @@ internal class SmileIDDocumentVerification private constructor(
         ) {
             when (it) {
                 is SmileIDResult.Success -> {
-                    val result =
-                        DocumentCaptureResult(
-                            selfieFile = it.data.selfieFile,
-                            documentFrontFile = it.data.documentFrontFile,
-                            livenessFiles = it.data.livenessFiles,
-                            documentBackFile = it.data.documentBackFile,
-                            didSubmitDocumentVerificationJob = it.data.didSubmitDocumentVerificationJob,
-                        )
+                    val result = DocumentCaptureResult(
+                        selfieFile = it.data.selfieFile,
+                        documentFrontFile = it.data.documentFrontFile,
+                        livenessFiles = it.data.livenessFiles,
+                        documentBackFile = it.data.documentBackFile,
+                        didSubmitDocumentVerificationJob = it.data.didSubmitDocumentVerificationJob,
+                    )
                     val newMoshi =
-                        SmileID.moshi
-                            .newBuilder()
-                            .add(DocumentCaptureResultAdapter.FACTORY)
-                            .build()
-                    val json =
-                        try {
-                            newMoshi
-                                .adapter(DocumentCaptureResult::class.java)
-                                .toJson(result)
-                        } catch (e: Exception) {
-                            onError(e)
-                            return@DocumentVerification
-                        }
+                        SmileID.moshi.newBuilder().add(DocumentCaptureResultAdapter.FACTORY).build()
+                    val json = try {
+                        newMoshi.adapter(DocumentCaptureResult::class.java).toJson(result)
+                    } catch (e: Exception) {
+                        onError(e)
+                        return@DocumentVerification
+                    }
                     json?.let { js ->
                         onSuccessJson(js)
                     }
@@ -87,8 +81,7 @@ internal class SmileIDDocumentVerification private constructor(
             viewId: Int,
             args: Any?,
         ): PlatformView {
-            @Suppress("UNCHECKED_CAST")
-            return SmileIDDocumentVerification(
+            @Suppress("UNCHECKED_CAST") return SmileIDDocumentVerification(
                 context,
                 viewId,
                 messenger,

@@ -68,7 +68,10 @@ class SelfieCaptureResultAdapter : JsonAdapter<SmartSelfieCaptureResult>() {
 
         writer.name("apiResponse")
         if (value.apiResponse != null) {
-            SmileID.moshi.adapter(SmartSelfieResponse::class.java).toJson(writer, value.apiResponse)
+            SmileID.moshi.adapter(SmartSelfieResponse::class.java).toJson(
+                writer,
+                value.apiResponse,
+            )
         } else {
             writer.nullValue()
         }
