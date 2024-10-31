@@ -10,10 +10,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.smileidentity.R
 import com.smileidentity.SmileID
 import com.smileidentity.compose.components.LocalMetadata
-import com.smileidentity.compose.document.DocumentCaptureScreen
 import com.smileidentity.compose.document.DocumentCaptureSide
 import com.smileidentity.compose.theme.colorScheme
 import com.smileidentity.compose.theme.typography
@@ -26,6 +24,8 @@ import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 import java.io.File
+import com.smileidentity.R
+import com.smileidentity.compose.document.DocumentCaptureScreen
 
 internal class SmileIDDocumentCaptureView private constructor(
     context: Context,
