@@ -43,14 +43,14 @@ internal class SmileIDSmartSelfieAuthentication private constructor(
                             livenessFiles = it.data.livenessFiles,
                             apiResponse = it.data.apiResponse,
                         )
-                    val newMoshi =
+                    val moshi =
                         SmileID.moshi
                             .newBuilder()
                             .add(SelfieCaptureResultAdapter.FACTORY)
                             .build()
                     val json =
                         try {
-                            newMoshi
+                            moshi
                                 .adapter(SmartSelfieCaptureResult::class.java)
                                 .toJson(result)
                         } catch (e: Exception) {

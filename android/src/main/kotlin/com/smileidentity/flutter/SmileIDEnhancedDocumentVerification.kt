@@ -52,14 +52,14 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
                             documentBackFile = it.data.documentBackFile,
                             didSubmitEnhancedDocVJob = it.data.didSubmitEnhancedDocVJob,
                         )
-                    val newMoshi =
+                    val moshi =
                         SmileID.moshi
                             .newBuilder()
                             .add(DocumentCaptureResultAdapter.FACTORY)
                             .build()
                     val json =
                         try {
-                            newMoshi
+                            moshi
                                 .adapter(DocumentCaptureResult::class.java)
                                 .toJson(result)
                         } catch (e: Exception) {

@@ -58,14 +58,14 @@ internal class SmileIDDocumentVerification private constructor(
                             didSubmitDocumentVerificationJob =
                                 it.data.didSubmitDocumentVerificationJob,
                         )
-                    val newMoshi =
+                    val moshi =
                         SmileID.moshi
                             .newBuilder()
                             .add(DocumentCaptureResultAdapter.FACTORY)
                             .build()
                     val json =
                         try {
-                            newMoshi.adapter(DocumentCaptureResult::class.java).toJson(result)
+                            moshi.adapter(DocumentCaptureResult::class.java).toJson(result)
                         } catch (e: Exception) {
                             onError(e)
                             return@DocumentVerification

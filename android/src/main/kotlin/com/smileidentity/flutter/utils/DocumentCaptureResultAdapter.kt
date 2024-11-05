@@ -20,7 +20,6 @@ class DocumentCaptureResultAdapter : JsonAdapter<DocumentCaptureResult>() {
         var livenessFiles: MutableList<File>? = null
         var didSubmitDocumentVerificationJob: Boolean? = null
         var didSubmitEnhancedDocVJob: Boolean? = null
-
         while (reader.hasNext()) {
             when (reader.nextName()) {
                 "selfieFile" -> selfieFile = reader.nextString()?.let { File(it) }
