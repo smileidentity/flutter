@@ -107,19 +107,10 @@ internal class SmileIDDocumentCaptureView private constructor(
             modifier = Modifier.fillMaxSize(),
             jobId = jobId,
             side = if (isDocumentFrontSide) DocumentCaptureSide.Front else DocumentCaptureSide.Back,
-            showInstructions = showInstructions,
-            showAttribution = showAttribution,
-            allowGallerySelection = allowGalleryUpload,
-            showSkipButton = false,
-            instructionsHeroImage = hero,
-            showConfirmation = showConfirmationDialog,
-            instructionsTitleText = stringResource(instructionTitle),
-            instructionsSubtitleText = stringResource(instructionSubTitle),
             captureTitleText = stringResource(captureTitleText),
             knownIdAspectRatio = idAspectRatio,
             onConfirm = { file -> handleConfirmation(isDocumentFrontSide, file) },
             onError = { throwable -> onError(throwable) },
-            onSkip = { },
         )
     }
 

@@ -38,6 +38,7 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
             allowAgentMode: args["allowAgentMode"] as? Bool ?? false,
             allowGalleryUpload: args["allowGalleryUpload"] as? Bool ?? false,
             showInstructions: args["showInstructions"] as? Bool ?? true,
+            skipApiSubmission: args["skipApiSubmission"] as? Bool ?? false,
             showAttribution: args["showAttribution"] as? Bool ?? true,
             extraPartnerParams: args["extraPartnerParams"] as? [String: String] ?? [:],
             delegate: self

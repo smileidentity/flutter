@@ -30,6 +30,7 @@ class SmileIDSmartSelfieAuthentication : NSObject, FlutterPlatformView, SmartSel
             allowAgentMode: args["allowAgentMode"] as? Bool ?? false,
             showAttribution: args["showAttribution"] as? Bool ?? true,
             showInstructions: args["showInstructions"] as? Bool ?? true,
+            skipApiSubmission: args["skipApiSubmission"] as? Bool ?? false,
             extraPartnerParams: args["extraPartnerParams"] as? [String: String] ?? [:],
             delegate: self
         )

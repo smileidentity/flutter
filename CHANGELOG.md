@@ -2,7 +2,11 @@
 
 ## 10.2.1
 
+* Allow skipApiSubmission which will capture Enrollment, Authentication, Doc V and Enhanced DocV
+  without submitting to SmileID and will return captured images file paths
 * Fix Consistent file paths for all products and capture screens
+* Bump android to 10.3.7 (https://github.com/smileidentity/android/releases/tag/v10.3.7)
+* Bump iOS to 10.2.17 (https://github.com/smileidentity/ios/releases/tag/v10.2.17)
 
 ## 10.2.0
 

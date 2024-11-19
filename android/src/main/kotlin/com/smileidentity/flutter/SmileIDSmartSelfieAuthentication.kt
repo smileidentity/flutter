@@ -33,6 +33,7 @@ internal class SmileIDSmartSelfieAuthentication private constructor(
             allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
             showAttribution = args["showAttribution"] as? Boolean ?: true,
             showInstructions = args["showInstructions"] as? Boolean ?: true,
+            skipApiSubmission = args["skipApiSubmission"] as? Boolean ?: false,
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {
             when (it) {
