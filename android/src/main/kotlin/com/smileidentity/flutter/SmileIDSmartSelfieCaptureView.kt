@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -36,6 +35,7 @@ import com.smileidentity.compose.selfie.SelfieCaptureScreen
 import com.smileidentity.compose.selfie.SmartSelfieInstructionsScreen
 import com.smileidentity.compose.theme.colorScheme
 import com.smileidentity.compose.theme.typography
+import com.smileidentity.flutter.results.SmartSelfieCaptureResult
 import com.smileidentity.flutter.utils.SelfieCaptureResultAdapter
 import com.smileidentity.models.v2.Metadata
 import com.smileidentity.results.SmileIDResult
@@ -48,12 +48,6 @@ import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
-import java.io.File
-
-data class SmartSelfieCaptureResult(
-    val selfieFile: File? = null,
-    val livenessFiles: List<File>? = null,
-)
 
 internal class SmileIDSmartSelfieCaptureView private constructor(
     context: Context,
@@ -192,14 +186,14 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                             selfieFile = res.data.selfieFile,
                             livenessFiles = res.data.livenessFiles,
                         )
-                    val newMoshi =
+                    val moshi =
                         SmileID.moshi
                             .newBuilder()
                             .add(SelfieCaptureResultAdapter.FACTORY)
                             .build()
                     val json =
                         try {
-                            newMoshi
+                            moshi
                                 .adapter(SmartSelfieCaptureResult::class.java)
                                 .toJson(result)
                         } catch (e: Exception) {

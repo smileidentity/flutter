@@ -1,14 +1,15 @@
 package com.smileidentity.flutter.utils
 
-import com.smileidentity.flutter.SmartSelfieCaptureResult
+import com.smileidentity.SmileID
+import com.smileidentity.flutter.results.SmartSelfieCaptureResult
+import com.smileidentity.models.v2.SmartSelfieResponse
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.JsonAdapter.Factory
 import com.squareup.moshi.JsonReader
 import com.squareup.moshi.JsonWriter
-import com.squareup.moshi.Moshi
 import com.squareup.moshi.ToJson
 import java.io.File
-import java.lang.reflect.Type
 
 class SelfieCaptureResultAdapter : JsonAdapter<SmartSelfieCaptureResult>() {
     @FromJson
@@ -16,23 +17,36 @@ class SelfieCaptureResultAdapter : JsonAdapter<SmartSelfieCaptureResult>() {
         reader.beginObject()
         var selfieFile: File? = null
         var livenessFiles: List<File>? = null
+        var apiResponse: SmartSelfieResponse? = null
+
         while (reader.hasNext()) {
             when (reader.nextName()) {
                 "selfieFile" -> selfieFile = reader.nextString()?.let { File(it) }
                 "livenessFiles" -> {
-                    reader.beginArray()
+                    // Assuming livenessFiles is an array of file paths in the JSON
                     val files = mutableListOf<File>()
+                    reader.beginArray()
                     while (reader.hasNext()) {
                         reader.nextString()?.let { files.add(File(it)) }
                     }
                     reader.endArray()
                     livenessFiles = files
                 }
+
+                "apiResponse" ->
+                    apiResponse =
+                        SmileID.moshi.adapter(SmartSelfieResponse::class.java).fromJson(reader)
+
                 else -> reader.skipValue()
             }
         }
+
         reader.endObject()
-        return SmartSelfieCaptureResult(selfieFile, livenessFiles)
+        return SmartSelfieCaptureResult(
+            selfieFile = selfieFile,
+            livenessFiles = livenessFiles,
+            apiResponse = apiResponse,
+        )
     }
 
     @ToJson
@@ -46,30 +60,34 @@ class SelfieCaptureResultAdapter : JsonAdapter<SmartSelfieCaptureResult>() {
         }
         writer.beginObject()
         writer.name("selfieFile").value(value.selfieFile?.absolutePath)
+
         writer.name("livenessFiles")
         writer.beginArray()
-        value.livenessFiles?.forEach { file ->
-            writer.value(file.absolutePath)
-        }
+        value.livenessFiles?.forEach { writer.value(it.absolutePath) }
         writer.endArray()
+
+        writer.name("apiResponse")
+        if (value.apiResponse != null) {
+            SmileID.moshi.adapter(SmartSelfieResponse::class.java).toJson(
+                writer,
+                value.apiResponse,
+            )
+        } else {
+            writer.nullValue()
+        }
         writer.endObject()
     }
 
     companion object {
         val FACTORY =
-            object : Factory {
-                override fun create(
-                    type: Type,
-                    annotations: Set<Annotation>,
-                    moshi: Moshi,
-                ): JsonAdapter<*>? =
-                    if (type ==
-                        SmartSelfieCaptureResult::class.java
-                    ) {
-                        SelfieCaptureResultAdapter()
-                    } else {
-                        null
-                    }
+            Factory { type, annotations, moshi ->
+                if (type ==
+                    SmartSelfieCaptureResult::class.java
+                ) {
+                    SelfieCaptureResultAdapter()
+                } else {
+                    null
+                }
             }
     }
 }

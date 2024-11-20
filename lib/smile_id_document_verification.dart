@@ -35,6 +35,7 @@ class SmileIDDocumentVerification extends StatelessWidget {
     bool allowGalleryUpload = false,
     bool allowAgentMode = false,
     bool showInstructions = true,
+    bool skipApiSubmission = false,
     Map<String, String>? extraPartnerParams,
     required Function(String resultJson) onSuccess,
     required Function(String errorMessage) onError,
@@ -55,6 +56,7 @@ class SmileIDDocumentVerification extends StatelessWidget {
         "allowAgentMode": allowAgentMode,
         "allowGalleryUpload": allowGalleryUpload,
         "showInstructions": showInstructions,
+        "skipApiSubmission" : skipApiSubmission,
         "extraPartnerParams" : extraPartnerParams,
       },
     );

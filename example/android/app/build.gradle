@@ -28,7 +28,7 @@ apply plugin: "org.jlleitschuh.gradle.ktlint"
 
 android {
     namespace "com.smileidentity.flutter.sample"
-    compileSdk 34
+    compileSdk 35
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -47,6 +47,10 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
     }
 }
 

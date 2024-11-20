@@ -1,5 +1,6 @@
 package com.smileidentity.flutter.utils
-import com.smileidentity.flutter.DocumentCaptureResult
+
+import com.smileidentity.flutter.results.DocumentCaptureResult
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonReader
@@ -13,17 +14,44 @@ class DocumentCaptureResultAdapter : JsonAdapter<DocumentCaptureResult>() {
     @FromJson
     override fun fromJson(reader: JsonReader): DocumentCaptureResult {
         reader.beginObject()
+        var selfieFile: File? = null
         var frontFile: File? = null
         var backFile: File? = null
+        var livenessFiles: MutableList<File>? = null
+        var didSubmitDocumentVerificationJob: Boolean? = null
+        var didSubmitEnhancedDocVJob: Boolean? = null
         while (reader.hasNext()) {
             when (reader.nextName()) {
+                "selfieFile" -> selfieFile = reader.nextString()?.let { File(it) }
                 "documentFrontFile" -> frontFile = reader.nextString()?.let { File(it) }
                 "documentBackFile" -> backFile = reader.nextString()?.let { File(it) }
+                "livenessFiles" -> {
+                    livenessFiles = mutableListOf()
+                    reader.beginArray()
+                    while (reader.hasNext()) {
+                        reader.nextString()?.let { livenessFiles.add(File(it)) }
+                    }
+                    reader.endArray()
+                }
+
+                "didSubmitDocumentVerificationJob" ->
+                    didSubmitDocumentVerificationJob =
+                        reader.nextBoolean()
+
+                "didSubmitEnhancedDocVJob" -> didSubmitEnhancedDocVJob = reader.nextBoolean()
                 else -> reader.skipValue()
             }
         }
         reader.endObject()
-        return DocumentCaptureResult(frontFile, backFile)
+
+        return DocumentCaptureResult(
+            selfieFile = selfieFile,
+            documentFrontFile = frontFile,
+            documentBackFile = backFile,
+            livenessFiles = livenessFiles,
+            didSubmitDocumentVerificationJob = didSubmitDocumentVerificationJob,
+            didSubmitEnhancedDocVJob = didSubmitEnhancedDocVJob,
+        )
     }
 
     @ToJson
@@ -35,9 +63,28 @@ class DocumentCaptureResultAdapter : JsonAdapter<DocumentCaptureResult>() {
             writer.nullValue()
             return
         }
+
         writer.beginObject()
+        writer.name("selfieFile").value(value.selfieFile?.absolutePath)
         writer.name("documentFrontFile").value(value.documentFrontFile?.absolutePath)
         writer.name("documentBackFile").value(value.documentBackFile?.absolutePath)
+
+        writer.name("livenessFiles")
+        if (value.livenessFiles == null) {
+            writer.nullValue()
+        } else {
+            writer.beginArray()
+            for (file in value.livenessFiles) {
+                writer.value(file.absolutePath)
+            }
+            writer.endArray()
+        }
+
+        writer
+            .name("didSubmitDocumentVerificationJob")
+            .value(value.didSubmitDocumentVerificationJob)
+        writer.name("didSubmitEnhancedDocVJob").value(value.didSubmitEnhancedDocVJob)
+
         writer.endObject()
     }
 
@@ -49,9 +96,7 @@ class DocumentCaptureResultAdapter : JsonAdapter<DocumentCaptureResult>() {
                     annotations: Set<Annotation>,
                     moshi: Moshi,
                 ): JsonAdapter<*>? =
-                    if (type ==
-                        DocumentCaptureResult::class.java
-                    ) {
+                    if (type == DocumentCaptureResult::class.java) {
                         DocumentCaptureResultAdapter()
                     } else {
                         null

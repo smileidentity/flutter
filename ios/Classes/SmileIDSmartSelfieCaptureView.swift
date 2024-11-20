@@ -3,7 +3,8 @@ import SwiftUI
 import Combine
 import SmileID
 
-class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView {
+class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView,SmileIDFileUtilsProtocol {
+    var fileManager: FileManager = Foundation.FileManager.default
     private let _childViewController: UIHostingController<AnyView>
     private let _viewModel: SelfieViewModel
     private let _channel: FlutterMethodChannel

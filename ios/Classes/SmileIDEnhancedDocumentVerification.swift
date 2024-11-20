@@ -3,8 +3,8 @@ import UIKit
 import SmileID
 import SwiftUI
 
-class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, EnhancedDocumentVerificationResultDelegate {
-    
+class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, EnhancedDocumentVerificationResultDelegate,SmileIDFileUtilsProtocol {
+    var fileManager: FileManager = Foundation.FileManager.default
     private var _view: UIView
     private var _channel: FlutterMethodChannel
     private var _childViewController: UIViewController?
@@ -38,6 +38,7 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
             allowAgentMode: args["allowAgentMode"] as? Bool ?? false,
             allowGalleryUpload: args["allowGalleryUpload"] as? Bool ?? false,
             showInstructions: args["showInstructions"] as? Bool ?? true,
+            skipApiSubmission: args["skipApiSubmission"] as? Bool ?? false,
             showAttribution: args["showAttribution"] as? Bool ?? true,
             extraPartnerParams: args["extraPartnerParams"] as? [String: String] ?? [:],
             delegate: self
@@ -52,9 +53,8 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
     func didSucceed(selfie: URL, documentFrontImage: URL, documentBackImage: URL?, didSubmitEnhancedDocVJob: Bool) {
         _childViewController?.removeFromParent()
         let arguments: [String: Any] = [
-            "selfieFile": selfie.absoluteString,
-            "documentFrontFile": documentFrontImage.absoluteString,
-            "documentBackFile": documentBackImage?.absoluteString ?? "",
+            "selfieFile": getFilePath(fileName: selfie.absoluteString),
+            "documentFrontFile": getFilePath(fileName: documentFrontImage.absoluteString),
             "didSubmitEnhancedDocVJob": didSubmitEnhancedDocVJob
         ]
         do {

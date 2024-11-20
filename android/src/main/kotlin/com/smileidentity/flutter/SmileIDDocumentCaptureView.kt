@@ -17,6 +17,7 @@ import com.smileidentity.compose.document.DocumentCaptureScreen
 import com.smileidentity.compose.document.DocumentCaptureSide
 import com.smileidentity.compose.theme.colorScheme
 import com.smileidentity.compose.theme.typography
+import com.smileidentity.flutter.results.DocumentCaptureResult
 import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
 import com.smileidentity.models.v2.Metadata
 import com.smileidentity.util.randomJobId
@@ -25,11 +26,6 @@ import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 import java.io.File
-
-data class DocumentCaptureResult(
-    val documentFrontFile: File? = null,
-    val documentBackFile: File? = null,
-)
 
 internal class SmileIDDocumentCaptureView private constructor(
     context: Context,
@@ -111,19 +107,10 @@ internal class SmileIDDocumentCaptureView private constructor(
             modifier = Modifier.fillMaxSize(),
             jobId = jobId,
             side = if (isDocumentFrontSide) DocumentCaptureSide.Front else DocumentCaptureSide.Back,
-            showInstructions = showInstructions,
-            showAttribution = showAttribution,
-            allowGallerySelection = allowGalleryUpload,
-            showSkipButton = false,
-            instructionsHeroImage = hero,
-            showConfirmation = showConfirmationDialog,
-            instructionsTitleText = stringResource(instructionTitle),
-            instructionsSubtitleText = stringResource(instructionSubTitle),
             captureTitleText = stringResource(captureTitleText),
             knownIdAspectRatio = idAspectRatio,
             onConfirm = { file -> handleConfirmation(isDocumentFrontSide, file) },
             onError = { throwable -> onError(throwable) },
-            onSkip = { },
         )
     }
 

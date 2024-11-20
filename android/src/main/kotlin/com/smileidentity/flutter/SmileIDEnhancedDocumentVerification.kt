@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.compose.runtime.Composable
 import com.smileidentity.SmileID
 import com.smileidentity.compose.EnhancedDocumentVerificationScreen
+import com.smileidentity.flutter.results.DocumentCaptureResult
+import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
@@ -38,10 +40,38 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
             allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
             allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false,
             showInstructions = args["showInstructions"] as? Boolean ?: true,
+            skipApiSubmission = args["skipApiSubmission"] as? Boolean ?: false,
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {
             when (it) {
-                is SmileIDResult.Success -> onSuccess(it.data)
+                is SmileIDResult.Success -> {
+                    val result =
+                        DocumentCaptureResult(
+                            selfieFile = it.data.selfieFile,
+                            documentFrontFile = it.data.documentFrontFile,
+                            livenessFiles = it.data.livenessFiles,
+                            documentBackFile = it.data.documentBackFile,
+                            didSubmitEnhancedDocVJob = it.data.didSubmitEnhancedDocVJob,
+                        )
+                    val moshi =
+                        SmileID.moshi
+                            .newBuilder()
+                            .add(DocumentCaptureResultAdapter.FACTORY)
+                            .build()
+                    val json =
+                        try {
+                            moshi
+                                .adapter(DocumentCaptureResult::class.java)
+                                .toJson(result)
+                        } catch (e: Exception) {
+                            onError(e)
+                            return@EnhancedDocumentVerificationScreen
+                        }
+                    json?.let { js ->
+                        onSuccessJson(js)
+                    }
+                }
+
                 is SmileIDResult.Error -> onError(it.throwable)
             }
         }
