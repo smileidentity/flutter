@@ -1,5 +1,5 @@
 group "com.smileidentity.flutter"
-version findProperty("SDK_VERSION") ?: "10.3.7"
+version findProperty("SDK_VERSION") ?: "10.3.8-SNAPSHOT"
 
 buildscript {
     ext.kotlin_version = "1.9.10"
@@ -10,9 +10,9 @@ buildscript {
     }
 
     dependencies {
-        classpath "com.android.tools.build:gradle:8.7.0"
+        classpath "com.android.tools.build:gradle:8.7.3"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.jlleitschuh.gradle:ktlint-gradle:12.1.1"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:12.1.2"
     }
 }
 
@@ -73,7 +73,7 @@ android {
         implementation "androidx.compose.material3:material3"
         implementation "androidx.fragment:fragment-ktx"
         implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core"
-        implementation "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.6"
+        implementation "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.8"
 
         testImplementation "org.jetbrains.kotlin:kotlin-test"
         testImplementation "io.mockk:mockk:1.13.11"
