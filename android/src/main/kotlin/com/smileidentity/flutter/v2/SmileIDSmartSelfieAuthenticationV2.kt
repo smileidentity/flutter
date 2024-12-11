@@ -27,7 +27,7 @@ internal class SmileIDSmartSelfieAuthenticationV2 private constructor(
     @Composable
     override fun Content(args: Map<String, Any?>) {
         val extraPartnerParams = args["extraPartnerParams"] as? Map<String, String> ?: emptyMap()
-        SmileID.SmartSelfieAuthentication(
+        SmileID.SmartSelfieAuthenticationV2(
             userId = args["userId"] as? String ?: randomUserId(),
             allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
             showAttribution = args["showAttribution"] as? Boolean ?: true,
