@@ -1,7 +1,7 @@
 buildscript {
     ext.kotlin_version = "1.9.10"
-    // Get AGP version from environment variable or default to 8.7.0
-    ext.agp_version = System.getenv("AGP_VERSION") ?: "8.7.0"
+    // Get AGP version from environment variable or default to 8.7.3
+    ext.agp_version = System.getenv("AGP_VERSION") ?: "8.7.3"
     repositories {
         google()
         mavenCentral()
@@ -21,6 +21,7 @@ allprojects {
         google()
         mavenCentral()
         mavenCentral { url "https://oss.sonatype.org/content/repositories/snapshots" }
+        maven {url "https://oss.sonatype.org/content/repositories/snapshots/com/smileidentity/android-sdk/" }
     }
 }
 

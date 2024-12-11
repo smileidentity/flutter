@@ -1,5 +1,5 @@
 group "com.smileidentity.flutter"
-version findProperty("SDK_VERSION") ?: "10.3.8-SNAPSHOT"
+version findProperty("SDK_VERSION") ?: "10.4.0-SNAPSHOT"
 
 buildscript {
     ext.kotlin_version = "1.9.10"
@@ -20,6 +20,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven {url "https://oss.sonatype.org/content/repositories/snapshots/com/smileidentity/android-sdk/" }
     }
 }
 
