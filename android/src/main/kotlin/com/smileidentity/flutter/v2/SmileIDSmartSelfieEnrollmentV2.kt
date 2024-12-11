@@ -36,29 +36,7 @@ internal class SmileIDSmartSelfieEnrollmentV2 private constructor(
         ) {
             when (it) {
                 is SmileIDResult.Success -> {
-                    val result =
-                        SmartSelfieResult(
-                            selfieFile = it.data.selfieFile,
-                            livenessFiles = it.data.livenessFiles,
-                            apiResponse = it.data.apiResponse,
-                        )
-                    val moshi =
-                        SmileID.moshi
-                            .newBuilder()
-                            .add(SelfieCaptureResultAdapter.FACTORY)
-                            .build()
-                    val json =
-                        try {
-                            moshi
-                                .adapter(SmartSelfieResult::class.java)
-                                .toJson(result)
-                        } catch (e: Exception) {
-                            onError(e)
-                            return@SmartSelfieEnrollment
-                        }
-                    json?.let { js ->
-                        onSuccessJson(js)
-                    }
+                    // todo
                 }
 
                 is SmileIDResult.Error -> onError(it.throwable)
