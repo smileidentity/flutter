@@ -1,11 +1,9 @@
-package android.src.main.kotlin.com.smileidentity.flutter.v2
+package com.smileidentity.flutter.v2
 
 import android.content.Context
 import androidx.compose.runtime.Composable
 import com.smileidentity.SmileID
-import com.smileidentity.compose.SmartSelfieEnrollment
-import com.smileidentity.flutter.results.SmartSelfieCaptureResult
-import com.smileidentity.flutter.utils.SelfieCaptureResultAdapter
+import com.smileidentity.flutter.SmileComposablePlatformView
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomUserId
 import io.flutter.plugin.common.BinaryMessenger
