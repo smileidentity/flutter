@@ -1,5 +1,9 @@
 # Release Notes
 
+## 10.3.0
+
+* Added the new enhanced biometric screens
+
 ## 10.2.1
 
 * Allow skipApiSubmission which will capture Enrollment, Authentication, Doc V and Enhanced DocV
