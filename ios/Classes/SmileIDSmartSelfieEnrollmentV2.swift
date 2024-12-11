@@ -24,7 +24,7 @@ class SmileIDSmartSelfieEnrollmentV2 : NSObject, FlutterPlatformView, SmartSelfi
         )
         _childViewController = nil
         super.init()
-        let screen = SmileID.smartSelfieEnrollmentScreen(
+        let screen = SmileID.smartSelfieEnrollmentScreenV2(
             userId: args["userId"] as? String ?? "user-\(UUID().uuidString)",
             allowNewEnroll: args["allowNewEnroll"] as? Bool ?? false,
             showAttribution: args["showAttribution"] as? Bool ?? true,
