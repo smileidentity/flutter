@@ -3,6 +3,7 @@
 ## 10.3.0
 
 * Added the new enhanced biometric screens
+* Migrate to Gradle Plugin setup
 
 ## 10.2.1
 
