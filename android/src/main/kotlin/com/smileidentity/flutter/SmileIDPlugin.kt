@@ -24,6 +24,7 @@ import android.app.Activity
 import android.content.Context
 import com.smileidentity.SmileID
 import com.smileidentity.SmileIDOptIn
+import com.smileidentity.flutter.enhanced.SmileIDSmartSelfieAuthenticationEnhanced
 import com.smileidentity.flutter.enhanced.SmileIDSmartSelfieEnrollmentEnhanced
 import com.smileidentity.networking.asFormDataPart
 import com.smileidentity.networking.pollBiometricKycJobStatus

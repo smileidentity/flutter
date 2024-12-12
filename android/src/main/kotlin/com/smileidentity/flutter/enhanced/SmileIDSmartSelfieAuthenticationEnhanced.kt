@@ -3,6 +3,7 @@ package com.smileidentity.flutter.enhanced
 import android.content.Context
 import androidx.compose.runtime.Composable
 import com.smileidentity.SmileID
+import com.smileidentity.compose.SmartSelfieAuthenticationEnhanced
 import com.smileidentity.flutter.SmileComposablePlatformView
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomUserId

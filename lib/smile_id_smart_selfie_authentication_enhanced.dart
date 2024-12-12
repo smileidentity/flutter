@@ -4,8 +4,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-class SmileIDSmartSelfieAuthenticationV2 extends StatelessWidget {
-  static const String viewType = "SmileIDSmartSelfieAuthenticationV2";
+class SmileIDSmartSelfieAuthenticationEnhanced extends StatelessWidget {
+  static const String viewType = "SmileIDSmartSelfieAuthenticationEnhanced";
   final Map<String, dynamic> creationParams;
 
   /// Called when the user successfully completes the smart selfie enrollment flow. The result is a
@@ -13,13 +13,13 @@ class SmileIDSmartSelfieAuthenticationV2 extends StatelessWidget {
   final Function(String) onSuccess;
   final Function(String) onError;
 
-  const SmileIDSmartSelfieAuthenticationV2._({
+  const SmileIDSmartSelfieAuthenticationEnhanced._({
     required this.creationParams,
     required this.onSuccess,
     required this.onError,
   });
 
-  factory SmileIDSmartSelfieAuthenticationV2({
+  factory SmileIDSmartSelfieAuthenticationEnhanced({
     Key? key,
     // userId can't actually be null in the native SDK but we delegate their creation to
     // the native platform code, since that's where the random ID creation happens
@@ -31,7 +31,7 @@ class SmileIDSmartSelfieAuthenticationV2 extends StatelessWidget {
     required Function(String resultJson) onSuccess,
     required Function(String errorMessage) onError,
   }) {
-    return SmileIDSmartSelfieAuthenticationV2._(
+    return SmileIDSmartSelfieAuthenticationEnhanced._(
       onSuccess: onSuccess,
       onError: onError,
       creationParams: {

@@ -21,7 +21,7 @@ allprojects {
         google()
         mavenCentral()
         mavenCentral { url "https://oss.sonatype.org/content/repositories/snapshots" }
-        maven {url "https://oss.sonatype.org/content/repositories/snapshots/com/smileidentity/android-sdk/" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/com/smileidentity/android-sdk/" }
     }
 }
 
