@@ -3,13 +3,13 @@ import UIKit
 import SmileID
 import SwiftUI
 
-class SmileIDSmartSelfieAuthenticationV2 : NSObject, FlutterPlatformView, SmartSelfieResultDelegate,SmileIDFileUtilsProtocol {
+class SmileIDSmartSelfieAuthenticationEnhanced : NSObject, FlutterPlatformView, SmartSelfieResultDelegate,SmileIDFileUtilsProtocol {
     var fileManager: FileManager = Foundation.FileManager.default
     private var _view: UIView
     private var _channel: FlutterMethodChannel
     private var _childViewController: UIViewController?
 
-    static let VIEW_TYPE_ID = "SmileIDSmartSelfieAuthenticationV2"
+    static let VIEW_TYPE_ID = "SmileIDSmartSelfieAuthenticationEnhanced"
 
     init(
         frame: CGRect,
@@ -19,12 +19,12 @@ class SmileIDSmartSelfieAuthenticationV2 : NSObject, FlutterPlatformView, SmartS
     ) {
         _view = UIView()
         _channel = FlutterMethodChannel(
-            name: "\(SmileIDSmartSelfieAuthenticationV2.VIEW_TYPE_ID)_\(viewId)",
+            name: "\(SmileIDSmartSelfieAuthenticationEnhanced.VIEW_TYPE_ID)_\(viewId)",
             binaryMessenger: messenger
         )
         _childViewController = nil
         super.init()
-        let screen = SmileID.smartSelfieAuthenticationScreenV2(
+        let screen = SmileID.smartSelfieAuthenticationScreenEnhanced(
             userId: args["userId"] as? String ?? "user-\(UUID().uuidString)",
             allowNewEnroll: args["allowNewEnroll"] as? Bool ?? false,
             showAttribution: args["showAttribution"] as? Bool ?? true,
@@ -62,7 +62,7 @@ class SmileIDSmartSelfieAuthenticationV2 : NSObject, FlutterPlatformView, SmartS
             viewIdentifier viewId: Int64,
             arguments args: Any?
         ) -> FlutterPlatformView {
-            return SmileIDSmartSelfieAuthenticationV2(
+            return SmileIDSmartSelfieAuthenticationEnhanced(
                 frame: frame,
                 viewIdentifier: viewId,
                 arguments: args as! [String: Any?],
