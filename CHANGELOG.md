@@ -4,6 +4,7 @@
 
 * Added the new enhanced biometric screens
 * Migrate to Gradle Plugin setup
+* Update to Kotlin 2.0
 
 ## 10.2.1
 
