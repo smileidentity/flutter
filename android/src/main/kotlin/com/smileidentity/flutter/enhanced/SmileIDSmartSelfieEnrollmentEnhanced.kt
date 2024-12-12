@@ -3,8 +3,10 @@ package com.smileidentity.flutter.enhanced
 import android.content.Context
 import androidx.compose.runtime.Composable
 import com.smileidentity.SmileID
+import com.smileidentity.SmileID.moshi
 import com.smileidentity.compose.SmartSelfieEnrollmentEnhanced
 import com.smileidentity.flutter.SmileComposablePlatformView
+import com.smileidentity.results.SmartSelfieResult
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomUserId
 import io.flutter.plugin.common.BinaryMessenger
@@ -35,7 +37,24 @@ internal class SmileIDSmartSelfieEnrollmentEnhanced private constructor(
         ) {
             when (it) {
                 is SmileIDResult.Success -> {
-                    // todo
+                    val result =
+                        SmartSelfieResult(
+                            selfieFile = it.data.selfieFile,
+                            livenessFiles = it.data.livenessFiles,
+                            apiResponse = it.data.apiResponse,
+                        )
+                    val json =
+                        try {
+                            moshi
+                                .adapter(SmartSelfieResult::class.java)
+                                .toJson(result)
+                        } catch (e: Exception) {
+                            onError(e)
+                            return@SmartSelfieEnrollmentEnhanced
+                        }
+                    json?.let { response ->
+                        onSuccessJson(response)
+                    }
                 }
 
                 is SmileIDResult.Error -> onError(it.throwable)
