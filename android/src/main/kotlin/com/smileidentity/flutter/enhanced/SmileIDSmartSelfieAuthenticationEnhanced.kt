@@ -1,9 +1,8 @@
-package com.smileidentity.flutter.v2
+package com.smileidentity.flutter.enhanced
 
 import android.content.Context
 import androidx.compose.runtime.Composable
 import com.smileidentity.SmileID
-import com.smileidentity.compose.SmartSelfieEnrollmentV2
 import com.smileidentity.flutter.SmileComposablePlatformView
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomUserId
@@ -13,20 +12,20 @@ import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 import kotlinx.collections.immutable.toImmutableMap
 
-internal class SmileIDSmartSelfieEnrollmentV2 private constructor(
+internal class SmileIDSmartSelfieAuthenticationEnhanced private constructor(
     context: Context,
     viewId: Int,
     messenger: BinaryMessenger,
     args: Map<String, Any?>,
 ) : SmileComposablePlatformView(context, VIEW_TYPE_ID, viewId, messenger, args) {
     companion object {
-        const val VIEW_TYPE_ID = "SmileIDSmartSelfieEnrollmentV2"
+        const val VIEW_TYPE_ID = "SmileIDSmartSelfieAuthenticationEnhanced"
     }
 
     @Composable
     override fun Content(args: Map<String, Any?>) {
         val extraPartnerParams = args["extraPartnerParams"] as? Map<String, String> ?: emptyMap()
-        SmileID.SmartSelfieEnrollmentV2(
+        SmileID.SmartSelfieAuthenticationEnhanced(
             userId = args["userId"] as? String ?: randomUserId(),
             allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
             showAttribution = args["showAttribution"] as? Boolean ?: true,
@@ -52,7 +51,7 @@ internal class SmileIDSmartSelfieEnrollmentV2 private constructor(
             args: Any?,
         ): PlatformView {
             @Suppress("UNCHECKED_CAST")
-            return SmileIDSmartSelfieEnrollmentV2(
+            return SmileIDSmartSelfieAuthenticationEnhanced(
                 context,
                 viewId,
                 messenger,

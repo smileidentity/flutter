@@ -24,8 +24,7 @@ import android.app.Activity
 import android.content.Context
 import com.smileidentity.SmileID
 import com.smileidentity.SmileIDOptIn
-import com.smileidentity.flutter.v2.SmileIDSmartSelfieAuthenticationV2
-import com.smileidentity.flutter.v2.SmileIDSmartSelfieEnrollmentV2
+import com.smileidentity.flutter.enhanced.SmileIDSmartSelfieEnrollmentEnhanced
 import com.smileidentity.networking.asFormDataPart
 import com.smileidentity.networking.pollBiometricKycJobStatus
 import com.smileidentity.networking.pollDocumentVerificationJobStatus
@@ -75,13 +74,13 @@ class SmileIDPlugin :
         )
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
-            SmileIDSmartSelfieEnrollmentV2.VIEW_TYPE_ID,
-            SmileIDSmartSelfieEnrollmentV2.Factory(flutterPluginBinding.binaryMessenger),
+            SmileIDSmartSelfieEnrollmentEnhanced.VIEW_TYPE_ID,
+            SmileIDSmartSelfieEnrollmentEnhanced.Factory(flutterPluginBinding.binaryMessenger),
         )
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
-            SmileIDSmartSelfieAuthenticationV2.VIEW_TYPE_ID,
-            SmileIDSmartSelfieAuthenticationV2.Factory(flutterPluginBinding.binaryMessenger),
+            SmileIDSmartSelfieAuthenticationEnhanced.VIEW_TYPE_ID,
+            SmileIDSmartSelfieAuthenticationEnhanced.Factory(flutterPluginBinding.binaryMessenger),
         )
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
