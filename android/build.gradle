@@ -1,8 +1,16 @@
-group "com.smileidentity.flutter"
-version findProperty("SDK_VERSION") ?: "10.3.7"
+def kotlinVersion = findProperty('kotlinVersion') ?: '2.1.0'
+def smileVersion = findProperty('smileVersion') ?: '10.4.0'
+def kotlinCompilerExtension = findProperty('kotlinCompilerExtensionVersion') ?: '1.5.14'
+
+ext {
+    project.ext.kotlinVersion = kotlinVersion
+    project.ext.smileVersion = smileVersion
+    project.ext.kotlinCompilerExtension = kotlinCompilerExtension
+}
 
 buildscript {
-    ext.kotlin_version = "1.9.10"
+    def kotlinVersion = rootProject.findProperty('kotlinVersion') ?: '2.1.0'
+
     repositories {
         google()
         mavenCentral()
@@ -10,9 +18,13 @@ buildscript {
     }
 
     dependencies {
-        classpath "com.android.tools.build:gradle:8.7.0"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.jlleitschuh.gradle:ktlint-gradle:12.1.1"
+        classpath "com.android.tools.build:gradle:8.7.3"
+        if (kotlinVersion?.startsWith("2")) {
+            classpath "org.jetbrains.kotlin:compose-compiler-gradle-plugin:$kotlinVersion"
+        } else {
+            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        }
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:12.1.2"
     }
 }
 
@@ -20,15 +32,19 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven {url "https://oss.sonatype.org/content/repositories/snapshots/com/smileidentity/android-sdk/" }
     }
 }
 
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 apply plugin: "org.jlleitschuh.gradle.ktlint"
+if (kotlinVersion?.startsWith("2")) {
+    apply plugin: "org.jetbrains.kotlin.plugin.compose"
+}
 
 android {
-    namespace group
+    namespace 'com.smileidentity.flutter'
     compileSdk 35
 
     defaultConfig {
@@ -61,19 +77,21 @@ android {
     }
 
     buildFeatures.compose = true
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
+    if (!kotlinVersion?.startsWith("2")) {
+        composeOptions {
+            kotlinCompilerExtensionVersion = kotlinCompilerExtension
+        }
     }
 
     dependencies {
-        implementation "com.smileidentity:android-sdk:${version}"
+        implementation "com.smileidentity:android-sdk:${smileVersion}"
         implementation "androidx.core:core-ktx"
         implementation "androidx.compose.ui:ui"
         implementation 'androidx.lifecycle:lifecycle-viewmodel-compose'
         implementation "androidx.compose.material3:material3"
         implementation "androidx.fragment:fragment-ktx"
         implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core"
-        implementation "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.6"
+        implementation "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.8"
 
         testImplementation "org.jetbrains.kotlin:kotlin-test"
         testImplementation "io.mockk:mockk:1.13.11"

@@ -1,37 +1,26 @@
-buildscript {
-    ext.kotlin_version = "1.9.10"
-    // Get AGP version from environment variable or default to 8.7.0
-    ext.agp_version = System.getenv("AGP_VERSION") ?: "8.7.0"
-    repositories {
-        google()
-        mavenCentral()
-        maven { url "https://plugins.gradle.org/m2/" }
-        mavenCentral { url "https://oss.sonatype.org/content/repositories/snapshots" }
-    }
-
-    dependencies {
-        classpath "com.android.tools.build:gradle:$agp_version"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.jlleitschuh.gradle:ktlint-gradle:12.1.1"
-    }
-}
+// set your desired versions here
+//project.ext {
+//    kotlinVersion = "1.9.24"
+//    kotlinCompilerExtensionVersion = "1.5.14"
+//}
 
 allprojects {
     repositories {
         google()
         mavenCentral()
         mavenCentral { url "https://oss.sonatype.org/content/repositories/snapshots" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/com/smileidentity/android-sdk/" }
     }
 }
 
-rootProject.buildDir = "../build"
+rootProject.buildDir = '../build'
 
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
 
 subprojects {
-    project.evaluationDependsOn(":app")
+    project.evaluationDependsOn(':app')
 }
 
 tasks.register("clean", Delete) {

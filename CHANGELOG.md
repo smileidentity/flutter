@@ -1,5 +1,13 @@
 # Release Notes
 
+## 10.3.0
+
+* Introduce screens for the new Enhanced Selfie Capture Enrollment and Authentication Products (Android).
+* Migrate to Gradle Plugin setup
+* Update to Kotlin 2.0
+* Bump android to 10.4.0 (https://github.com/smileidentity/android/releases/tag/v10.4.0)
+* Bump iOS to 10.3.1 (https://github.com/smileidentity/ios/releases/tag/v10.3.1)
+
 ## 10.2.1
 
 * Allow skipApiSubmission which will capture Enrollment, Authentication, Doc V and Enhanced DocV

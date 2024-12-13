@@ -39,6 +39,22 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             smartSelfieAuthenticationFactory,
             withId: SmileIDSmartSelfieAuthentication.VIEW_TYPE_ID
         )
+
+//         let smartSelfieEnrollmentEnhancedFactory = SmileIDSmartSelfieEnrollmentEnhanced.Factory(
+//             messenger: registrar.messenger()
+//         )
+//         registrar.register(
+//             smartSelfieEnrollmentEnhancedFactory,
+//             withId: SmileIDSmartSelfieEnrollmentEnhanced.VIEW_TYPE_ID
+//         )
+//
+//         let smartSelfieAuthenticationEnhancedFactory = SmileIDSmartSelfieAuthenticationEnhanced.Factory(
+//             messenger: registrar.messenger()
+//         )
+//         registrar.register(
+//             smartSelfieAuthenticationEnhancedFactory,
+//             withId: SmileIDSmartSelfieAuthenticationEnhanced.VIEW_TYPE_ID
+//         )
         
         let biometricKYCFactory = SmileIDBiometricKYC.Factory(
             messenger: registrar.messenger()
@@ -231,6 +247,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
                     callbackUrl: callbackUrl,
                     sandboxResult: sandboxResult.map { Int($0) },
                     allowNewEnroll: allowNewEnroll,
+                    failureReason: nil,
                     metadata: Metadata.default()
                 )
                 completion(.success(response.toResponse()))
@@ -272,6 +289,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
                     partnerParams: convertNullableMapToNonNull(data: partnerParams),
                     callbackUrl: callbackUrl,
                     sandboxResult: sandboxResult.map { Int($0) },
+                    failureReason: nil,
                     metadata: Metadata.default()
                 )
                 completion(.success(response.toResponse()))

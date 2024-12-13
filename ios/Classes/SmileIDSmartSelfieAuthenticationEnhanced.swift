@@ -3,13 +3,13 @@ import UIKit
 import SmileID
 import SwiftUI
 
-class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieResultDelegate, SmileIDFileUtilsProtocol {
+class SmileIDSmartSelfieAuthenticationEnhanced : NSObject, FlutterPlatformView, SmartSelfieResultDelegate,SmileIDFileUtilsProtocol {
     var fileManager: FileManager = Foundation.FileManager.default
     private var _view: UIView
     private var _channel: FlutterMethodChannel
     private var _childViewController: UIViewController?
 
-    static let VIEW_TYPE_ID = "SmileIDSmartSelfieEnrollment"
+    static let VIEW_TYPE_ID = "SmileIDSmartSelfieAuthenticationEnhanced"
 
     init(
         frame: CGRect,
@@ -19,18 +19,16 @@ class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieR
     ) {
         _view = UIView()
         _channel = FlutterMethodChannel(
-            name: "\(SmileIDSmartSelfieEnrollment.VIEW_TYPE_ID)_\(viewId)",
+            name: "\(SmileIDSmartSelfieAuthenticationEnhanced.VIEW_TYPE_ID)_\(viewId)",
             binaryMessenger: messenger
         )
         _childViewController = nil
         super.init()
-        let screen = SmileID.smartSelfieEnrollmentScreen(
+        let screen = SmileID.smartSelfieAuthenticationScreenEnhanced(
             userId: args["userId"] as? String ?? "user-\(UUID().uuidString)",
             allowNewEnroll: args["allowNewEnroll"] as? Bool ?? false,
-            allowAgentMode: args["allowAgentMode"] as? Bool ?? false,
             showAttribution: args["showAttribution"] as? Bool ?? true,
             showInstructions: args["showInstructions"] as? Bool ?? true,
-            skipApiSubmission: args["skipApiSubmission"] as? Bool ?? false,
             extraPartnerParams: args["extraPartnerParams"] as? [String: String] ?? [:],
             delegate: self
         )
@@ -43,34 +41,14 @@ class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieR
 
     func didSucceed(selfieImage: URL, livenessImages: [URL], apiResponse: SmartSelfieResponse?) {
         _childViewController?.removeFromParent()
-        var arguments: [String: Any] = [
-            "selfieFile": getFilePath(fileName: selfieImage.absoluteString),
-            "livenessFiles": livenessImages.map {
-              getFilePath(fileName: $0.absoluteString)
-            }
-        ]
-        if let apiResponse = apiResponse {
-            let encoder = JSONEncoder()
-            encoder.outputFormatting = .prettyPrinted
-            if let jsonData = try? encoder.encode(apiResponse),
-               let jsonString = String(data: jsonData, encoding: .utf8) {
-                arguments["apiResponse"] = jsonString
-            }
-        }
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: arguments, options: [])
-            if let jsonString = String(data: jsonData, encoding: .utf8) {
-                _channel.invokeMethod("onSuccess", arguments: jsonString)
-            }
-        } catch {
-            didError(error: error)
-        }
+        // todo
     }
 
     func didError(error: Error) {
         print("[Smile ID] An error occurred - \(error.localizedDescription)")
         _channel.invokeMethod("onError", arguments: error.localizedDescription)
     }
+
 
     class Factory : NSObject, FlutterPlatformViewFactory {
         private var messenger: FlutterBinaryMessenger
@@ -84,7 +62,7 @@ class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieR
             viewIdentifier viewId: Int64,
             arguments args: Any?
         ) -> FlutterPlatformView {
-            return SmileIDSmartSelfieEnrollment(
+            return SmileIDSmartSelfieAuthenticationEnhanced(
                 frame: frame,
                 viewIdentifier: viewId,
                 arguments: args as! [String: Any?],
