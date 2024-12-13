@@ -2,9 +2,11 @@
 
 ## 10.3.0
 
-* Added the new enhanced biometric screens
+* Introduce screens for the new Enhanced Selfie Capture Enrollment and Authentication Products.
 * Migrate to Gradle Plugin setup
 * Update to Kotlin 2.0
+* Bump android to 10.4.0 (https://github.com/smileidentity/android/releases/tag/v10.4.0)
+* Bump iOS to 10.3.0 (https://github.com/smileidentity/ios/releases/tag/v10.3.0)
 
 ## 10.2.1
 
