@@ -3,7 +3,7 @@ import SwiftUI
 import Combine
 import SmileID
 
-class SmileIDDocumentCaptureView: NSObject, FlutterPlatformView,SmileIDFileUtilsProtocol {
+class SmileIDDocumentCaptureView: NSObject, FlutterPlatformView, SmileIDFileUtilsProtocol {
     var fileManager: FileManager = Foundation.FileManager.default
     private let _childViewController: UIHostingController<AnyView>
     private let _channel: FlutterMethodChannel

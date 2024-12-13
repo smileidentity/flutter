@@ -247,6 +247,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
                     callbackUrl: callbackUrl,
                     sandboxResult: sandboxResult.map { Int($0) },
                     allowNewEnroll: allowNewEnroll,
+                    failureReason: nil,
                     metadata: Metadata.default()
                 )
                 completion(.success(response.toResponse()))
@@ -288,6 +289,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
                     partnerParams: convertNullableMapToNonNull(data: partnerParams),
                     callbackUrl: callbackUrl,
                     sandboxResult: sandboxResult.map { Int($0) },
+                    failureReason: nil,
                     metadata: Metadata.default()
                 )
                 completion(.success(response.toResponse()))

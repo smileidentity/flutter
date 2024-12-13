@@ -3,7 +3,7 @@ import SwiftUI
 import Combine
 import SmileID
 
-class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView,SmileIDFileUtilsProtocol {
+class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView, SmileIDFileUtilsProtocol {
     var fileManager: FileManager = Foundation.FileManager.default
     private let _childViewController: UIHostingController<AnyView>
     private let _viewModel: SelfieViewModel
@@ -75,39 +75,39 @@ struct SmileIDRootView: View {
     
     var body: some View {
         NavigationView {
-            Group {
-                if showInstructions, !acknowledgedInstructions {
-                    SmartSelfieInstructionsScreen(showAttribution: showAttribution) {
-                        acknowledgedInstructions = true
-                    }
-                } else if viewModel.processingState != nil {
-                    Color.clear.onAppear {
-                        self.viewModel.onFinished(callback: self)
-                    }
-                } else if let selfieToConfirm = viewModel.selfieToConfirm{
-                    if(showConfirmationDialog){
-                        ImageCaptureConfirmationDialog(
-                            title: SmileIDResourcesHelper.localizedString(for: "Confirmation.GoodSelfie"),
-                            subtitle: SmileIDResourcesHelper.localizedString(for: "Confirmation.FaceClear"),
-                            image: UIImage(data: selfieToConfirm)!,
-                            confirmationButtonText: SmileIDResourcesHelper.localizedString(for: "Confirmation.YesUse"),
-                            onConfirm: viewModel.submitJob,
-                            retakeButtonText: SmileIDResourcesHelper.localizedString(for: "Confirmation.Retake"),
-                            onRetake: viewModel.onSelfieRejected,
-                            scaleFactor: 1.25
-                        ).preferredColorScheme(.light)
-                    }else{
-                        Color.clear.onAppear {
-                            self.viewModel.submitJob()
-                        }
-                    }
-                } else {
-                    SelfieCaptureScreen(
-                        allowAgentMode: allowAgentMode,
-                        viewModel: viewModel
-                    ).preferredColorScheme(.light)
-                }
-            }
+//            Group {
+//                if showInstructions, !acknowledgedInstructions {
+//                    SmartSelfieInstructionsScreen(showAttribution: showAttribution) {
+//                        acknowledgedInstructions = true
+//                    }
+//                } else if viewModel.processingState != nil {
+//                    Color.clear.onAppear {
+//                        self.viewModel.onFinished(callback: self)
+//                    }
+//                } else if let selfieToConfirm = viewModel.selfieToConfirm{
+//                    if(showConfirmationDialog){
+//                        ImageCaptureConfirmationDialog(
+//                            title: SmileIDResourcesHelper.localizedString(for: "Confirmation.GoodSelfie"),
+//                            subtitle: SmileIDResourcesHelper.localizedString(for: "Confirmation.FaceClear"),
+//                            image: UIImage(data: selfieToConfirm)!,
+//                            confirmationButtonText: SmileIDResourcesHelper.localizedString(for: "Confirmation.YesUse"),
+//                            onConfirm: viewModel.submitJob,
+//                            retakeButtonText: SmileIDResourcesHelper.localizedString(for: "Confirmation.Retake"),
+//                            onRetake: viewModel.onSelfieRejected,
+//                            scaleFactor: 1.25
+//                        ).preferredColorScheme(.light)
+//                    }else{
+//                        Color.clear.onAppear {
+//                            self.viewModel.submitJob()
+//                        }
+//                    }
+//                } else {
+//                    SelfieCaptureScreen(
+//                        allowAgentMode: allowAgentMode,
+//                        viewModel: viewModel
+//                    ).preferredColorScheme(.light)
+//                }
+//            }
         }.padding()
     }
 
