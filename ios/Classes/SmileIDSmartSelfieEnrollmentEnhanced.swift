@@ -41,27 +41,16 @@ class SmileIDSmartSelfieEnrollmentEnhanced : NSObject, FlutterPlatformView, Smar
 
     func didSucceed(selfieImage: URL, livenessImages: [URL], apiResponse: SmartSelfieResponse?) {
         _childViewController?.removeFromParent()
-        var arguments: [String: Any] = [
-            "selfieFile": getFilePath(fileName: selfieImage.absoluteString),
-            "livenessFiles": livenessImages.map {
+        let successData = SmartSelfieSuccessData(
+            selfieFile: getFilePath(fileName: selfieImage.absoluteString),
+            livenessFiles: livenessImages.map {
                 getFilePath(fileName: $0.absoluteString)
-            }
-        ]
-        if let apiResponse = apiResponse {
-            let encoder = JSONEncoder()
-            encoder.outputFormatting = .prettyPrinted
-            if let jsonData = try? encoder.encode(apiResponse),
-               let jsonString = String(data: jsonData, encoding: .utf8) {
-                arguments["apiResponse"] = jsonString
-            }
-        }
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: arguments, options: [])
-            if let jsonString = String(data: jsonData, encoding: .utf8) {
-                _channel.invokeMethod("onSuccess", arguments: jsonString)
-            }
-        } catch {
-            didError(error: error)
+            },
+            apiResponse: apiResponse
+        )
+
+        if let jsonString = successData.toJSONString() {
+            _channel.invokeMethod("onSuccess", arguments: jsonString)
         }
     }
 
@@ -93,6 +82,23 @@ class SmileIDSmartSelfieEnrollmentEnhanced : NSObject, FlutterPlatformView, Smar
         public func createArgsCodec() -> FlutterMessageCodec & NSObjectProtocol {
               return FlutterStandardMessageCodec.sharedInstance()
         }
+    }
+}
+
+struct SmartSelfieSuccessData: Encodable {
+    let selfieFile: String
+    let livenessFiles: [String]
+    let apiResponse: SmartSelfieResponse?
+    
+    func toJSONString() -> String? {
+        let jsonEncoder = JSONEncoder()
+        jsonEncoder.outputFormatting = .withoutEscapingSlashes
+        let json = try? jsonEncoder.encode(self)
+        guard let data = json,
+                let jsonString = String(data: data, encoding: .utf8) else {
+            return nil
+        }
+        return jsonString
     }
 }
 
