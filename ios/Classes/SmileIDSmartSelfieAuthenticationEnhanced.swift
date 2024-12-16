@@ -24,7 +24,7 @@ class SmileIDSmartSelfieAuthenticationEnhanced : NSObject, FlutterPlatformView, 
         )
         _childViewController = nil
         super.init()
-        let screen = SmileID.smartSelfieAuthenticationScreenEnhanced(
+        let screen = EnhancedSelfieAuthenticationRootView(
             userId: args["userId"] as? String ?? "user-\(UUID().uuidString)",
             allowNewEnroll: args["allowNewEnroll"] as? Bool ?? false,
             showAttribution: args["showAttribution"] as? Bool ?? true,
@@ -41,14 +41,34 @@ class SmileIDSmartSelfieAuthenticationEnhanced : NSObject, FlutterPlatformView, 
 
     func didSucceed(selfieImage: URL, livenessImages: [URL], apiResponse: SmartSelfieResponse?) {
         _childViewController?.removeFromParent()
-        // todo
+        var arguments: [String: Any] = [
+            "selfieFile": getFilePath(fileName: selfieImage.absoluteString),
+            "livenessFiles": livenessImages.map {
+              getFilePath(fileName: $0.absoluteString)
+            }
+        ]
+        if let apiResponse = apiResponse {
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .prettyPrinted
+            if let jsonData = try? encoder.encode(apiResponse),
+               let jsonString = String(data: jsonData, encoding: .utf8) {
+                arguments["apiResponse"] = jsonString
+            }
+        }
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: arguments, options: [])
+            if let jsonString = String(data: jsonData, encoding: .utf8) {
+                _channel.invokeMethod("onSuccess", arguments: jsonString)
+            }
+        } catch {
+            didError(error: error)
+        }
     }
 
     func didError(error: Error) {
         print("[Smile ID] An error occurred - \(error.localizedDescription)")
         _channel.invokeMethod("onError", arguments: error.localizedDescription)
     }
-
 
     class Factory : NSObject, FlutterPlatformViewFactory {
         private var messenger: FlutterBinaryMessenger
@@ -72,6 +92,28 @@ class SmileIDSmartSelfieAuthenticationEnhanced : NSObject, FlutterPlatformView, 
 
         public func createArgsCodec() -> FlutterMessageCodec & NSObjectProtocol {
               return FlutterStandardMessageCodec.sharedInstance()
+        }
+    }
+}
+
+struct EnhancedSelfieAuthenticationRootView: View {
+    let userId: String
+    let allowNewEnroll: Bool
+    let showAttribution: Bool
+    let showInstructions: Bool
+    let extraPartnerParams: [String: String]
+    let delegate: SmartSelfieResultDelegate
+
+    var body: some View {
+        NavigationView {
+            SmileID.smartSelfieAuthenticationScreenEnhanced(
+                userId: userId,
+                allowNewEnroll: allowNewEnroll,
+                showAttribution: showAttribution,
+                showInstructions: showInstructions,
+                extraPartnerParams: extraPartnerParams,
+                delegate: delegate
+            )
         }
     }
 }
