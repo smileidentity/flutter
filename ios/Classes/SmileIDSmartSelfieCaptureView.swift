@@ -104,8 +104,7 @@ struct SmileIDRootView: View {
                     }
                 } else {
                     SelfieCaptureScreen(
-                        allowAgentMode: allowAgentMode,
-                        viewModel: viewModel
+                        viewModel: viewModel, allowAgentMode: allowAgentMode
                     ).preferredColorScheme(.light)
                 }
             }
