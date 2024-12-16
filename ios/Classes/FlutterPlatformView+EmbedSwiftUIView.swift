@@ -1,6 +1,6 @@
 import Flutter
-import UIKit
 import SwiftUI
+import UIKit
 
 extension FlutterPlatformView {
     /// Embeds a SwiftUI view into a UIKit view hierarchy for a view class that conforms to `FlutterPlatformView`
@@ -25,13 +25,15 @@ extension FlutterPlatformView {
         frame: CGRect
     ) -> UIViewController {
         let hostingController = UIHostingController(rootView: swiftUIView)
-        
+
         hostingController.view.frame = frame
         hostingController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         parentView.addSubview(hostingController.view)
-        
-        if let navigationController = UIApplication.shared.windows.first?.rootViewController as? UINavigationController,
-           let flutterViewController = navigationController.viewControllers.first as? FlutterViewController {
+
+        if let navigationController = UIApplication.shared.windows.first?.rootViewController
+            as? UINavigationController,
+            let flutterViewController = navigationController.viewControllers.first
+                as? FlutterViewController {
             flutterViewController.addChild(hostingController)
             parentView.addSubview(hostingController.view)
             hostingController.view.setNeedsLayout()
