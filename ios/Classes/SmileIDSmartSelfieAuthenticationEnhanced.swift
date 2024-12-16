@@ -24,7 +24,7 @@ class SmileIDSmartSelfieAuthenticationEnhanced : NSObject, FlutterPlatformView, 
         )
         _childViewController = nil
         super.init()
-        let screen = SmileID.smartSelfieAuthenticationScreenEnhanced(
+        let screen = EnhancedSelfieAuthenticationRootView(
             userId: args["userId"] as? String ?? "user-\(UUID().uuidString)",
             allowNewEnroll: args["allowNewEnroll"] as? Bool ?? false,
             showAttribution: args["showAttribution"] as? Bool ?? true,
@@ -41,14 +41,23 @@ class SmileIDSmartSelfieAuthenticationEnhanced : NSObject, FlutterPlatformView, 
 
     func didSucceed(selfieImage: URL, livenessImages: [URL], apiResponse: SmartSelfieResponse?) {
         _childViewController?.removeFromParent()
-        // todo
+        let successData = SmartSelfieSuccessData(
+            selfieFile: getFilePath(fileName: selfieImage.absoluteString),
+            livenessFiles: livenessImages.map {
+                getFilePath(fileName: $0.absoluteString)
+            },
+            apiResponse: apiResponse
+        )
+
+        if let jsonString = successData.toJSONString() {
+            _channel.invokeMethod("onSuccess", arguments: jsonString)
+        }
     }
 
     func didError(error: Error) {
         print("[Smile ID] An error occurred - \(error.localizedDescription)")
         _channel.invokeMethod("onError", arguments: error.localizedDescription)
     }
-
 
     class Factory : NSObject, FlutterPlatformViewFactory {
         private var messenger: FlutterBinaryMessenger
@@ -72,6 +81,28 @@ class SmileIDSmartSelfieAuthenticationEnhanced : NSObject, FlutterPlatformView, 
 
         public func createArgsCodec() -> FlutterMessageCodec & NSObjectProtocol {
               return FlutterStandardMessageCodec.sharedInstance()
+        }
+    }
+}
+
+struct EnhancedSelfieAuthenticationRootView: View {
+    let userId: String
+    let allowNewEnroll: Bool
+    let showAttribution: Bool
+    let showInstructions: Bool
+    let extraPartnerParams: [String: String]
+    let delegate: SmartSelfieResultDelegate
+
+    var body: some View {
+        NavigationView {
+            SmileID.smartSelfieAuthenticationScreenEnhanced(
+                userId: userId,
+                allowNewEnroll: allowNewEnroll,
+                showAttribution: showAttribution,
+                showInstructions: showInstructions,
+                extraPartnerParams: extraPartnerParams,
+                delegate: delegate
+            )
         }
     }
 }

@@ -5,7 +5,9 @@ protocol SmileIDFileUtilsProtocol {
 
 extension SmileIDFileUtilsProtocol {
   func getSmileIDDirectory() -> String? {
-    guard let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+    guard let documentsDirectory = fileManager.urls(
+        for: .documentDirectory, in: .userDomainMask
+    ).first else {
       print("Unable to access documents directory")
       return nil
     }

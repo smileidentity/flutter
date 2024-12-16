@@ -75,40 +75,40 @@ struct SmileIDRootView: View {
     
     var body: some View {
         NavigationView {
-//            Group {
-//                if showInstructions, !acknowledgedInstructions {
-//                    SmartSelfieInstructionsScreen(showAttribution: showAttribution) {
-//                        acknowledgedInstructions = true
-//                    }
-//                } else if viewModel.processingState != nil {
-//                    Color.clear.onAppear {
-//                        self.viewModel.onFinished(callback: self)
-//                    }
-//                } else if let selfieToConfirm = viewModel.selfieToConfirm{
-//                    if(showConfirmationDialog){
-//                        ImageCaptureConfirmationDialog(
-//                            title: SmileIDResourcesHelper.localizedString(for: "Confirmation.GoodSelfie"),
-//                            subtitle: SmileIDResourcesHelper.localizedString(for: "Confirmation.FaceClear"),
-//                            image: UIImage(data: selfieToConfirm)!,
-//                            confirmationButtonText: SmileIDResourcesHelper.localizedString(for: "Confirmation.YesUse"),
-//                            onConfirm: viewModel.submitJob,
-//                            retakeButtonText: SmileIDResourcesHelper.localizedString(for: "Confirmation.Retake"),
-//                            onRetake: viewModel.onSelfieRejected,
-//                            scaleFactor: 1.25
-//                        ).preferredColorScheme(.light)
-//                    }else{
-//                        Color.clear.onAppear {
-//                            self.viewModel.submitJob()
-//                        }
-//                    }
-//                } else {
-//                    SelfieCaptureScreen(
-//                        allowAgentMode: allowAgentMode,
-//                        viewModel: viewModel
-//                    ).preferredColorScheme(.light)
-//                }
-//            }
-        }.padding()
+            Group {
+                if showInstructions, !acknowledgedInstructions {
+                    SmartSelfieInstructionsScreen(showAttribution: showAttribution) {
+                        acknowledgedInstructions = true
+                    }
+                    .padding()
+                } else if viewModel.processingState != nil {
+                    Color.clear.onAppear {
+                        self.viewModel.onFinished(callback: self)
+                    }
+                } else if let selfieToConfirm = viewModel.selfieToConfirm{
+                    if(showConfirmationDialog){
+                        ImageCaptureConfirmationDialog(
+                            title: SmileIDResourcesHelper.localizedString(for: "Confirmation.GoodSelfie"),
+                            subtitle: SmileIDResourcesHelper.localizedString(for: "Confirmation.FaceClear"),
+                            image: UIImage(data: selfieToConfirm)!,
+                            confirmationButtonText: SmileIDResourcesHelper.localizedString(for: "Confirmation.YesUse"),
+                            onConfirm: viewModel.submitJob,
+                            retakeButtonText: SmileIDResourcesHelper.localizedString(for: "Confirmation.Retake"),
+                            onRetake: viewModel.onSelfieRejected,
+                            scaleFactor: 1.25
+                        ).preferredColorScheme(.light)
+                    }else{
+                        Color.clear.onAppear {
+                            self.viewModel.submitJob()
+                        }
+                    }
+                } else {
+                    SelfieCaptureScreen(
+                        viewModel: viewModel, allowAgentMode: allowAgentMode
+                    ).preferredColorScheme(.light)
+                }
+            }
+        }
     }
 
     

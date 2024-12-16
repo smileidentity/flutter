@@ -24,7 +24,7 @@ class SmileIDSmartSelfieEnrollmentEnhanced : NSObject, FlutterPlatformView, Smar
         )
         _childViewController = nil
         super.init()
-        let screen = SmileID.smartSelfieEnrollmentScreenEnhanced(
+        let screen = EnhancedSelfieEnrollmentRootView.init(
             userId: args["userId"] as? String ?? "user-\(UUID().uuidString)",
             allowNewEnroll: args["allowNewEnroll"] as? Bool ?? false,
             showAttribution: args["showAttribution"] as? Bool ?? true,
@@ -41,7 +41,17 @@ class SmileIDSmartSelfieEnrollmentEnhanced : NSObject, FlutterPlatformView, Smar
 
     func didSucceed(selfieImage: URL, livenessImages: [URL], apiResponse: SmartSelfieResponse?) {
         _childViewController?.removeFromParent()
-        // todo
+        let successData = SmartSelfieSuccessData(
+            selfieFile: getFilePath(fileName: selfieImage.absoluteString),
+            livenessFiles: livenessImages.map {
+                getFilePath(fileName: $0.absoluteString)
+            },
+            apiResponse: apiResponse
+        )
+
+        if let jsonString = successData.toJSONString() {
+            _channel.invokeMethod("onSuccess", arguments: jsonString)
+        }
     }
 
     func didError(error: Error) {
@@ -71,6 +81,45 @@ class SmileIDSmartSelfieEnrollmentEnhanced : NSObject, FlutterPlatformView, Smar
 
         public func createArgsCodec() -> FlutterMessageCodec & NSObjectProtocol {
               return FlutterStandardMessageCodec.sharedInstance()
+        }
+    }
+}
+
+struct SmartSelfieSuccessData: Encodable {
+    let selfieFile: String
+    let livenessFiles: [String]
+    let apiResponse: SmartSelfieResponse?
+    
+    func toJSONString() -> String? {
+        let jsonEncoder = JSONEncoder()
+        jsonEncoder.outputFormatting = .withoutEscapingSlashes
+        let json = try? jsonEncoder.encode(self)
+        guard let data = json,
+                let jsonString = String(data: data, encoding: .utf8) else {
+            return nil
+        }
+        return jsonString
+    }
+}
+
+struct EnhancedSelfieEnrollmentRootView: View {
+    let userId: String
+    let allowNewEnroll: Bool
+    let showAttribution: Bool
+    let showInstructions: Bool
+    let extraPartnerParams: [String: String]
+    let delegate: SmartSelfieResultDelegate
+
+    var body: some View {
+        NavigationView {
+            SmileID.smartSelfieEnrollmentScreenEnhanced(
+                userId: userId,
+                allowNewEnroll: allowNewEnroll,
+                showAttribution: showAttribution,
+                showInstructions: showInstructions,
+                extraPartnerParams: extraPartnerParams,
+                delegate: delegate
+            )
         }
     }
 }

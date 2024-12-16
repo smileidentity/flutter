@@ -40,21 +40,21 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             withId: SmileIDSmartSelfieAuthentication.VIEW_TYPE_ID
         )
 
-//         let smartSelfieEnrollmentEnhancedFactory = SmileIDSmartSelfieEnrollmentEnhanced.Factory(
-//             messenger: registrar.messenger()
-//         )
-//         registrar.register(
-//             smartSelfieEnrollmentEnhancedFactory,
-//             withId: SmileIDSmartSelfieEnrollmentEnhanced.VIEW_TYPE_ID
-//         )
-//
-//         let smartSelfieAuthenticationEnhancedFactory = SmileIDSmartSelfieAuthenticationEnhanced.Factory(
-//             messenger: registrar.messenger()
-//         )
-//         registrar.register(
-//             smartSelfieAuthenticationEnhancedFactory,
-//             withId: SmileIDSmartSelfieAuthenticationEnhanced.VIEW_TYPE_ID
-//         )
+         let smartSelfieEnrollmentEnhancedFactory = SmileIDSmartSelfieEnrollmentEnhanced.Factory(
+             messenger: registrar.messenger()
+         )
+         registrar.register(
+             smartSelfieEnrollmentEnhancedFactory,
+             withId: SmileIDSmartSelfieEnrollmentEnhanced.VIEW_TYPE_ID
+         )
+
+         let smartSelfieAuthenticationEnhancedFactory = SmileIDSmartSelfieAuthenticationEnhanced.Factory(
+             messenger: registrar.messenger()
+         )
+         registrar.register(
+             smartSelfieAuthenticationEnhancedFactory,
+             withId: SmileIDSmartSelfieAuthenticationEnhanced.VIEW_TYPE_ID
+         )
         
         let biometricKYCFactory = SmileIDBiometricKYC.Factory(
             messenger: registrar.messenger()
