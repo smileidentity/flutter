@@ -1,5 +1,9 @@
 # Release Notes
 
+## 10.3.1
+
+* Fixed Moshi configuration to only use FileAdapter which uses absolute path
+
 ## 10.3.0
 
 * Introduce screens for the new Enhanced Selfie Capture Enrollment and Authentication Products (Android).
