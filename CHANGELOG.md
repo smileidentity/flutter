@@ -3,6 +3,8 @@
 ## 10.3.1
 
 * Fixed Moshi configuration to only use FileAdapter which uses absolute path
+* Fixed iOS navigation setup
+* Bump iOS to 10.3.2 (https://github.com/smileidentity/ios/releases/tag/v10.3.2)
 
 ## 10.3.0
 
