@@ -39,6 +39,38 @@ internal class SmileIDDocumentCaptureView private constructor(
 
     @Composable
     override fun Content(args: Map<String, Any?>) {
+        val isDocumentFrontSide = args["isDocumentFrontSide"] as? Boolean ?: true
+        val showInstructions = args["showInstructions"] as? Boolean ?: true
+        val showAttribution = args["showAttribution"] as? Boolean ?: true
+        val allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false
+        val showConfirmationDialog = args["showConfirmationDialog"] as? Boolean ?: true
+        val idAspectRatio = (args["idAspectRatio"] as Double?)?.toFloat()
+
+        val jobId = randomJobId()
+        val side =
+            if (isDocumentFrontSide) {
+                DocumentCaptureSide.Front
+            } else {
+                DocumentCaptureSide.Back
+            }
+
+        val metadata = LocalMetadata.current
+        val viewModel: DocumentCaptureViewModel =
+            viewModel(
+                factory =
+                viewModelFactory {
+                    DocumentCaptureViewModel(
+                        jobId = jobId,
+                        side = side,
+                        knownIdAspectRatio = idAspectRatio,
+                        metadata = metadata,
+                    )
+                },
+                key = side.name,
+            )
+        val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
+        var acknowledgedInstructions by rememberSaveable { mutableStateOf(false) }
+
         CompositionLocalProvider(
             LocalMetadata provides remember { Metadata.default().items.toMutableStateList() },
         ) {
@@ -49,35 +81,43 @@ internal class SmileIDDocumentCaptureView private constructor(
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                 ) {
-                    val isDocumentFrontSide = args["isDocumentFrontSide"] as? Boolean ?: true
-                    val showInstructions = args["showInstructions"] as? Boolean ?: true
-                    val showAttribution = args["showAttribution"] as? Boolean ?: true
-                    val allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false
-                    val showConfirmationDialog = args["showConfirmationDialog"] as? Boolean ?: true
-                    val idAspectRatio = (args["idAspectRatio"] as Double?)?.toFloat()
-                    RenderDocumentCaptureScreen(
-                        jobId = randomJobId(),
-                        isDocumentFrontSide = isDocumentFrontSide,
-                        showInstructions = showInstructions,
-                        showAttribution = showAttribution,
-                        allowGalleryUpload = allowGalleryUpload,
-                        showConfirmationDialog = showConfirmationDialog,
-                        idAspectRatio = idAspectRatio,
-                    )
+                    when {
+                        showInstructions && !acknowledgedInstructions ->
+                            RenderDocumentCaptureInstructionsScreen(
+                                isDocumentFrontSide = isDocumentFrontSide,
+                                showAttribution = showAttribution,
+                                allowGalleryUpload = allowGalleryUpload,
+                                jobId = jobId,
+                                idAspectRatio = idAspectRatio,
+                            ) {
+                                acknowledgedInstructions = true
+                            }
+                        showConfirmation && uiState.documentImageToConfirm != null ->
+                            RenderDocumentCaptureConfirmationScreen(
+                                documentImageToConfirm = uiState.documentImageToConfirm,
+                                isDocumentFrontSide = isDocumentFrontSide,
+                                viewModel = viewModel,
+                            )
+                        else -> RenderDocumentCaptureScreen(
+                            jobId = jobId,
+                            isDocumentFrontSide = isDocumentFrontSide,
+                            idAspectRatio = idAspectRatio,
+                            galleryDocumentUri = null
+                        )
+                    }
                 }
             }
         }
     }
 
     @Composable
-    private fun RenderDocumentCaptureScreen(
-        jobId: String,
+    private fun RenderDocumentCaptureInstructionsScreen(
         isDocumentFrontSide: Boolean,
-        showInstructions: Boolean,
         showAttribution: Boolean,
         allowGalleryUpload: Boolean,
-        showConfirmationDialog: Boolean,
+        jobId: String,
         idAspectRatio: Float?,
+        onInstructionsAcknowledged: () -> Unit,
     ) {
         val hero =
             if (isDocumentFrontSide) {
@@ -97,12 +137,66 @@ internal class SmileIDDocumentCaptureView private constructor(
             } else {
                 R.string.si_doc_v_instruction_back_subtitle
             }
-        val captureTitleText =
-            if (isDocumentFrontSide) {
-                R.string.si_doc_v_capture_instructions_front_title
-            } else {
-                R.string.si_doc_v_capture_instructions_back_title
-            }
+        DocumentCaptureInstructionsScreen(
+            modifier = Modifier.fillMaxSize(),
+            heroImage = hero,
+            title = instructionTitle,
+            subtitle = instructionSubTitle,
+            showAttribution = showAttribution,
+            allowPhotoFromGallery = allowGalleryUpload,
+            showSkipButton = false,
+            onSkip = {},
+            onInstructionsAcknowledgedSelectFromGallery = { uri ->
+                RenderDocumentCaptureScreen(
+                    jobId = jobId,
+                    isDocumentFrontSide = isDocumentFrontSide,
+                    idAspectRatio = idAspectRatio,
+                    galleryDocumentUri = uri
+                )
+            },
+            onInstructionsAcknowledgedTakePhoto = onInstructionsAcknowledged,
+        )
+    }
+
+    @Composable
+    private fun RenderDocumentCaptureConfirmationScreen(
+        documentImageToConfirm: File?,
+        isDocumentFrontSide: Boolean,
+        viewModel: DocumentCaptureViewModel,
+    ) {
+        ImageCaptureConfirmationDialog(
+            modifier = Modifier.fillMaxSize(),
+            titleText = stringResource(R.string.si_doc_v_confirmation_dialog_title),
+            subtitleText = stringResource(R.string.si_doc_v_confirmation_dialog_subtitle),
+            painter = BitmapPainter(
+                BitmapFactory
+                    .decodeFile(documentImageToConfirm.absolutePath)
+                    .asImageBitmap(),
+            ),
+            confirmButtonText = stringResource(R.string.si_doc_v_confirmation_dialog_confirm_button),
+            onConfirm = {
+                viewModel.onConfirm(documentImageToConfirm) { file ->
+                    handleConfirmation(isDocumentFrontSide, file)
+                }
+            },
+            retakeButtonText = stringResource(R.string.si_doc_v_confirmation_dialog_retake_button),
+            onRetake = viewModel::onRetry,
+            scaleFactor = 1.0f,
+        )
+    }
+
+    @Composable
+    private fun RenderDocumentCaptureScreen(
+        jobId: String,
+        isDocumentFrontSide: Boolean,
+        idAspectRatio: Float?,
+        galleryDocumentUri: String?,
+    ) {
+        val captureTitleText = if (isDocumentFrontSide) {
+            R.string.si_doc_v_capture_instructions_front_title
+        } else {
+            R.string.si_doc_v_capture_instructions_back_title
+        }
         DocumentCaptureScreen(
             modifier = Modifier.fillMaxSize(),
             jobId = jobId,
@@ -111,6 +205,7 @@ internal class SmileIDDocumentCaptureView private constructor(
             knownIdAspectRatio = idAspectRatio,
             onConfirm = { file -> handleConfirmation(isDocumentFrontSide, file) },
             onError = { throwable -> onError(throwable) },
+            galleryDocumentUri = galleryDocumentUri,
         )
     }
 
