@@ -1,18 +1,28 @@
 package com.smileidentity.flutter
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.smileidentity.R
 import com.smileidentity.SmileID
+import com.smileidentity.compose.components.ImageCaptureConfirmationDialog
 import com.smileidentity.compose.components.LocalMetadata
+import com.smileidentity.compose.document.DocumentCaptureInstructionsScreen
 import com.smileidentity.compose.document.DocumentCaptureScreen
 import com.smileidentity.compose.document.DocumentCaptureSide
 import com.smileidentity.compose.theme.colorScheme
@@ -21,6 +31,7 @@ import com.smileidentity.flutter.results.DocumentCaptureResult
 import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
 import com.smileidentity.models.v2.Metadata
 import com.smileidentity.util.randomJobId
+import com.smileidentity.viewmodel.document.DocumentCaptureViewModel
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
@@ -92,9 +103,9 @@ internal class SmileIDDocumentCaptureView private constructor(
                             ) {
                                 acknowledgedInstructions = true
                             }
-                        showConfirmation && uiState.documentImageToConfirm != null ->
+                        showConfirmationDialog && uiState.documentImageToConfirm != null ->
                             RenderDocumentCaptureConfirmationScreen(
-                                documentImageToConfirm = uiState.documentImageToConfirm,
+                                documentImageToConfirm = uiState.documentImageToConfirm!!,
                                 isDocumentFrontSide = isDocumentFrontSide,
                                 viewModel = viewModel,
                             )
@@ -140,8 +151,8 @@ internal class SmileIDDocumentCaptureView private constructor(
         DocumentCaptureInstructionsScreen(
             modifier = Modifier.fillMaxSize(),
             heroImage = hero,
-            title = instructionTitle,
-            subtitle = instructionSubTitle,
+            title = stringResource(instructionTitle),
+            subtitle = stringResource(instructionSubTitle),
             showAttribution = showAttribution,
             allowPhotoFromGallery = allowGalleryUpload,
             showSkipButton = false,
@@ -160,7 +171,7 @@ internal class SmileIDDocumentCaptureView private constructor(
 
     @Composable
     private fun RenderDocumentCaptureConfirmationScreen(
-        documentImageToConfirm: File?,
+        documentImageToConfirm: File,
         isDocumentFrontSide: Boolean,
         viewModel: DocumentCaptureViewModel,
     ) {
