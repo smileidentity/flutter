@@ -7,9 +7,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
@@ -54,7 +56,7 @@ internal class SmileIDDocumentCaptureView private constructor(
         val showInstructions = args["showInstructions"] as? Boolean ?: true
         val showAttribution = args["showAttribution"] as? Boolean ?: true
         val allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false
-        val showConfirmationDialog = args["showConfirmationDialog"] as? Boolean ?: true
+        val showConfirmation = args["showConfirmationDialog"] as? Boolean ?: true
         val idAspectRatio = (args["idAspectRatio"] as Double?)?.toFloat()
 
         val jobId = randomJobId()
@@ -73,14 +75,16 @@ internal class SmileIDDocumentCaptureView private constructor(
                     DocumentCaptureViewModel(
                         jobId = jobId,
                         side = side,
-                        knownIdAspectRatio = idAspectRatio,
+                        knownAspectRatio = idAspectRatio,
                         metadata = metadata,
                     )
                 },
                 key = side.name,
             )
+
         val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
-        var acknowledgedInstructions by rememberSaveable { mutableStateOf(false) }
+        var acknowledgedInstructions: Boolean by rememberSaveable { mutableStateOf(false) }
+        var galleryDocumentUri: String? by rememberSaveable { mutableStateOf(null) }
 
         CompositionLocalProvider(
             LocalMetadata provides remember { Metadata.default().items.toMutableStateList() },
@@ -98,12 +102,11 @@ internal class SmileIDDocumentCaptureView private constructor(
                                 isDocumentFrontSide = isDocumentFrontSide,
                                 showAttribution = showAttribution,
                                 allowGalleryUpload = allowGalleryUpload,
-                                jobId = jobId,
-                                idAspectRatio = idAspectRatio,
-                            ) {
+                            ) { uri ->
                                 acknowledgedInstructions = true
+                                galleryDocumentUri = uri
                             }
-                        showConfirmationDialog && uiState.documentImageToConfirm != null ->
+                        showConfirmation && uiState.documentImageToConfirm != null ->
                             RenderDocumentCaptureConfirmationScreen(
                                 documentImageToConfirm = uiState.documentImageToConfirm!!,
                                 isDocumentFrontSide = isDocumentFrontSide,
@@ -113,7 +116,9 @@ internal class SmileIDDocumentCaptureView private constructor(
                             jobId = jobId,
                             isDocumentFrontSide = isDocumentFrontSide,
                             idAspectRatio = idAspectRatio,
-                            galleryDocumentUri = null
+                            galleryDocumentUri = galleryDocumentUri,
+                            showConfirmation = showConfirmation,
+                            viewModel = viewModel,
                         )
                     }
                 }
@@ -126,9 +131,7 @@ internal class SmileIDDocumentCaptureView private constructor(
         isDocumentFrontSide: Boolean,
         showAttribution: Boolean,
         allowGalleryUpload: Boolean,
-        jobId: String,
-        idAspectRatio: Float?,
-        onInstructionsAcknowledged: () -> Unit,
+        onInstructionsAcknowledged: (String?) -> Unit,
     ) {
         val hero =
             if (isDocumentFrontSide) {
@@ -158,14 +161,11 @@ internal class SmileIDDocumentCaptureView private constructor(
             showSkipButton = false,
             onSkip = {},
             onInstructionsAcknowledgedSelectFromGallery = { uri ->
-                RenderDocumentCaptureScreen(
-                    jobId = jobId,
-                    isDocumentFrontSide = isDocumentFrontSide,
-                    idAspectRatio = idAspectRatio,
-                    galleryDocumentUri = uri
-                )
+                onInstructionsAcknowledged(uri)
             },
-            onInstructionsAcknowledgedTakePhoto = onInstructionsAcknowledged,
+            onInstructionsAcknowledgedTakePhoto = {
+                onInstructionsAcknowledged(null)
+            },
         )
     }
 
@@ -202,6 +202,8 @@ internal class SmileIDDocumentCaptureView private constructor(
         isDocumentFrontSide: Boolean,
         idAspectRatio: Float?,
         galleryDocumentUri: String?,
+        showConfirmation: Boolean,
+        viewModel: DocumentCaptureViewModel,
     ) {
         val captureTitleText = if (isDocumentFrontSide) {
             R.string.si_doc_v_capture_instructions_front_title
@@ -214,9 +216,14 @@ internal class SmileIDDocumentCaptureView private constructor(
             side = if (isDocumentFrontSide) DocumentCaptureSide.Front else DocumentCaptureSide.Back,
             captureTitleText = stringResource(captureTitleText),
             knownIdAspectRatio = idAspectRatio,
-            onConfirm = { file -> handleConfirmation(isDocumentFrontSide, file) },
+            onConfirm = { file ->
+                if (!showConfirmation) {
+                    handleConfirmation(isDocumentFrontSide, file)
+                }
+            },
             onError = { throwable -> onError(throwable) },
             galleryDocumentUri = galleryDocumentUri,
+            viewModel = viewModel
         )
     }
 
