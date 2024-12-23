@@ -17,9 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.lifecycle.viewmodel.viewModelFactory
 import com.smileidentity.R
 import com.smileidentity.SmileID
 import com.smileidentity.compose.components.ImageCaptureConfirmationDialog
@@ -59,32 +56,9 @@ internal class SmileIDDocumentCaptureView private constructor(
         val showConfirmation = args["showConfirmationDialog"] as? Boolean ?: true
         val idAspectRatio = (args["idAspectRatio"] as Double?)?.toFloat()
 
-        val jobId = randomJobId()
-        val side =
-            if (isDocumentFrontSide) {
-                DocumentCaptureSide.Front
-            } else {
-                DocumentCaptureSide.Back
-            }
-
-        val metadata = LocalMetadata.current
-        val viewModel: DocumentCaptureViewModel =
-            viewModel(
-                factory =
-                viewModelFactory {
-                    DocumentCaptureViewModel(
-                        jobId = jobId,
-                        side = side,
-                        knownAspectRatio = idAspectRatio,
-                        metadata = metadata,
-                    )
-                },
-                key = side.name,
-            )
-
-        val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
         var acknowledgedInstructions: Boolean by rememberSaveable { mutableStateOf(false) }
         var galleryDocumentUri: String? by rememberSaveable { mutableStateOf(null) }
+        var documentImageToConfirm: File? by rememberSaveable { mutableStateOf(null) }
 
         CompositionLocalProvider(
             LocalMetadata provides remember { Metadata.default().items.toMutableStateList() },
@@ -106,20 +80,21 @@ internal class SmileIDDocumentCaptureView private constructor(
                                 acknowledgedInstructions = true
                                 galleryDocumentUri = uri
                             }
-                        showConfirmation && uiState.documentImageToConfirm != null ->
+                        showConfirmation && documentImageToConfirm != null ->
                             RenderDocumentCaptureConfirmationScreen(
-                                documentImageToConfirm = uiState.documentImageToConfirm!!,
+                                documentImageToConfirm = documentImageToConfirm!!,
                                 isDocumentFrontSide = isDocumentFrontSide,
-                                viewModel = viewModel,
-                            )
+                            ) {
+                                documentImageToConfirm = null
+                            }
                         else -> RenderDocumentCaptureScreen(
-                            jobId = jobId,
                             isDocumentFrontSide = isDocumentFrontSide,
                             idAspectRatio = idAspectRatio,
                             galleryDocumentUri = galleryDocumentUri,
                             showConfirmation = showConfirmation,
-                            viewModel = viewModel,
-                        )
+                        ) { file ->
+                            documentImageToConfirm = file
+                        }
                     }
                 }
             }
@@ -173,7 +148,7 @@ internal class SmileIDDocumentCaptureView private constructor(
     private fun RenderDocumentCaptureConfirmationScreen(
         documentImageToConfirm: File,
         isDocumentFrontSide: Boolean,
-        viewModel: DocumentCaptureViewModel,
+        onRetake: () -> Unit,
     ) {
         ImageCaptureConfirmationDialog(
             modifier = Modifier.fillMaxSize(),
@@ -186,30 +161,41 @@ internal class SmileIDDocumentCaptureView private constructor(
             ),
             confirmButtonText = stringResource(R.string.si_doc_v_confirmation_dialog_confirm_button),
             onConfirm = {
-                viewModel.onConfirm(documentImageToConfirm) { file ->
-                    handleConfirmation(isDocumentFrontSide, file)
-                }
+                handleConfirmation(isDocumentFrontSide, documentImageToConfirm)
             },
             retakeButtonText = stringResource(R.string.si_doc_v_confirmation_dialog_retake_button),
-            onRetake = viewModel::onRetry,
+            onRetake = onRetake, //viewModel::onRetry,
             scaleFactor = 1.0f,
         )
     }
 
     @Composable
     private fun RenderDocumentCaptureScreen(
-        jobId: String,
         isDocumentFrontSide: Boolean,
         idAspectRatio: Float?,
         galleryDocumentUri: String?,
         showConfirmation: Boolean,
-        viewModel: DocumentCaptureViewModel,
+        onConfirm: (File?) -> Unit,
     ) {
+        val jobId = randomJobId()
+        val side =
+            if (isDocumentFrontSide) {
+                DocumentCaptureSide.Front
+            } else {
+                DocumentCaptureSide.Back
+            }
         val captureTitleText = if (isDocumentFrontSide) {
             R.string.si_doc_v_capture_instructions_front_title
         } else {
             R.string.si_doc_v_capture_instructions_back_title
         }
+        val viewModel: DocumentCaptureViewModel =
+            DocumentCaptureViewModel(
+                jobId = jobId,
+                side = side,
+                knownAspectRatio = idAspectRatio,
+                metadata = LocalMetadata.current
+            )
         DocumentCaptureScreen(
             modifier = Modifier.fillMaxSize(),
             jobId = jobId,
@@ -219,6 +205,8 @@ internal class SmileIDDocumentCaptureView private constructor(
             onConfirm = { file ->
                 if (!showConfirmation) {
                     handleConfirmation(isDocumentFrontSide, file)
+                } else {
+                    onConfirm(file)
                 }
             },
             onError = { throwable -> onError(throwable) },
