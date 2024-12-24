@@ -80,9 +80,10 @@ internal class SmileIDDocumentCaptureView private constructor(
                                 allowGalleryUpload = allowGalleryUpload,
                             ) { uri ->
                                 acknowledgedInstructions = true
-                                galleryDocumentUri = uri?.let {
-                                    URLDecoder.decode(it, StandardCharsets.UTF_8.toString())
-                                }
+                                galleryDocumentUri =
+                                    uri?.let {
+                                        URLDecoder.decode(it, StandardCharsets.UTF_8.toString())
+                                    }
                             }
                         showConfirmation && documentImageToConfirm != null ->
                             RenderDocumentCaptureConfirmationScreen(
@@ -98,14 +99,15 @@ internal class SmileIDDocumentCaptureView private constructor(
                                     acknowledgedInstructions = false
                                 }
                             }
-                        else -> RenderDocumentCaptureScreen(
-                            isDocumentFrontSide = isDocumentFrontSide,
-                            idAspectRatio = idAspectRatio,
-                            galleryDocumentUri = galleryDocumentUri,
-                            showConfirmation = showConfirmation,
-                        ) { file ->
-                            documentImageToConfirm = file
-                        }
+                        else ->
+                            RenderDocumentCaptureScreen(
+                                isDocumentFrontSide = isDocumentFrontSide,
+                                idAspectRatio = idAspectRatio,
+                                galleryDocumentUri = galleryDocumentUri,
+                                showConfirmation = showConfirmation,
+                            ) { file ->
+                                documentImageToConfirm = file
+                            }
                     }
                 }
             }
@@ -165,12 +167,14 @@ internal class SmileIDDocumentCaptureView private constructor(
             modifier = Modifier.fillMaxSize(),
             titleText = stringResource(R.string.si_doc_v_confirmation_dialog_title),
             subtitleText = stringResource(R.string.si_doc_v_confirmation_dialog_subtitle),
-            painter = BitmapPainter(
-                BitmapFactory
-                    .decodeFile(documentImageToConfirm.absolutePath)
-                    .asImageBitmap(),
-            ),
-            confirmButtonText = stringResource(R.string.si_doc_v_confirmation_dialog_confirm_button),
+            painter =
+                BitmapPainter(
+                    BitmapFactory
+                        .decodeFile(documentImageToConfirm.absolutePath)
+                        .asImageBitmap(),
+                ),
+            confirmButtonText =
+                stringResource(R.string.si_doc_v_confirmation_dialog_confirm_button),
             onConfirm = {
                 handleConfirmation(isDocumentFrontSide, documentImageToConfirm)
             },
@@ -195,17 +199,18 @@ internal class SmileIDDocumentCaptureView private constructor(
             } else {
                 DocumentCaptureSide.Back
             }
-        val captureTitleText = if (isDocumentFrontSide) {
-            R.string.si_doc_v_capture_instructions_front_title
-        } else {
-            R.string.si_doc_v_capture_instructions_back_title
-        }
+        val captureTitleText =
+            if (isDocumentFrontSide) {
+                R.string.si_doc_v_capture_instructions_front_title
+            } else {
+                R.string.si_doc_v_capture_instructions_back_title
+            }
         val viewModel: DocumentCaptureViewModel =
             DocumentCaptureViewModel(
                 jobId = jobId,
                 side = side,
                 knownAspectRatio = idAspectRatio,
-                metadata = LocalMetadata.current
+                metadata = LocalMetadata.current,
             )
         DocumentCaptureScreen(
             modifier = Modifier.fillMaxSize(),
@@ -222,7 +227,7 @@ internal class SmileIDDocumentCaptureView private constructor(
             },
             onError = { throwable -> onError(throwable) },
             galleryDocumentUri = galleryDocumentUri,
-            viewModel = viewModel
+            viewModel = viewModel,
         )
     }
 
