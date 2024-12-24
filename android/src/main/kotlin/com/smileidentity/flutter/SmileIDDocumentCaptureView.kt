@@ -36,6 +36,8 @@ import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 import java.io.File
+import java.net.URLDecoder
+import java.nio.charset.StandardCharsets
 
 internal class SmileIDDocumentCaptureView private constructor(
     context: Context,
@@ -78,7 +80,9 @@ internal class SmileIDDocumentCaptureView private constructor(
                                 allowGalleryUpload = allowGalleryUpload,
                             ) { uri ->
                                 acknowledgedInstructions = true
-                                galleryDocumentUri = uri
+                                galleryDocumentUri = uri?.let {
+                                    URLDecoder.decode(it, StandardCharsets.UTF_8.toString())
+                                }
                             }
                         showConfirmation && documentImageToConfirm != null ->
                             RenderDocumentCaptureConfirmationScreen(
@@ -86,6 +90,13 @@ internal class SmileIDDocumentCaptureView private constructor(
                                 isDocumentFrontSide = isDocumentFrontSide,
                             ) {
                                 documentImageToConfirm = null
+
+                                // in case the user chooses to retake an image after a photo gallery
+                                // upload, we redirect the user to the instructions screen
+                                if (galleryDocumentUri != null) {
+                                    galleryDocumentUri = null
+                                    acknowledgedInstructions = false
+                                }
                             }
                         else -> RenderDocumentCaptureScreen(
                             isDocumentFrontSide = isDocumentFrontSide,
@@ -164,7 +175,7 @@ internal class SmileIDDocumentCaptureView private constructor(
                 handleConfirmation(isDocumentFrontSide, documentImageToConfirm)
             },
             retakeButtonText = stringResource(R.string.si_doc_v_confirmation_dialog_retake_button),
-            onRetake = onRetake, //viewModel::onRetry,
+            onRetake = onRetake,
             scaleFactor = 1.0f,
         )
     }
