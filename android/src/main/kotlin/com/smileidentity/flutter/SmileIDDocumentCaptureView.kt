@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.smileidentity.R
 import com.smileidentity.SmileID
 import com.smileidentity.compose.components.ImageCaptureConfirmationDialog
@@ -31,6 +32,7 @@ import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
 import com.smileidentity.models.v2.Metadata
 import com.smileidentity.util.randomJobId
 import com.smileidentity.viewmodel.document.DocumentCaptureViewModel
+import com.smileidentity.viewmodel.viewModelFactory
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
@@ -57,10 +59,29 @@ internal class SmileIDDocumentCaptureView private constructor(
         val allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false
         val showConfirmation = args["showConfirmationDialog"] as? Boolean ?: true
         val idAspectRatio = (args["idAspectRatio"] as Double?)?.toFloat()
-
-        var acknowledgedInstructions: Boolean by rememberSaveable { mutableStateOf(false) }
+        var acknowledgedInstructions by rememberSaveable { mutableStateOf(false) }
         var galleryDocumentUri: String? by rememberSaveable { mutableStateOf(null) }
         var documentImageToConfirm: File? by rememberSaveable { mutableStateOf(null) }
+        val jobId = randomJobId()
+        val metadata = LocalMetadata.current
+        val side =
+            if (isDocumentFrontSide) {
+                DocumentCaptureSide.Front
+            } else {
+                DocumentCaptureSide.Back
+            }
+        val viewModel: DocumentCaptureViewModel =
+            viewModel(
+                factory =
+                    viewModelFactory {
+                        DocumentCaptureViewModel(
+                            jobId = jobId,
+                            side = side,
+                            knownAspectRatio = idAspectRatio,
+                            metadata = metadata,
+                        )
+                    },
+            )
 
         CompositionLocalProvider(
             LocalMetadata provides remember { Metadata.default().items.toMutableStateList() },
@@ -104,6 +125,8 @@ internal class SmileIDDocumentCaptureView private constructor(
                                 isDocumentFrontSide = isDocumentFrontSide,
                                 idAspectRatio = idAspectRatio,
                                 galleryDocumentUri = galleryDocumentUri,
+                                jobId = jobId,
+                                viewModel = viewModel,
                                 showConfirmation = showConfirmation,
                             ) { file ->
                                 documentImageToConfirm = file
@@ -189,29 +212,17 @@ internal class SmileIDDocumentCaptureView private constructor(
         isDocumentFrontSide: Boolean,
         idAspectRatio: Float?,
         galleryDocumentUri: String?,
+        jobId: String,
+        viewModel: DocumentCaptureViewModel,
         showConfirmation: Boolean,
         onConfirm: (File?) -> Unit,
     ) {
-        val jobId = randomJobId()
-        val side =
-            if (isDocumentFrontSide) {
-                DocumentCaptureSide.Front
-            } else {
-                DocumentCaptureSide.Back
-            }
         val captureTitleText =
             if (isDocumentFrontSide) {
                 R.string.si_doc_v_capture_instructions_front_title
             } else {
                 R.string.si_doc_v_capture_instructions_back_title
             }
-        val viewModel: DocumentCaptureViewModel =
-            DocumentCaptureViewModel(
-                jobId = jobId,
-                side = side,
-                knownAspectRatio = idAspectRatio,
-                metadata = LocalMetadata.current,
-            )
         DocumentCaptureScreen(
             modifier = Modifier.fillMaxSize(),
             jobId = jobId,
