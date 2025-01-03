@@ -1,5 +1,9 @@
 # Release Notes
 
+## 10.3.2
+* Fixed document capture view on android to properly handle showInstructions and showConfirmation 
+  screens
+
 ## 10.3.1
 
 * Fixed Moshi configuration to only use FileAdapter which uses absolute path
