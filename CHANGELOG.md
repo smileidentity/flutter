@@ -1,5 +1,9 @@
 # Release Notes
 
+## 10.3.2
+
+* Fixed metadata version check to support versions below Kotlin 2.0
+
 ## 10.3.1
 
 * Fixed Moshi configuration to only use FileAdapter which uses absolute path
