@@ -57,6 +57,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = '17'
+        freeCompilerArgs += ['-Xskip-metadata-version-check'] // metadata version check skip flag
     }
 
     sourceSets {
