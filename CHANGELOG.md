@@ -3,6 +3,8 @@
 ## 10.3.2
 
 * Fixed metadata version check to support versions below Kotlin 2.0
+* Fixed document capture view on android to properly handle showInstructions and showConfirmation 
+  screens
 
 ## 10.3.1
 

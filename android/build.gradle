@@ -93,9 +93,10 @@ android {
         implementation "androidx.fragment:fragment-ktx"
         implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core"
         implementation "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.8"
+        implementation "com.google.mlkit:object-detection:17.0.2"
 
         testImplementation "org.jetbrains.kotlin:kotlin-test"
-        testImplementation "io.mockk:mockk:1.13.11"
+        testImplementation "io.mockk:mockk:1.13.13"
     }
 }
 
