@@ -128,6 +128,78 @@ struct FlutterPartnerParams {
   }
 }
 
+/// Generated class from Pigeon that represents data sent in messages.
+struct SmartSelfieEnrollmentCreationParams {
+  var userId: String? = nil
+  var allowNewEnroll: Bool
+  var allowAgentMode: Bool
+  var showAttribution: Bool
+  var showInstructions: Bool
+  var skipApiSubmission: Bool
+  var extraPartnerParams: [String?: String?]? = nil
+
+  static func fromList(_ list: [Any?]) -> SmartSelfieEnrollmentCreationParams? {
+    let userId: String? = nilOrValue(list[0])
+    let allowNewEnroll = list[1] as! Bool
+    let allowAgentMode = list[2] as! Bool
+    let showAttribution = list[3] as! Bool
+    let showInstructions = list[4] as! Bool
+    let skipApiSubmission = list[5] as! Bool
+    let extraPartnerParams: [String?: String?]? = nilOrValue(list[6])
+
+    return SmartSelfieEnrollmentCreationParams(
+      userId: userId,
+      allowNewEnroll: allowNewEnroll,
+      allowAgentMode: allowAgentMode,
+      showAttribution: showAttribution,
+      showInstructions: showInstructions,
+      skipApiSubmission: skipApiSubmission,
+      extraPartnerParams: extraPartnerParams
+    )
+  }
+  func toList() -> [Any?] {
+    return [
+      userId,
+      allowNewEnroll,
+      allowAgentMode,
+      showAttribution,
+      showInstructions,
+      skipApiSubmission,
+      extraPartnerParams,
+    ]
+  }
+}
+
+/// Generated class from Pigeon that represents data sent in messages.
+struct SmartSelfieCaptureResult {
+  var selfieFile: String? = nil
+  var livenessFiles: [String?]? = nil
+  var apiResponse: [String?: Any?]? = nil
+  var didSubmitBiometricKycJob: Bool? = nil
+
+  static func fromList(_ list: [Any?]) -> SmartSelfieCaptureResult? {
+    let selfieFile: String? = nilOrValue(list[0])
+    let livenessFiles: [String?]? = nilOrValue(list[1])
+    let apiResponse: [String?: Any?]? = nilOrValue(list[2])
+    let didSubmitBiometricKycJob: Bool? = nilOrValue(list[3])
+
+    return SmartSelfieCaptureResult(
+      selfieFile: selfieFile,
+      livenessFiles: livenessFiles,
+      apiResponse: apiResponse,
+      didSubmitBiometricKycJob: didSubmitBiometricKycJob
+    )
+  }
+  func toList() -> [Any?] {
+    return [
+      selfieFile,
+      livenessFiles,
+      apiResponse,
+      didSubmitBiometricKycJob,
+    ]
+  }
+}
+
 /// The Auth Smile request. Auth Smile serves multiple purposes:
 ///
 /// - It is used to fetch the signature needed for subsequent API requests
@@ -1788,6 +1860,10 @@ private class SmileIDApiCodecReader: FlutterStandardReader {
       return FlutterValidDocument.fromList(self.readValue() as! [Any?])
     case 170:
       return FlutterValidDocumentsResponse.fromList(self.readValue() as! [Any?])
+    case 171:
+      return SmartSelfieCaptureResult.fromList(self.readValue() as! [Any?])
+    case 172:
+      return SmartSelfieEnrollmentCreationParams.fromList(self.readValue() as! [Any?])
     default:
       return super.readValue(ofType: type)
     }
@@ -1925,6 +2001,12 @@ private class SmileIDApiCodecWriter: FlutterStandardWriter {
     } else if let value = value as? FlutterValidDocumentsResponse {
       super.writeByte(170)
       super.writeValue(value.toList())
+    } else if let value = value as? SmartSelfieCaptureResult {
+      super.writeByte(171)
+      super.writeValue(value.toList())
+    } else if let value = value as? SmartSelfieEnrollmentCreationParams {
+      super.writeByte(172)
+      super.writeValue(value.toList())
     } else {
       super.writeValue(value)
     }
@@ -1957,6 +2039,7 @@ protocol SmileIDApi {
   func cleanup(jobId: String) throws
   func cleanupJobs(jobIds: [String]) throws
   func submitJob(jobId: String, deleteFilesOnSuccess: Bool) throws
+  func smartSelfieEnrollment(creationParams: SmartSelfieEnrollmentCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, Error>) -> Void)
   func authenticate(request: FlutterAuthenticationRequest, completion: @escaping (Result<FlutterAuthenticationResponse, Error>) -> Void)
   func prepUpload(request: FlutterPrepUploadRequest, completion: @escaping (Result<FlutterPrepUploadResponse, Error>) -> Void)
   func upload(url: String, request: FlutterUploadRequest, completion: @escaping (Result<Void, Error>) -> Void)
@@ -2134,6 +2217,23 @@ class SmileIDApiSetup {
       }
     } else {
       submitJobChannel.setMessageHandler(nil)
+    }
+    let smartSelfieEnrollmentChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.smartSelfieEnrollment", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      smartSelfieEnrollmentChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let creationParamsArg = args[0] as! SmartSelfieEnrollmentCreationParams
+        api.smartSelfieEnrollment(creationParams: creationParamsArg) { result in
+          switch result {
+          case .success(let res):
+            reply(wrapResult(res))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      smartSelfieEnrollmentChannel.setMessageHandler(nil)
     }
     let authenticateChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.authenticate", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {

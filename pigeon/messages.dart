@@ -10,7 +10,6 @@ import 'package:pigeon/pigeon.dart';
   swiftOptions: SwiftOptions(),
   dartPackageName: 'smileid',
 ))
-
 enum FlutterJobType {
   enhancedKyc,
   documentVerification,
@@ -30,6 +29,40 @@ class FlutterPartnerParams {
   Map<String?, String?>? extras;
 
   FlutterPartnerParams(this.jobType, this.jobId, this.userId);
+}
+
+class SmartSelfieEnrollmentCreationParams {
+  final String? userId;
+  final bool allowNewEnroll;
+  final bool allowAgentMode;
+  final bool showAttribution;
+  final bool showInstructions;
+  final bool skipApiSubmission;
+  final Map<String?, String?>? extraPartnerParams;
+
+  SmartSelfieEnrollmentCreationParams({
+    this.userId,
+    this.allowNewEnroll = false,
+    this.allowAgentMode = false,
+    this.showAttribution = true,
+    this.showInstructions = true,
+    this.skipApiSubmission = false,
+    this.extraPartnerParams,
+  });
+}
+
+class SmartSelfieCaptureResult {
+  final String? selfieFile;
+  final List<String?>? livenessFiles;
+  final Map<String?, Object?>? apiResponse;
+  final bool? didSubmitBiometricKycJob;
+
+  SmartSelfieCaptureResult({
+    this.selfieFile,
+    this.livenessFiles,
+    this.apiResponse,
+    this.didSubmitBiometricKycJob,
+  });
 }
 
 /// The Auth Smile request. Auth Smile serves multiple purposes:
@@ -804,21 +837,11 @@ class FlutterConfig {
 @HostApi()
 abstract class SmileIDApi {
   void initializeWithApiKey(
-      String apiKey,
-      FlutterConfig config,
-      bool useSandbox,
-      bool enableCrashReporting
-  );
+      String apiKey, FlutterConfig config, bool useSandbox, bool enableCrashReporting);
 
-  void initializeWithConfig(
-      FlutterConfig config,
-      bool useSandbox,
-      bool enableCrashReporting
-  );
+  void initializeWithConfig(FlutterConfig config, bool useSandbox, bool enableCrashReporting);
 
-  void initialize(
-      bool useSandbox
-  );
+  void initialize(bool useSandbox);
 
   void setCallbackUrl(String callbackUrl);
 
@@ -835,8 +858,11 @@ abstract class SmileIDApi {
   void submitJob(String jobId, bool deleteFilesOnSuccess);
 
   @async
-  FlutterAuthenticationResponse authenticate(
-      FlutterAuthenticationRequest request);
+  SmartSelfieCaptureResult smartSelfieEnrollment(
+      SmartSelfieEnrollmentCreationParams creationParams);
+
+  @async
+  FlutterAuthenticationResponse authenticate(FlutterAuthenticationRequest request);
 
   @async
   FlutterPrepUploadResponse prepUpload(FlutterPrepUploadRequest request);
@@ -848,12 +874,10 @@ abstract class SmileIDApi {
   FlutterEnhancedKycResponse doEnhancedKyc(FlutterEnhancedKycRequest request);
 
   @async
-  FlutterEnhancedKycAsyncResponse doEnhancedKycAsync(
-      FlutterEnhancedKycRequest request);
+  FlutterEnhancedKycAsyncResponse doEnhancedKycAsync(FlutterEnhancedKycRequest request);
 
   @async
-  FlutterSmartSelfieJobStatusResponse getSmartSelfieJobStatus(
-      FlutterJobStatusRequest request);
+  FlutterSmartSelfieJobStatusResponse getSmartSelfieJobStatus(FlutterJobStatusRequest request);
 
   @async
   FlutterSmartSelfieResponse doSmartSelfieEnrollment(
@@ -885,20 +909,17 @@ abstract class SmileIDApi {
       FlutterJobStatusRequest request);
 
   @async
-  FlutterBiometricKycJobStatusResponse getBiometricKycJobStatus(
-      FlutterJobStatusRequest request);
+  FlutterBiometricKycJobStatusResponse getBiometricKycJobStatus(FlutterJobStatusRequest request);
 
   @async
   FlutterEnhancedDocumentVerificationJobStatusResponse getEnhancedDocumentVerificationJobStatus(
       FlutterJobStatusRequest request);
 
   @async
-  FlutterProductsConfigResponse getProductsConfig(
-      FlutterProductsConfigRequest request);
+  FlutterProductsConfigResponse getProductsConfig(FlutterProductsConfigRequest request);
 
   @async
-  FlutterValidDocumentsResponse getValidDocuments(
-      FlutterProductsConfigRequest request);
+  FlutterValidDocumentsResponse getValidDocuments(FlutterProductsConfigRequest request);
 
   @async
   FlutterServicesResponse getServices();

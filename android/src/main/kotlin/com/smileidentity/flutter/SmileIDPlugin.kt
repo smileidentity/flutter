@@ -19,9 +19,14 @@ import FlutterSmartSelfieJobStatusResponse
 import FlutterSmartSelfieResponse
 import FlutterUploadRequest
 import FlutterValidDocumentsResponse
+import SmartSelfieCaptureResult
+import SmartSelfieEnrollmentCreationParams
+import SmileFlutterError
 import SmileIDApi
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import com.smileidentity.SmileID
 import com.smileidentity.SmileIDOptIn
 import com.smileidentity.flutter.enhanced.SmileIDSmartSelfieAuthenticationEnhanced
@@ -34,6 +39,7 @@ import com.smileidentity.networking.pollSmartSelfieJobStatus
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
+import io.flutter.plugin.common.PluginRegistry.ActivityResultListener
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -50,10 +56,11 @@ import kotlin.time.Duration.Companion.milliseconds
 class SmileIDPlugin :
     FlutterPlugin,
     SmileIDApi,
-    ActivityAware {
+    ActivityAware, ActivityResultListener {
     private var activity: Activity? = null
     private lateinit var appContext: Context
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
+    private var smartSelfieEnrollmentResult: ((Result<SmartSelfieCaptureResult>) -> Unit)? = null
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         SmileIDApi.setUp(flutterPluginBinding.binaryMessenger, this)
@@ -173,6 +180,31 @@ class SmileIDPlugin :
         }
     }
 
+    override fun smartSelfieEnrollment(
+        creationParams: SmartSelfieEnrollmentCreationParams,
+        callback: (Result<SmartSelfieCaptureResult>) -> Unit,
+    ) {
+        val intent = Intent(activity, SmileIDSmartSelfieEnrollmentActivity::class.java)
+        intent.putExtra("userId", creationParams.userId)
+        intent.putExtra("allowNewEnroll", creationParams.allowNewEnroll)
+        intent.putExtra("allowAgentMode", creationParams.allowAgentMode)
+        intent.putExtra("showAttribution", creationParams.showAttribution)
+        intent.putExtra("showInstructions", creationParams.showInstructions)
+        intent.putExtra("skipApiSubmission", creationParams.skipApiSubmission)
+        intent.putExtra(
+            "extraPartnerParams",
+            Bundle().apply {
+                creationParams.extraPartnerParams?.forEach { (key, value) ->
+                    putString(key, value)
+                }
+            },
+        )
+
+        smartSelfieEnrollmentResult = callback
+        activity?.startActivityForResult(intent, SmileIDSmartSelfieEnrollmentActivity.REQUEST_CODE)
+    }
+
+
     override fun authenticate(
         request: FlutterAuthenticationRequest,
         callback: (Result<FlutterAuthenticationResponse>) -> Unit,
@@ -240,17 +272,17 @@ class SmileIDPlugin :
                 .doSmartSelfieEnrollment(
                     userId = userId,
                     selfieImage =
-                        File(selfieImage).asFormDataPart(
-                            partName = "selfie_image",
-                            mediaType = "image/jpeg",
-                        ),
+                    File(selfieImage).asFormDataPart(
+                        partName = "selfie_image",
+                        mediaType = "image/jpeg",
+                    ),
                     livenessImages =
-                        livenessImages.map {
-                            File(selfieImage).asFormDataPart(
-                                partName = "liveness_images",
-                                mediaType = "image/jpeg",
-                            )
-                        },
+                    livenessImages.map {
+                        File(selfieImage).asFormDataPart(
+                            partName = "liveness_images",
+                            mediaType = "image/jpeg",
+                        )
+                    },
                     partnerParams = convertNullableMapToNonNull(partnerParams),
                     callbackUrl = callbackUrl,
                     sandboxResult = sandboxResult?.toInt(),
@@ -277,17 +309,17 @@ class SmileIDPlugin :
                 .doSmartSelfieAuthentication(
                     userId = userId,
                     selfieImage =
-                        File(selfieImage).asFormDataPart(
-                            partName = "selfie_image",
-                            mediaType = "image/jpeg",
-                        ),
+                    File(selfieImage).asFormDataPart(
+                        partName = "selfie_image",
+                        mediaType = "image/jpeg",
+                    ),
                     livenessImages =
-                        livenessImages.map {
-                            File(selfieImage).asFormDataPart(
-                                partName = "liveness_images",
-                                mediaType = "image/jpeg",
-                            )
-                        },
+                    livenessImages.map {
+                        File(selfieImage).asFormDataPart(
+                            partName = "liveness_images",
+                            mediaType = "image/jpeg",
+                        )
+                    },
                     partnerParams = convertNullableMapToNonNull(partnerParams),
                     callbackUrl = callbackUrl,
                     sandboxResult = sandboxResult?.toInt(),
@@ -443,13 +475,44 @@ class SmileIDPlugin :
      */
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         this.activity = binding.activity
+        binding.addActivityResultListener(this)
     }
 
     override fun onDetachedFromActivityForConfigChanges() {}
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {}
 
-    override fun onDetachedFromActivity() {}
+    override fun onDetachedFromActivity() {
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
+        if (requestCode == SmileIDSmartSelfieEnrollmentActivity.REQUEST_CODE
+            && smartSelfieEnrollmentResult != null
+        ) {
+            if (resultCode == Activity.RESULT_OK) {
+                val apiResponseBundle = data?.getBundleExtra("apiResponse")
+                val apiResponse = apiResponseBundle?.keySet()?.associateWith {
+                    apiResponseBundle.getString(it)
+                } as Map<String?, Any?>? ?: emptyMap()
+
+                val result = SmartSelfieCaptureResult(
+                    selfieFile = data?.getStringExtra("selfieFile") ?: "",
+                    livenessFiles = data?.getStringArrayListExtra("livenessFiles") ?: emptyList(),
+                    apiResponse = apiResponse,
+                )
+                smartSelfieEnrollmentResult?.invoke(Result.success(result))
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                val error = data?.getStringExtra("error") ?: "Unknown error"
+                smartSelfieEnrollmentResult?.invoke(Result.failure(SmileFlutterError(error)))
+            }
+
+            smartSelfieEnrollmentResult = null
+            return true
+        }
+
+        return false
+    }
+
 }
 
 /**

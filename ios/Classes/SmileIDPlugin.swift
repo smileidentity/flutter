@@ -1,8 +1,10 @@
 import Flutter
+import SwiftUI
 import SmileID
 import UIKit
 
 public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
+    
     public static func register(with registrar: FlutterPluginRegistrar) {
         let messenger: FlutterBinaryMessenger = registrar.messenger()
         let api: SmileIDApi & NSObjectProtocol = SmileIDPlugin()
@@ -111,6 +113,21 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         SmileID.initialize(
             useSandbox: useSandbox
         )
+    }
+    
+    func smartSelfieEnrollment(creationParams: SmartSelfieEnrollmentCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, any Error>) -> Void) {
+        
+        let window = UIApplication.shared.delegate?.window
+        if let controller = window??.rootViewController as? UINavigationController {
+            let smileIdSelfieEnrollmentViewController = UIHostingController(rootView: SmileIDSmartSelfieEnrollmentView(creationParams: creationParams, completion: completion, uiViewController: controller))
+    
+            controller.pushViewController(smileIdSelfieEnrollmentViewController, animated: true)
+            return
+        }
+        
+       
+        
+        completion(.failure("Failed to start smart selfie enrollment"))
     }
     
     func setCallbackUrl(callbackUrl: String) {

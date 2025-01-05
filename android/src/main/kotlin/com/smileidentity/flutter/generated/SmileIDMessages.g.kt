@@ -159,6 +159,71 @@ data class FlutterPartnerParams (
   }
 }
 
+/** Generated class from Pigeon that represents data sent in messages. */
+data class SmartSelfieEnrollmentCreationParams (
+  val userId: String? = null,
+  val allowNewEnroll: Boolean,
+  val allowAgentMode: Boolean,
+  val showAttribution: Boolean,
+  val showInstructions: Boolean,
+  val skipApiSubmission: Boolean,
+  val extraPartnerParams: Map<String?, String?>? = null
+
+) {
+  companion object {
+    @Suppress("UNCHECKED_CAST")
+    fun fromList(list: List<Any?>): SmartSelfieEnrollmentCreationParams {
+      val userId = list[0] as String?
+      val allowNewEnroll = list[1] as Boolean
+      val allowAgentMode = list[2] as Boolean
+      val showAttribution = list[3] as Boolean
+      val showInstructions = list[4] as Boolean
+      val skipApiSubmission = list[5] as Boolean
+      val extraPartnerParams = list[6] as Map<String?, String?>?
+      return SmartSelfieEnrollmentCreationParams(userId, allowNewEnroll, allowAgentMode, showAttribution, showInstructions, skipApiSubmission, extraPartnerParams)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf<Any?>(
+      userId,
+      allowNewEnroll,
+      allowAgentMode,
+      showAttribution,
+      showInstructions,
+      skipApiSubmission,
+      extraPartnerParams,
+    )
+  }
+}
+
+/** Generated class from Pigeon that represents data sent in messages. */
+data class SmartSelfieCaptureResult (
+  val selfieFile: String? = null,
+  val livenessFiles: List<String?>? = null,
+  val apiResponse: Map<String?, Any?>? = null,
+  val didSubmitBiometricKycJob: Boolean? = null
+
+) {
+  companion object {
+    @Suppress("UNCHECKED_CAST")
+    fun fromList(list: List<Any?>): SmartSelfieCaptureResult {
+      val selfieFile = list[0] as String?
+      val livenessFiles = list[1] as List<String?>?
+      val apiResponse = list[2] as Map<String?, Any?>?
+      val didSubmitBiometricKycJob = list[3] as Boolean?
+      return SmartSelfieCaptureResult(selfieFile, livenessFiles, apiResponse, didSubmitBiometricKycJob)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf<Any?>(
+      selfieFile,
+      livenessFiles,
+      apiResponse,
+      didSubmitBiometricKycJob,
+    )
+  }
+}
+
 /**
  * The Auth Smile request. Auth Smile serves multiple purposes:
  *
@@ -1778,6 +1843,16 @@ private object SmileIDApiCodec : StandardMessageCodec() {
           FlutterValidDocumentsResponse.fromList(it)
         }
       }
+      171.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
+          SmartSelfieCaptureResult.fromList(it)
+        }
+      }
+      172.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
+          SmartSelfieEnrollmentCreationParams.fromList(it)
+        }
+      }
       else -> super.readValueOfType(type, buffer)
     }
   }
@@ -1955,6 +2030,14 @@ private object SmileIDApiCodec : StandardMessageCodec() {
         stream.write(170)
         writeValue(stream, value.toList())
       }
+      is SmartSelfieCaptureResult -> {
+        stream.write(171)
+        writeValue(stream, value.toList())
+      }
+      is SmartSelfieEnrollmentCreationParams -> {
+        stream.write(172)
+        writeValue(stream, value.toList())
+      }
       else -> super.writeValue(stream, value)
     }
   }
@@ -1972,6 +2055,7 @@ interface SmileIDApi {
   fun cleanup(jobId: String)
   fun cleanupJobs(jobIds: List<String>)
   fun submitJob(jobId: String, deleteFilesOnSuccess: Boolean)
+  fun smartSelfieEnrollment(creationParams: SmartSelfieEnrollmentCreationParams, callback: (Result<SmartSelfieCaptureResult>) -> Unit)
   fun authenticate(request: FlutterAuthenticationRequest, callback: (Result<FlutterAuthenticationResponse>) -> Unit)
   fun prepUpload(request: FlutterPrepUploadRequest, callback: (Result<FlutterPrepUploadResponse>) -> Unit)
   fun upload(url: String, request: FlutterUploadRequest, callback: (Result<Unit>) -> Unit)
@@ -2184,6 +2268,26 @@ interface SmileIDApi {
               wrapped = wrapError(exception)
             }
             reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.smartSelfieEnrollment", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val creationParamsArg = args[0] as SmartSelfieEnrollmentCreationParams
+            api.smartSelfieEnrollment(creationParamsArg) { result: Result<SmartSelfieCaptureResult> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
+            }
           }
         } else {
           channel.setMessageHandler(null)

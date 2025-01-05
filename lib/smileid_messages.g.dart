@@ -107,6 +107,93 @@ class FlutterPartnerParams {
   }
 }
 
+class SmartSelfieEnrollmentCreationParams {
+  SmartSelfieEnrollmentCreationParams({
+    this.userId,
+    required this.allowNewEnroll,
+    required this.allowAgentMode,
+    required this.showAttribution,
+    required this.showInstructions,
+    required this.skipApiSubmission,
+    this.extraPartnerParams,
+  });
+
+  String? userId;
+
+  bool allowNewEnroll;
+
+  bool allowAgentMode;
+
+  bool showAttribution;
+
+  bool showInstructions;
+
+  bool skipApiSubmission;
+
+  Map<String?, String?>? extraPartnerParams;
+
+  Object encode() {
+    return <Object?>[
+      userId,
+      allowNewEnroll,
+      allowAgentMode,
+      showAttribution,
+      showInstructions,
+      skipApiSubmission,
+      extraPartnerParams,
+    ];
+  }
+
+  static SmartSelfieEnrollmentCreationParams decode(Object result) {
+    result as List<Object?>;
+    return SmartSelfieEnrollmentCreationParams(
+      userId: result[0] as String?,
+      allowNewEnroll: result[1]! as bool,
+      allowAgentMode: result[2]! as bool,
+      showAttribution: result[3]! as bool,
+      showInstructions: result[4]! as bool,
+      skipApiSubmission: result[5]! as bool,
+      extraPartnerParams: (result[6] as Map<Object?, Object?>?)?.cast<String?, String?>(),
+    );
+  }
+}
+
+class SmartSelfieCaptureResult {
+  SmartSelfieCaptureResult({
+    this.selfieFile,
+    this.livenessFiles,
+    this.apiResponse,
+    this.didSubmitBiometricKycJob,
+  });
+
+  String? selfieFile;
+
+  List<String?>? livenessFiles;
+
+  Map<String?, Object?>? apiResponse;
+
+  bool? didSubmitBiometricKycJob;
+
+  Object encode() {
+    return <Object?>[
+      selfieFile,
+      livenessFiles,
+      apiResponse,
+      didSubmitBiometricKycJob,
+    ];
+  }
+
+  static SmartSelfieCaptureResult decode(Object result) {
+    result as List<Object?>;
+    return SmartSelfieCaptureResult(
+      selfieFile: result[0] as String?,
+      livenessFiles: (result[1] as List<Object?>?)?.cast<String?>(),
+      apiResponse: (result[2] as Map<Object?, Object?>?)?.cast<String?, Object?>(),
+      didSubmitBiometricKycJob: result[3] as bool?,
+    );
+  }
+}
+
 /// The Auth Smile request. Auth Smile serves multiple purposes:
 ///
 /// - It is used to fetch the signature needed for subsequent API requests
@@ -2114,6 +2201,12 @@ class _SmileIDApiCodec extends StandardMessageCodec {
     } else if (value is FlutterValidDocumentsResponse) {
       buffer.putUint8(170);
       writeValue(buffer, value.encode());
+    } else if (value is SmartSelfieCaptureResult) {
+      buffer.putUint8(171);
+      writeValue(buffer, value.encode());
+    } else if (value is SmartSelfieEnrollmentCreationParams) {
+      buffer.putUint8(172);
+      writeValue(buffer, value.encode());
     } else {
       super.writeValue(buffer, value);
     }
@@ -2208,6 +2301,10 @@ class _SmileIDApiCodec extends StandardMessageCodec {
         return FlutterValidDocument.decode(readValue(buffer)!);
       case 170: 
         return FlutterValidDocumentsResponse.decode(readValue(buffer)!);
+      case 171: 
+        return SmartSelfieCaptureResult.decode(readValue(buffer)!);
+      case 172: 
+        return SmartSelfieEnrollmentCreationParams.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);
     }
@@ -2451,6 +2548,33 @@ class SmileIDApi {
       );
     } else {
       return;
+    }
+  }
+
+  Future<SmartSelfieCaptureResult> smartSelfieEnrollment(SmartSelfieEnrollmentCreationParams creationParams) async {
+    const String __pigeon_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.smartSelfieEnrollment';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+      __pigeon_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: __pigeon_binaryMessenger,
+    );
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(<Object?>[creationParams]) as List<Object?>?;
+    if (__pigeon_replyList == null) {
+      throw _createConnectionError(__pigeon_channelName);
+    } else if (__pigeon_replyList.length > 1) {
+      throw PlatformException(
+        code: __pigeon_replyList[0]! as String,
+        message: __pigeon_replyList[1] as String?,
+        details: __pigeon_replyList[2],
+      );
+    } else if (__pigeon_replyList[0] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (__pigeon_replyList[0] as SmartSelfieCaptureResult?)!;
     }
   }
 
