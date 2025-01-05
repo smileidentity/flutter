@@ -10,23 +10,6 @@ import SmileID
 import Foundation
 import Flutter
 
-class SmartSelfieDelegateController{
-    let uiViewController: UIViewController;
-    
-    init(uiViewController: UIViewController, result: ( (Result<SmartSelfieCaptureResult, any Error>) -> Void)? = nil) {
-        self.uiViewController = uiViewController
-        self.result = result
-    }
-    
-    var result: ((Result<SmartSelfieCaptureResult, any Error>) -> Void)?
-    
-    func onPopResult(response: Result<SmartSelfieCaptureResult, any Error>) {
-        result?(response)
-        uiViewController.dismiss(animated: true)
-        result = nil
-    }
-}
-
 struct SmileIDSmartSelfieEnrollmentView: View, SmartSelfieResultDelegate, SmileIDFileUtilsProtocol {
     var fileManager: FileManager = Foundation.FileManager.default
     
