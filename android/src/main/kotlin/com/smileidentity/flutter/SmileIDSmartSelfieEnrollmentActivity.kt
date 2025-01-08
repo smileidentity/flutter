@@ -12,7 +12,6 @@ import com.smileidentity.util.randomUserId
 import kotlinx.collections.immutable.toImmutableMap
 import java.io.File
 
-
 class SmileIDSmartSelfieEnrollmentActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,10 +23,10 @@ class SmileIDSmartSelfieEnrollmentActivity : ComponentActivity() {
         val showInstructions = intent.getBooleanExtra("showInstructions", true)
         val skipApiSubmission = intent.getBooleanExtra("skipApiSubmission", false)
         val extraPartnerParamsBundle = intent.getBundleExtra("extraPartnerParams")
-        val extraPartnerParams = extraPartnerParamsBundle?.keySet()?.associateWith {
-            extraPartnerParamsBundle.getString(it)
-        } as? Map<String, String> ?: emptyMap()
-
+        val extraPartnerParams =
+            extraPartnerParamsBundle?.keySet()?.associateWith {
+                extraPartnerParamsBundle.getString(it)
+            } as? Map<String, String> ?: emptyMap()
 
         setContent {
             SmileID.SmartSelfieEnrollment(
@@ -39,9 +38,9 @@ class SmileIDSmartSelfieEnrollmentActivity : ComponentActivity() {
                 skipApiSubmission = skipApiSubmission,
                 extraPartnerParams = extraPartnerParams.toImmutableMap(),
             ) {
+                val intent = Intent()
                 when (it) {
                     is SmileIDResult.Success -> {
-                        val intent = Intent()
                         intent.putExtra("selfieFile", it.data.selfieFile.absolutePath)
                         intent.putStringArrayListExtra(
                             "livenessFiles",
@@ -58,7 +57,6 @@ class SmileIDSmartSelfieEnrollmentActivity : ComponentActivity() {
                     }
 
                     is SmileIDResult.Error -> {
-                        val intent = Intent()
                         intent.putExtra("error", it.throwable.message)
                         setResult(RESULT_CANCELED, intent)
                         finish()
@@ -66,7 +64,6 @@ class SmileIDSmartSelfieEnrollmentActivity : ComponentActivity() {
                 }
             }
         }
-
     }
 
     companion object {
