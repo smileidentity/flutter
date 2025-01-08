@@ -200,7 +200,6 @@ struct SmartSelfieCaptureResult {
   var selfieFile: String? = nil
   var livenessFiles: [String]? = nil
   var apiResponse: [String: Any]? = nil
-  var didSubmitBiometricKycJob: Bool? = nil
 
 
   // swift-format-ignore: AlwaysUseLowerCamelCase
@@ -208,13 +207,11 @@ struct SmartSelfieCaptureResult {
     let selfieFile: String? = nilOrValue(pigeonVar_list[0])
     let livenessFiles: [String]? = nilOrValue(pigeonVar_list[1])
     let apiResponse: [String: Any]? = nilOrValue(pigeonVar_list[2])
-    let didSubmitBiometricKycJob: Bool? = nilOrValue(pigeonVar_list[3])
 
     return SmartSelfieCaptureResult(
       selfieFile: selfieFile,
       livenessFiles: livenessFiles,
-      apiResponse: apiResponse,
-      didSubmitBiometricKycJob: didSubmitBiometricKycJob
+      apiResponse: apiResponse
     )
   }
   func toList() -> [Any?] {
@@ -222,7 +219,6 @@ struct SmartSelfieCaptureResult {
       selfieFile,
       livenessFiles,
       apiResponse,
-      didSubmitBiometricKycJob,
     ]
   }
 }

@@ -199,8 +199,7 @@ data class SmartSelfieEnrollmentCreationParams (
 data class SmartSelfieCaptureResult (
   val selfieFile: String? = null,
   val livenessFiles: List<String>? = null,
-  val apiResponse: Map<String, Any>? = null,
-  val didSubmitBiometricKycJob: Boolean? = null
+  val apiResponse: Map<String, Any>? = null
 )
  {
   companion object {
@@ -208,8 +207,7 @@ data class SmartSelfieCaptureResult (
       val selfieFile = pigeonVar_list[0] as String?
       val livenessFiles = pigeonVar_list[1] as List<String>?
       val apiResponse = pigeonVar_list[2] as Map<String, Any>?
-      val didSubmitBiometricKycJob = pigeonVar_list[3] as Boolean?
-      return SmartSelfieCaptureResult(selfieFile, livenessFiles, apiResponse, didSubmitBiometricKycJob)
+      return SmartSelfieCaptureResult(selfieFile, livenessFiles, apiResponse)
     }
   }
   fun toList(): List<Any?> {
@@ -217,7 +215,6 @@ data class SmartSelfieCaptureResult (
       selfieFile,
       livenessFiles,
       apiResponse,
-      didSubmitBiometricKycJob,
     )
   }
 }

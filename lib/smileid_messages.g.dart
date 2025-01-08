@@ -161,7 +161,6 @@ class SmartSelfieCaptureResult {
     this.selfieFile,
     this.livenessFiles,
     this.apiResponse,
-    this.didSubmitBiometricKycJob,
   });
 
   String? selfieFile;
@@ -170,14 +169,11 @@ class SmartSelfieCaptureResult {
 
   Map<String, Object>? apiResponse;
 
-  bool? didSubmitBiometricKycJob;
-
   Object encode() {
     return <Object?>[
       selfieFile,
       livenessFiles,
       apiResponse,
-      didSubmitBiometricKycJob,
     ];
   }
 
@@ -187,7 +183,6 @@ class SmartSelfieCaptureResult {
       selfieFile: result[0] as String?,
       livenessFiles: (result[1] as List<Object?>?)?.cast<String>(),
       apiResponse: (result[2] as Map<Object?, Object?>?)?.cast<String, Object>(),
-      didSubmitBiometricKycJob: result[3] as bool?,
     );
   }
 }

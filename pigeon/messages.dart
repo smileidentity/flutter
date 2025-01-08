@@ -54,13 +54,11 @@ class SmartSelfieCaptureResult {
   final String? selfieFile;
   final List<String>? livenessFiles;
   final Map<String, Object>? apiResponse;
-  final bool? didSubmitBiometricKycJob;
 
   SmartSelfieCaptureResult({
     this.selfieFile,
     this.livenessFiles,
     this.apiResponse,
-    this.didSubmitBiometricKycJob,
   });
 }
 

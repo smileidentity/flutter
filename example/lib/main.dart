@@ -211,7 +211,6 @@ class MainContent extends StatelessWidget {
             print('enrollment selfie: ${data.selfieFile}');
             print('enrollment liveness: ${data.livenessFiles}');
             print('enrollment apiResponse: ${data.apiResponse}');
-            print('enrollment didSubmitBiometricKycJob: ${data.didSubmitBiometricKycJob}');
           case SmileIdSdkResultError<SmartSelfieCaptureResult>(:final error):
             print('error occurred with smart selfie enrollment: $error');
         }
