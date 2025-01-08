@@ -11,18 +11,20 @@ class SmileID {
   static SmileIDApi platformInterface = SmileIDApi();
   static SmileIDService api = SmileIDService(platformInterface);
 
-  static void initializeWithApiKey(
-      {required String apiKey,
-      required FlutterConfig config,
-      required bool useSandbox,
-      required bool enableCrashReporting}) {
+  static void initializeWithApiKey({
+    required String apiKey,
+    required FlutterConfig config,
+    required bool useSandbox,
+    required bool enableCrashReporting,
+  }) {
     platformInterface.initializeWithApiKey(apiKey, config, useSandbox, enableCrashReporting);
   }
 
-  static void initializeWithConfig(
-      {required FlutterConfig config,
-      required bool useSandbox,
-      required bool enableCrashReporting}) {
+  static void initializeWithConfig({
+    required FlutterConfig config,
+    required bool useSandbox,
+    required bool enableCrashReporting,
+  }) {
     platformInterface.initializeWithConfig(config, useSandbox, enableCrashReporting);
   }
 
@@ -32,11 +34,15 @@ class SmileID {
     platformInterface.initialize(useSandbox);
   }
 
-  static void setCallbackUrl({required Uri callbackUrl}) {
+  static void setCallbackUrl({
+    required Uri callbackUrl,
+  }) {
     platformInterface.setCallbackUrl(callbackUrl.toString());
   }
 
-  static void setAllowOfflineMode({required bool allowOfflineMode}) {
+  static void setAllowOfflineMode({
+    required bool allowOfflineMode,
+  }) {
     platformInterface.setAllowOfflineMode(allowOfflineMode);
   }
 
