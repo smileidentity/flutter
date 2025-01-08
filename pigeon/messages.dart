@@ -3,8 +3,7 @@ import 'package:pigeon/pigeon.dart';
 @ConfigurePigeon(PigeonOptions(
   dartOut: 'lib/smileid_messages.g.dart',
   dartOptions: DartOptions(),
-  kotlinOut:
-      'android/src/main/kotlin/com/smileidentity/flutter/generated/SmileIDMessages.g.kt',
+  kotlinOut: 'android/src/main/kotlin/com/smileidentity/flutter/generated/SmileIDMessages.g.kt',
   kotlinOptions: KotlinOptions(errorClassName: "SmileFlutterError"),
   swiftOut: 'ios/Classes/SmileIDMessages.g.swift',
   swiftOptions: SwiftOptions(),
@@ -330,20 +329,21 @@ class FlutterEnhancedKycRequest {
   final String timestamp;
   final String signature;
 
-  FlutterEnhancedKycRequest(
-      {required this.country,
-      required this.idType,
-      required this.idNumber,
-      this.firstName,
-      this.middleName,
-      this.lastName,
-      this.dob,
-      this.phoneNumber,
-      this.bankCode,
-      this.callbackUrl,
-      required this.partnerParams,
-      required this.timestamp,
-      required this.signature});
+  FlutterEnhancedKycRequest({
+    required this.country,
+    required this.idType,
+    required this.idNumber,
+    this.firstName,
+    this.middleName,
+    this.lastName,
+    this.dob,
+    this.phoneNumber,
+    this.bankCode,
+    this.callbackUrl,
+    required this.partnerParams,
+    required this.timestamp,
+    required this.signature,
+  });
 }
 
 class FlutterEnhancedKycAsyncResponse {
@@ -837,9 +837,17 @@ class FlutterConfig {
 @HostApi()
 abstract class SmileIDApi {
   void initializeWithApiKey(
-      String apiKey, FlutterConfig config, bool useSandbox, bool enableCrashReporting);
+    String apiKey,
+    FlutterConfig config,
+    bool useSandbox,
+    bool enableCrashReporting,
+  );
 
-  void initializeWithConfig(FlutterConfig config, bool useSandbox, bool enableCrashReporting);
+  void initializeWithConfig(
+    FlutterConfig config,
+    bool useSandbox,
+    bool enableCrashReporting,
+  );
 
   void initialize(bool useSandbox);
 
@@ -859,7 +867,8 @@ abstract class SmileIDApi {
 
   @async
   SmartSelfieCaptureResult smartSelfieEnrollment(
-      SmartSelfieEnrollmentCreationParams creationParams);
+    SmartSelfieEnrollmentCreationParams creationParams,
+  );
 
   @async
   FlutterAuthenticationResponse authenticate(FlutterAuthenticationRequest request);
@@ -906,14 +915,16 @@ abstract class SmileIDApi {
 
   @async
   FlutterDocumentVerificationJobStatusResponse getDocumentVerificationJobStatus(
-      FlutterJobStatusRequest request);
+    FlutterJobStatusRequest request,
+  );
 
   @async
   FlutterBiometricKycJobStatusResponse getBiometricKycJobStatus(FlutterJobStatusRequest request);
 
   @async
   FlutterEnhancedDocumentVerificationJobStatusResponse getEnhancedDocumentVerificationJobStatus(
-      FlutterJobStatusRequest request);
+    FlutterJobStatusRequest request,
+  );
 
   @async
   FlutterProductsConfigResponse getProductsConfig(FlutterProductsConfigRequest request);
@@ -926,17 +937,29 @@ abstract class SmileIDApi {
 
   @async
   FlutterSmartSelfieJobStatusResponse pollSmartSelfieJobStatus(
-      FlutterJobStatusRequest request, int interval, int numAttempts);
+    FlutterJobStatusRequest request,
+    int interval,
+    int numAttempts,
+  );
 
   @async
   FlutterDocumentVerificationJobStatusResponse pollDocumentVerificationJobStatus(
-      FlutterJobStatusRequest request, int interval, int numAttempts);
+    FlutterJobStatusRequest request,
+    int interval,
+    int numAttempts,
+  );
 
   @async
   FlutterBiometricKycJobStatusResponse pollBiometricKycJobStatus(
-      FlutterJobStatusRequest request, int interval, int numAttempts);
+    FlutterJobStatusRequest request,
+    int interval,
+    int numAttempts,
+  );
 
   @async
   FlutterEnhancedDocumentVerificationJobStatusResponse pollEnhancedDocumentVerificationJobStatus(
-      FlutterJobStatusRequest request, int interval, int numAttempts);
+    FlutterJobStatusRequest request,
+    int interval,
+    int numAttempts,
+  );
 }

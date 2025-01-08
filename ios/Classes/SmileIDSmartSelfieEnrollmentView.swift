@@ -1,10 +1,3 @@
-//
-//  SmileIDSmartSelfieEnrollmentView.swift
-//  smile_id
-//
-//  Created by Sebastine Odeh on 05/01/2025.
-//
-
 import SwiftUI
 import SmileID
 import Foundation
