@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:smile_id/smile_id_sdk_result.dart';
 
 import 'smileid_messages.g.dart';
 import 'smile_id_service.dart';
@@ -9,20 +11,18 @@ class SmileID {
   static SmileIDApi platformInterface = SmileIDApi();
   static SmileIDService api = SmileIDService(platformInterface);
 
-  static void initializeWithApiKey({
-    required String apiKey,
-    required FlutterConfig config,
-    required bool useSandbox,
-    required bool enableCrashReporting
-  }){
+  static void initializeWithApiKey(
+      {required String apiKey,
+      required FlutterConfig config,
+      required bool useSandbox,
+      required bool enableCrashReporting}) {
     platformInterface.initializeWithApiKey(apiKey, config, useSandbox, enableCrashReporting);
   }
 
-  static void initializeWithConfig({
-    required FlutterConfig config,
-    required bool useSandbox,
-    required bool enableCrashReporting
-  }) {
+  static void initializeWithConfig(
+      {required FlutterConfig config,
+      required bool useSandbox,
+      required bool enableCrashReporting}) {
     platformInterface.initializeWithConfig(config, useSandbox, enableCrashReporting);
   }
 
@@ -46,6 +46,17 @@ class SmileID {
 
   Future<List<String?>> getUnsubmittedJobs() {
     return platformInterface.getUnsubmittedJobs();
+  }
+
+  Future<SmileIDSdkResult<SmartSelfieCaptureResult>> smartSelfieEnrollment({
+    required SmartSelfieEnrollmentCreationParams creationParams,
+  }) async {
+    try {
+      final result = await platformInterface.smartSelfieEnrollment(creationParams);
+      return SmileIdSdkResultSuccess(result);
+    } on PlatformException catch (e) {
+      return SmileIdSdkResultError(e.message ?? "An error occurred communicating with the sdk");
+    }
   }
 
   static void cleanup(String jobId) {

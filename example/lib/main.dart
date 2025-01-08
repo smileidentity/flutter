@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:smile_id/smile_id_document_capture_view.dart';
+import 'package:smile_id/smile_id_sdk_result.dart';
 import 'package:smile_id/smile_id_smart_selfie_capture_view.dart';
 import 'package:smile_id/smileid_messages.g.dart';
 import 'package:smile_id/smile_id.dart';
@@ -196,8 +197,8 @@ class MainContent extends StatelessWidget {
     return ElevatedButton(
       child: const Text("SmartSelfie Enrollment"),
       onPressed: () async {
-        final result = await SmileID.platformInterface.smartSelfieEnrollment(
-          SmartSelfieEnrollmentCreationParams(
+        final result = await SmileID().smartSelfieEnrollment(
+          creationParams: SmartSelfieEnrollmentCreationParams(
               allowNewEnroll: false,
               allowAgentMode: false,
               showAttribution: true,
@@ -205,10 +206,15 @@ class MainContent extends StatelessWidget {
               skipApiSubmission: false),
         );
 
-        print('enrollment selfie: ${result.selfieFile}');
-        print('enrollment liveness: ${result.livenessFiles}');
-        print('enrollment apiResponse: ${result.apiResponse}');
-        print('enrollment didSubmitBiometricKycJob: ${result.didSubmitBiometricKycJob}');
+        switch (result) {
+          case SmileIdSdkResultSuccess<SmartSelfieCaptureResult>(:final data):
+            print('enrollment selfie: ${data.selfieFile}');
+            print('enrollment liveness: ${data.livenessFiles}');
+            print('enrollment apiResponse: ${data.apiResponse}');
+            print('enrollment didSubmitBiometricKycJob: ${data.didSubmitBiometricKycJob}');
+          case SmileIdSdkResultError<SmartSelfieCaptureResult>(:final error):
+            print('error occurred with smart selfie enrollment: $error');
+        }
       },
       // onPressed: () {
       //   Navigator.of(context).push(

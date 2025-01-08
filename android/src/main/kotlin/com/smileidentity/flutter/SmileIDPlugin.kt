@@ -272,17 +272,17 @@ class SmileIDPlugin :
                 .doSmartSelfieEnrollment(
                     userId = userId,
                     selfieImage =
-                        File(selfieImage).asFormDataPart(
-                            partName = "selfie_image",
-                            mediaType = "image/jpeg",
-                        ),
+                    File(selfieImage).asFormDataPart(
+                        partName = "selfie_image",
+                        mediaType = "image/jpeg",
+                    ),
                     livenessImages =
-                        livenessImages.map {
-                            File(selfieImage).asFormDataPart(
-                                partName = "liveness_images",
-                                mediaType = "image/jpeg",
-                            )
-                        },
+                    livenessImages.map {
+                        File(selfieImage).asFormDataPart(
+                            partName = "liveness_images",
+                            mediaType = "image/jpeg",
+                        )
+                    },
                     partnerParams = convertNullableMapToNonNull(partnerParams),
                     callbackUrl = callbackUrl,
                     sandboxResult = sandboxResult?.toInt(),
@@ -309,17 +309,17 @@ class SmileIDPlugin :
                 .doSmartSelfieAuthentication(
                     userId = userId,
                     selfieImage =
-                        File(selfieImage).asFormDataPart(
-                            partName = "selfie_image",
-                            mediaType = "image/jpeg",
-                        ),
+                    File(selfieImage).asFormDataPart(
+                        partName = "selfie_image",
+                        mediaType = "image/jpeg",
+                    ),
                     livenessImages =
-                        livenessImages.map {
-                            File(selfieImage).asFormDataPart(
-                                partName = "liveness_images",
-                                mediaType = "image/jpeg",
-                            )
-                        },
+                    livenessImages.map {
+                        File(selfieImage).asFormDataPart(
+                            partName = "liveness_images",
+                            mediaType = "image/jpeg",
+                        )
+                    },
                     partnerParams = convertNullableMapToNonNull(partnerParams),
                     callbackUrl = callbackUrl,
                     sandboxResult = sandboxResult?.toInt(),
@@ -495,23 +495,29 @@ class SmileIDPlugin :
         ) {
             if (resultCode == Activity.RESULT_OK) {
                 val apiResponseBundle = data?.getBundleExtra("apiResponse")
-                val apiResponse =
-                    apiResponseBundle?.keySet()?.associateWith {
-                        apiResponseBundle.getString(it)
-                    } as Map<String, Any>? ?: emptyMap()
+                val apiResponse = apiResponseBundle?.keySet()?.associateWith {
+                    apiResponseBundle.getString(it)
+                } as Map<String, Any>? ?: emptyMap()
 
                 val result =
                     SmartSelfieCaptureResult(
                         selfieFile = data?.getStringExtra("selfieFile") ?: "",
                         livenessFiles =
-                            data?.getStringArrayListExtra("livenessFiles")
-                                ?: emptyList(),
+                        data?.getStringArrayListExtra("livenessFiles")
+                            ?: emptyList(),
                         apiResponse = apiResponse,
                     )
                 smartSelfieEnrollmentResult?.invoke(Result.success(result))
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 val error = data?.getStringExtra("error") ?: "Unknown error"
-                smartSelfieEnrollmentResult?.invoke(Result.failure(SmileFlutterError(error)))
+                smartSelfieEnrollmentResult?.invoke(
+                    Result.failure(
+                        SmileFlutterError(
+                            "12",
+                            message = error,
+                        ),
+                    ),
+                )
             }
 
             smartSelfieEnrollmentResult = null
