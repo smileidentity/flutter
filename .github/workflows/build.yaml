@@ -20,6 +20,10 @@ jobs:
           channel: 'stable'
       - name: Install Dependencies
         run: flutter pub get && cd example && flutter pub get && cd ..
+
+      - name: Format code
+        run: dart format . --set-exit-if-changed
+
       - name: Lint Flutter
         run: flutter analyze
   Android:
