@@ -37,7 +37,7 @@ class SmartSelfieEnrollmentCreationParams {
   final bool showAttribution;
   final bool showInstructions;
   final bool skipApiSubmission;
-  final Map<String?, String?>? extraPartnerParams;
+  final Map<String, String>? extraPartnerParams;
 
   SmartSelfieEnrollmentCreationParams({
     this.userId,
@@ -52,8 +52,8 @@ class SmartSelfieEnrollmentCreationParams {
 
 class SmartSelfieCaptureResult {
   final String? selfieFile;
-  final List<String?>? livenessFiles;
-  final Map<String?, Object?>? apiResponse;
+  final List<String>? livenessFiles;
+  final Map<String, Object>? apiResponse;
   final bool? didSubmitBiometricKycJob;
 
   SmartSelfieCaptureResult({

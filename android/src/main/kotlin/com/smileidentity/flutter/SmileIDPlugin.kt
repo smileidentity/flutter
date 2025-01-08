@@ -493,7 +493,7 @@ class SmileIDPlugin :
                 val apiResponseBundle = data?.getBundleExtra("apiResponse")
                 val apiResponse = apiResponseBundle?.keySet()?.associateWith {
                     apiResponseBundle.getString(it)
-                } as Map<String?, Any?>? ?: emptyMap()
+                } as Map<String, Any>? ?: emptyMap()
 
                 val result = SmartSelfieCaptureResult(
                     selfieFile = data?.getStringExtra("selfieFile") ?: "",

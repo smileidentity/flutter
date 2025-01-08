@@ -38,13 +38,13 @@ struct SmileIDSmartSelfieEnrollmentView: View, SmartSelfieResultDelegate, SmileI
     }
     
     func didError(error: any Error) {
-        completion?(.failure(error.localizedDescription))
+        completion?(.failure(PigeonError(code: "12", message: error.localizedDescription, details: nil)))
         uiViewController?.popViewController(animated: true)
     }
 }
 
 fileprivate extension SmartSelfieResponse {
-    func buildResponse() -> Dictionary<String?, Any?> {
+    func buildResponse() -> Dictionary<String, Any> {
         return [
             "created_at": self.createdAt,
             "job_id": self.jobId,
