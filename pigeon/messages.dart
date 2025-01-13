@@ -849,6 +849,29 @@ class FlutterConfig {
 }
 
 @HostApi()
+abstract class SmileIDProductsApi {
+  @async
+  SmartSelfieCaptureResult smartSelfieEnrollment(
+    SmartSelfieCreationParams creationParams,
+  );
+
+  @async
+  SmartSelfieCaptureResult smartSelfieAuthentication(
+    SmartSelfieCreationParams creationParams,
+  );
+
+  @async
+  SmartSelfieCaptureResult smartSelfieEnrollmentEnhanced(
+    SmartSelfieEnhancedCreationParams creationParams,
+  );
+
+  @async
+  SmartSelfieCaptureResult smartSelfieAuthenticationEnhanced(
+    SmartSelfieEnhancedCreationParams creationParams,
+  );
+}
+
+@HostApi()
 abstract class SmileIDApi {
   void initializeWithApiKey(
     String apiKey,
@@ -878,26 +901,6 @@ abstract class SmileIDApi {
   void cleanupJobs(List<String> jobIds);
 
   void submitJob(String jobId, bool deleteFilesOnSuccess);
-
-  @async
-  SmartSelfieCaptureResult smartSelfieEnrollment(
-    SmartSelfieCreationParams creationParams,
-  );
-
-  @async
-  SmartSelfieCaptureResult smartSelfieAuthentication(
-    SmartSelfieCreationParams creationParams,
-  );
-
-  @async
-  SmartSelfieCaptureResult smartSelfieEnrollmentEnhanced(
-    SmartSelfieEnhancedCreationParams creationParams,
-  );
-
-  @async
-  SmartSelfieCaptureResult smartSelfieAuthenticationEnhanced(
-    SmartSelfieEnhancedCreationParams creationParams,
-  );
 
   @async
   FlutterAuthenticationResponse authenticate(FlutterAuthenticationRequest request);

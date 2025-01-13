@@ -2024,6 +2024,105 @@ private open class SmileIDMessagesPigeonCodec : StandardMessageCodec() {
 
 
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
+interface SmileIDProductsApi {
+  fun smartSelfieEnrollment(creationParams: SmartSelfieCreationParams, callback: (Result<SmartSelfieCaptureResult>) -> Unit)
+  fun smartSelfieAuthentication(creationParams: SmartSelfieCreationParams, callback: (Result<SmartSelfieCaptureResult>) -> Unit)
+  fun smartSelfieEnrollmentEnhanced(creationParams: SmartSelfieEnhancedCreationParams, callback: (Result<SmartSelfieCaptureResult>) -> Unit)
+  fun smartSelfieAuthenticationEnhanced(creationParams: SmartSelfieEnhancedCreationParams, callback: (Result<SmartSelfieCaptureResult>) -> Unit)
+
+  companion object {
+    /** The codec used by SmileIDProductsApi. */
+    val codec: MessageCodec<Any?> by lazy {
+      SmileIDMessagesPigeonCodec()
+    }
+    /** Sets up an instance of `SmileIDProductsApi` to handle messages through the `binaryMessenger`. */
+    @JvmOverloads
+    fun setUp(binaryMessenger: BinaryMessenger, api: SmileIDProductsApi?, messageChannelSuffix: String = "") {
+      val separatedMessageChannelSuffix = if (messageChannelSuffix.isNotEmpty()) ".$messageChannelSuffix" else ""
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDProductsApi.smartSelfieEnrollment$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val creationParamsArg = args[0] as SmartSelfieCreationParams
+            api.smartSelfieEnrollment(creationParamsArg) { result: Result<SmartSelfieCaptureResult> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDProductsApi.smartSelfieAuthentication$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val creationParamsArg = args[0] as SmartSelfieCreationParams
+            api.smartSelfieAuthentication(creationParamsArg) { result: Result<SmartSelfieCaptureResult> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDProductsApi.smartSelfieEnrollmentEnhanced$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val creationParamsArg = args[0] as SmartSelfieEnhancedCreationParams
+            api.smartSelfieEnrollmentEnhanced(creationParamsArg) { result: Result<SmartSelfieCaptureResult> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDProductsApi.smartSelfieAuthenticationEnhanced$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val creationParamsArg = args[0] as SmartSelfieEnhancedCreationParams
+            api.smartSelfieAuthenticationEnhanced(creationParamsArg) { result: Result<SmartSelfieCaptureResult> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+    }
+  }
+}
+/** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface SmileIDApi {
   fun initializeWithApiKey(apiKey: String, config: FlutterConfig, useSandbox: Boolean, enableCrashReporting: Boolean)
   fun initializeWithConfig(config: FlutterConfig, useSandbox: Boolean, enableCrashReporting: Boolean)
@@ -2035,10 +2134,6 @@ interface SmileIDApi {
   fun cleanup(jobId: String)
   fun cleanupJobs(jobIds: List<String>)
   fun submitJob(jobId: String, deleteFilesOnSuccess: Boolean)
-  fun smartSelfieEnrollment(creationParams: SmartSelfieCreationParams, callback: (Result<SmartSelfieCaptureResult>) -> Unit)
-  fun smartSelfieAuthentication(creationParams: SmartSelfieCreationParams, callback: (Result<SmartSelfieCaptureResult>) -> Unit)
-  fun smartSelfieEnrollmentEnhanced(creationParams: SmartSelfieEnhancedCreationParams, callback: (Result<SmartSelfieCaptureResult>) -> Unit)
-  fun smartSelfieAuthenticationEnhanced(creationParams: SmartSelfieEnhancedCreationParams, callback: (Result<SmartSelfieCaptureResult>) -> Unit)
   fun authenticate(request: FlutterAuthenticationRequest, callback: (Result<FlutterAuthenticationResponse>) -> Unit)
   fun prepUpload(request: FlutterPrepUploadRequest, callback: (Result<FlutterPrepUploadResponse>) -> Unit)
   fun upload(url: String, request: FlutterUploadRequest, callback: (Result<Unit>) -> Unit)
@@ -2242,86 +2337,6 @@ interface SmileIDApi {
               wrapError(exception)
             }
             reply.reply(wrapped)
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.smartSelfieEnrollment$separatedMessageChannelSuffix", codec)
-        if (api != null) {
-          channel.setMessageHandler { message, reply ->
-            val args = message as List<Any?>
-            val creationParamsArg = args[0] as SmartSelfieCreationParams
-            api.smartSelfieEnrollment(creationParamsArg) { result: Result<SmartSelfieCaptureResult> ->
-              val error = result.exceptionOrNull()
-              if (error != null) {
-                reply.reply(wrapError(error))
-              } else {
-                val data = result.getOrNull()
-                reply.reply(wrapResult(data))
-              }
-            }
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.smartSelfieAuthentication$separatedMessageChannelSuffix", codec)
-        if (api != null) {
-          channel.setMessageHandler { message, reply ->
-            val args = message as List<Any?>
-            val creationParamsArg = args[0] as SmartSelfieCreationParams
-            api.smartSelfieAuthentication(creationParamsArg) { result: Result<SmartSelfieCaptureResult> ->
-              val error = result.exceptionOrNull()
-              if (error != null) {
-                reply.reply(wrapError(error))
-              } else {
-                val data = result.getOrNull()
-                reply.reply(wrapResult(data))
-              }
-            }
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.smartSelfieEnrollmentEnhanced$separatedMessageChannelSuffix", codec)
-        if (api != null) {
-          channel.setMessageHandler { message, reply ->
-            val args = message as List<Any?>
-            val creationParamsArg = args[0] as SmartSelfieEnhancedCreationParams
-            api.smartSelfieEnrollmentEnhanced(creationParamsArg) { result: Result<SmartSelfieCaptureResult> ->
-              val error = result.exceptionOrNull()
-              if (error != null) {
-                reply.reply(wrapError(error))
-              } else {
-                val data = result.getOrNull()
-                reply.reply(wrapResult(data))
-              }
-            }
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDApi.smartSelfieAuthenticationEnhanced$separatedMessageChannelSuffix", codec)
-        if (api != null) {
-          channel.setMessageHandler { message, reply ->
-            val args = message as List<Any?>
-            val creationParamsArg = args[0] as SmartSelfieEnhancedCreationParams
-            api.smartSelfieAuthenticationEnhanced(creationParamsArg) { result: Result<SmartSelfieCaptureResult> ->
-              val error = result.exceptionOrNull()
-              if (error != null) {
-                reply.reply(wrapError(error))
-              } else {
-                val data = result.getOrNull()
-                reply.reply(wrapResult(data))
-              }
-            }
           }
         } else {
           channel.setMessageHandler(null)

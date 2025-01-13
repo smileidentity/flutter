@@ -2158,6 +2158,90 @@ class SmileIDMessagesPigeonCodec: FlutterStandardMessageCodec, @unchecked Sendab
 
 
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
+protocol SmileIDProductsApi {
+  func smartSelfieEnrollment(creationParams: SmartSelfieCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, Error>) -> Void)
+  func smartSelfieAuthentication(creationParams: SmartSelfieCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, Error>) -> Void)
+  func smartSelfieEnrollmentEnhanced(creationParams: SmartSelfieEnhancedCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, Error>) -> Void)
+  func smartSelfieAuthenticationEnhanced(creationParams: SmartSelfieEnhancedCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, Error>) -> Void)
+}
+
+/// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
+class SmileIDProductsApiSetup {
+  static var codec: FlutterStandardMessageCodec { SmileIDMessagesPigeonCodec.shared }
+  /// Sets up an instance of `SmileIDProductsApi` to handle messages through the `binaryMessenger`.
+  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: SmileIDProductsApi?, messageChannelSuffix: String = "") {
+    let channelSuffix = messageChannelSuffix.count > 0 ? ".\(messageChannelSuffix)" : ""
+    let smartSelfieEnrollmentChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDProductsApi.smartSelfieEnrollment\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      smartSelfieEnrollmentChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let creationParamsArg = args[0] as! SmartSelfieCreationParams
+        api.smartSelfieEnrollment(creationParams: creationParamsArg) { result in
+          switch result {
+          case .success(let res):
+            reply(wrapResult(res))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      smartSelfieEnrollmentChannel.setMessageHandler(nil)
+    }
+    let smartSelfieAuthenticationChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDProductsApi.smartSelfieAuthentication\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      smartSelfieAuthenticationChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let creationParamsArg = args[0] as! SmartSelfieCreationParams
+        api.smartSelfieAuthentication(creationParams: creationParamsArg) { result in
+          switch result {
+          case .success(let res):
+            reply(wrapResult(res))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      smartSelfieAuthenticationChannel.setMessageHandler(nil)
+    }
+    let smartSelfieEnrollmentEnhancedChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDProductsApi.smartSelfieEnrollmentEnhanced\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      smartSelfieEnrollmentEnhancedChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let creationParamsArg = args[0] as! SmartSelfieEnhancedCreationParams
+        api.smartSelfieEnrollmentEnhanced(creationParams: creationParamsArg) { result in
+          switch result {
+          case .success(let res):
+            reply(wrapResult(res))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      smartSelfieEnrollmentEnhancedChannel.setMessageHandler(nil)
+    }
+    let smartSelfieAuthenticationEnhancedChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDProductsApi.smartSelfieAuthenticationEnhanced\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      smartSelfieAuthenticationEnhancedChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let creationParamsArg = args[0] as! SmartSelfieEnhancedCreationParams
+        api.smartSelfieAuthenticationEnhanced(creationParams: creationParamsArg) { result in
+          switch result {
+          case .success(let res):
+            reply(wrapResult(res))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      smartSelfieAuthenticationEnhancedChannel.setMessageHandler(nil)
+    }
+  }
+}
+/// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol SmileIDApi {
   func initializeWithApiKey(apiKey: String, config: FlutterConfig, useSandbox: Bool, enableCrashReporting: Bool) throws
   func initializeWithConfig(config: FlutterConfig, useSandbox: Bool, enableCrashReporting: Bool) throws
@@ -2169,10 +2253,6 @@ protocol SmileIDApi {
   func cleanup(jobId: String) throws
   func cleanupJobs(jobIds: [String]) throws
   func submitJob(jobId: String, deleteFilesOnSuccess: Bool) throws
-  func smartSelfieEnrollment(creationParams: SmartSelfieCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, Error>) -> Void)
-  func smartSelfieAuthentication(creationParams: SmartSelfieCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, Error>) -> Void)
-  func smartSelfieEnrollmentEnhanced(creationParams: SmartSelfieEnhancedCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, Error>) -> Void)
-  func smartSelfieAuthenticationEnhanced(creationParams: SmartSelfieEnhancedCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, Error>) -> Void)
   func authenticate(request: FlutterAuthenticationRequest, completion: @escaping (Result<FlutterAuthenticationResponse, Error>) -> Void)
   func prepUpload(request: FlutterPrepUploadRequest, completion: @escaping (Result<FlutterPrepUploadResponse, Error>) -> Void)
   func upload(url: String, request: FlutterUploadRequest, completion: @escaping (Result<Void, Error>) -> Void)
@@ -2350,74 +2430,6 @@ class SmileIDApiSetup {
       }
     } else {
       submitJobChannel.setMessageHandler(nil)
-    }
-    let smartSelfieEnrollmentChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.smartSelfieEnrollment\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
-    if let api = api {
-      smartSelfieEnrollmentChannel.setMessageHandler { message, reply in
-        let args = message as! [Any?]
-        let creationParamsArg = args[0] as! SmartSelfieCreationParams
-        api.smartSelfieEnrollment(creationParams: creationParamsArg) { result in
-          switch result {
-          case .success(let res):
-            reply(wrapResult(res))
-          case .failure(let error):
-            reply(wrapError(error))
-          }
-        }
-      }
-    } else {
-      smartSelfieEnrollmentChannel.setMessageHandler(nil)
-    }
-    let smartSelfieAuthenticationChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.smartSelfieAuthentication\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
-    if let api = api {
-      smartSelfieAuthenticationChannel.setMessageHandler { message, reply in
-        let args = message as! [Any?]
-        let creationParamsArg = args[0] as! SmartSelfieCreationParams
-        api.smartSelfieAuthentication(creationParams: creationParamsArg) { result in
-          switch result {
-          case .success(let res):
-            reply(wrapResult(res))
-          case .failure(let error):
-            reply(wrapError(error))
-          }
-        }
-      }
-    } else {
-      smartSelfieAuthenticationChannel.setMessageHandler(nil)
-    }
-    let smartSelfieEnrollmentEnhancedChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.smartSelfieEnrollmentEnhanced\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
-    if let api = api {
-      smartSelfieEnrollmentEnhancedChannel.setMessageHandler { message, reply in
-        let args = message as! [Any?]
-        let creationParamsArg = args[0] as! SmartSelfieEnhancedCreationParams
-        api.smartSelfieEnrollmentEnhanced(creationParams: creationParamsArg) { result in
-          switch result {
-          case .success(let res):
-            reply(wrapResult(res))
-          case .failure(let error):
-            reply(wrapError(error))
-          }
-        }
-      }
-    } else {
-      smartSelfieEnrollmentEnhancedChannel.setMessageHandler(nil)
-    }
-    let smartSelfieAuthenticationEnhancedChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.smartSelfieAuthenticationEnhanced\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
-    if let api = api {
-      smartSelfieAuthenticationEnhancedChannel.setMessageHandler { message, reply in
-        let args = message as! [Any?]
-        let creationParamsArg = args[0] as! SmartSelfieEnhancedCreationParams
-        api.smartSelfieAuthenticationEnhanced(creationParams: creationParamsArg) { result in
-          switch result {
-          case .success(let res):
-            reply(wrapResult(res))
-          case .failure(let error):
-            reply(wrapError(error))
-          }
-        }
-      }
-    } else {
-      smartSelfieAuthenticationEnhancedChannel.setMessageHandler(nil)
     }
     let authenticateChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDApi.authenticate\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {

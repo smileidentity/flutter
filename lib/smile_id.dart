@@ -9,6 +9,8 @@ import 'smile_id_service.dart';
 class SmileID {
   @visibleForTesting
   static SmileIDApi platformInterface = SmileIDApi();
+  @visibleForTesting
+  static SmileIDProductsApi productsInterface = SmileIDProductsApi();
   static SmileIDService api = SmileIDService(platformInterface);
 
   static void initializeWithApiKey({
@@ -58,7 +60,7 @@ class SmileID {
     required SmartSelfieCreationParams creationParams,
   }) async {
     try {
-      final result = await platformInterface.smartSelfieEnrollment(creationParams);
+      final result = await productsInterface.smartSelfieEnrollment(creationParams);
       return SmileIDSdkResultSuccess(result);
     } on PlatformException catch (e) {
       return SmileIDSdkResultError(e.message ?? "An error occurred communicating with the sdk");
@@ -69,7 +71,7 @@ class SmileID {
     required SmartSelfieCreationParams creationParams,
   }) async {
     try {
-      final result = await platformInterface.smartSelfieAuthentication(creationParams);
+      final result = await productsInterface.smartSelfieAuthentication(creationParams);
       return SmileIDSdkResultSuccess(result);
     } on PlatformException catch (e) {
       return SmileIDSdkResultError(e.message ?? "An error occurred communicating with the sdk");
@@ -80,7 +82,7 @@ class SmileID {
     required SmartSelfieEnhancedCreationParams creationParams,
   }) async {
     try {
-      final result = await platformInterface.smartSelfieEnrollmentEnhanced(creationParams);
+      final result = await productsInterface.smartSelfieEnrollmentEnhanced(creationParams);
       return SmileIDSdkResultSuccess(result);
     } on PlatformException catch (e) {
       return SmileIDSdkResultError(e.message ?? "An error occurred communicating with the sdk");
@@ -91,7 +93,7 @@ class SmileID {
     required SmartSelfieEnhancedCreationParams creationParams,
   }) async {
     try {
-      final result = await platformInterface.smartSelfieAuthenticationEnhanced(creationParams);
+      final result = await productsInterface.smartSelfieAuthenticationEnhanced(creationParams);
       return SmileIDSdkResultSuccess(result);
     } on PlatformException catch (e) {
       return SmileIDSdkResultError(e.message ?? "An error occurred communicating with the sdk");
