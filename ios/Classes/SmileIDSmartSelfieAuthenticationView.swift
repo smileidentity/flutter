@@ -1,10 +1,3 @@
-//
-//  SmileIDSmartSelfieAuthenticationView.swift
-//  smile_id
-//
-//  Created by Sebastine Odeh on 13/01/2025.
-//
-
 import SwiftUI
 import SmileID
 
