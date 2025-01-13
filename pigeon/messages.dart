@@ -30,7 +30,7 @@ class FlutterPartnerParams {
   FlutterPartnerParams(this.jobType, this.jobId, this.userId);
 }
 
-class SmartSelfieEnrollmentCreationParams {
+class SmartSelfieCreationParams {
   final String? userId;
   final bool allowNewEnroll;
   final bool allowAgentMode;
@@ -39,7 +39,7 @@ class SmartSelfieEnrollmentCreationParams {
   final bool skipApiSubmission;
   final Map<String, String>? extraPartnerParams;
 
-  SmartSelfieEnrollmentCreationParams({
+  SmartSelfieCreationParams({
     this.userId,
     this.allowNewEnroll = false,
     this.allowAgentMode = false,
@@ -50,10 +50,26 @@ class SmartSelfieEnrollmentCreationParams {
   });
 }
 
+class SmartSelfieEnhancedCreationParams {
+  final String? userId;
+  final bool allowNewEnroll;
+  final bool showAttribution;
+  final bool showInstructions;
+  final Map<String, String>? extraPartnerParams;
+
+  SmartSelfieEnhancedCreationParams({
+    this.userId,
+    this.allowNewEnroll = false,
+    this.showAttribution = true,
+    this.showInstructions = true,
+    this.extraPartnerParams,
+  });
+}
+
 class SmartSelfieCaptureResult {
   final String? selfieFile;
   final List<String>? livenessFiles;
-  final Map<String, Object>? apiResponse;
+  final Map<String, Object?>? apiResponse;
 
   SmartSelfieCaptureResult({
     this.selfieFile,
@@ -865,7 +881,22 @@ abstract class SmileIDApi {
 
   @async
   SmartSelfieCaptureResult smartSelfieEnrollment(
-    SmartSelfieEnrollmentCreationParams creationParams,
+    SmartSelfieCreationParams creationParams,
+  );
+
+  @async
+  SmartSelfieCaptureResult smartSelfieAuthentication(
+    SmartSelfieCreationParams creationParams,
+  );
+
+  @async
+  SmartSelfieCaptureResult smartSelfieEnrollmentEnhanced(
+    SmartSelfieEnhancedCreationParams creationParams,
+  );
+
+  @async
+  SmartSelfieCaptureResult smartSelfieAuthenticationEnhanced(
+    SmartSelfieEnhancedCreationParams creationParams,
   );
 
   @async

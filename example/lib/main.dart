@@ -198,7 +198,7 @@ class MainContent extends StatelessWidget {
       child: const Text("SmartSelfie Enrollment"),
       onPressed: () async {
         final result = await SmileID().smartSelfieEnrollment(
-          creationParams: SmartSelfieEnrollmentCreationParams(
+          creationParams: SmartSelfieCreationParams(
               allowNewEnroll: false,
               allowAgentMode: false,
               showAttribution: true,
@@ -207,65 +207,38 @@ class MainContent extends StatelessWidget {
         );
 
         switch (result) {
-          case SmileIdSdkResultSuccess<SmartSelfieCaptureResult>(:final data):
+          case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(:final data):
             print('enrollment selfie: ${data.selfieFile}');
             print('enrollment liveness: ${data.livenessFiles}');
             print('enrollment apiResponse: ${data.apiResponse}');
-          case SmileIdSdkResultError<SmartSelfieCaptureResult>(:final error):
+          case SmileIDSdkResultError<SmartSelfieCaptureResult>(:final error):
             print('error occurred with smart selfie enrollment: $error');
         }
       },
-      // onPressed: () {
-      //   Navigator.of(context).push(
-      //     MaterialPageRoute<void>(
-      //       builder: (BuildContext context) => MyScaffold(
-      //           body: SmileIDSmartSelfieEnrollment(
-      //         onSuccess: (String? result) {
-      //           // Your success handling logic
-      //           Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
-      //           String formattedResult = jsonEncode(jsonResult);
-      //           final snackBar = SnackBar(content: Text("Success: $formattedResult"));
-      //           ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      //           Navigator.of(context).pop();
-      //         },
-      //         onError: (String errorMessage) {
-      //           // Your error handling logic
-      //           final snackBar = SnackBar(content: Text("Error: $errorMessage"));
-      //           ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      //           Navigator.of(context).pop();
-      //         },
-      //       )),
-      //     ),
-      //   );
-      // },
     );
   }
 
   Widget smartSelfieAuthenticationButton(BuildContext context) {
     return ElevatedButton(
       child: const Text("SmartSelfie Authentication"),
-      onPressed: () {
-        Navigator.of(context).push(
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) => MyScaffold(
-                body: SmileIDSmartSelfieAuthentication(
-              onSuccess: (String? result) {
-                // Your success handling logic
-                Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
-                String formattedResult = jsonEncode(jsonResult);
-                final snackBar = SnackBar(content: Text("Success: $formattedResult"));
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                Navigator.of(context).pop();
-              },
-              onError: (String errorMessage) {
-                // Your error handling logic
-                final snackBar = SnackBar(content: Text("Error: $errorMessage"));
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                Navigator.of(context).pop();
-              },
-            )),
-          ),
+      onPressed: () async {
+        final result = await SmileID().smartSelfieAuthentication(
+          creationParams: SmartSelfieCreationParams(
+              allowNewEnroll: false,
+              allowAgentMode: false,
+              showAttribution: true,
+              showInstructions: true,
+              skipApiSubmission: true),
         );
+
+        switch (result) {
+          case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(:final data):
+            print('enrollment selfie: ${data.selfieFile}');
+            print('enrollment liveness: ${data.livenessFiles}');
+            print('enrollment apiResponse: ${data.apiResponse}');
+          case SmileIDSdkResultError<SmartSelfieCaptureResult>(:final error):
+            print('error occurred with smart selfie authentication: $error');
+        }
       },
     );
   }
@@ -273,28 +246,22 @@ class MainContent extends StatelessWidget {
   Widget smartSelfieEnrollmentButtonEnhanced(BuildContext context) {
     return ElevatedButton(
       child: const Text("SmartSelfie Enrollment (Enhanced)"),
-      onPressed: () {
-        Navigator.of(context).push(
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) => MyScaffold(
-                body: SmileIDSmartSelfieEnrollmentEnhanced(
-              onSuccess: (String? result) {
-                // Your success handling logic
-                Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
-                String formattedResult = jsonEncode(jsonResult);
-                final snackBar = SnackBar(content: Text("Success: $formattedResult"));
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                Navigator.of(context).pop();
-              },
-              onError: (String errorMessage) {
-                // Your error handling logic
-                final snackBar = SnackBar(content: Text("Error: $errorMessage"));
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                Navigator.of(context).pop();
-              },
-            )),
-          ),
-        );
+      onPressed: () async {
+        final result = await SmileID().smartSelfieEnrollmentEnhanced(
+            creationParams: SmartSelfieEnhancedCreationParams(
+          allowNewEnroll: false,
+          showAttribution: true,
+          showInstructions: true,
+        ));
+
+        switch (result) {
+          case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(:final data):
+            print('enrollment selfie: ${data.selfieFile}');
+            print('enrollment liveness: ${data.livenessFiles}');
+            print('enrollment apiResponse: ${data.apiResponse}');
+          case SmileIDSdkResultError<SmartSelfieCaptureResult>(:final error):
+            print('error occurred with smart selfie enrollment enhanced: $error');
+        }
       },
     );
   }
@@ -302,28 +269,22 @@ class MainContent extends StatelessWidget {
   Widget smartSelfieAuthenticationButtonEnhanced(BuildContext context) {
     return ElevatedButton(
       child: const Text("SmartSelfie Authentication (Enhanced)"),
-      onPressed: () {
-        Navigator.of(context).push(
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) => MyScaffold(
-                body: SmileIDSmartSelfieAuthenticationEnhanced(
-              onSuccess: (String? result) {
-                // Your success handling logic
-                Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
-                String formattedResult = jsonEncode(jsonResult);
-                final snackBar = SnackBar(content: Text("Success: $formattedResult"));
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                Navigator.of(context).pop();
-              },
-              onError: (String errorMessage) {
-                // Your error handling logic
-                final snackBar = SnackBar(content: Text("Error: $errorMessage"));
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                Navigator.of(context).pop();
-              },
-            )),
-          ),
-        );
+      onPressed: () async {
+        final result = await SmileID().smartSelfieAuthenticationEnhanced(
+            creationParams: SmartSelfieEnhancedCreationParams(
+          allowNewEnroll: false,
+          showAttribution: true,
+          showInstructions: true,
+        ));
+
+        switch (result) {
+          case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(:final data):
+            print('enrollment selfie: ${data.selfieFile}');
+            print('enrollment liveness: ${data.livenessFiles}');
+            print('enrollment apiResponse: ${data.apiResponse}');
+          case SmileIDSdkResultError<SmartSelfieCaptureResult>(:final error):
+            print('error occurred with smart selfie authentication enhanced: $error');
+        }
       },
     );
   }

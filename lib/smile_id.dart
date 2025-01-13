@@ -55,13 +55,46 @@ class SmileID {
   }
 
   Future<SmileIDSdkResult<SmartSelfieCaptureResult>> smartSelfieEnrollment({
-    required SmartSelfieEnrollmentCreationParams creationParams,
+    required SmartSelfieCreationParams creationParams,
   }) async {
     try {
       final result = await platformInterface.smartSelfieEnrollment(creationParams);
-      return SmileIdSdkResultSuccess(result);
+      return SmileIDSdkResultSuccess(result);
     } on PlatformException catch (e) {
-      return SmileIdSdkResultError(e.message ?? "An error occurred communicating with the sdk");
+      return SmileIDSdkResultError(e.message ?? "An error occurred communicating with the sdk");
+    }
+  }
+
+  Future<SmileIDSdkResult<SmartSelfieCaptureResult>> smartSelfieAuthentication({
+    required SmartSelfieCreationParams creationParams,
+  }) async {
+    try {
+      final result = await platformInterface.smartSelfieAuthentication(creationParams);
+      return SmileIDSdkResultSuccess(result);
+    } on PlatformException catch (e) {
+      return SmileIDSdkResultError(e.message ?? "An error occurred communicating with the sdk");
+    }
+  }
+
+  Future<SmileIDSdkResult<SmartSelfieCaptureResult>> smartSelfieEnrollmentEnhanced({
+    required SmartSelfieEnhancedCreationParams creationParams,
+  }) async {
+    try {
+      final result = await platformInterface.smartSelfieEnrollmentEnhanced(creationParams);
+      return SmileIDSdkResultSuccess(result);
+    } on PlatformException catch (e) {
+      return SmileIDSdkResultError(e.message ?? "An error occurred communicating with the sdk");
+    }
+  }
+
+  Future<SmileIDSdkResult<SmartSelfieCaptureResult>> smartSelfieAuthenticationEnhanced({
+    required SmartSelfieEnhancedCreationParams creationParams,
+  }) async {
+    try {
+      final result = await platformInterface.smartSelfieAuthenticationEnhanced(creationParams);
+      return SmileIDSdkResultSuccess(result);
+    } on PlatformException catch (e) {
+      return SmileIDSdkResultError(e.message ?? "An error occurred communicating with the sdk");
     }
   }
 

@@ -5,12 +5,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.smileidentity.SmileID
-import com.smileidentity.compose.SmartSelfieEnrollment
+import com.smileidentity.compose.SmartSelfieAuthentication
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomUserId
 import kotlinx.collections.immutable.toImmutableMap
 
-class SmileIDSmartSelfieEnrollmentActivity : ComponentActivity() {
+class SmileIDSmartSelfieAuthenticationActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -27,7 +28,7 @@ class SmileIDSmartSelfieEnrollmentActivity : ComponentActivity() {
             } as? Map<String, String> ?: emptyMap()
 
         setContent {
-            SmileID.SmartSelfieEnrollment(
+            SmileID.SmartSelfieAuthentication(
                 userId = userId,
                 allowNewEnroll = allowNewEnroll,
                 allowAgentMode = allowAgentMode,
@@ -36,6 +37,7 @@ class SmileIDSmartSelfieEnrollmentActivity : ComponentActivity() {
                 skipApiSubmission = skipApiSubmission,
                 extraPartnerParams = extraPartnerParams.toImmutableMap(),
             ) {
+
                 val intent = Intent()
                 when (it) {
                     is SmileIDResult.Success -> {
@@ -60,12 +62,12 @@ class SmileIDSmartSelfieEnrollmentActivity : ComponentActivity() {
                         finish()
                     }
                 }
+
             }
         }
     }
 
-
     companion object {
-        const val REQUEST_CODE = 12
+        const val REQUEST_CODE = 13
     }
 }

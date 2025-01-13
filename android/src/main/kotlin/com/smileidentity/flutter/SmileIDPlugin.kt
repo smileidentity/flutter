@@ -20,7 +20,8 @@ import FlutterSmartSelfieResponse
 import FlutterUploadRequest
 import FlutterValidDocumentsResponse
 import SmartSelfieCaptureResult
-import SmartSelfieEnrollmentCreationParams
+import SmartSelfieCreationParams
+import SmartSelfieEnhancedCreationParams
 import SmileFlutterError
 import SmileIDApi
 import android.app.Activity
@@ -29,6 +30,8 @@ import android.content.Intent
 import android.os.Bundle
 import com.smileidentity.SmileID
 import com.smileidentity.SmileIDOptIn
+import com.smileidentity.flutter.enhanced.SmileIDSmartSelfieAuthenticationEnhancedActivity
+import com.smileidentity.flutter.enhanced.SmileIDSmartSelfieEnrollmentEnhancedActivity
 import com.smileidentity.flutter.enhanced.SmileIDSmartSelfieAuthenticationEnhanced
 import com.smileidentity.flutter.enhanced.SmileIDSmartSelfieEnrollmentEnhanced
 import com.smileidentity.networking.asFormDataPart
@@ -61,7 +64,7 @@ class SmileIDPlugin :
     private var activity: Activity? = null
     private lateinit var context: Context
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
-    private var smartSelfieEnrollmentResult: ((Result<SmartSelfieCaptureResult>) -> Unit)? = null
+    private var smartSelfieResult: ((Result<SmartSelfieCaptureResult>) -> Unit)? = null
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         SmileIDApi.setUp(flutterPluginBinding.binaryMessenger, this)
@@ -182,7 +185,7 @@ class SmileIDPlugin :
     }
 
     override fun smartSelfieEnrollment(
-        creationParams: SmartSelfieEnrollmentCreationParams,
+        creationParams: SmartSelfieCreationParams,
         callback: (Result<SmartSelfieCaptureResult>) -> Unit,
     ) {
         val intent = Intent(activity, SmileIDSmartSelfieEnrollmentActivity::class.java)
@@ -201,8 +204,89 @@ class SmileIDPlugin :
             },
         )
 
-        smartSelfieEnrollmentResult = callback
-        activity?.startActivityForResult(intent, SmileIDSmartSelfieEnrollmentActivity.REQUEST_CODE)
+        smartSelfieResult = callback
+        activity?.startActivityForResult(
+            intent,
+            SmileIDSmartSelfieEnrollmentActivity.REQUEST_CODE,
+        )
+    }
+
+    override fun smartSelfieAuthentication(
+        creationParams: SmartSelfieCreationParams,
+        callback: (Result<SmartSelfieCaptureResult>) -> Unit
+    ) {
+        val intent = Intent(activity, SmileIDSmartSelfieAuthenticationActivity::class.java)
+        intent.putExtra("userId", creationParams.userId)
+        intent.putExtra("allowNewEnroll", creationParams.allowNewEnroll)
+        intent.putExtra("allowAgentMode", creationParams.allowAgentMode)
+        intent.putExtra("showAttribution", creationParams.showAttribution)
+        intent.putExtra("showInstructions", creationParams.showInstructions)
+        intent.putExtra("skipApiSubmission", creationParams.skipApiSubmission)
+        intent.putExtra(
+            "extraPartnerParams",
+            Bundle().apply {
+                creationParams.extraPartnerParams?.forEach { (key, value) ->
+                    putString(key, value)
+                }
+            },
+        )
+
+        smartSelfieResult = callback
+        activity?.startActivityForResult(
+            intent,
+            SmileIDSmartSelfieAuthenticationActivity.REQUEST_CODE,
+        )
+    }
+
+
+    override fun smartSelfieEnrollmentEnhanced(
+        creationParams: SmartSelfieEnhancedCreationParams,
+        callback: (Result<SmartSelfieCaptureResult>) -> Unit,
+    ) {
+        val intent = Intent(activity, SmileIDSmartSelfieEnrollmentEnhancedActivity::class.java)
+        intent.putExtra("userId", creationParams.userId)
+        intent.putExtra("allowNewEnroll", creationParams.allowNewEnroll)
+        intent.putExtra("showAttribution", creationParams.showAttribution)
+        intent.putExtra("showInstructions", creationParams.showInstructions)
+        intent.putExtra(
+            "extraPartnerParams",
+            Bundle().apply {
+                creationParams.extraPartnerParams?.forEach { (key, value) ->
+                    putString(key, value)
+                }
+            },
+        )
+
+        smartSelfieResult = callback
+        activity?.startActivityForResult(
+            intent,
+            SmileIDSmartSelfieEnrollmentEnhancedActivity.REQUEST_CODE,
+        )
+    }
+
+    override fun smartSelfieAuthenticationEnhanced(
+        creationParams: SmartSelfieEnhancedCreationParams,
+        callback: (Result<SmartSelfieCaptureResult>) -> Unit,
+    ) {
+        val intent = Intent(activity, SmileIDSmartSelfieAuthenticationEnhancedActivity::class.java)
+        intent.putExtra("userId", creationParams.userId)
+        intent.putExtra("allowNewEnroll", creationParams.allowNewEnroll)
+        intent.putExtra("showAttribution", creationParams.showAttribution)
+        intent.putExtra("showInstructions", creationParams.showInstructions)
+        intent.putExtra(
+            "extraPartnerParams",
+            Bundle().apply {
+                creationParams.extraPartnerParams?.forEach { (key, value) ->
+                    putString(key, value)
+                }
+            },
+        )
+
+        smartSelfieResult = callback
+        activity?.startActivityForResult(
+            intent,
+            SmileIDSmartSelfieAuthenticationEnhancedActivity.REQUEST_CODE,
+        )
     }
 
     override fun authenticate(
@@ -490,41 +574,152 @@ class SmileIDPlugin :
         resultCode: Int,
         data: Intent?,
     ): Boolean {
-        if (requestCode == SmileIDSmartSelfieEnrollmentActivity.REQUEST_CODE &&
-            smartSelfieEnrollmentResult != null
-        ) {
-            if (resultCode == Activity.RESULT_OK) {
-                val apiResponseBundle = data?.getBundleExtra("apiResponse")
-                val apiResponse = apiResponseBundle?.keySet()?.associateWith {
-                    apiResponseBundle.getString(it)
-                } as Map<String, Any>? ?: emptyMap()
+        when (requestCode) {
+            SmileIDSmartSelfieEnrollmentActivity.REQUEST_CODE -> {
+                if (smartSelfieResult != null) {
+                    if (resultCode == Activity.RESULT_OK) {
+                        val apiResponseBundle = data?.getBundleExtra("apiResponse")
+                        val apiResponse = apiResponseBundle?.keySet()?.associateWith {
+                            apiResponseBundle.getString(it)
+                        } as Map<String, Any>? ?: emptyMap()
 
-                val result =
-                    SmartSelfieCaptureResult(
-                        selfieFile = data?.getStringExtra("selfieFile") ?: "",
-                        livenessFiles =
-                        data?.getStringArrayListExtra("livenessFiles")
-                            ?: emptyList(),
-                        apiResponse = apiResponse,
-                    )
-                smartSelfieEnrollmentResult?.invoke(Result.success(result))
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                val error = data?.getStringExtra("error") ?: "Unknown error"
-                smartSelfieEnrollmentResult?.invoke(
-                    Result.failure(
-                        SmileFlutterError(
-                            "12",
-                            message = error,
-                        ),
-                    ),
-                )
+                        val result =
+                            SmartSelfieCaptureResult(
+                                selfieFile = data?.getStringExtra("selfieFile") ?: "",
+                                livenessFiles =
+                                data?.getStringArrayListExtra("livenessFiles")
+                                    ?: emptyList(),
+                                apiResponse = apiResponse,
+                            )
+                        smartSelfieResult?.invoke(Result.success(result))
+                    } else if (resultCode == Activity.RESULT_CANCELED) {
+                        val error = data?.getStringExtra("error") ?: "Unknown error"
+                        smartSelfieResult?.invoke(
+                            Result.failure(
+                                SmileFlutterError(
+                                    SmileIDSmartSelfieEnrollmentActivity.REQUEST_CODE.toString(),
+                                    message = error,
+                                ),
+                            ),
+                        )
+                    }
+
+                    smartSelfieResult = null
+                    return true
+                }
+
+                return false
             }
 
-            smartSelfieEnrollmentResult = null
-            return true
-        }
+            SmileIDSmartSelfieAuthenticationActivity.REQUEST_CODE -> {
+                if (smartSelfieResult != null) {
+                    if (resultCode == Activity.RESULT_OK) {
+                        val apiResponseBundle = data?.getBundleExtra("apiResponse")
+                        val apiResponse = apiResponseBundle?.keySet()?.associateWith {
+                            apiResponseBundle.getString(it)
+                        } as Map<String, Any>? ?: emptyMap()
 
-        return false
+                        val result = SmartSelfieCaptureResult(
+                            selfieFile = data?.getStringExtra("selfieFile") ?: "",
+                            livenessFiles = data?.getStringArrayListExtra("livenessFiles")
+                                ?: emptyList(),
+                            apiResponse = apiResponse,
+                        )
+
+                        smartSelfieResult?.invoke(Result.success(result))
+
+                    } else if (resultCode == Activity.RESULT_CANCELED) {
+                        val error = data?.getStringExtra("error") ?: "Unknown error"
+                        smartSelfieResult?.invoke(
+                            Result.failure(
+                                SmileFlutterError(
+                                    SmileIDSmartSelfieAuthenticationActivity.REQUEST_CODE.toString(),
+                                    message = error,
+                                ),
+                            ),
+                        )
+                    }
+
+                    smartSelfieResult = null
+                    return true
+                }
+
+                return false
+            }
+
+            SmileIDSmartSelfieEnrollmentEnhancedActivity.REQUEST_CODE -> {
+                smartSelfieResult?.let { resultCallback ->
+                    if (resultCode == Activity.RESULT_OK) {
+                        val apiResponseBundle = data?.getBundleExtra("apiResponse")
+                        val apiResponse = apiResponseBundle?.keySet()?.associateWith {
+                            apiResponseBundle.getString(it)
+                        } as Map<String, Any>? ?: emptyMap()
+
+                        val result = SmartSelfieCaptureResult(
+                            selfieFile = data?.getStringExtra("selfieFile") ?: "",
+                            livenessFiles = data?.getStringArrayListExtra("livenessFiles")
+                                ?: emptyList(),
+                            apiResponse = apiResponse,
+                        )
+                        resultCallback.invoke(Result.success(result))
+                    } else if (resultCode == Activity.RESULT_CANCELED) {
+                        val error = data?.getStringExtra("error") ?: "Unknown error"
+                        resultCallback.invoke(
+                            Result.failure(
+                                SmileFlutterError(
+                                    SmileIDSmartSelfieEnrollmentEnhancedActivity.REQUEST_CODE.toString(),
+                                    message = error,
+                                ),
+                            ),
+                        )
+                    }
+
+                    smartSelfieResult = null
+                    return true
+                }
+
+                return false
+            }
+
+            SmileIDSmartSelfieAuthenticationEnhancedActivity.REQUEST_CODE -> {
+                smartSelfieResult?.let { resultCallback ->
+                    if (resultCode == Activity.RESULT_OK) {
+                        val apiResponseBundle = data?.getBundleExtra("apiResponse")
+                        val apiResponse = apiResponseBundle?.keySet()?.associateWith {
+                            apiResponseBundle.getString(it)
+                        } as Map<String, Any>? ?: emptyMap()
+
+                        val result = SmartSelfieCaptureResult(
+                            selfieFile = data?.getStringExtra("selfieFile") ?: "",
+                            livenessFiles = data?.getStringArrayListExtra("livenessFiles")
+                                ?: emptyList(),
+                            apiResponse = apiResponse,
+                        )
+                        resultCallback.invoke(Result.success(result))
+
+                    } else if (resultCode == Activity.RESULT_CANCELED) {
+                        val error = data?.getStringExtra("error") ?: "Unknown error"
+                        resultCallback.invoke(
+                            Result.failure(
+                                SmileFlutterError(
+                                    SmileIDSmartSelfieAuthenticationEnhancedActivity.REQUEST_CODE.toString(),
+                                    message = error,
+                                ),
+                            ),
+                        )
+                    }
+
+                    smartSelfieResult = null
+                    return true
+                }
+
+                return false
+            }
+
+            else -> {
+                return false
+            }
+        }
     }
 }
 

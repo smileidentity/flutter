@@ -44,6 +44,7 @@ import FlutterUploadImageInfo
 import FlutterUploadRequest
 import FlutterValidDocument
 import FlutterValidDocumentsResponse
+import android.os.Bundle
 import com.smileidentity.models.ActionResult
 import com.smileidentity.models.Actions
 import com.smileidentity.models.Antifraud
@@ -580,25 +581,25 @@ fun HostedWeb.toResponse() =
     FlutterHostedWeb(
         basicKyc = basicKyc.groupBy { it.countryCode }.mapValues { it.value.first().toResponse() },
         biometricKyc =
-            biometricKyc
-                .groupBy { it.countryCode }
-                .mapValues { it.value.first().toResponse() },
+        biometricKyc
+            .groupBy { it.countryCode }
+            .mapValues { it.value.first().toResponse() },
         enhancedKyc =
-            enhancedKyc
-                .groupBy { it.countryCode }
-                .mapValues { it.value.first().toResponse() },
+        enhancedKyc
+            .groupBy { it.countryCode }
+            .mapValues { it.value.first().toResponse() },
         documentVerification =
-            docVerification
-                .groupBy { it.countryCode }
-                .mapValues { it.value.first().toResponse() },
+        docVerification
+            .groupBy { it.countryCode }
+            .mapValues { it.value.first().toResponse() },
         enhancedKycSmartSelfie =
-            enhancedKycSmartSelfie
-                .groupBy { it.countryCode }
-                .mapValues { it.value.first().toResponse() },
+        enhancedKycSmartSelfie
+            .groupBy { it.countryCode }
+            .mapValues { it.value.first().toResponse() },
         enhancedDocumentVerification =
-            enhancedDocumentVerification
-                .groupBy { it.countryCode }
-                .mapValues { it.value.first().toResponse() },
+        enhancedDocumentVerification
+            .groupBy { it.countryCode }
+            .mapValues { it.value.first().toResponse() },
     )
 
 fun CountryInfo.toResponse() =
@@ -624,3 +625,31 @@ fun FlutterConfig.toRequest() =
         prodBaseUrl = prodBaseUrl,
         sandboxBaseUrl = sandboxBaseUrl,
     )
+
+
+fun SmartSelfieResponse.buildBundle() = Bundle().apply {
+    this.putString("code", code)
+    this.putString("created_at", createdAt)
+    this.putString("job_id", jobId)
+    this.putString("job_type", jobType.name)
+    this.putString("message", message)
+    this.putString("partner_id", partnerId)
+    this.putBundle(
+        "partner_params",
+        Bundle().apply {
+            partnerParams.forEach {
+                putString(it.key, it.value)
+            }
+        },
+    )
+    this.putString("status", status.name)
+    this.putString("updated_at", updatedAt)
+    this.putString("user_id", userId)
+}
+
+fun List<File>.pathList(): ArrayList<String> = ArrayList<String>().let {
+    this.forEach { item ->
+        it.add(item.absolutePath)
+    }
+    return it
+}

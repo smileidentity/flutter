@@ -5,6 +5,18 @@
         <activity
                 android:name=".SmileIDSmartSelfieEnrollmentActivity"
                 android:exported="true" />
+        <activity
+                android:name=".SmileIDSmartSelfieAuthenticationActivity"
+                android:exported="true" />
+
+        <activity
+                android:name=".enhanced.SmileIDSmartSelfieEnrollmentEnhancedActivity"
+                android:exported="true" />
+
+        <activity
+                android:name=".enhanced.SmileIDSmartSelfieAuthenticationEnhancedActivity"
+                android:exported="true" />
+
     </application>
 
 </manifest>

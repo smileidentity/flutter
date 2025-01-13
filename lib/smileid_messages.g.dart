@@ -105,8 +105,8 @@ class FlutterPartnerParams {
   }
 }
 
-class SmartSelfieEnrollmentCreationParams {
-  SmartSelfieEnrollmentCreationParams({
+class SmartSelfieCreationParams {
+  SmartSelfieCreationParams({
     this.userId,
     required this.allowNewEnroll,
     required this.allowAgentMode,
@@ -142,9 +142,9 @@ class SmartSelfieEnrollmentCreationParams {
     ];
   }
 
-  static SmartSelfieEnrollmentCreationParams decode(Object result) {
+  static SmartSelfieCreationParams decode(Object result) {
     result as List<Object?>;
-    return SmartSelfieEnrollmentCreationParams(
+    return SmartSelfieCreationParams(
       userId: result[0] as String?,
       allowNewEnroll: result[1]! as bool,
       allowAgentMode: result[2]! as bool,
@@ -152,6 +152,47 @@ class SmartSelfieEnrollmentCreationParams {
       showInstructions: result[4]! as bool,
       skipApiSubmission: result[5]! as bool,
       extraPartnerParams: (result[6] as Map<Object?, Object?>?)?.cast<String, String>(),
+    );
+  }
+}
+
+class SmartSelfieEnhancedCreationParams {
+  SmartSelfieEnhancedCreationParams({
+    this.userId,
+    required this.allowNewEnroll,
+    required this.showAttribution,
+    required this.showInstructions,
+    this.extraPartnerParams,
+  });
+
+  String? userId;
+
+  bool allowNewEnroll;
+
+  bool showAttribution;
+
+  bool showInstructions;
+
+  Map<String, String>? extraPartnerParams;
+
+  Object encode() {
+    return <Object?>[
+      userId,
+      allowNewEnroll,
+      showAttribution,
+      showInstructions,
+      extraPartnerParams,
+    ];
+  }
+
+  static SmartSelfieEnhancedCreationParams decode(Object result) {
+    result as List<Object?>;
+    return SmartSelfieEnhancedCreationParams(
+      userId: result[0] as String?,
+      allowNewEnroll: result[1]! as bool,
+      showAttribution: result[2]! as bool,
+      showInstructions: result[3]! as bool,
+      extraPartnerParams: (result[4] as Map<Object?, Object?>?)?.cast<String, String>(),
     );
   }
 }
@@ -167,7 +208,7 @@ class SmartSelfieCaptureResult {
 
   List<String>? livenessFiles;
 
-  Map<String, Object>? apiResponse;
+  Map<String, Object?>? apiResponse;
 
   Object encode() {
     return <Object?>[
@@ -182,7 +223,7 @@ class SmartSelfieCaptureResult {
     return SmartSelfieCaptureResult(
       selfieFile: result[0] as String?,
       livenessFiles: (result[1] as List<Object?>?)?.cast<String>(),
-      apiResponse: (result[2] as Map<Object?, Object?>?)?.cast<String, Object>(),
+      apiResponse: (result[2] as Map<Object?, Object?>?)?.cast<String, Object?>(),
     );
   }
 }
@@ -2063,125 +2104,128 @@ class _PigeonCodec extends StandardMessageCodec {
     }    else if (value is FlutterPartnerParams) {
       buffer.putUint8(134);
       writeValue(buffer, value.encode());
-    }    else if (value is SmartSelfieEnrollmentCreationParams) {
+    }    else if (value is SmartSelfieCreationParams) {
       buffer.putUint8(135);
       writeValue(buffer, value.encode());
-    }    else if (value is SmartSelfieCaptureResult) {
+    }    else if (value is SmartSelfieEnhancedCreationParams) {
       buffer.putUint8(136);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterAuthenticationRequest) {
+    }    else if (value is SmartSelfieCaptureResult) {
       buffer.putUint8(137);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterAuthenticationResponse) {
+    }    else if (value is FlutterAuthenticationRequest) {
       buffer.putUint8(138);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterPrepUploadRequest) {
+    }    else if (value is FlutterAuthenticationResponse) {
       buffer.putUint8(139);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterPrepUploadResponse) {
+    }    else if (value is FlutterPrepUploadRequest) {
       buffer.putUint8(140);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterUploadRequest) {
+    }    else if (value is FlutterPrepUploadResponse) {
       buffer.putUint8(141);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterUploadImageInfo) {
+    }    else if (value is FlutterUploadRequest) {
       buffer.putUint8(142);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterIdInfo) {
+    }    else if (value is FlutterUploadImageInfo) {
       buffer.putUint8(143);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterEnhancedKycResponse) {
+    }    else if (value is FlutterIdInfo) {
       buffer.putUint8(144);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterActions) {
+    }    else if (value is FlutterEnhancedKycResponse) {
       buffer.putUint8(145);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterConsentInfo) {
+    }    else if (value is FlutterActions) {
       buffer.putUint8(146);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterEnhancedKycRequest) {
+    }    else if (value is FlutterConsentInfo) {
       buffer.putUint8(147);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterEnhancedKycAsyncResponse) {
+    }    else if (value is FlutterEnhancedKycRequest) {
       buffer.putUint8(148);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterImageLinks) {
+    }    else if (value is FlutterEnhancedKycAsyncResponse) {
       buffer.putUint8(149);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterAntifraud) {
+    }    else if (value is FlutterImageLinks) {
       buffer.putUint8(150);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterSuspectUser) {
+    }    else if (value is FlutterAntifraud) {
       buffer.putUint8(151);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterJobStatusRequest) {
+    }    else if (value is FlutterSuspectUser) {
       buffer.putUint8(152);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterSmartSelfieJobResult) {
+    }    else if (value is FlutterJobStatusRequest) {
       buffer.putUint8(153);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterSmartSelfieJobStatusResponse) {
+    }    else if (value is FlutterSmartSelfieJobResult) {
       buffer.putUint8(154);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterSmartSelfieResponse) {
+    }    else if (value is FlutterSmartSelfieJobStatusResponse) {
       buffer.putUint8(155);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterDocumentVerificationJobResult) {
+    }    else if (value is FlutterSmartSelfieResponse) {
       buffer.putUint8(156);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterDocumentVerificationJobStatusResponse) {
+    }    else if (value is FlutterDocumentVerificationJobResult) {
       buffer.putUint8(157);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterBiometricKycJobResult) {
+    }    else if (value is FlutterDocumentVerificationJobStatusResponse) {
       buffer.putUint8(158);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterBiometricKycJobStatusResponse) {
+    }    else if (value is FlutterBiometricKycJobResult) {
       buffer.putUint8(159);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterEnhancedDocumentVerificationJobResult) {
+    }    else if (value is FlutterBiometricKycJobStatusResponse) {
       buffer.putUint8(160);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterEnhancedDocumentVerificationJobStatusResponse) {
+    }    else if (value is FlutterEnhancedDocumentVerificationJobResult) {
       buffer.putUint8(161);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterProductsConfigRequest) {
+    }    else if (value is FlutterEnhancedDocumentVerificationJobStatusResponse) {
       buffer.putUint8(162);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterProductsConfigResponse) {
+    }    else if (value is FlutterProductsConfigRequest) {
       buffer.putUint8(163);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterIdSelection) {
+    }    else if (value is FlutterProductsConfigResponse) {
       buffer.putUint8(164);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterValidDocumentsResponse) {
+    }    else if (value is FlutterIdSelection) {
       buffer.putUint8(165);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterValidDocument) {
+    }    else if (value is FlutterValidDocumentsResponse) {
       buffer.putUint8(166);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterCountry) {
+    }    else if (value is FlutterValidDocument) {
       buffer.putUint8(167);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterIdType) {
+    }    else if (value is FlutterCountry) {
       buffer.putUint8(168);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterServicesResponse) {
+    }    else if (value is FlutterIdType) {
       buffer.putUint8(169);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterBankCode) {
+    }    else if (value is FlutterServicesResponse) {
       buffer.putUint8(170);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterHostedWeb) {
+    }    else if (value is FlutterBankCode) {
       buffer.putUint8(171);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterCountryInfo) {
+    }    else if (value is FlutterHostedWeb) {
       buffer.putUint8(172);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterAvailableIdType) {
+    }    else if (value is FlutterCountryInfo) {
       buffer.putUint8(173);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterConfig) {
+    }    else if (value is FlutterAvailableIdType) {
       buffer.putUint8(174);
+      writeValue(buffer, value.encode());
+    }    else if (value is FlutterConfig) {
+      buffer.putUint8(175);
       writeValue(buffer, value.encode());
     } else {
       super.writeValue(buffer, value);
@@ -2209,84 +2253,86 @@ class _PigeonCodec extends StandardMessageCodec {
       case 134: 
         return FlutterPartnerParams.decode(readValue(buffer)!);
       case 135: 
-        return SmartSelfieEnrollmentCreationParams.decode(readValue(buffer)!);
+        return SmartSelfieCreationParams.decode(readValue(buffer)!);
       case 136: 
-        return SmartSelfieCaptureResult.decode(readValue(buffer)!);
+        return SmartSelfieEnhancedCreationParams.decode(readValue(buffer)!);
       case 137: 
-        return FlutterAuthenticationRequest.decode(readValue(buffer)!);
+        return SmartSelfieCaptureResult.decode(readValue(buffer)!);
       case 138: 
-        return FlutterAuthenticationResponse.decode(readValue(buffer)!);
+        return FlutterAuthenticationRequest.decode(readValue(buffer)!);
       case 139: 
-        return FlutterPrepUploadRequest.decode(readValue(buffer)!);
+        return FlutterAuthenticationResponse.decode(readValue(buffer)!);
       case 140: 
-        return FlutterPrepUploadResponse.decode(readValue(buffer)!);
+        return FlutterPrepUploadRequest.decode(readValue(buffer)!);
       case 141: 
-        return FlutterUploadRequest.decode(readValue(buffer)!);
+        return FlutterPrepUploadResponse.decode(readValue(buffer)!);
       case 142: 
-        return FlutterUploadImageInfo.decode(readValue(buffer)!);
+        return FlutterUploadRequest.decode(readValue(buffer)!);
       case 143: 
-        return FlutterIdInfo.decode(readValue(buffer)!);
+        return FlutterUploadImageInfo.decode(readValue(buffer)!);
       case 144: 
-        return FlutterEnhancedKycResponse.decode(readValue(buffer)!);
+        return FlutterIdInfo.decode(readValue(buffer)!);
       case 145: 
-        return FlutterActions.decode(readValue(buffer)!);
+        return FlutterEnhancedKycResponse.decode(readValue(buffer)!);
       case 146: 
-        return FlutterConsentInfo.decode(readValue(buffer)!);
+        return FlutterActions.decode(readValue(buffer)!);
       case 147: 
-        return FlutterEnhancedKycRequest.decode(readValue(buffer)!);
+        return FlutterConsentInfo.decode(readValue(buffer)!);
       case 148: 
-        return FlutterEnhancedKycAsyncResponse.decode(readValue(buffer)!);
+        return FlutterEnhancedKycRequest.decode(readValue(buffer)!);
       case 149: 
-        return FlutterImageLinks.decode(readValue(buffer)!);
+        return FlutterEnhancedKycAsyncResponse.decode(readValue(buffer)!);
       case 150: 
-        return FlutterAntifraud.decode(readValue(buffer)!);
+        return FlutterImageLinks.decode(readValue(buffer)!);
       case 151: 
-        return FlutterSuspectUser.decode(readValue(buffer)!);
+        return FlutterAntifraud.decode(readValue(buffer)!);
       case 152: 
-        return FlutterJobStatusRequest.decode(readValue(buffer)!);
+        return FlutterSuspectUser.decode(readValue(buffer)!);
       case 153: 
-        return FlutterSmartSelfieJobResult.decode(readValue(buffer)!);
+        return FlutterJobStatusRequest.decode(readValue(buffer)!);
       case 154: 
-        return FlutterSmartSelfieJobStatusResponse.decode(readValue(buffer)!);
+        return FlutterSmartSelfieJobResult.decode(readValue(buffer)!);
       case 155: 
-        return FlutterSmartSelfieResponse.decode(readValue(buffer)!);
+        return FlutterSmartSelfieJobStatusResponse.decode(readValue(buffer)!);
       case 156: 
-        return FlutterDocumentVerificationJobResult.decode(readValue(buffer)!);
+        return FlutterSmartSelfieResponse.decode(readValue(buffer)!);
       case 157: 
-        return FlutterDocumentVerificationJobStatusResponse.decode(readValue(buffer)!);
+        return FlutterDocumentVerificationJobResult.decode(readValue(buffer)!);
       case 158: 
-        return FlutterBiometricKycJobResult.decode(readValue(buffer)!);
+        return FlutterDocumentVerificationJobStatusResponse.decode(readValue(buffer)!);
       case 159: 
-        return FlutterBiometricKycJobStatusResponse.decode(readValue(buffer)!);
+        return FlutterBiometricKycJobResult.decode(readValue(buffer)!);
       case 160: 
-        return FlutterEnhancedDocumentVerificationJobResult.decode(readValue(buffer)!);
+        return FlutterBiometricKycJobStatusResponse.decode(readValue(buffer)!);
       case 161: 
-        return FlutterEnhancedDocumentVerificationJobStatusResponse.decode(readValue(buffer)!);
+        return FlutterEnhancedDocumentVerificationJobResult.decode(readValue(buffer)!);
       case 162: 
-        return FlutterProductsConfigRequest.decode(readValue(buffer)!);
+        return FlutterEnhancedDocumentVerificationJobStatusResponse.decode(readValue(buffer)!);
       case 163: 
-        return FlutterProductsConfigResponse.decode(readValue(buffer)!);
+        return FlutterProductsConfigRequest.decode(readValue(buffer)!);
       case 164: 
-        return FlutterIdSelection.decode(readValue(buffer)!);
+        return FlutterProductsConfigResponse.decode(readValue(buffer)!);
       case 165: 
-        return FlutterValidDocumentsResponse.decode(readValue(buffer)!);
+        return FlutterIdSelection.decode(readValue(buffer)!);
       case 166: 
-        return FlutterValidDocument.decode(readValue(buffer)!);
+        return FlutterValidDocumentsResponse.decode(readValue(buffer)!);
       case 167: 
-        return FlutterCountry.decode(readValue(buffer)!);
+        return FlutterValidDocument.decode(readValue(buffer)!);
       case 168: 
-        return FlutterIdType.decode(readValue(buffer)!);
+        return FlutterCountry.decode(readValue(buffer)!);
       case 169: 
-        return FlutterServicesResponse.decode(readValue(buffer)!);
+        return FlutterIdType.decode(readValue(buffer)!);
       case 170: 
-        return FlutterBankCode.decode(readValue(buffer)!);
+        return FlutterServicesResponse.decode(readValue(buffer)!);
       case 171: 
-        return FlutterHostedWeb.decode(readValue(buffer)!);
+        return FlutterBankCode.decode(readValue(buffer)!);
       case 172: 
-        return FlutterCountryInfo.decode(readValue(buffer)!);
+        return FlutterHostedWeb.decode(readValue(buffer)!);
       case 173: 
-        return FlutterAvailableIdType.decode(readValue(buffer)!);
+        return FlutterCountryInfo.decode(readValue(buffer)!);
       case 174: 
+        return FlutterAvailableIdType.decode(readValue(buffer)!);
+      case 175: 
         return FlutterConfig.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);
@@ -2537,8 +2583,89 @@ class SmileIDApi {
     }
   }
 
-  Future<SmartSelfieCaptureResult> smartSelfieEnrollment(SmartSelfieEnrollmentCreationParams creationParams) async {
+  Future<SmartSelfieCaptureResult> smartSelfieEnrollment(SmartSelfieCreationParams creationParams) async {
     final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.smartSelfieEnrollment$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+      pigeonVar_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: pigeonVar_binaryMessenger,
+    );
+    final List<Object?>? pigeonVar_replyList =
+        await pigeonVar_channel.send(<Object?>[creationParams]) as List<Object?>?;
+    if (pigeonVar_replyList == null) {
+      throw _createConnectionError(pigeonVar_channelName);
+    } else if (pigeonVar_replyList.length > 1) {
+      throw PlatformException(
+        code: pigeonVar_replyList[0]! as String,
+        message: pigeonVar_replyList[1] as String?,
+        details: pigeonVar_replyList[2],
+      );
+    } else if (pigeonVar_replyList[0] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (pigeonVar_replyList[0] as SmartSelfieCaptureResult?)!;
+    }
+  }
+
+  Future<SmartSelfieCaptureResult> smartSelfieAuthentication(SmartSelfieCreationParams creationParams) async {
+    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.smartSelfieAuthentication$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+      pigeonVar_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: pigeonVar_binaryMessenger,
+    );
+    final List<Object?>? pigeonVar_replyList =
+        await pigeonVar_channel.send(<Object?>[creationParams]) as List<Object?>?;
+    if (pigeonVar_replyList == null) {
+      throw _createConnectionError(pigeonVar_channelName);
+    } else if (pigeonVar_replyList.length > 1) {
+      throw PlatformException(
+        code: pigeonVar_replyList[0]! as String,
+        message: pigeonVar_replyList[1] as String?,
+        details: pigeonVar_replyList[2],
+      );
+    } else if (pigeonVar_replyList[0] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (pigeonVar_replyList[0] as SmartSelfieCaptureResult?)!;
+    }
+  }
+
+  Future<SmartSelfieCaptureResult> smartSelfieEnrollmentEnhanced(SmartSelfieEnhancedCreationParams creationParams) async {
+    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.smartSelfieEnrollmentEnhanced$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+      pigeonVar_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: pigeonVar_binaryMessenger,
+    );
+    final List<Object?>? pigeonVar_replyList =
+        await pigeonVar_channel.send(<Object?>[creationParams]) as List<Object?>?;
+    if (pigeonVar_replyList == null) {
+      throw _createConnectionError(pigeonVar_channelName);
+    } else if (pigeonVar_replyList.length > 1) {
+      throw PlatformException(
+        code: pigeonVar_replyList[0]! as String,
+        message: pigeonVar_replyList[1] as String?,
+        details: pigeonVar_replyList[2],
+      );
+    } else if (pigeonVar_replyList[0] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (pigeonVar_replyList[0] as SmartSelfieCaptureResult?)!;
+    }
+  }
+
+  Future<SmartSelfieCaptureResult> smartSelfieAuthenticationEnhanced(SmartSelfieEnhancedCreationParams creationParams) async {
+    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.smartSelfieAuthenticationEnhanced$pigeonVar_messageChannelSuffix';
     final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,

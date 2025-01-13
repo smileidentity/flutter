@@ -1,29 +1,31 @@
+//
+//  SmileIDSmartSelfieAuthenticationView.swift
+//  smile_id
+//
+//  Created by Sebastine Odeh on 13/01/2025.
+//
+
 import SwiftUI
 import SmileID
-import Foundation
-import Flutter
 
-struct SmileIDSmartSelfieEnrollmentView: View, SmartSelfieResultDelegate, SmileIDFileUtilsProtocol {
+struct SmileIDSmartSelfieAuthenticationView: View, SmartSelfieResultDelegate, SmileIDFileUtilsProtocol {
     var fileManager: FileManager = Foundation.FileManager.default
-    
     
     let creationParams: SmartSelfieCreationParams
     var completion: ((Result<SmartSelfieCaptureResult, any Error>) -> Void)?
     weak var uiViewController: UINavigationController?
     
     var body: some View {
-        SmileID.smartSelfieEnrollmentScreen(
+        SmileID.smartSelfieAuthenticationScreen(
             userId: creationParams.userId ?? "user-\(UUID().uuidString)",
             allowNewEnroll: creationParams.allowNewEnroll,
             allowAgentMode: creationParams.allowAgentMode,
             showAttribution: creationParams.showAttribution,
             showInstructions: creationParams.showInstructions,
-            skipApiSubmission: creationParams.skipApiSubmission,
             extraPartnerParams: creationParams.extraPartnerParams ?? [:],
             delegate: self
         )
     }
-    
     
     func didSucceed(selfieImage: URL, livenessImages: [URL], apiResponse: SmartSelfieResponse?) {
         let result = SmartSelfieCaptureResult(
@@ -38,7 +40,7 @@ struct SmileIDSmartSelfieEnrollmentView: View, SmartSelfieResultDelegate, SmileI
     }
     
     func didError(error: any Error) {
-        completion?(.failure(PigeonError(code: "12", message: error.localizedDescription, details: nil)))
+        completion?(.failure(PigeonError(code: "13", message: error.localizedDescription, details: nil)))
         uiViewController?.popViewController(animated: true)
     }
 }
