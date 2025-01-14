@@ -11,7 +11,6 @@ import com.smileidentity.util.randomUserId
 import kotlinx.collections.immutable.toImmutableMap
 
 class SmileIDSmartSelfieAuthenticationActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,7 +36,6 @@ class SmileIDSmartSelfieAuthenticationActivity : ComponentActivity() {
                 skipApiSubmission = skipApiSubmission,
                 extraPartnerParams = extraPartnerParams.toImmutableMap(),
             ) {
-
                 val intent = Intent()
                 when (it) {
                     is SmileIDResult.Success -> {
@@ -62,7 +60,6 @@ class SmileIDSmartSelfieAuthenticationActivity : ComponentActivity() {
                         finish()
                     }
                 }
-
             }
         }
     }

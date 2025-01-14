@@ -13,7 +13,6 @@ import com.smileidentity.util.randomUserId
 import kotlinx.collections.immutable.toImmutableMap
 
 class SmileIDSmartSelfieEnrollmentEnhancedActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val userId = intent.getStringExtra("userId") ?: randomUserId()
