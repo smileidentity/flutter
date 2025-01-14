@@ -10,10 +10,6 @@ import 'package:smile_id/smile_id.dart';
 import 'package:smile_id/smile_id_biometric_kyc.dart';
 import 'package:smile_id/smile_id_document_verification.dart';
 import 'package:smile_id/smile_id_enhanced_document_verification.dart';
-import 'package:smile_id/smile_id_smart_selfie_authentication.dart';
-import 'package:smile_id/smile_id_smart_selfie_authentication_enhanced.dart';
-import 'package:smile_id/smile_id_smart_selfie_enrollment.dart';
-import 'package:smile_id/smile_id_smart_selfie_enrollment_enhanced.dart';
 
 // ignore_for_file: avoid_print
 
