@@ -4,15 +4,35 @@ import Flutter
 
 public class SmileIDProductsPluginApi: SmileIDProductsApi {
     
+    var navigationController: UINavigationController? = nil
+    
     public static func setUp(binaryMessenger: FlutterBinaryMessenger) {
         let api = SmileIDProductsPluginApi()
         SmileIDProductsApiSetup.setUp(binaryMessenger: binaryMessenger, api: api)
+        
+        let window = UIApplication.shared.delegate?.window
+        if  let controller = window??.rootViewController as?
+                UIViewController {
+            let navigationController = UINavigationController(rootViewController: controller)
+            
+            navigationController.isNavigationBarHidden = true
+            window??.rootViewController = navigationController
+            window??.makeKeyAndVisible()
+            
+            api.navigationController = navigationController
+            return
+        }
+        
+        if let controller = window??.rootViewController as? UINavigationController {
+            api.navigationController = controller
+            return;
+        }
+        
     }
     
     func smartSelfieEnrollment(creationParams: SmartSelfieCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, any Error>) -> Void) {
         
-        let window = UIApplication.shared.delegate?.window
-        if let controller = window??.rootViewController as? UINavigationController {
+        if let controller = navigationController {
             let smileIdSelfieEnrollmentViewController = UIHostingController(rootView: SmileIDSmartSelfieEnrollmentView(creationParams: creationParams, completion: completion, uiViewController: controller))
             
             controller.pushViewController(smileIdSelfieEnrollmentViewController, animated: true)
@@ -23,8 +43,8 @@ public class SmileIDProductsPluginApi: SmileIDProductsApi {
     }
     
     func smartSelfieAuthentication(creationParams: SmartSelfieCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, any Error>) -> Void) {
-        let window = UIApplication.shared.delegate?.window
-        if let controller = window??.rootViewController as? UINavigationController {
+        
+        if let controller = navigationController {
             let smileIdSelfieAuthenticationController = UIHostingController(rootView: SmileIDSmartSelfieAuthenticationView(creationParams: creationParams, completion: completion, uiViewController: controller))
             
             controller.pushViewController(smileIdSelfieAuthenticationController, animated: true)
@@ -35,8 +55,8 @@ public class SmileIDProductsPluginApi: SmileIDProductsApi {
     }
     
     func smartSelfieEnrollmentEnhanced(creationParams: SmartSelfieEnhancedCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, any Error>) -> Void) {
-        let window = UIApplication.shared.delegate?.window
-        if let controller = window??.rootViewController as? UINavigationController {
+        
+        if let controller = navigationController {
             let smileIdSelfieEnrollmentEnhancedController = UIHostingController(rootView: SmileIDSmartSelfieEnrollmentEnhancedView(creationParams: creationParams, completion: completion, uiViewController: controller))
             
             controller.pushViewController(smileIdSelfieEnrollmentEnhancedController, animated: true)
@@ -47,8 +67,8 @@ public class SmileIDProductsPluginApi: SmileIDProductsApi {
     }
     
     func smartSelfieAuthenticationEnhanced(creationParams: SmartSelfieEnhancedCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, any Error>) -> Void) {
-        let window = UIApplication.shared.delegate?.window
-        if let controller = window??.rootViewController as? UINavigationController {
+        
+        if let controller = navigationController {
             let smileIDSelfieAuthenticationEnhancedController = UIHostingController(
                 rootView: SmileIDSmartSelfieAuthenticationEnhancedView(creationParams: creationParams, completion: completion, uiViewController: controller))
             
