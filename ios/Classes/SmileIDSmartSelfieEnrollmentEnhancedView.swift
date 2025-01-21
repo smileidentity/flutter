@@ -16,7 +16,7 @@ struct SmileIDSmartSelfieEnrollmentEnhancedView: View, SmartSelfieResultDelegate
             showInstructions: creationParams.showInstructions,
             extraPartnerParams: creationParams.extraPartnerParams ?? [:],
             delegate: self
-        )
+        ).preferredColorScheme(.light)
     }
     
     func didSucceed(selfieImage: URL, livenessImages: [URL], apiResponse: SmartSelfieResponse?) {

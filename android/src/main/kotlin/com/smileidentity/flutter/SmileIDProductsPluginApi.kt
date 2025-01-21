@@ -114,11 +114,21 @@ class SmileIDProductsPluginApi :
         val intent = Intent(activity, SmileIDSmartSelfieEnrollmentActivity::class.java)
         intent.putSmartSelfieCreationParams(creationParams)
 
-        smartSelfieResult = callback
-        activity?.startActivityForResult(
-            intent,
-            SmileIDSmartSelfieEnrollmentActivity.REQUEST_CODE,
-        )
+        if (activity != null) {
+            smartSelfieResult = callback
+            activity!!.startActivityForResult(
+                intent,
+                SmileIDSmartSelfieEnrollmentActivity.REQUEST_CODE,
+            )
+        } else
+            callback(
+                Result.failure(
+                    SmileFlutterError(
+                        SmileIDSmartSelfieEnrollmentActivity.REQUEST_CODE.toString(),
+                        "Failed to start smart selfie enrollment",
+                    ),
+                ),
+            )
     }
 
     override fun smartSelfieAuthentication(
@@ -128,11 +138,21 @@ class SmileIDProductsPluginApi :
         val intent = Intent(activity, SmileIDSmartSelfieAuthenticationActivity::class.java)
         intent.putSmartSelfieCreationParams(creationParams)
 
-        smartSelfieResult = callback
-        activity?.startActivityForResult(
-            intent,
-            SmileIDSmartSelfieAuthenticationActivity.REQUEST_CODE,
-        )
+        if (activity != null) {
+            smartSelfieResult = callback
+            activity!!.startActivityForResult(
+                intent,
+                SmileIDSmartSelfieAuthenticationActivity.REQUEST_CODE,
+            )
+        } else
+            callback(
+                Result.failure(
+                    SmileFlutterError(
+                        SmileIDSmartSelfieAuthenticationActivity.REQUEST_CODE.toString(),
+                        "Failed to start smart selfie authentication",
+                    ),
+                ),
+            )
     }
 
     override fun smartSelfieEnrollmentEnhanced(
@@ -142,11 +162,21 @@ class SmileIDProductsPluginApi :
         val intent = Intent(activity, SmileIDSmartSelfieEnrollmentEnhancedActivity::class.java)
         intent.putSmartSelfieEnhancedCreationParams(creationParams)
 
-        smartSelfieResult = callback
-        activity?.startActivityForResult(
-            intent,
-            SmileIDSmartSelfieEnrollmentEnhancedActivity.REQUEST_CODE,
-        )
+        if (activity != null) {
+            smartSelfieResult = callback
+            activity!!.startActivityForResult(
+                intent,
+                SmileIDSmartSelfieEnrollmentEnhancedActivity.REQUEST_CODE,
+            )
+        } else
+            callback(
+                Result.failure(
+                    SmileFlutterError(
+                        SmileIDSmartSelfieEnrollmentEnhancedActivity.REQUEST_CODE.toString(),
+                        "Failed to start smart selfie enrollment enhanced",
+                    ),
+                ),
+            )
     }
 
     override fun smartSelfieAuthenticationEnhanced(
@@ -156,11 +186,21 @@ class SmileIDProductsPluginApi :
         val intent = Intent(activity, SmileIDSmartSelfieAuthenticationEnhancedActivity::class.java)
         intent.putSmartSelfieEnhancedCreationParams(creationParams)
 
-        smartSelfieResult = callback
-        activity?.startActivityForResult(
-            intent,
-            SmileIDSmartSelfieAuthenticationEnhancedActivity.REQUEST_CODE,
-        )
+        if (activity != null) {
+            smartSelfieResult = callback
+            activity?.startActivityForResult(
+                intent,
+                SmileIDSmartSelfieAuthenticationEnhancedActivity.REQUEST_CODE,
+            )
+        } else
+            callback(
+                Result.failure(
+                    SmileFlutterError(
+                        SmileIDSmartSelfieAuthenticationEnhancedActivity.REQUEST_CODE.toString(),
+                        "Failed to start smart selfie authentication enhanced",
+                    ),
+                ),
+            )
     }
 }
 
@@ -205,31 +245,46 @@ private fun handleSelfieResult(
     errorCode: String,
     resultCallback: (Result<SmartSelfieCaptureResult>) -> Unit,
 ) {
-    if (resultCode == Activity.RESULT_OK) {
-        val apiResponseBundle = data?.getBundleExtra("apiResponse")
-        val apiResponse =
-            apiResponseBundle?.keySet()?.associateWith {
-                return@associateWith if (apiResponseBundle.getString(it) != null) {
-                    apiResponseBundle.getString(it)
-                } else {
-                    val newBundle = apiResponseBundle.getBundle(it)
-                    newBundle?.keySet()?.associateWith { key ->
-                        newBundle.getString(key)
+    when (resultCode) {
+        Activity.RESULT_OK -> {
+            val apiResponseBundle = data?.getBundleExtra("apiResponse")
+            val apiResponse =
+                apiResponseBundle?.keySet()?.associateWith {
+                    return@associateWith if (apiResponseBundle.getString(it) != null) {
+                        apiResponseBundle.getString(it)
+                    } else {
+                        val newBundle = apiResponseBundle.getBundle(it)
+                        newBundle?.keySet()?.associateWith { key ->
+                            newBundle.getString(key)
+                        }
                     }
-                }
-            } as Map<String, Any>? ?: emptyMap()
+                } as Map<String, Any>? ?: emptyMap()
 
-        val result =
-            SmartSelfieCaptureResult(
-                selfieFile = data?.getStringExtra("selfieFile") ?: "",
-                livenessFiles =
+            val result =
+                SmartSelfieCaptureResult(
+                    selfieFile = data?.getStringExtra("selfieFile") ?: "",
+                    livenessFiles =
                     data?.getStringArrayListExtra("livenessFiles")
                         ?: emptyList(),
-                apiResponse = apiResponse,
+                    apiResponse = apiResponse,
+                )
+            resultCallback.invoke(Result.success(result))
+        }
+
+        Activity.RESULT_CANCELED -> {
+            val error = data?.getStringExtra("error") ?: "Unknown error"
+            resultCallback.invoke(Result.failure(SmileFlutterError(errorCode, message = error)))
+        }
+
+        else -> {
+            resultCallback.invoke(
+                Result.failure(
+                    SmileFlutterError(
+                        errorCode,
+                        message = "User cancelled operation",
+                    ),
+                ),
             )
-        resultCallback.invoke(Result.success(result))
-    } else if (resultCode == Activity.RESULT_CANCELED) {
-        val error = data?.getStringExtra("error") ?: "Unknown error"
-        resultCallback.invoke(Result.failure(SmileFlutterError(errorCode, message = error)))
+        }
     }
 }

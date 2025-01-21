@@ -25,7 +25,7 @@ public class SmileIDProductsPluginApi: SmileIDProductsApi {
         
         if let controller = window??.rootViewController as? UINavigationController {
             api.navigationController = controller
-            return;
+            return
         }
         
     }
@@ -33,7 +33,7 @@ public class SmileIDProductsPluginApi: SmileIDProductsApi {
     func smartSelfieEnrollment(creationParams: SmartSelfieCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, any Error>) -> Void) {
         
         if let controller = navigationController {
-            let smileIdSelfieEnrollmentViewController = UIHostingController(rootView: SmileIDSmartSelfieEnrollmentView(creationParams: creationParams, completion: completion, uiViewController: controller))
+            let smileIdSelfieEnrollmentViewController = PortraitHostingController(rootView: SmileIDSmartSelfieEnrollmentView(creationParams: creationParams, completion: completion, uiViewController: controller))
             
             controller.pushViewController(smileIdSelfieEnrollmentViewController, animated: true)
             return
@@ -45,7 +45,7 @@ public class SmileIDProductsPluginApi: SmileIDProductsApi {
     func smartSelfieAuthentication(creationParams: SmartSelfieCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, any Error>) -> Void) {
         
         if let controller = navigationController {
-            let smileIdSelfieAuthenticationController = UIHostingController(rootView: SmileIDSmartSelfieAuthenticationView(creationParams: creationParams, completion: completion, uiViewController: controller))
+            let smileIdSelfieAuthenticationController = PortraitHostingController(rootView: SmileIDSmartSelfieAuthenticationView(creationParams: creationParams, completion: completion, uiViewController: controller))
             
             controller.pushViewController(smileIdSelfieAuthenticationController, animated: true)
             return
@@ -57,7 +57,7 @@ public class SmileIDProductsPluginApi: SmileIDProductsApi {
     func smartSelfieEnrollmentEnhanced(creationParams: SmartSelfieEnhancedCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, any Error>) -> Void) {
         
         if let controller = navigationController {
-            let smileIdSelfieEnrollmentEnhancedController = UIHostingController(rootView: SmileIDSmartSelfieEnrollmentEnhancedView(creationParams: creationParams, completion: completion, uiViewController: controller))
+            let smileIdSelfieEnrollmentEnhancedController = PortraitHostingController(rootView: SmileIDSmartSelfieEnrollmentEnhancedView(creationParams: creationParams, completion: completion, uiViewController: controller))
             
             controller.pushViewController(smileIdSelfieEnrollmentEnhancedController, animated: true)
             return
@@ -69,7 +69,7 @@ public class SmileIDProductsPluginApi: SmileIDProductsApi {
     func smartSelfieAuthenticationEnhanced(creationParams: SmartSelfieEnhancedCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, any Error>) -> Void) {
         
         if let controller = navigationController {
-            let smileIDSelfieAuthenticationEnhancedController = UIHostingController(
+            let smileIDSelfieAuthenticationEnhancedController = PortraitHostingController(
                 rootView: SmileIDSmartSelfieAuthenticationEnhancedView(creationParams: creationParams, completion: completion, uiViewController: controller))
             
             controller.pushViewController(smileIDSelfieAuthenticationEnhancedController, animated: true)
@@ -77,5 +77,15 @@ public class SmileIDProductsPluginApi: SmileIDProductsApi {
         }
         
         completion(.failure(PigeonError(code: "15", message: "Failed to start smart selfie authentication enhance", details: nil)))
+    }
+}
+
+class PortraitHostingController<Content>: UIHostingController<Content> where Content: View {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+    
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return .portrait
     }
 }
