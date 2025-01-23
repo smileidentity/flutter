@@ -57,11 +57,17 @@ func getFile(atPath path: String) -> Data? {
 
 extension FlutterPartnerParams {
     func toRequest() -> PartnerParams {
-        PartnerParams(
+        let mappedExtras = extras?
+            .filter { key, value in key != nil && value != nil && !key!.isEmpty && !value!.isEmpty }
+            .mapValues { $0! }
+            .reduce(into: [String: String]()) { dict, pair in
+                dict[pair.key!] = pair.value
+            }
+        return PartnerParams(
             jobId: jobId,
             userId: userId,
             jobType: jobType!.toRequest(),
-            extras: [:]
+            extras: mappedExtras
         )
     }
 }

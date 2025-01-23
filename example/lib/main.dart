@@ -122,6 +122,10 @@ class MainContent extends StatelessWidget {
                               jobType: FlutterJobType.enhancedKyc,
                               jobId: userId,
                               userId: userId,
+                                extras: {
+                                  "name": "Dummy Name",
+                                  "work": "SmileID",
+                                }
                             ),
                             timestamp: authResponse!.timestamp,
                             signature: authResponse.signature))
