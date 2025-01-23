@@ -1,5 +1,9 @@
 # Release Notes
 
+## 10.3.3
+
+* Fixed missing extras on partnerParams in the iOS Mapper
+
 ## 10.3.2
 
 * Fixed metadata version check to support versions below Kotlin 2.0
