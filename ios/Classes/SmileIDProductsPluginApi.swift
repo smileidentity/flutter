@@ -34,6 +34,7 @@ public class SmileIDProductsPluginApi: SmileIDProductsApi {
         
         if let controller = navigationController {
             let smileIdSelfieEnrollmentViewController = UIHostingController(rootView: SmileIDSmartSelfieEnrollmentView(creationParams: creationParams, completion: completion, uiViewController: controller))
+            smileIdSelfieEnrollmentViewController.overrideUserInterfaceStyle = .light
             
             controller.pushViewController(smileIdSelfieEnrollmentViewController, animated: true)
             return
@@ -46,6 +47,7 @@ public class SmileIDProductsPluginApi: SmileIDProductsApi {
         
         if let controller = navigationController {
             let smileIdSelfieAuthenticationController = UIHostingController(rootView: SmileIDSmartSelfieAuthenticationView(creationParams: creationParams, completion: completion, uiViewController: controller))
+            smileIdSelfieAuthenticationController.overrideUserInterfaceStyle = .light
             
             controller.pushViewController(smileIdSelfieAuthenticationController, animated: true)
             return
@@ -58,6 +60,7 @@ public class SmileIDProductsPluginApi: SmileIDProductsApi {
         
         if let controller = navigationController {
             let smileIdSelfieEnrollmentEnhancedController = UIHostingController(rootView: SmileIDSmartSelfieEnrollmentEnhancedView(creationParams: creationParams, completion: completion, uiViewController: controller))
+            smileIdSelfieEnrollmentEnhancedController.overrideUserInterfaceStyle = .light
             
             controller.pushViewController(smileIdSelfieEnrollmentEnhancedController, animated: true)
             return
@@ -71,6 +74,7 @@ public class SmileIDProductsPluginApi: SmileIDProductsApi {
         if let controller = navigationController {
             let smileIDSelfieAuthenticationEnhancedController = UIHostingController(
                 rootView: SmileIDSmartSelfieAuthenticationEnhancedView(creationParams: creationParams, completion: completion, uiViewController: controller))
+            smileIDSelfieAuthenticationEnhancedController.overrideUserInterfaceStyle = .light
             
             controller.pushViewController(smileIDSelfieAuthenticationEnhancedController, animated: true)
             return
