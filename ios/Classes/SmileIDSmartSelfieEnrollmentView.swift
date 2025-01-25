@@ -12,16 +12,23 @@ struct SmileIDSmartSelfieEnrollmentView: View, SmartSelfieResultDelegate, SmileI
     weak var uiViewController: UINavigationController?
     
     var body: some View {
-        SmileID.smartSelfieEnrollmentScreen(
-            userId: creationParams.userId ?? "user-\(UUID().uuidString)",
-            allowNewEnroll: creationParams.allowNewEnroll,
-            allowAgentMode: creationParams.allowAgentMode,
-            showAttribution: creationParams.showAttribution,
-            showInstructions: creationParams.showInstructions,
-            skipApiSubmission: creationParams.skipApiSubmission,
-            extraPartnerParams: creationParams.extraPartnerParams ?? [:],
-            delegate: self
-        ).preferredColorScheme(.light)
+        VStack(alignment: .leading) {
+            Button("Back") {
+                completion?(.failure(PigeonError(code: "12", message: "User cancelled operation", details: nil)))
+                uiViewController?.popViewController(animated: true)
+            }.padding(.leading, 20)
+            
+            SmileID.smartSelfieEnrollmentScreen(
+                userId: creationParams.userId ?? "user-\(UUID().uuidString)",
+                allowNewEnroll: creationParams.allowNewEnroll,
+                allowAgentMode: creationParams.allowAgentMode,
+                showAttribution: creationParams.showAttribution,
+                showInstructions: creationParams.showInstructions,
+                skipApiSubmission: creationParams.skipApiSubmission,
+                extraPartnerParams: creationParams.extraPartnerParams ?? [:],
+                delegate: self
+            ).preferredColorScheme(.light)
+        }
     }
     
     

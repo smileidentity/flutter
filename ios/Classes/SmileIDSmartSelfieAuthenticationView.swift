@@ -9,15 +9,22 @@ struct SmileIDSmartSelfieAuthenticationView: View, SmartSelfieResultDelegate, Sm
     weak var uiViewController: UINavigationController?
     
     var body: some View {
-        SmileID.smartSelfieAuthenticationScreen(
-            userId: creationParams.userId ?? "user-\(UUID().uuidString)",
-            allowNewEnroll: creationParams.allowNewEnroll,
-            allowAgentMode: creationParams.allowAgentMode,
-            showAttribution: creationParams.showAttribution,
-            showInstructions: creationParams.showInstructions,
-            extraPartnerParams: creationParams.extraPartnerParams ?? [:],
-            delegate: self
-        ).preferredColorScheme(.light)
+        VStack(alignment: .leading) {
+            Button("Back") {
+                completion?(.failure(PigeonError(code: "12", message: "User cancelled operation", details: nil)))
+                uiViewController?.popViewController(animated: true)
+            }.padding(.leading, 20)
+            
+            SmileID.smartSelfieAuthenticationScreen(
+                userId: creationParams.userId ?? "user-\(UUID().uuidString)",
+                allowNewEnroll: creationParams.allowNewEnroll,
+                allowAgentMode: creationParams.allowAgentMode,
+                showAttribution: creationParams.showAttribution,
+                showInstructions: creationParams.showInstructions,
+                extraPartnerParams: creationParams.extraPartnerParams ?? [:],
+                delegate: self
+            ).preferredColorScheme(.light)
+        }
     }
     
     func didSucceed(selfieImage: URL, livenessImages: [URL], apiResponse: SmartSelfieResponse?) {

@@ -9,14 +9,21 @@ struct SmileIDSmartSelfieEnrollmentEnhancedView: View, SmartSelfieResultDelegate
     weak var uiViewController: UINavigationController?
     
     var body: some View {
-        EnhancedSelfieEnrollmentRootView(
-            userId: creationParams.userId ?? "user-\(UUID().uuidString)",
-            allowNewEnroll: creationParams.allowNewEnroll,
-            showAttribution: creationParams.showAttribution,
-            showInstructions: creationParams.showInstructions,
-            extraPartnerParams: creationParams.extraPartnerParams ?? [:],
-            delegate: self
-        ).preferredColorScheme(.light)
+        VStack(alignment: .leading) {
+            Button("Back") {
+                completion?(.failure(PigeonError(code: "12", message: "User cancelled operation", details: nil)))
+                uiViewController?.popViewController(animated: true)
+            }.padding(.leading, 20)
+            
+            EnhancedSelfieEnrollmentRootView(
+                userId: creationParams.userId ?? "user-\(UUID().uuidString)",
+                allowNewEnroll: creationParams.allowNewEnroll,
+                showAttribution: creationParams.showAttribution,
+                showInstructions: creationParams.showInstructions,
+                extraPartnerParams: creationParams.extraPartnerParams ?? [:],
+                delegate: self
+            ).preferredColorScheme(.light)
+        }
     }
     
     func didSucceed(selfieImage: URL, livenessImages: [URL], apiResponse: SmartSelfieResponse?) {
