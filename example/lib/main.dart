@@ -7,9 +7,6 @@ import 'package:smile_id/smile_id_sdk_result.dart';
 import 'package:smile_id/smile_id_smart_selfie_capture_view.dart';
 import 'package:smile_id/smileid_messages.g.dart';
 import 'package:smile_id/smile_id.dart';
-import 'package:smile_id/smile_id_biometric_kyc.dart';
-import 'package:smile_id/smile_id_document_verification.dart';
-import 'package:smile_id/smile_id_enhanced_document_verification.dart';
 
 // ignore_for_file: avoid_print
 
@@ -134,30 +131,31 @@ class MainContent extends StatelessWidget {
   Widget documentVerificationButton(BuildContext context) {
     return ElevatedButton(
       child: const Text("Document Verification"),
-      onPressed: () {
-        Navigator.of(context).push(
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) => MyScaffold(
-                body: SmileIDDocumentVerification(
+      onPressed: () async {
+        final result = await SmileID().documentVerification(
+          creationParams: DocumentVerificationCreationParams(
               countryCode: "GH",
               documentType: "DRIVERS_LICENSE",
-              onSuccess: (String? result) {
-                // Your success handling logic
-                Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
-                String formattedResult = jsonEncode(jsonResult);
-                final snackBar = SnackBar(content: Text("Success: $formattedResult"));
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                Navigator.of(context).pop();
-              },
-              onError: (String errorMessage) {
-                // Your error handling logic
-                final snackBar = SnackBar(content: Text("Error: $errorMessage"));
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                Navigator.of(context).pop();
-              },
-            )),
-          ),
+              captureBothSides: true,
+              allowNewEnroll: false,
+              showAttribution: true,
+              allowGalleryUpload: false,
+              allowAgentMode: false,
+              showInstructions: true,
+              skipApiSubmission: false),
         );
+
+        switch (result) {
+          case SmileIDSdkResultSuccess<DocumentCaptureResult>(:final data):
+            print('verification selfie: ${data.selfieFile}');
+            print('verification liveness: ${data.livenessFiles}');
+            print('verification backFile: ${data.documentBackFile}');
+            print('verification frontFile: ${data.documentFrontFile}');
+            print(
+                'verification didSubmitVerificationJob: ${data.didSubmitDocumentVerificationJob}');
+          case SmileIDSdkResultError<DocumentCaptureResult>(:final error):
+            print('error occurred with document verification: $error');
+        }
       },
     );
   }
@@ -165,30 +163,30 @@ class MainContent extends StatelessWidget {
   Widget enhancedDocumentVerificationButton(BuildContext context) {
     return ElevatedButton(
       child: const Text("Enhanced Document Verification"),
-      onPressed: () {
-        Navigator.of(context).push(
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) => MyScaffold(
-                body: SmileIDEnhancedDocumentVerification(
+      onPressed: () async {
+        final result = await SmileID().documentVerificationEnhanced(
+          creationParams: DocumentVerificationEnhancedCreationParams(
               countryCode: "GH",
               documentType: "DRIVERS_LICENSE",
-              onSuccess: (String? result) {
-                // Your success handling logic
-                Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
-                String formattedResult = jsonEncode(jsonResult);
-                final snackBar = SnackBar(content: Text("Success: $formattedResult"));
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                Navigator.of(context).pop();
-              },
-              onError: (String errorMessage) {
-                // Your error handling logic
-                final snackBar = SnackBar(content: Text("Error: $errorMessage"));
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                Navigator.of(context).pop();
-              },
-            )),
-          ),
+              captureBothSides: true,
+              allowNewEnroll: false,
+              showAttribution: true,
+              allowAgentMode: false,
+              allowGalleryUpload: false,
+              showInstructions: true,
+              skipApiSubmission: false),
         );
+
+        switch (result) {
+          case SmileIDSdkResultSuccess<DocumentCaptureResult>(:final data):
+            print('verification selfie: ${data.selfieFile}');
+            print('verification liveness: ${data.livenessFiles}');
+            print('verification backFile: ${data.documentBackFile}');
+            print('verification frontFile: ${data.documentFrontFile}');
+            print('verification didSubmitEnhancedDocVJob: ${data.didSubmitEnhancedDocVJob}');
+          case SmileIDSdkResultError<DocumentCaptureResult>(:final error):
+            print('error occurred with document verification enhanced: $error');
+        }
       },
     );
   }
@@ -292,31 +290,23 @@ class MainContent extends StatelessWidget {
   Widget biometricKycButton(BuildContext context) {
     return ElevatedButton(
       child: const Text("Biometric KYC"),
-      onPressed: () {
-        Navigator.of(context).push(
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) => MyScaffold(
-                body: SmileIDBiometricKYC(
-              country: "KE",
-              idType: "NATIONAL_ID",
-              idNumber: "12345678",
-              onSuccess: (String? result) {
-                // Your success handling logic
-                Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
-                String formattedResult = jsonEncode(jsonResult);
-                final snackBar = SnackBar(content: Text("Success: $formattedResult"));
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                Navigator.of(context).pop();
-              },
-              onError: (String errorMessage) {
-                // Your error handling logic
-                final snackBar = SnackBar(content: Text("Error: $errorMessage"));
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                Navigator.of(context).pop();
-              },
-            )),
-          ),
+      onPressed: () async {
+        final result = await SmileID().biometricKYC(
+          creationParams: BiometricKYCCreationParams(
+              allowNewEnroll: false,
+              allowAgentMode: false,
+              showAttribution: true,
+              showInstructions: true),
         );
+
+        switch (result) {
+          case SmileIDSdkResultSuccess<BiometricKYCCaptureResult>(:final data):
+            print('biometric kyc selfie: ${data.selfieFile}');
+            print('biometric kyc liveness: ${data.livenessFiles}');
+            print('biometric kyc didSubmitKycJob: ${data.didSubmitBiometricKycJob}');
+          case SmileIDSdkResultError<BiometricKYCCaptureResult>(:final error):
+            print('error occurred with biometric kyc: $error');
+        }
       },
     );
   }

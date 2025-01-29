@@ -249,6 +249,300 @@ data class SmartSelfieCaptureResult (
   }
 }
 
+/** Generated class from Pigeon that represents data sent in messages. */
+data class DocumentVerificationCreationParams (
+  val countryCode: String,
+  val documentType: String? = null,
+  val idAspectRatio: Double? = null,
+  val captureBothSides: Boolean,
+  val bypassSelfieCaptureWithFile: String? = null,
+  val userId: String? = null,
+  val jobId: String? = null,
+  val allowNewEnroll: Boolean,
+  val showAttribution: Boolean,
+  val allowGalleryUpload: Boolean,
+  val allowAgentMode: Boolean,
+  val showInstructions: Boolean,
+  val skipApiSubmission: Boolean,
+  val extraPartnerParams: Map<String, String>? = null
+)
+ {
+  companion object {
+    fun fromList(pigeonVar_list: List<Any?>): DocumentVerificationCreationParams {
+      val countryCode = pigeonVar_list[0] as String
+      val documentType = pigeonVar_list[1] as String?
+      val idAspectRatio = pigeonVar_list[2] as Double?
+      val captureBothSides = pigeonVar_list[3] as Boolean
+      val bypassSelfieCaptureWithFile = pigeonVar_list[4] as String?
+      val userId = pigeonVar_list[5] as String?
+      val jobId = pigeonVar_list[6] as String?
+      val allowNewEnroll = pigeonVar_list[7] as Boolean
+      val showAttribution = pigeonVar_list[8] as Boolean
+      val allowGalleryUpload = pigeonVar_list[9] as Boolean
+      val allowAgentMode = pigeonVar_list[10] as Boolean
+      val showInstructions = pigeonVar_list[11] as Boolean
+      val skipApiSubmission = pigeonVar_list[12] as Boolean
+      val extraPartnerParams = pigeonVar_list[13] as Map<String, String>?
+      return DocumentVerificationCreationParams(countryCode, documentType, idAspectRatio, captureBothSides, bypassSelfieCaptureWithFile, userId, jobId, allowNewEnroll, showAttribution, allowGalleryUpload, allowAgentMode, showInstructions, skipApiSubmission, extraPartnerParams)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf(
+      countryCode,
+      documentType,
+      idAspectRatio,
+      captureBothSides,
+      bypassSelfieCaptureWithFile,
+      userId,
+      jobId,
+      allowNewEnroll,
+      showAttribution,
+      allowGalleryUpload,
+      allowAgentMode,
+      showInstructions,
+      skipApiSubmission,
+      extraPartnerParams,
+    )
+  }
+}
+
+/** Generated class from Pigeon that represents data sent in messages. */
+data class DocumentVerificationEnhancedCreationParams (
+  val countryCode: String,
+  val documentType: String? = null,
+  val idAspectRatio: Double? = null,
+  val captureBothSides: Boolean,
+  val bypassSelfieCaptureWithFile: String? = null,
+  val userId: String? = null,
+  val jobId: String? = null,
+  val allowNewEnroll: Boolean,
+  val showAttribution: Boolean,
+  val allowAgentMode: Boolean,
+  val allowGalleryUpload: Boolean,
+  val showInstructions: Boolean,
+  val skipApiSubmission: Boolean,
+  val extraPartnerParams: Map<String, String>? = null
+)
+ {
+  companion object {
+    fun fromList(pigeonVar_list: List<Any?>): DocumentVerificationEnhancedCreationParams {
+      val countryCode = pigeonVar_list[0] as String
+      val documentType = pigeonVar_list[1] as String?
+      val idAspectRatio = pigeonVar_list[2] as Double?
+      val captureBothSides = pigeonVar_list[3] as Boolean
+      val bypassSelfieCaptureWithFile = pigeonVar_list[4] as String?
+      val userId = pigeonVar_list[5] as String?
+      val jobId = pigeonVar_list[6] as String?
+      val allowNewEnroll = pigeonVar_list[7] as Boolean
+      val showAttribution = pigeonVar_list[8] as Boolean
+      val allowAgentMode = pigeonVar_list[9] as Boolean
+      val allowGalleryUpload = pigeonVar_list[10] as Boolean
+      val showInstructions = pigeonVar_list[11] as Boolean
+      val skipApiSubmission = pigeonVar_list[12] as Boolean
+      val extraPartnerParams = pigeonVar_list[13] as Map<String, String>?
+      return DocumentVerificationEnhancedCreationParams(countryCode, documentType, idAspectRatio, captureBothSides, bypassSelfieCaptureWithFile, userId, jobId, allowNewEnroll, showAttribution, allowAgentMode, allowGalleryUpload, showInstructions, skipApiSubmission, extraPartnerParams)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf(
+      countryCode,
+      documentType,
+      idAspectRatio,
+      captureBothSides,
+      bypassSelfieCaptureWithFile,
+      userId,
+      jobId,
+      allowNewEnroll,
+      showAttribution,
+      allowAgentMode,
+      allowGalleryUpload,
+      showInstructions,
+      skipApiSubmission,
+      extraPartnerParams,
+    )
+  }
+}
+
+/** Generated class from Pigeon that represents data sent in messages. */
+data class DocumentCaptureResult (
+  val selfieFile: String? = null,
+  val documentFrontFile: String? = null,
+  val livenessFiles: List<String>? = null,
+  val documentBackFile: String? = null,
+  val didSubmitDocumentVerificationJob: Boolean? = null,
+  val didSubmitEnhancedDocVJob: Boolean? = null
+)
+ {
+  companion object {
+    fun fromList(pigeonVar_list: List<Any?>): DocumentCaptureResult {
+      val selfieFile = pigeonVar_list[0] as String?
+      val documentFrontFile = pigeonVar_list[1] as String?
+      val livenessFiles = pigeonVar_list[2] as List<String>?
+      val documentBackFile = pigeonVar_list[3] as String?
+      val didSubmitDocumentVerificationJob = pigeonVar_list[4] as Boolean?
+      val didSubmitEnhancedDocVJob = pigeonVar_list[5] as Boolean?
+      return DocumentCaptureResult(selfieFile, documentFrontFile, livenessFiles, documentBackFile, didSubmitDocumentVerificationJob, didSubmitEnhancedDocVJob)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf(
+      selfieFile,
+      documentFrontFile,
+      livenessFiles,
+      documentBackFile,
+      didSubmitDocumentVerificationJob,
+      didSubmitEnhancedDocVJob,
+    )
+  }
+}
+
+/** Generated class from Pigeon that represents data sent in messages. */
+data class BiometricKYCCreationParams (
+  val country: String? = null,
+  val idType: String? = null,
+  val idNumber: String? = null,
+  val firstName: String? = null,
+  val middleName: String? = null,
+  val lastName: String? = null,
+  val dob: String? = null,
+  val bankCode: String? = null,
+  val entered: Boolean? = null,
+  val userId: String? = null,
+  val jobId: String? = null,
+  val allowNewEnroll: Boolean,
+  val allowAgentMode: Boolean,
+  val showAttribution: Boolean,
+  val showInstructions: Boolean,
+  val extraPartnerParams: Map<String, String>? = null
+)
+ {
+  companion object {
+    fun fromList(pigeonVar_list: List<Any?>): BiometricKYCCreationParams {
+      val country = pigeonVar_list[0] as String?
+      val idType = pigeonVar_list[1] as String?
+      val idNumber = pigeonVar_list[2] as String?
+      val firstName = pigeonVar_list[3] as String?
+      val middleName = pigeonVar_list[4] as String?
+      val lastName = pigeonVar_list[5] as String?
+      val dob = pigeonVar_list[6] as String?
+      val bankCode = pigeonVar_list[7] as String?
+      val entered = pigeonVar_list[8] as Boolean?
+      val userId = pigeonVar_list[9] as String?
+      val jobId = pigeonVar_list[10] as String?
+      val allowNewEnroll = pigeonVar_list[11] as Boolean
+      val allowAgentMode = pigeonVar_list[12] as Boolean
+      val showAttribution = pigeonVar_list[13] as Boolean
+      val showInstructions = pigeonVar_list[14] as Boolean
+      val extraPartnerParams = pigeonVar_list[15] as Map<String, String>?
+      return BiometricKYCCreationParams(country, idType, idNumber, firstName, middleName, lastName, dob, bankCode, entered, userId, jobId, allowNewEnroll, allowAgentMode, showAttribution, showInstructions, extraPartnerParams)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf(
+      country,
+      idType,
+      idNumber,
+      firstName,
+      middleName,
+      lastName,
+      dob,
+      bankCode,
+      entered,
+      userId,
+      jobId,
+      allowNewEnroll,
+      allowAgentMode,
+      showAttribution,
+      showInstructions,
+      extraPartnerParams,
+    )
+  }
+}
+
+/** Generated class from Pigeon that represents data sent in messages. */
+data class BiometricKYCCaptureResult (
+  val selfieFile: String? = null,
+  val livenessFiles: List<String>? = null,
+  val didSubmitBiometricKycJob: Boolean? = null
+)
+ {
+  companion object {
+    fun fromList(pigeonVar_list: List<Any?>): BiometricKYCCaptureResult {
+      val selfieFile = pigeonVar_list[0] as String?
+      val livenessFiles = pigeonVar_list[1] as List<String>?
+      val didSubmitBiometricKycJob = pigeonVar_list[2] as Boolean?
+      return BiometricKYCCaptureResult(selfieFile, livenessFiles, didSubmitBiometricKycJob)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf(
+      selfieFile,
+      livenessFiles,
+      didSubmitBiometricKycJob,
+    )
+  }
+}
+
+/** Generated class from Pigeon that represents data sent in messages. */
+data class SelfieCaptureViewCreationParams (
+  val showConfirmationDialog: Boolean,
+  val showInstructions: Boolean,
+  val showAttribution: Boolean,
+  val allowAgent: Boolean
+)
+ {
+  companion object {
+    fun fromList(pigeonVar_list: List<Any?>): SelfieCaptureViewCreationParams {
+      val showConfirmationDialog = pigeonVar_list[0] as Boolean
+      val showInstructions = pigeonVar_list[1] as Boolean
+      val showAttribution = pigeonVar_list[2] as Boolean
+      val allowAgent = pigeonVar_list[3] as Boolean
+      return SelfieCaptureViewCreationParams(showConfirmationDialog, showInstructions, showAttribution, allowAgent)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf(
+      showConfirmationDialog,
+      showInstructions,
+      showAttribution,
+      allowAgent,
+    )
+  }
+}
+
+/** Generated class from Pigeon that represents data sent in messages. */
+data class DocumentCaptureCreationParams (
+  val isDocumentFrontSide: Boolean,
+  val showInstructions: Boolean,
+  val showAttribution: Boolean,
+  val allowGalleryUpload: Boolean,
+  val showConfirmationDialog: Boolean,
+  val idAspectRatio: Double? = null
+)
+ {
+  companion object {
+    fun fromList(pigeonVar_list: List<Any?>): DocumentCaptureCreationParams {
+      val isDocumentFrontSide = pigeonVar_list[0] as Boolean
+      val showInstructions = pigeonVar_list[1] as Boolean
+      val showAttribution = pigeonVar_list[2] as Boolean
+      val allowGalleryUpload = pigeonVar_list[3] as Boolean
+      val showConfirmationDialog = pigeonVar_list[4] as Boolean
+      val idAspectRatio = pigeonVar_list[5] as Double?
+      return DocumentCaptureCreationParams(isDocumentFrontSide, showInstructions, showAttribution, allowGalleryUpload, showConfirmationDialog, idAspectRatio)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf(
+      isDocumentFrontSide,
+      showInstructions,
+      showAttribution,
+      allowGalleryUpload,
+      showConfirmationDialog,
+      idAspectRatio,
+    )
+  }
+}
+
 /**
  * The Auth Smile request. Auth Smile serves multiple purposes:
  *
@@ -1636,190 +1930,225 @@ private open class SmileIDMessagesPigeonCodec : StandardMessageCodec() {
       }
       138.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterAuthenticationRequest.fromList(it)
+          DocumentVerificationCreationParams.fromList(it)
         }
       }
       139.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterAuthenticationResponse.fromList(it)
+          DocumentVerificationEnhancedCreationParams.fromList(it)
         }
       }
       140.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterPrepUploadRequest.fromList(it)
+          DocumentCaptureResult.fromList(it)
         }
       }
       141.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterPrepUploadResponse.fromList(it)
+          BiometricKYCCreationParams.fromList(it)
         }
       }
       142.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterUploadRequest.fromList(it)
+          BiometricKYCCaptureResult.fromList(it)
         }
       }
       143.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterUploadImageInfo.fromList(it)
+          SelfieCaptureViewCreationParams.fromList(it)
         }
       }
       144.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterIdInfo.fromList(it)
+          DocumentCaptureCreationParams.fromList(it)
         }
       }
       145.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterEnhancedKycResponse.fromList(it)
+          FlutterAuthenticationRequest.fromList(it)
         }
       }
       146.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterActions.fromList(it)
+          FlutterAuthenticationResponse.fromList(it)
         }
       }
       147.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterConsentInfo.fromList(it)
+          FlutterPrepUploadRequest.fromList(it)
         }
       }
       148.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterEnhancedKycRequest.fromList(it)
+          FlutterPrepUploadResponse.fromList(it)
         }
       }
       149.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterEnhancedKycAsyncResponse.fromList(it)
+          FlutterUploadRequest.fromList(it)
         }
       }
       150.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterImageLinks.fromList(it)
+          FlutterUploadImageInfo.fromList(it)
         }
       }
       151.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterAntifraud.fromList(it)
+          FlutterIdInfo.fromList(it)
         }
       }
       152.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterSuspectUser.fromList(it)
+          FlutterEnhancedKycResponse.fromList(it)
         }
       }
       153.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterJobStatusRequest.fromList(it)
+          FlutterActions.fromList(it)
         }
       }
       154.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterSmartSelfieJobResult.fromList(it)
+          FlutterConsentInfo.fromList(it)
         }
       }
       155.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterSmartSelfieJobStatusResponse.fromList(it)
+          FlutterEnhancedKycRequest.fromList(it)
         }
       }
       156.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterSmartSelfieResponse.fromList(it)
+          FlutterEnhancedKycAsyncResponse.fromList(it)
         }
       }
       157.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterDocumentVerificationJobResult.fromList(it)
+          FlutterImageLinks.fromList(it)
         }
       }
       158.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterDocumentVerificationJobStatusResponse.fromList(it)
+          FlutterAntifraud.fromList(it)
         }
       }
       159.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterBiometricKycJobResult.fromList(it)
+          FlutterSuspectUser.fromList(it)
         }
       }
       160.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterBiometricKycJobStatusResponse.fromList(it)
+          FlutterJobStatusRequest.fromList(it)
         }
       }
       161.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterEnhancedDocumentVerificationJobResult.fromList(it)
+          FlutterSmartSelfieJobResult.fromList(it)
         }
       }
       162.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterEnhancedDocumentVerificationJobStatusResponse.fromList(it)
+          FlutterSmartSelfieJobStatusResponse.fromList(it)
         }
       }
       163.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterProductsConfigRequest.fromList(it)
+          FlutterSmartSelfieResponse.fromList(it)
         }
       }
       164.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterProductsConfigResponse.fromList(it)
+          FlutterDocumentVerificationJobResult.fromList(it)
         }
       }
       165.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterIdSelection.fromList(it)
+          FlutterDocumentVerificationJobStatusResponse.fromList(it)
         }
       }
       166.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterValidDocumentsResponse.fromList(it)
+          FlutterBiometricKycJobResult.fromList(it)
         }
       }
       167.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterValidDocument.fromList(it)
+          FlutterBiometricKycJobStatusResponse.fromList(it)
         }
       }
       168.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterCountry.fromList(it)
+          FlutterEnhancedDocumentVerificationJobResult.fromList(it)
         }
       }
       169.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterIdType.fromList(it)
+          FlutterEnhancedDocumentVerificationJobStatusResponse.fromList(it)
         }
       }
       170.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterServicesResponse.fromList(it)
+          FlutterProductsConfigRequest.fromList(it)
         }
       }
       171.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterBankCode.fromList(it)
+          FlutterProductsConfigResponse.fromList(it)
         }
       }
       172.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterHostedWeb.fromList(it)
+          FlutterIdSelection.fromList(it)
         }
       }
       173.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterCountryInfo.fromList(it)
+          FlutterValidDocumentsResponse.fromList(it)
         }
       }
       174.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          FlutterAvailableIdType.fromList(it)
+          FlutterValidDocument.fromList(it)
         }
       }
       175.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
+          FlutterCountry.fromList(it)
+        }
+      }
+      176.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
+          FlutterIdType.fromList(it)
+        }
+      }
+      177.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
+          FlutterServicesResponse.fromList(it)
+        }
+      }
+      178.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
+          FlutterBankCode.fromList(it)
+        }
+      }
+      179.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
+          FlutterHostedWeb.fromList(it)
+        }
+      }
+      180.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
+          FlutterCountryInfo.fromList(it)
+        }
+      }
+      181.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
+          FlutterAvailableIdType.fromList(it)
+        }
+      }
+      182.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
           FlutterConfig.fromList(it)
         }
@@ -1865,156 +2194,184 @@ private open class SmileIDMessagesPigeonCodec : StandardMessageCodec() {
         stream.write(137)
         writeValue(stream, value.toList())
       }
-      is FlutterAuthenticationRequest -> {
+      is DocumentVerificationCreationParams -> {
         stream.write(138)
         writeValue(stream, value.toList())
       }
-      is FlutterAuthenticationResponse -> {
+      is DocumentVerificationEnhancedCreationParams -> {
         stream.write(139)
         writeValue(stream, value.toList())
       }
-      is FlutterPrepUploadRequest -> {
+      is DocumentCaptureResult -> {
         stream.write(140)
         writeValue(stream, value.toList())
       }
-      is FlutterPrepUploadResponse -> {
+      is BiometricKYCCreationParams -> {
         stream.write(141)
         writeValue(stream, value.toList())
       }
-      is FlutterUploadRequest -> {
+      is BiometricKYCCaptureResult -> {
         stream.write(142)
         writeValue(stream, value.toList())
       }
-      is FlutterUploadImageInfo -> {
+      is SelfieCaptureViewCreationParams -> {
         stream.write(143)
         writeValue(stream, value.toList())
       }
-      is FlutterIdInfo -> {
+      is DocumentCaptureCreationParams -> {
         stream.write(144)
         writeValue(stream, value.toList())
       }
-      is FlutterEnhancedKycResponse -> {
+      is FlutterAuthenticationRequest -> {
         stream.write(145)
         writeValue(stream, value.toList())
       }
-      is FlutterActions -> {
+      is FlutterAuthenticationResponse -> {
         stream.write(146)
         writeValue(stream, value.toList())
       }
-      is FlutterConsentInfo -> {
+      is FlutterPrepUploadRequest -> {
         stream.write(147)
         writeValue(stream, value.toList())
       }
-      is FlutterEnhancedKycRequest -> {
+      is FlutterPrepUploadResponse -> {
         stream.write(148)
         writeValue(stream, value.toList())
       }
-      is FlutterEnhancedKycAsyncResponse -> {
+      is FlutterUploadRequest -> {
         stream.write(149)
         writeValue(stream, value.toList())
       }
-      is FlutterImageLinks -> {
+      is FlutterUploadImageInfo -> {
         stream.write(150)
         writeValue(stream, value.toList())
       }
-      is FlutterAntifraud -> {
+      is FlutterIdInfo -> {
         stream.write(151)
         writeValue(stream, value.toList())
       }
-      is FlutterSuspectUser -> {
+      is FlutterEnhancedKycResponse -> {
         stream.write(152)
         writeValue(stream, value.toList())
       }
-      is FlutterJobStatusRequest -> {
+      is FlutterActions -> {
         stream.write(153)
         writeValue(stream, value.toList())
       }
-      is FlutterSmartSelfieJobResult -> {
+      is FlutterConsentInfo -> {
         stream.write(154)
         writeValue(stream, value.toList())
       }
-      is FlutterSmartSelfieJobStatusResponse -> {
+      is FlutterEnhancedKycRequest -> {
         stream.write(155)
         writeValue(stream, value.toList())
       }
-      is FlutterSmartSelfieResponse -> {
+      is FlutterEnhancedKycAsyncResponse -> {
         stream.write(156)
         writeValue(stream, value.toList())
       }
-      is FlutterDocumentVerificationJobResult -> {
+      is FlutterImageLinks -> {
         stream.write(157)
         writeValue(stream, value.toList())
       }
-      is FlutterDocumentVerificationJobStatusResponse -> {
+      is FlutterAntifraud -> {
         stream.write(158)
         writeValue(stream, value.toList())
       }
-      is FlutterBiometricKycJobResult -> {
+      is FlutterSuspectUser -> {
         stream.write(159)
         writeValue(stream, value.toList())
       }
-      is FlutterBiometricKycJobStatusResponse -> {
+      is FlutterJobStatusRequest -> {
         stream.write(160)
         writeValue(stream, value.toList())
       }
-      is FlutterEnhancedDocumentVerificationJobResult -> {
+      is FlutterSmartSelfieJobResult -> {
         stream.write(161)
         writeValue(stream, value.toList())
       }
-      is FlutterEnhancedDocumentVerificationJobStatusResponse -> {
+      is FlutterSmartSelfieJobStatusResponse -> {
         stream.write(162)
         writeValue(stream, value.toList())
       }
-      is FlutterProductsConfigRequest -> {
+      is FlutterSmartSelfieResponse -> {
         stream.write(163)
         writeValue(stream, value.toList())
       }
-      is FlutterProductsConfigResponse -> {
+      is FlutterDocumentVerificationJobResult -> {
         stream.write(164)
         writeValue(stream, value.toList())
       }
-      is FlutterIdSelection -> {
+      is FlutterDocumentVerificationJobStatusResponse -> {
         stream.write(165)
         writeValue(stream, value.toList())
       }
-      is FlutterValidDocumentsResponse -> {
+      is FlutterBiometricKycJobResult -> {
         stream.write(166)
         writeValue(stream, value.toList())
       }
-      is FlutterValidDocument -> {
+      is FlutterBiometricKycJobStatusResponse -> {
         stream.write(167)
         writeValue(stream, value.toList())
       }
-      is FlutterCountry -> {
+      is FlutterEnhancedDocumentVerificationJobResult -> {
         stream.write(168)
         writeValue(stream, value.toList())
       }
-      is FlutterIdType -> {
+      is FlutterEnhancedDocumentVerificationJobStatusResponse -> {
         stream.write(169)
         writeValue(stream, value.toList())
       }
-      is FlutterServicesResponse -> {
+      is FlutterProductsConfigRequest -> {
         stream.write(170)
         writeValue(stream, value.toList())
       }
-      is FlutterBankCode -> {
+      is FlutterProductsConfigResponse -> {
         stream.write(171)
         writeValue(stream, value.toList())
       }
-      is FlutterHostedWeb -> {
+      is FlutterIdSelection -> {
         stream.write(172)
         writeValue(stream, value.toList())
       }
-      is FlutterCountryInfo -> {
+      is FlutterValidDocumentsResponse -> {
         stream.write(173)
         writeValue(stream, value.toList())
       }
-      is FlutterAvailableIdType -> {
+      is FlutterValidDocument -> {
         stream.write(174)
         writeValue(stream, value.toList())
       }
-      is FlutterConfig -> {
+      is FlutterCountry -> {
         stream.write(175)
+        writeValue(stream, value.toList())
+      }
+      is FlutterIdType -> {
+        stream.write(176)
+        writeValue(stream, value.toList())
+      }
+      is FlutterServicesResponse -> {
+        stream.write(177)
+        writeValue(stream, value.toList())
+      }
+      is FlutterBankCode -> {
+        stream.write(178)
+        writeValue(stream, value.toList())
+      }
+      is FlutterHostedWeb -> {
+        stream.write(179)
+        writeValue(stream, value.toList())
+      }
+      is FlutterCountryInfo -> {
+        stream.write(180)
+        writeValue(stream, value.toList())
+      }
+      is FlutterAvailableIdType -> {
+        stream.write(181)
+        writeValue(stream, value.toList())
+      }
+      is FlutterConfig -> {
+        stream.write(182)
         writeValue(stream, value.toList())
       }
       else -> super.writeValue(stream, value)
@@ -2025,10 +2382,15 @@ private open class SmileIDMessagesPigeonCodec : StandardMessageCodec() {
 
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface SmileIDProductsApi {
+  fun documentVerification(creationParams: DocumentVerificationCreationParams, callback: (Result<DocumentCaptureResult>) -> Unit)
+  fun documentVerificationEnhanced(creationParams: DocumentVerificationEnhancedCreationParams, callback: (Result<DocumentCaptureResult>) -> Unit)
   fun smartSelfieEnrollment(creationParams: SmartSelfieCreationParams, callback: (Result<SmartSelfieCaptureResult>) -> Unit)
   fun smartSelfieAuthentication(creationParams: SmartSelfieCreationParams, callback: (Result<SmartSelfieCaptureResult>) -> Unit)
   fun smartSelfieEnrollmentEnhanced(creationParams: SmartSelfieEnhancedCreationParams, callback: (Result<SmartSelfieCaptureResult>) -> Unit)
   fun smartSelfieAuthenticationEnhanced(creationParams: SmartSelfieEnhancedCreationParams, callback: (Result<SmartSelfieCaptureResult>) -> Unit)
+  fun biometricKYC(creationParams: BiometricKYCCreationParams, callback: (Result<BiometricKYCCaptureResult>) -> Unit)
+  fun selfieCapture(creationParams: SmartSelfieCreationParams, callback: (Result<SmartSelfieCaptureResult>) -> Unit)
+  fun documentCapture(creationParams: DocumentCaptureCreationParams, callback: (Result<DocumentCaptureResult>) -> Unit)
 
   companion object {
     /** The codec used by SmileIDProductsApi. */
@@ -2039,6 +2401,46 @@ interface SmileIDProductsApi {
     @JvmOverloads
     fun setUp(binaryMessenger: BinaryMessenger, api: SmileIDProductsApi?, messageChannelSuffix: String = "") {
       val separatedMessageChannelSuffix = if (messageChannelSuffix.isNotEmpty()) ".$messageChannelSuffix" else ""
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDProductsApi.documentVerification$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val creationParamsArg = args[0] as DocumentVerificationCreationParams
+            api.documentVerification(creationParamsArg) { result: Result<DocumentCaptureResult> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDProductsApi.documentVerificationEnhanced$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val creationParamsArg = args[0] as DocumentVerificationEnhancedCreationParams
+            api.documentVerificationEnhanced(creationParamsArg) { result: Result<DocumentCaptureResult> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
       run {
         val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDProductsApi.smartSelfieEnrollment$separatedMessageChannelSuffix", codec)
         if (api != null) {
@@ -2106,6 +2508,66 @@ interface SmileIDProductsApi {
             val args = message as List<Any?>
             val creationParamsArg = args[0] as SmartSelfieEnhancedCreationParams
             api.smartSelfieAuthenticationEnhanced(creationParamsArg) { result: Result<SmartSelfieCaptureResult> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDProductsApi.biometricKYC$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val creationParamsArg = args[0] as BiometricKYCCreationParams
+            api.biometricKYC(creationParamsArg) { result: Result<BiometricKYCCaptureResult> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDProductsApi.selfieCapture$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val creationParamsArg = args[0] as SmartSelfieCreationParams
+            api.selfieCapture(creationParamsArg) { result: Result<SmartSelfieCaptureResult> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.smileid.SmileIDProductsApi.documentCapture$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val creationParamsArg = args[0] as DocumentCaptureCreationParams
+            api.documentCapture(creationParamsArg) { result: Result<DocumentCaptureResult> ->
               val error = result.exceptionOrNull()
               if (error != null) {
                 reply.reply(wrapError(error))

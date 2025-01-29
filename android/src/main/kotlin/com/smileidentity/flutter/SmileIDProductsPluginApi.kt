@@ -1,5 +1,11 @@
 package com.smileidentity.flutter
 
+import BiometricKYCCaptureResult
+import BiometricKYCCreationParams
+import DocumentCaptureCreationParams
+import DocumentCaptureResult
+import DocumentVerificationCreationParams
+import DocumentVerificationEnhancedCreationParams
 import SmartSelfieCaptureResult
 import SmartSelfieCreationParams
 import SmartSelfieEnhancedCreationParams
@@ -18,6 +24,8 @@ class SmileIDProductsPluginApi :
     SmileIDProductsApi {
     private var activity: Activity? = null
     private var smartSelfieResult: ((Result<SmartSelfieCaptureResult>) -> Unit)? = null
+    private var documentCaptureResult: ((Result<DocumentCaptureResult>) -> Unit)? = null
+    private var biometricKycResult: ((Result<BiometricKYCCaptureResult>) -> Unit)? = null
 
     fun onAttachActivity(activity: Activity?) {
         this.activity = activity
@@ -101,10 +109,179 @@ class SmileIDProductsPluginApi :
                 return false
             }
 
+            SmileIDDocumentVerificationActivity.REQUEST_CODE -> {
+                documentCaptureResult?.let { resultCallback ->
+                    handleDocumentResult(
+                        resultCode,
+                        data,
+                        SmileIDDocumentVerificationActivity.REQUEST_CODE.toString(),
+                        resultCallback,
+                    )
+
+                    documentCaptureResult = null
+                    return true
+                }
+
+                return false
+            }
+
+            SmileIDEnhancedDocumentVerificationActivity.REQUEST_CODE -> {
+                documentCaptureResult?.let { resultCallback ->
+                    handleDocumentResult(
+                        resultCode,
+                        data,
+                        SmileIDEnhancedDocumentVerificationActivity.REQUEST_CODE.toString(),
+                        resultCallback,
+                    )
+
+                    documentCaptureResult = null
+                    return true
+                }
+
+                return false
+            }
+
+            SmileIDBiometricKYCActivity.REQUEST_CODE -> {
+                biometricKycResult?.let { resultCallback ->
+                    val errorCode = SmileIDBiometricKYCActivity.REQUEST_CODE.toString()
+                    when (resultCode) {
+                        Activity.RESULT_OK -> {
+                            val result = BiometricKYCCaptureResult(
+                                selfieFile = data?.getStringExtra("selfieFile") ?: "",
+                                livenessFiles = data?.getStringArrayListExtra("livenessFiles")
+                                    ?: emptyList(),
+                                didSubmitBiometricKycJob = data?.getBooleanExtra(
+                                    "didSubmitBiometricKycJob",
+                                    false,
+                                ),
+                            )
+
+                            resultCallback.invoke(Result.success(result))
+                        }
+
+                        Activity.RESULT_CANCELED -> {
+                            val error = data?.getStringExtra("error") ?: "Unknown error"
+                            resultCallback.invoke(
+                                Result.failure(
+                                    SmileFlutterError(
+                                        errorCode,
+                                        message = error,
+                                    ),
+                                ),
+                            )
+                        }
+
+                        else -> {
+                            resultCallback(
+                                Result.failure(
+                                    SmileFlutterError(
+                                        errorCode,
+                                        message = "User cancelled operation",
+                                    ),
+                                ),
+                            )
+                        }
+                    }
+
+                    biometricKycResult = null
+                    return true
+                }
+
+                return false
+            }
+
             else -> {
                 return false
             }
         }
+    }
+
+    override fun documentVerification(
+        creationParams: DocumentVerificationCreationParams,
+        callback: (Result<DocumentCaptureResult>) -> Unit,
+    ) {
+        val intent = Intent(activity, SmileIDDocumentVerificationActivity::class.java)
+        intent.putExtra("countryCode", creationParams.countryCode)
+        intent.putExtra("documentType", creationParams.documentType)
+        intent.putExtra("idAspectRatio", creationParams.idAspectRatio)
+        intent.putExtra("captureBothSides", creationParams.captureBothSides)
+        intent.putExtra("bypassSelfieCaptureWithFile", creationParams.bypassSelfieCaptureWithFile)
+        intent.putExtra("userId", creationParams.userId)
+        intent.putExtra("jobId", creationParams.jobId)
+        intent.putExtra("allowNewEnroll", creationParams.allowNewEnroll)
+        intent.putExtra("showAttribution", creationParams.showAttribution)
+        intent.putExtra("allowAgentMode", creationParams.allowAgentMode)
+        intent.putExtra("allowGalleryUpload", creationParams.allowGalleryUpload)
+        intent.putExtra("showInstructions", creationParams.showInstructions)
+        intent.putExtra("skipApiSubmission", creationParams.skipApiSubmission)
+        intent.putExtra(
+            "extraPartnerParams",
+            Bundle().apply {
+                creationParams.extraPartnerParams?.forEach { (key, value) ->
+                    putString(key, value)
+                }
+            },
+        )
+
+        if (activity != null) {
+            documentCaptureResult = callback
+            activity!!.startActivityForResult(
+                intent,
+                SmileIDDocumentVerificationActivity.REQUEST_CODE,
+            )
+        } else
+            callback(
+                Result.failure(
+                    SmileFlutterError(
+                        SmileIDDocumentVerificationActivity.REQUEST_CODE.toString(),
+                        "Failed to start document verification",
+                    ),
+                ),
+            )
+    }
+
+    override fun documentVerificationEnhanced(
+        creationParams: DocumentVerificationEnhancedCreationParams,
+        callback: (Result<DocumentCaptureResult>) -> Unit,
+    ) {
+        val intent = Intent(activity, SmileIDEnhancedDocumentVerificationActivity::class.java)
+        intent.putExtra("countryCode", creationParams.countryCode)
+        intent.putExtra("documentType", creationParams.documentType)
+        intent.putExtra("idAspectRatio", creationParams.idAspectRatio)
+        intent.putExtra("captureBothSides", creationParams.captureBothSides)
+        intent.putExtra("bypassSelfieCaptureWithFile", creationParams.bypassSelfieCaptureWithFile)
+        intent.putExtra("userId", creationParams.userId)
+        intent.putExtra("jobId", creationParams.jobId)
+        intent.putExtra("allowNewEnroll", creationParams.allowNewEnroll)
+        intent.putExtra("showAttribution", creationParams.showAttribution)
+        intent.putExtra("allowAgentMode", creationParams.allowAgentMode)
+        intent.putExtra("allowGalleryUpload", creationParams.allowGalleryUpload)
+        intent.putExtra("showInstructions", creationParams.showInstructions)
+        intent.putExtra("skipApiSubmission", creationParams.skipApiSubmission)
+        intent.putExtra(
+            "extraPartnerParams",
+            Bundle().apply {
+                creationParams.extraPartnerParams?.forEach { (key, value) ->
+                    putString(key, value)
+                }
+            },
+        )
+
+        if (activity != null) {
+            documentCaptureResult = callback
+            activity!!.startActivityForResult(
+                intent,
+                SmileIDEnhancedDocumentVerificationActivity.REQUEST_CODE,
+            )
+        } else
+            callback(
+                Result.failure(
+                    SmileFlutterError(
+                        SmileIDEnhancedDocumentVerificationActivity.REQUEST_CODE.toString(),
+                        "Failed to start enhanced document verification",
+                    ),
+                ),
+            )
     }
 
     override fun smartSelfieEnrollment(
@@ -202,6 +379,63 @@ class SmileIDProductsPluginApi :
                 ),
             )
     }
+
+    override fun biometricKYC(
+        creationParams: BiometricKYCCreationParams,
+        callback: (Result<BiometricKYCCaptureResult>) -> Unit,
+    ) {
+        val intent = Intent(activity, SmileIDBiometricKYCActivity::class.java)
+        intent.putExtra("country", creationParams.country)
+        intent.putExtra("idType", creationParams.idType)
+        intent.putExtra("idNumber", creationParams.idNumber)
+        intent.putExtra("firstName", creationParams.firstName)
+        intent.putExtra("middleName", creationParams.middleName)
+        intent.putExtra("lastName", creationParams.lastName)
+        intent.putExtra("dob", creationParams.dob)
+        intent.putExtra("bankCode", creationParams.bankCode)
+        intent.putExtra("entered", creationParams.entered)
+        intent.putExtra("userId", creationParams.userId)
+        intent.putExtra("jobId", creationParams.jobId)
+        intent.putExtra("allowNewEnroll", creationParams.allowNewEnroll)
+        intent.putExtra("allowAgentMode", creationParams.allowAgentMode)
+        intent.putExtra("showAttribution", creationParams.showAttribution)
+        intent.putExtra("showInstructions", creationParams.showInstructions)
+        intent.putExtra(
+            "extraPartnerParams",
+            Bundle().apply {
+                creationParams.extraPartnerParams?.forEach { (key, value) ->
+                    putString(key, value)
+                }
+            },
+        )
+
+        if (activity != null) {
+            biometricKycResult = callback
+            activity!!.startActivityForResult(intent, SmileIDBiometricKYCActivity.REQUEST_CODE)
+        } else
+            callback(
+                Result.failure(
+                    SmileFlutterError(
+                        SmileIDBiometricKYCActivity.REQUEST_CODE.toString(),
+                        "Failed to start biometric KYC",
+                    ),
+                ),
+            )
+    }
+
+    override fun selfieCapture(
+        creationParams: SmartSelfieCreationParams,
+        callback: (Result<SmartSelfieCaptureResult>) -> Unit,
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun documentCapture(
+        creationParams: DocumentCaptureCreationParams,
+        callback: (Result<DocumentCaptureResult>) -> Unit,
+    ) {
+        TODO("Not yet implemented")
+    }
 }
 
 private fun Intent.putSmartSelfieCreationParams(creationParams: SmartSelfieCreationParams) =
@@ -268,6 +502,49 @@ private fun handleSelfieResult(
                         ?: emptyList(),
                     apiResponse = apiResponse,
                 )
+            resultCallback.invoke(Result.success(result))
+        }
+
+        Activity.RESULT_CANCELED -> {
+            val error = data?.getStringExtra("error") ?: "Unknown error"
+            resultCallback.invoke(Result.failure(SmileFlutterError(errorCode, message = error)))
+        }
+
+        else -> {
+            resultCallback.invoke(
+                Result.failure(
+                    SmileFlutterError(
+                        errorCode,
+                        message = "User cancelled operation",
+                    ),
+                ),
+            )
+        }
+    }
+}
+
+private fun handleDocumentResult(
+    resultCode: Int,
+    data: Intent?,
+    errorCode: String,
+    resultCallback: (Result<DocumentCaptureResult>) -> Unit,
+) {
+
+    when (resultCode) {
+        Activity.RESULT_OK -> {
+            val result = DocumentCaptureResult(
+                selfieFile = data?.getStringExtra("selfieFile") ?: "",
+                livenessFiles = data?.getStringArrayListExtra("livenessFiles") ?: emptyList(),
+                documentFrontFile = data?.getStringExtra("documentFrontFile") ?: "",
+                documentBackFile = data?.getStringExtra("documentBackFile") ?: "",
+                didSubmitDocumentVerificationJob = if (data?.hasExtra("didSubmitDocumentVerificationJob") == true) data?.getBooleanExtra(
+                    "didSubmitDocumentVerificationJob",
+                    false,
+                ) else null,
+                didSubmitEnhancedDocVJob = if (data?.hasExtra("didSubmitEnhanceDocVJob") == true
+                ) data.getBooleanExtra("didSubmitEnhanceDocVJob", false) else null,
+            )
+
             resultCallback.invoke(Result.success(result))
         }
 

@@ -26,6 +26,36 @@
                 android:exported="true"
                 tools:ignore="DiscouragedApi" />
 
+        <activity
+                android:name=".SmileIDDocumentVerificationActivity"
+                android:screenOrientation="portrait"
+                android:exported="true"
+                tools:ignore="DiscouragedApi" />
+
+        <activity
+                android:name=".SmileIDBiometricKYCActivity"
+                android:screenOrientation="portrait"
+                android:exported="true"
+                tools:ignore="DiscouragedApi" />
+
+        <activity
+                android:name=".SmileIDEnhancedDocumentVerificationActivity"
+                android:screenOrientation="portrait"
+                android:exported="true"
+                tools:ignore="DiscouragedApi" />
+
+        <activity
+                android:name=".SmileIDSelfieCaptureActivity"
+                android:screenOrientation="portrait"
+                android:exported="true"
+                tools:ignore="DiscouragedApi" />
+
+        <activity
+                android:name=".SmileIDDocumentCaptureActivity"
+                android:screenOrientation="portrait"
+                android:exported="true"
+                tools:ignore="DiscouragedApi" />
+
     </application>
 
 </manifest>

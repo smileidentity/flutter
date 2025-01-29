@@ -100,6 +100,39 @@ class SmileID {
     }
   }
 
+  Future<SmileIDSdkResult<DocumentCaptureResult>> documentVerification({
+    required DocumentVerificationCreationParams creationParams,
+  }) async {
+    try {
+      final result = await productsInterface.documentVerification(creationParams);
+      return SmileIDSdkResultSuccess(result);
+    } on PlatformException catch (e) {
+      return SmileIDSdkResultError(e.message ?? "An error occurred communicating with the sdk");
+    }
+  }
+
+  Future<SmileIDSdkResult<DocumentCaptureResult>> documentVerificationEnhanced({
+    required DocumentVerificationEnhancedCreationParams creationParams,
+  }) async {
+    try {
+      final result = await productsInterface.documentVerificationEnhanced(creationParams);
+      return SmileIDSdkResultSuccess(result);
+    } on PlatformException catch (e) {
+      return SmileIDSdkResultError(e.message ?? "An error occurred communicating with the sdk");
+    }
+  }
+
+  Future<SmileIDSdkResult<BiometricKYCCaptureResult>> biometricKYC({
+    required BiometricKYCCreationParams creationParams,
+  }) async {
+    try {
+      final result = await productsInterface.biometricKYC(creationParams);
+      return SmileIDSdkResultSuccess(result);
+    } on PlatformException catch (e) {
+      return SmileIDSdkResultError(e.message ?? "An error occurred communicating with the sdk");
+    }
+  }
+
   static void cleanup(String jobId) {
     platformInterface.cleanup(jobId);
   }

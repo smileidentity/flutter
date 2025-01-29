@@ -259,6 +259,370 @@ struct SmartSelfieCaptureResult {
   }
 }
 
+/// Generated class from Pigeon that represents data sent in messages.
+struct DocumentVerificationCreationParams {
+  var countryCode: String
+  var documentType: String? = nil
+  var idAspectRatio: Double? = nil
+  var captureBothSides: Bool
+  var bypassSelfieCaptureWithFile: String? = nil
+  var userId: String? = nil
+  var jobId: String? = nil
+  var allowNewEnroll: Bool
+  var showAttribution: Bool
+  var allowGalleryUpload: Bool
+  var allowAgentMode: Bool
+  var showInstructions: Bool
+  var skipApiSubmission: Bool
+  var extraPartnerParams: [String: String]? = nil
+
+
+  // swift-format-ignore: AlwaysUseLowerCamelCase
+  static func fromList(_ pigeonVar_list: [Any?]) -> DocumentVerificationCreationParams? {
+    let countryCode = pigeonVar_list[0] as! String
+    let documentType: String? = nilOrValue(pigeonVar_list[1])
+    let idAspectRatio: Double? = nilOrValue(pigeonVar_list[2])
+    let captureBothSides = pigeonVar_list[3] as! Bool
+    let bypassSelfieCaptureWithFile: String? = nilOrValue(pigeonVar_list[4])
+    let userId: String? = nilOrValue(pigeonVar_list[5])
+    let jobId: String? = nilOrValue(pigeonVar_list[6])
+    let allowNewEnroll = pigeonVar_list[7] as! Bool
+    let showAttribution = pigeonVar_list[8] as! Bool
+    let allowGalleryUpload = pigeonVar_list[9] as! Bool
+    let allowAgentMode = pigeonVar_list[10] as! Bool
+    let showInstructions = pigeonVar_list[11] as! Bool
+    let skipApiSubmission = pigeonVar_list[12] as! Bool
+    let extraPartnerParams: [String: String]? = nilOrValue(pigeonVar_list[13])
+
+    return DocumentVerificationCreationParams(
+      countryCode: countryCode,
+      documentType: documentType,
+      idAspectRatio: idAspectRatio,
+      captureBothSides: captureBothSides,
+      bypassSelfieCaptureWithFile: bypassSelfieCaptureWithFile,
+      userId: userId,
+      jobId: jobId,
+      allowNewEnroll: allowNewEnroll,
+      showAttribution: showAttribution,
+      allowGalleryUpload: allowGalleryUpload,
+      allowAgentMode: allowAgentMode,
+      showInstructions: showInstructions,
+      skipApiSubmission: skipApiSubmission,
+      extraPartnerParams: extraPartnerParams
+    )
+  }
+  func toList() -> [Any?] {
+    return [
+      countryCode,
+      documentType,
+      idAspectRatio,
+      captureBothSides,
+      bypassSelfieCaptureWithFile,
+      userId,
+      jobId,
+      allowNewEnroll,
+      showAttribution,
+      allowGalleryUpload,
+      allowAgentMode,
+      showInstructions,
+      skipApiSubmission,
+      extraPartnerParams,
+    ]
+  }
+}
+
+/// Generated class from Pigeon that represents data sent in messages.
+struct DocumentVerificationEnhancedCreationParams {
+  var countryCode: String
+  var documentType: String? = nil
+  var idAspectRatio: Double? = nil
+  var captureBothSides: Bool
+  var bypassSelfieCaptureWithFile: String? = nil
+  var userId: String? = nil
+  var jobId: String? = nil
+  var allowNewEnroll: Bool
+  var showAttribution: Bool
+  var allowAgentMode: Bool
+  var allowGalleryUpload: Bool
+  var showInstructions: Bool
+  var skipApiSubmission: Bool
+  var extraPartnerParams: [String: String]? = nil
+
+
+  // swift-format-ignore: AlwaysUseLowerCamelCase
+  static func fromList(_ pigeonVar_list: [Any?]) -> DocumentVerificationEnhancedCreationParams? {
+    let countryCode = pigeonVar_list[0] as! String
+    let documentType: String? = nilOrValue(pigeonVar_list[1])
+    let idAspectRatio: Double? = nilOrValue(pigeonVar_list[2])
+    let captureBothSides = pigeonVar_list[3] as! Bool
+    let bypassSelfieCaptureWithFile: String? = nilOrValue(pigeonVar_list[4])
+    let userId: String? = nilOrValue(pigeonVar_list[5])
+    let jobId: String? = nilOrValue(pigeonVar_list[6])
+    let allowNewEnroll = pigeonVar_list[7] as! Bool
+    let showAttribution = pigeonVar_list[8] as! Bool
+    let allowAgentMode = pigeonVar_list[9] as! Bool
+    let allowGalleryUpload = pigeonVar_list[10] as! Bool
+    let showInstructions = pigeonVar_list[11] as! Bool
+    let skipApiSubmission = pigeonVar_list[12] as! Bool
+    let extraPartnerParams: [String: String]? = nilOrValue(pigeonVar_list[13])
+
+    return DocumentVerificationEnhancedCreationParams(
+      countryCode: countryCode,
+      documentType: documentType,
+      idAspectRatio: idAspectRatio,
+      captureBothSides: captureBothSides,
+      bypassSelfieCaptureWithFile: bypassSelfieCaptureWithFile,
+      userId: userId,
+      jobId: jobId,
+      allowNewEnroll: allowNewEnroll,
+      showAttribution: showAttribution,
+      allowAgentMode: allowAgentMode,
+      allowGalleryUpload: allowGalleryUpload,
+      showInstructions: showInstructions,
+      skipApiSubmission: skipApiSubmission,
+      extraPartnerParams: extraPartnerParams
+    )
+  }
+  func toList() -> [Any?] {
+    return [
+      countryCode,
+      documentType,
+      idAspectRatio,
+      captureBothSides,
+      bypassSelfieCaptureWithFile,
+      userId,
+      jobId,
+      allowNewEnroll,
+      showAttribution,
+      allowAgentMode,
+      allowGalleryUpload,
+      showInstructions,
+      skipApiSubmission,
+      extraPartnerParams,
+    ]
+  }
+}
+
+/// Generated class from Pigeon that represents data sent in messages.
+struct DocumentCaptureResult {
+  var selfieFile: String? = nil
+  var documentFrontFile: String? = nil
+  var livenessFiles: [String]? = nil
+  var documentBackFile: String? = nil
+  var didSubmitDocumentVerificationJob: Bool? = nil
+  var didSubmitEnhancedDocVJob: Bool? = nil
+
+
+  // swift-format-ignore: AlwaysUseLowerCamelCase
+  static func fromList(_ pigeonVar_list: [Any?]) -> DocumentCaptureResult? {
+    let selfieFile: String? = nilOrValue(pigeonVar_list[0])
+    let documentFrontFile: String? = nilOrValue(pigeonVar_list[1])
+    let livenessFiles: [String]? = nilOrValue(pigeonVar_list[2])
+    let documentBackFile: String? = nilOrValue(pigeonVar_list[3])
+    let didSubmitDocumentVerificationJob: Bool? = nilOrValue(pigeonVar_list[4])
+    let didSubmitEnhancedDocVJob: Bool? = nilOrValue(pigeonVar_list[5])
+
+    return DocumentCaptureResult(
+      selfieFile: selfieFile,
+      documentFrontFile: documentFrontFile,
+      livenessFiles: livenessFiles,
+      documentBackFile: documentBackFile,
+      didSubmitDocumentVerificationJob: didSubmitDocumentVerificationJob,
+      didSubmitEnhancedDocVJob: didSubmitEnhancedDocVJob
+    )
+  }
+  func toList() -> [Any?] {
+    return [
+      selfieFile,
+      documentFrontFile,
+      livenessFiles,
+      documentBackFile,
+      didSubmitDocumentVerificationJob,
+      didSubmitEnhancedDocVJob,
+    ]
+  }
+}
+
+/// Generated class from Pigeon that represents data sent in messages.
+struct BiometricKYCCreationParams {
+  var country: String? = nil
+  var idType: String? = nil
+  var idNumber: String? = nil
+  var firstName: String? = nil
+  var middleName: String? = nil
+  var lastName: String? = nil
+  var dob: String? = nil
+  var bankCode: String? = nil
+  var entered: Bool? = nil
+  var userId: String? = nil
+  var jobId: String? = nil
+  var allowNewEnroll: Bool
+  var allowAgentMode: Bool
+  var showAttribution: Bool
+  var showInstructions: Bool
+  var extraPartnerParams: [String: String]? = nil
+
+
+  // swift-format-ignore: AlwaysUseLowerCamelCase
+  static func fromList(_ pigeonVar_list: [Any?]) -> BiometricKYCCreationParams? {
+    let country: String? = nilOrValue(pigeonVar_list[0])
+    let idType: String? = nilOrValue(pigeonVar_list[1])
+    let idNumber: String? = nilOrValue(pigeonVar_list[2])
+    let firstName: String? = nilOrValue(pigeonVar_list[3])
+    let middleName: String? = nilOrValue(pigeonVar_list[4])
+    let lastName: String? = nilOrValue(pigeonVar_list[5])
+    let dob: String? = nilOrValue(pigeonVar_list[6])
+    let bankCode: String? = nilOrValue(pigeonVar_list[7])
+    let entered: Bool? = nilOrValue(pigeonVar_list[8])
+    let userId: String? = nilOrValue(pigeonVar_list[9])
+    let jobId: String? = nilOrValue(pigeonVar_list[10])
+    let allowNewEnroll = pigeonVar_list[11] as! Bool
+    let allowAgentMode = pigeonVar_list[12] as! Bool
+    let showAttribution = pigeonVar_list[13] as! Bool
+    let showInstructions = pigeonVar_list[14] as! Bool
+    let extraPartnerParams: [String: String]? = nilOrValue(pigeonVar_list[15])
+
+    return BiometricKYCCreationParams(
+      country: country,
+      idType: idType,
+      idNumber: idNumber,
+      firstName: firstName,
+      middleName: middleName,
+      lastName: lastName,
+      dob: dob,
+      bankCode: bankCode,
+      entered: entered,
+      userId: userId,
+      jobId: jobId,
+      allowNewEnroll: allowNewEnroll,
+      allowAgentMode: allowAgentMode,
+      showAttribution: showAttribution,
+      showInstructions: showInstructions,
+      extraPartnerParams: extraPartnerParams
+    )
+  }
+  func toList() -> [Any?] {
+    return [
+      country,
+      idType,
+      idNumber,
+      firstName,
+      middleName,
+      lastName,
+      dob,
+      bankCode,
+      entered,
+      userId,
+      jobId,
+      allowNewEnroll,
+      allowAgentMode,
+      showAttribution,
+      showInstructions,
+      extraPartnerParams,
+    ]
+  }
+}
+
+/// Generated class from Pigeon that represents data sent in messages.
+struct BiometricKYCCaptureResult {
+  var selfieFile: String? = nil
+  var livenessFiles: [String]? = nil
+  var didSubmitBiometricKycJob: Bool? = nil
+
+
+  // swift-format-ignore: AlwaysUseLowerCamelCase
+  static func fromList(_ pigeonVar_list: [Any?]) -> BiometricKYCCaptureResult? {
+    let selfieFile: String? = nilOrValue(pigeonVar_list[0])
+    let livenessFiles: [String]? = nilOrValue(pigeonVar_list[1])
+    let didSubmitBiometricKycJob: Bool? = nilOrValue(pigeonVar_list[2])
+
+    return BiometricKYCCaptureResult(
+      selfieFile: selfieFile,
+      livenessFiles: livenessFiles,
+      didSubmitBiometricKycJob: didSubmitBiometricKycJob
+    )
+  }
+  func toList() -> [Any?] {
+    return [
+      selfieFile,
+      livenessFiles,
+      didSubmitBiometricKycJob,
+    ]
+  }
+}
+
+/// Generated class from Pigeon that represents data sent in messages.
+struct SelfieCaptureViewCreationParams {
+  var showConfirmationDialog: Bool
+  var showInstructions: Bool
+  var showAttribution: Bool
+  var allowAgent: Bool
+
+
+  // swift-format-ignore: AlwaysUseLowerCamelCase
+  static func fromList(_ pigeonVar_list: [Any?]) -> SelfieCaptureViewCreationParams? {
+    let showConfirmationDialog = pigeonVar_list[0] as! Bool
+    let showInstructions = pigeonVar_list[1] as! Bool
+    let showAttribution = pigeonVar_list[2] as! Bool
+    let allowAgent = pigeonVar_list[3] as! Bool
+
+    return SelfieCaptureViewCreationParams(
+      showConfirmationDialog: showConfirmationDialog,
+      showInstructions: showInstructions,
+      showAttribution: showAttribution,
+      allowAgent: allowAgent
+    )
+  }
+  func toList() -> [Any?] {
+    return [
+      showConfirmationDialog,
+      showInstructions,
+      showAttribution,
+      allowAgent,
+    ]
+  }
+}
+
+/// Generated class from Pigeon that represents data sent in messages.
+struct DocumentCaptureCreationParams {
+  var isDocumentFrontSide: Bool
+  var showInstructions: Bool
+  var showAttribution: Bool
+  var allowGalleryUpload: Bool
+  var showConfirmationDialog: Bool
+  var idAspectRatio: Double? = nil
+
+
+  // swift-format-ignore: AlwaysUseLowerCamelCase
+  static func fromList(_ pigeonVar_list: [Any?]) -> DocumentCaptureCreationParams? {
+    let isDocumentFrontSide = pigeonVar_list[0] as! Bool
+    let showInstructions = pigeonVar_list[1] as! Bool
+    let showAttribution = pigeonVar_list[2] as! Bool
+    let allowGalleryUpload = pigeonVar_list[3] as! Bool
+    let showConfirmationDialog = pigeonVar_list[4] as! Bool
+    let idAspectRatio: Double? = nilOrValue(pigeonVar_list[5])
+
+    return DocumentCaptureCreationParams(
+      isDocumentFrontSide: isDocumentFrontSide,
+      showInstructions: showInstructions,
+      showAttribution: showAttribution,
+      allowGalleryUpload: allowGalleryUpload,
+      showConfirmationDialog: showConfirmationDialog,
+      idAspectRatio: idAspectRatio
+    )
+  }
+  func toList() -> [Any?] {
+    return [
+      isDocumentFrontSide,
+      showInstructions,
+      showAttribution,
+      allowGalleryUpload,
+      showConfirmationDialog,
+      idAspectRatio,
+    ]
+  }
+}
+
 /// The Auth Smile request. Auth Smile serves multiple purposes:
 ///
 /// - It is used to fetch the signature needed for subsequent API requests
@@ -1912,80 +2276,94 @@ private class SmileIDMessagesPigeonCodecReader: FlutterStandardReader {
     case 137:
       return SmartSelfieCaptureResult.fromList(self.readValue() as! [Any?])
     case 138:
-      return FlutterAuthenticationRequest.fromList(self.readValue() as! [Any?])
+      return DocumentVerificationCreationParams.fromList(self.readValue() as! [Any?])
     case 139:
-      return FlutterAuthenticationResponse.fromList(self.readValue() as! [Any?])
+      return DocumentVerificationEnhancedCreationParams.fromList(self.readValue() as! [Any?])
     case 140:
-      return FlutterPrepUploadRequest.fromList(self.readValue() as! [Any?])
+      return DocumentCaptureResult.fromList(self.readValue() as! [Any?])
     case 141:
-      return FlutterPrepUploadResponse.fromList(self.readValue() as! [Any?])
+      return BiometricKYCCreationParams.fromList(self.readValue() as! [Any?])
     case 142:
-      return FlutterUploadRequest.fromList(self.readValue() as! [Any?])
+      return BiometricKYCCaptureResult.fromList(self.readValue() as! [Any?])
     case 143:
-      return FlutterUploadImageInfo.fromList(self.readValue() as! [Any?])
+      return SelfieCaptureViewCreationParams.fromList(self.readValue() as! [Any?])
     case 144:
-      return FlutterIdInfo.fromList(self.readValue() as! [Any?])
+      return DocumentCaptureCreationParams.fromList(self.readValue() as! [Any?])
     case 145:
-      return FlutterEnhancedKycResponse.fromList(self.readValue() as! [Any?])
+      return FlutterAuthenticationRequest.fromList(self.readValue() as! [Any?])
     case 146:
-      return FlutterActions.fromList(self.readValue() as! [Any?])
+      return FlutterAuthenticationResponse.fromList(self.readValue() as! [Any?])
     case 147:
-      return FlutterConsentInfo.fromList(self.readValue() as! [Any?])
+      return FlutterPrepUploadRequest.fromList(self.readValue() as! [Any?])
     case 148:
-      return FlutterEnhancedKycRequest.fromList(self.readValue() as! [Any?])
+      return FlutterPrepUploadResponse.fromList(self.readValue() as! [Any?])
     case 149:
-      return FlutterEnhancedKycAsyncResponse.fromList(self.readValue() as! [Any?])
+      return FlutterUploadRequest.fromList(self.readValue() as! [Any?])
     case 150:
-      return FlutterImageLinks.fromList(self.readValue() as! [Any?])
+      return FlutterUploadImageInfo.fromList(self.readValue() as! [Any?])
     case 151:
-      return FlutterAntifraud.fromList(self.readValue() as! [Any?])
+      return FlutterIdInfo.fromList(self.readValue() as! [Any?])
     case 152:
-      return FlutterSuspectUser.fromList(self.readValue() as! [Any?])
+      return FlutterEnhancedKycResponse.fromList(self.readValue() as! [Any?])
     case 153:
-      return FlutterJobStatusRequest.fromList(self.readValue() as! [Any?])
+      return FlutterActions.fromList(self.readValue() as! [Any?])
     case 154:
-      return FlutterSmartSelfieJobResult.fromList(self.readValue() as! [Any?])
+      return FlutterConsentInfo.fromList(self.readValue() as! [Any?])
     case 155:
-      return FlutterSmartSelfieJobStatusResponse.fromList(self.readValue() as! [Any?])
+      return FlutterEnhancedKycRequest.fromList(self.readValue() as! [Any?])
     case 156:
-      return FlutterSmartSelfieResponse.fromList(self.readValue() as! [Any?])
+      return FlutterEnhancedKycAsyncResponse.fromList(self.readValue() as! [Any?])
     case 157:
-      return FlutterDocumentVerificationJobResult.fromList(self.readValue() as! [Any?])
+      return FlutterImageLinks.fromList(self.readValue() as! [Any?])
     case 158:
-      return FlutterDocumentVerificationJobStatusResponse.fromList(self.readValue() as! [Any?])
+      return FlutterAntifraud.fromList(self.readValue() as! [Any?])
     case 159:
-      return FlutterBiometricKycJobResult.fromList(self.readValue() as! [Any?])
+      return FlutterSuspectUser.fromList(self.readValue() as! [Any?])
     case 160:
-      return FlutterBiometricKycJobStatusResponse.fromList(self.readValue() as! [Any?])
+      return FlutterJobStatusRequest.fromList(self.readValue() as! [Any?])
     case 161:
-      return FlutterEnhancedDocumentVerificationJobResult.fromList(self.readValue() as! [Any?])
+      return FlutterSmartSelfieJobResult.fromList(self.readValue() as! [Any?])
     case 162:
-      return FlutterEnhancedDocumentVerificationJobStatusResponse.fromList(self.readValue() as! [Any?])
+      return FlutterSmartSelfieJobStatusResponse.fromList(self.readValue() as! [Any?])
     case 163:
-      return FlutterProductsConfigRequest.fromList(self.readValue() as! [Any?])
+      return FlutterSmartSelfieResponse.fromList(self.readValue() as! [Any?])
     case 164:
-      return FlutterProductsConfigResponse.fromList(self.readValue() as! [Any?])
+      return FlutterDocumentVerificationJobResult.fromList(self.readValue() as! [Any?])
     case 165:
-      return FlutterIdSelection.fromList(self.readValue() as! [Any?])
+      return FlutterDocumentVerificationJobStatusResponse.fromList(self.readValue() as! [Any?])
     case 166:
-      return FlutterValidDocumentsResponse.fromList(self.readValue() as! [Any?])
+      return FlutterBiometricKycJobResult.fromList(self.readValue() as! [Any?])
     case 167:
-      return FlutterValidDocument.fromList(self.readValue() as! [Any?])
+      return FlutterBiometricKycJobStatusResponse.fromList(self.readValue() as! [Any?])
     case 168:
-      return FlutterCountry.fromList(self.readValue() as! [Any?])
+      return FlutterEnhancedDocumentVerificationJobResult.fromList(self.readValue() as! [Any?])
     case 169:
-      return FlutterIdType.fromList(self.readValue() as! [Any?])
+      return FlutterEnhancedDocumentVerificationJobStatusResponse.fromList(self.readValue() as! [Any?])
     case 170:
-      return FlutterServicesResponse.fromList(self.readValue() as! [Any?])
+      return FlutterProductsConfigRequest.fromList(self.readValue() as! [Any?])
     case 171:
-      return FlutterBankCode.fromList(self.readValue() as! [Any?])
+      return FlutterProductsConfigResponse.fromList(self.readValue() as! [Any?])
     case 172:
-      return FlutterHostedWeb.fromList(self.readValue() as! [Any?])
+      return FlutterIdSelection.fromList(self.readValue() as! [Any?])
     case 173:
-      return FlutterCountryInfo.fromList(self.readValue() as! [Any?])
+      return FlutterValidDocumentsResponse.fromList(self.readValue() as! [Any?])
     case 174:
-      return FlutterAvailableIdType.fromList(self.readValue() as! [Any?])
+      return FlutterValidDocument.fromList(self.readValue() as! [Any?])
     case 175:
+      return FlutterCountry.fromList(self.readValue() as! [Any?])
+    case 176:
+      return FlutterIdType.fromList(self.readValue() as! [Any?])
+    case 177:
+      return FlutterServicesResponse.fromList(self.readValue() as! [Any?])
+    case 178:
+      return FlutterBankCode.fromList(self.readValue() as! [Any?])
+    case 179:
+      return FlutterHostedWeb.fromList(self.readValue() as! [Any?])
+    case 180:
+      return FlutterCountryInfo.fromList(self.readValue() as! [Any?])
+    case 181:
+      return FlutterAvailableIdType.fromList(self.readValue() as! [Any?])
+    case 182:
       return FlutterConfig.fromList(self.readValue() as! [Any?])
     default:
       return super.readValue(ofType: type)
@@ -2022,119 +2400,140 @@ private class SmileIDMessagesPigeonCodecWriter: FlutterStandardWriter {
     } else if let value = value as? SmartSelfieCaptureResult {
       super.writeByte(137)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterAuthenticationRequest {
+    } else if let value = value as? DocumentVerificationCreationParams {
       super.writeByte(138)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterAuthenticationResponse {
+    } else if let value = value as? DocumentVerificationEnhancedCreationParams {
       super.writeByte(139)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterPrepUploadRequest {
+    } else if let value = value as? DocumentCaptureResult {
       super.writeByte(140)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterPrepUploadResponse {
+    } else if let value = value as? BiometricKYCCreationParams {
       super.writeByte(141)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterUploadRequest {
+    } else if let value = value as? BiometricKYCCaptureResult {
       super.writeByte(142)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterUploadImageInfo {
+    } else if let value = value as? SelfieCaptureViewCreationParams {
       super.writeByte(143)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterIdInfo {
+    } else if let value = value as? DocumentCaptureCreationParams {
       super.writeByte(144)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterEnhancedKycResponse {
+    } else if let value = value as? FlutterAuthenticationRequest {
       super.writeByte(145)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterActions {
+    } else if let value = value as? FlutterAuthenticationResponse {
       super.writeByte(146)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterConsentInfo {
+    } else if let value = value as? FlutterPrepUploadRequest {
       super.writeByte(147)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterEnhancedKycRequest {
+    } else if let value = value as? FlutterPrepUploadResponse {
       super.writeByte(148)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterEnhancedKycAsyncResponse {
+    } else if let value = value as? FlutterUploadRequest {
       super.writeByte(149)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterImageLinks {
+    } else if let value = value as? FlutterUploadImageInfo {
       super.writeByte(150)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterAntifraud {
+    } else if let value = value as? FlutterIdInfo {
       super.writeByte(151)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterSuspectUser {
+    } else if let value = value as? FlutterEnhancedKycResponse {
       super.writeByte(152)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterJobStatusRequest {
+    } else if let value = value as? FlutterActions {
       super.writeByte(153)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterSmartSelfieJobResult {
+    } else if let value = value as? FlutterConsentInfo {
       super.writeByte(154)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterSmartSelfieJobStatusResponse {
+    } else if let value = value as? FlutterEnhancedKycRequest {
       super.writeByte(155)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterSmartSelfieResponse {
+    } else if let value = value as? FlutterEnhancedKycAsyncResponse {
       super.writeByte(156)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterDocumentVerificationJobResult {
+    } else if let value = value as? FlutterImageLinks {
       super.writeByte(157)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterDocumentVerificationJobStatusResponse {
+    } else if let value = value as? FlutterAntifraud {
       super.writeByte(158)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterBiometricKycJobResult {
+    } else if let value = value as? FlutterSuspectUser {
       super.writeByte(159)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterBiometricKycJobStatusResponse {
+    } else if let value = value as? FlutterJobStatusRequest {
       super.writeByte(160)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterEnhancedDocumentVerificationJobResult {
+    } else if let value = value as? FlutterSmartSelfieJobResult {
       super.writeByte(161)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterEnhancedDocumentVerificationJobStatusResponse {
+    } else if let value = value as? FlutterSmartSelfieJobStatusResponse {
       super.writeByte(162)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterProductsConfigRequest {
+    } else if let value = value as? FlutterSmartSelfieResponse {
       super.writeByte(163)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterProductsConfigResponse {
+    } else if let value = value as? FlutterDocumentVerificationJobResult {
       super.writeByte(164)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterIdSelection {
+    } else if let value = value as? FlutterDocumentVerificationJobStatusResponse {
       super.writeByte(165)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterValidDocumentsResponse {
+    } else if let value = value as? FlutterBiometricKycJobResult {
       super.writeByte(166)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterValidDocument {
+    } else if let value = value as? FlutterBiometricKycJobStatusResponse {
       super.writeByte(167)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterCountry {
+    } else if let value = value as? FlutterEnhancedDocumentVerificationJobResult {
       super.writeByte(168)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterIdType {
+    } else if let value = value as? FlutterEnhancedDocumentVerificationJobStatusResponse {
       super.writeByte(169)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterServicesResponse {
+    } else if let value = value as? FlutterProductsConfigRequest {
       super.writeByte(170)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterBankCode {
+    } else if let value = value as? FlutterProductsConfigResponse {
       super.writeByte(171)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterHostedWeb {
+    } else if let value = value as? FlutterIdSelection {
       super.writeByte(172)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterCountryInfo {
+    } else if let value = value as? FlutterValidDocumentsResponse {
       super.writeByte(173)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterAvailableIdType {
+    } else if let value = value as? FlutterValidDocument {
       super.writeByte(174)
       super.writeValue(value.toList())
-    } else if let value = value as? FlutterConfig {
+    } else if let value = value as? FlutterCountry {
       super.writeByte(175)
+      super.writeValue(value.toList())
+    } else if let value = value as? FlutterIdType {
+      super.writeByte(176)
+      super.writeValue(value.toList())
+    } else if let value = value as? FlutterServicesResponse {
+      super.writeByte(177)
+      super.writeValue(value.toList())
+    } else if let value = value as? FlutterBankCode {
+      super.writeByte(178)
+      super.writeValue(value.toList())
+    } else if let value = value as? FlutterHostedWeb {
+      super.writeByte(179)
+      super.writeValue(value.toList())
+    } else if let value = value as? FlutterCountryInfo {
+      super.writeByte(180)
+      super.writeValue(value.toList())
+    } else if let value = value as? FlutterAvailableIdType {
+      super.writeByte(181)
+      super.writeValue(value.toList())
+    } else if let value = value as? FlutterConfig {
+      super.writeByte(182)
       super.writeValue(value.toList())
     } else {
       super.writeValue(value)
@@ -2159,10 +2558,15 @@ class SmileIDMessagesPigeonCodec: FlutterStandardMessageCodec, @unchecked Sendab
 
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol SmileIDProductsApi {
+  func documentVerification(creationParams: DocumentVerificationCreationParams, completion: @escaping (Result<DocumentCaptureResult, Error>) -> Void)
+  func documentVerificationEnhanced(creationParams: DocumentVerificationEnhancedCreationParams, completion: @escaping (Result<DocumentCaptureResult, Error>) -> Void)
   func smartSelfieEnrollment(creationParams: SmartSelfieCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, Error>) -> Void)
   func smartSelfieAuthentication(creationParams: SmartSelfieCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, Error>) -> Void)
   func smartSelfieEnrollmentEnhanced(creationParams: SmartSelfieEnhancedCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, Error>) -> Void)
   func smartSelfieAuthenticationEnhanced(creationParams: SmartSelfieEnhancedCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, Error>) -> Void)
+  func biometricKYC(creationParams: BiometricKYCCreationParams, completion: @escaping (Result<BiometricKYCCaptureResult, Error>) -> Void)
+  func selfieCapture(creationParams: SmartSelfieCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, Error>) -> Void)
+  func documentCapture(creationParams: DocumentCaptureCreationParams, completion: @escaping (Result<DocumentCaptureResult, Error>) -> Void)
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -2171,6 +2575,40 @@ class SmileIDProductsApiSetup {
   /// Sets up an instance of `SmileIDProductsApi` to handle messages through the `binaryMessenger`.
   static func setUp(binaryMessenger: FlutterBinaryMessenger, api: SmileIDProductsApi?, messageChannelSuffix: String = "") {
     let channelSuffix = messageChannelSuffix.count > 0 ? ".\(messageChannelSuffix)" : ""
+    let documentVerificationChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDProductsApi.documentVerification\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      documentVerificationChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let creationParamsArg = args[0] as! DocumentVerificationCreationParams
+        api.documentVerification(creationParams: creationParamsArg) { result in
+          switch result {
+          case .success(let res):
+            reply(wrapResult(res))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      documentVerificationChannel.setMessageHandler(nil)
+    }
+    let documentVerificationEnhancedChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDProductsApi.documentVerificationEnhanced\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      documentVerificationEnhancedChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let creationParamsArg = args[0] as! DocumentVerificationEnhancedCreationParams
+        api.documentVerificationEnhanced(creationParams: creationParamsArg) { result in
+          switch result {
+          case .success(let res):
+            reply(wrapResult(res))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      documentVerificationEnhancedChannel.setMessageHandler(nil)
+    }
     let smartSelfieEnrollmentChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDProductsApi.smartSelfieEnrollment\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       smartSelfieEnrollmentChannel.setMessageHandler { message, reply in
@@ -2238,6 +2676,57 @@ class SmileIDProductsApiSetup {
       }
     } else {
       smartSelfieAuthenticationEnhancedChannel.setMessageHandler(nil)
+    }
+    let biometricKYCChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDProductsApi.biometricKYC\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      biometricKYCChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let creationParamsArg = args[0] as! BiometricKYCCreationParams
+        api.biometricKYC(creationParams: creationParamsArg) { result in
+          switch result {
+          case .success(let res):
+            reply(wrapResult(res))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      biometricKYCChannel.setMessageHandler(nil)
+    }
+    let selfieCaptureChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDProductsApi.selfieCapture\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      selfieCaptureChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let creationParamsArg = args[0] as! SmartSelfieCreationParams
+        api.selfieCapture(creationParams: creationParamsArg) { result in
+          switch result {
+          case .success(let res):
+            reply(wrapResult(res))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      selfieCaptureChannel.setMessageHandler(nil)
+    }
+    let documentCaptureChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.smileid.SmileIDProductsApi.documentCapture\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      documentCaptureChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let creationParamsArg = args[0] as! DocumentCaptureCreationParams
+        api.documentCapture(creationParams: creationParamsArg) { result in
+          switch result {
+          case .success(let res):
+            reply(wrapResult(res))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      documentCaptureChannel.setMessageHandler(nil)
     }
   }
 }

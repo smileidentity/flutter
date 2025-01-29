@@ -228,6 +228,433 @@ class SmartSelfieCaptureResult {
   }
 }
 
+class DocumentVerificationCreationParams {
+  DocumentVerificationCreationParams({
+    required this.countryCode,
+    this.documentType,
+    this.idAspectRatio,
+    required this.captureBothSides,
+    this.bypassSelfieCaptureWithFile,
+    this.userId,
+    this.jobId,
+    required this.allowNewEnroll,
+    required this.showAttribution,
+    required this.allowGalleryUpload,
+    required this.allowAgentMode,
+    required this.showInstructions,
+    required this.skipApiSubmission,
+    this.extraPartnerParams,
+  });
+
+  String countryCode;
+
+  String? documentType;
+
+  double? idAspectRatio;
+
+  bool captureBothSides;
+
+  String? bypassSelfieCaptureWithFile;
+
+  String? userId;
+
+  String? jobId;
+
+  bool allowNewEnroll;
+
+  bool showAttribution;
+
+  bool allowGalleryUpload;
+
+  bool allowAgentMode;
+
+  bool showInstructions;
+
+  bool skipApiSubmission;
+
+  Map<String, String>? extraPartnerParams;
+
+  Object encode() {
+    return <Object?>[
+      countryCode,
+      documentType,
+      idAspectRatio,
+      captureBothSides,
+      bypassSelfieCaptureWithFile,
+      userId,
+      jobId,
+      allowNewEnroll,
+      showAttribution,
+      allowGalleryUpload,
+      allowAgentMode,
+      showInstructions,
+      skipApiSubmission,
+      extraPartnerParams,
+    ];
+  }
+
+  static DocumentVerificationCreationParams decode(Object result) {
+    result as List<Object?>;
+    return DocumentVerificationCreationParams(
+      countryCode: result[0]! as String,
+      documentType: result[1] as String?,
+      idAspectRatio: result[2] as double?,
+      captureBothSides: result[3]! as bool,
+      bypassSelfieCaptureWithFile: result[4] as String?,
+      userId: result[5] as String?,
+      jobId: result[6] as String?,
+      allowNewEnroll: result[7]! as bool,
+      showAttribution: result[8]! as bool,
+      allowGalleryUpload: result[9]! as bool,
+      allowAgentMode: result[10]! as bool,
+      showInstructions: result[11]! as bool,
+      skipApiSubmission: result[12]! as bool,
+      extraPartnerParams: (result[13] as Map<Object?, Object?>?)?.cast<String, String>(),
+    );
+  }
+}
+
+class DocumentVerificationEnhancedCreationParams {
+  DocumentVerificationEnhancedCreationParams({
+    required this.countryCode,
+    this.documentType,
+    this.idAspectRatio,
+    required this.captureBothSides,
+    this.bypassSelfieCaptureWithFile,
+    this.userId,
+    this.jobId,
+    required this.allowNewEnroll,
+    required this.showAttribution,
+    required this.allowAgentMode,
+    required this.allowGalleryUpload,
+    required this.showInstructions,
+    required this.skipApiSubmission,
+    this.extraPartnerParams,
+  });
+
+  String countryCode;
+
+  String? documentType;
+
+  double? idAspectRatio;
+
+  bool captureBothSides;
+
+  String? bypassSelfieCaptureWithFile;
+
+  String? userId;
+
+  String? jobId;
+
+  bool allowNewEnroll;
+
+  bool showAttribution;
+
+  bool allowAgentMode;
+
+  bool allowGalleryUpload;
+
+  bool showInstructions;
+
+  bool skipApiSubmission;
+
+  Map<String, String>? extraPartnerParams;
+
+  Object encode() {
+    return <Object?>[
+      countryCode,
+      documentType,
+      idAspectRatio,
+      captureBothSides,
+      bypassSelfieCaptureWithFile,
+      userId,
+      jobId,
+      allowNewEnroll,
+      showAttribution,
+      allowAgentMode,
+      allowGalleryUpload,
+      showInstructions,
+      skipApiSubmission,
+      extraPartnerParams,
+    ];
+  }
+
+  static DocumentVerificationEnhancedCreationParams decode(Object result) {
+    result as List<Object?>;
+    return DocumentVerificationEnhancedCreationParams(
+      countryCode: result[0]! as String,
+      documentType: result[1] as String?,
+      idAspectRatio: result[2] as double?,
+      captureBothSides: result[3]! as bool,
+      bypassSelfieCaptureWithFile: result[4] as String?,
+      userId: result[5] as String?,
+      jobId: result[6] as String?,
+      allowNewEnroll: result[7]! as bool,
+      showAttribution: result[8]! as bool,
+      allowAgentMode: result[9]! as bool,
+      allowGalleryUpload: result[10]! as bool,
+      showInstructions: result[11]! as bool,
+      skipApiSubmission: result[12]! as bool,
+      extraPartnerParams: (result[13] as Map<Object?, Object?>?)?.cast<String, String>(),
+    );
+  }
+}
+
+class DocumentCaptureResult {
+  DocumentCaptureResult({
+    this.selfieFile,
+    this.documentFrontFile,
+    this.livenessFiles,
+    this.documentBackFile,
+    this.didSubmitDocumentVerificationJob,
+    this.didSubmitEnhancedDocVJob,
+  });
+
+  String? selfieFile;
+
+  String? documentFrontFile;
+
+  List<String>? livenessFiles;
+
+  String? documentBackFile;
+
+  bool? didSubmitDocumentVerificationJob;
+
+  bool? didSubmitEnhancedDocVJob;
+
+  Object encode() {
+    return <Object?>[
+      selfieFile,
+      documentFrontFile,
+      livenessFiles,
+      documentBackFile,
+      didSubmitDocumentVerificationJob,
+      didSubmitEnhancedDocVJob,
+    ];
+  }
+
+  static DocumentCaptureResult decode(Object result) {
+    result as List<Object?>;
+    return DocumentCaptureResult(
+      selfieFile: result[0] as String?,
+      documentFrontFile: result[1] as String?,
+      livenessFiles: (result[2] as List<Object?>?)?.cast<String>(),
+      documentBackFile: result[3] as String?,
+      didSubmitDocumentVerificationJob: result[4] as bool?,
+      didSubmitEnhancedDocVJob: result[5] as bool?,
+    );
+  }
+}
+
+class BiometricKYCCreationParams {
+  BiometricKYCCreationParams({
+    this.country,
+    this.idType,
+    this.idNumber,
+    this.firstName,
+    this.middleName,
+    this.lastName,
+    this.dob,
+    this.bankCode,
+    this.entered,
+    this.userId,
+    this.jobId,
+    required this.allowNewEnroll,
+    required this.allowAgentMode,
+    required this.showAttribution,
+    required this.showInstructions,
+    this.extraPartnerParams,
+  });
+
+  String? country;
+
+  String? idType;
+
+  String? idNumber;
+
+  String? firstName;
+
+  String? middleName;
+
+  String? lastName;
+
+  String? dob;
+
+  String? bankCode;
+
+  bool? entered;
+
+  String? userId;
+
+  String? jobId;
+
+  bool allowNewEnroll;
+
+  bool allowAgentMode;
+
+  bool showAttribution;
+
+  bool showInstructions;
+
+  Map<String, String>? extraPartnerParams;
+
+  Object encode() {
+    return <Object?>[
+      country,
+      idType,
+      idNumber,
+      firstName,
+      middleName,
+      lastName,
+      dob,
+      bankCode,
+      entered,
+      userId,
+      jobId,
+      allowNewEnroll,
+      allowAgentMode,
+      showAttribution,
+      showInstructions,
+      extraPartnerParams,
+    ];
+  }
+
+  static BiometricKYCCreationParams decode(Object result) {
+    result as List<Object?>;
+    return BiometricKYCCreationParams(
+      country: result[0] as String?,
+      idType: result[1] as String?,
+      idNumber: result[2] as String?,
+      firstName: result[3] as String?,
+      middleName: result[4] as String?,
+      lastName: result[5] as String?,
+      dob: result[6] as String?,
+      bankCode: result[7] as String?,
+      entered: result[8] as bool?,
+      userId: result[9] as String?,
+      jobId: result[10] as String?,
+      allowNewEnroll: result[11]! as bool,
+      allowAgentMode: result[12]! as bool,
+      showAttribution: result[13]! as bool,
+      showInstructions: result[14]! as bool,
+      extraPartnerParams: (result[15] as Map<Object?, Object?>?)?.cast<String, String>(),
+    );
+  }
+}
+
+class BiometricKYCCaptureResult {
+  BiometricKYCCaptureResult({
+    this.selfieFile,
+    this.livenessFiles,
+    this.didSubmitBiometricKycJob,
+  });
+
+  String? selfieFile;
+
+  List<String>? livenessFiles;
+
+  bool? didSubmitBiometricKycJob;
+
+  Object encode() {
+    return <Object?>[
+      selfieFile,
+      livenessFiles,
+      didSubmitBiometricKycJob,
+    ];
+  }
+
+  static BiometricKYCCaptureResult decode(Object result) {
+    result as List<Object?>;
+    return BiometricKYCCaptureResult(
+      selfieFile: result[0] as String?,
+      livenessFiles: (result[1] as List<Object?>?)?.cast<String>(),
+      didSubmitBiometricKycJob: result[2] as bool?,
+    );
+  }
+}
+
+class SelfieCaptureViewCreationParams {
+  SelfieCaptureViewCreationParams({
+    required this.showConfirmationDialog,
+    required this.showInstructions,
+    required this.showAttribution,
+    required this.allowAgent,
+  });
+
+  bool showConfirmationDialog;
+
+  bool showInstructions;
+
+  bool showAttribution;
+
+  bool allowAgent;
+
+  Object encode() {
+    return <Object?>[
+      showConfirmationDialog,
+      showInstructions,
+      showAttribution,
+      allowAgent,
+    ];
+  }
+
+  static SelfieCaptureViewCreationParams decode(Object result) {
+    result as List<Object?>;
+    return SelfieCaptureViewCreationParams(
+      showConfirmationDialog: result[0]! as bool,
+      showInstructions: result[1]! as bool,
+      showAttribution: result[2]! as bool,
+      allowAgent: result[3]! as bool,
+    );
+  }
+}
+
+class DocumentCaptureCreationParams {
+  DocumentCaptureCreationParams({
+    required this.isDocumentFrontSide,
+    required this.showInstructions,
+    required this.showAttribution,
+    required this.allowGalleryUpload,
+    required this.showConfirmationDialog,
+    this.idAspectRatio,
+  });
+
+  bool isDocumentFrontSide;
+
+  bool showInstructions;
+
+  bool showAttribution;
+
+  bool allowGalleryUpload;
+
+  bool showConfirmationDialog;
+
+  double? idAspectRatio;
+
+  Object encode() {
+    return <Object?>[
+      isDocumentFrontSide,
+      showInstructions,
+      showAttribution,
+      allowGalleryUpload,
+      showConfirmationDialog,
+      idAspectRatio,
+    ];
+  }
+
+  static DocumentCaptureCreationParams decode(Object result) {
+    result as List<Object?>;
+    return DocumentCaptureCreationParams(
+      isDocumentFrontSide: result[0]! as bool,
+      showInstructions: result[1]! as bool,
+      showAttribution: result[2]! as bool,
+      allowGalleryUpload: result[3]! as bool,
+      showConfirmationDialog: result[4]! as bool,
+      idAspectRatio: result[5] as double?,
+    );
+  }
+}
+
 /// The Auth Smile request. Auth Smile serves multiple purposes:
 ///
 /// - It is used to fetch the signature needed for subsequent API requests
@@ -2113,119 +2540,140 @@ class _PigeonCodec extends StandardMessageCodec {
     }    else if (value is SmartSelfieCaptureResult) {
       buffer.putUint8(137);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterAuthenticationRequest) {
+    }    else if (value is DocumentVerificationCreationParams) {
       buffer.putUint8(138);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterAuthenticationResponse) {
+    }    else if (value is DocumentVerificationEnhancedCreationParams) {
       buffer.putUint8(139);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterPrepUploadRequest) {
+    }    else if (value is DocumentCaptureResult) {
       buffer.putUint8(140);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterPrepUploadResponse) {
+    }    else if (value is BiometricKYCCreationParams) {
       buffer.putUint8(141);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterUploadRequest) {
+    }    else if (value is BiometricKYCCaptureResult) {
       buffer.putUint8(142);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterUploadImageInfo) {
+    }    else if (value is SelfieCaptureViewCreationParams) {
       buffer.putUint8(143);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterIdInfo) {
+    }    else if (value is DocumentCaptureCreationParams) {
       buffer.putUint8(144);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterEnhancedKycResponse) {
+    }    else if (value is FlutterAuthenticationRequest) {
       buffer.putUint8(145);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterActions) {
+    }    else if (value is FlutterAuthenticationResponse) {
       buffer.putUint8(146);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterConsentInfo) {
+    }    else if (value is FlutterPrepUploadRequest) {
       buffer.putUint8(147);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterEnhancedKycRequest) {
+    }    else if (value is FlutterPrepUploadResponse) {
       buffer.putUint8(148);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterEnhancedKycAsyncResponse) {
+    }    else if (value is FlutterUploadRequest) {
       buffer.putUint8(149);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterImageLinks) {
+    }    else if (value is FlutterUploadImageInfo) {
       buffer.putUint8(150);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterAntifraud) {
+    }    else if (value is FlutterIdInfo) {
       buffer.putUint8(151);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterSuspectUser) {
+    }    else if (value is FlutterEnhancedKycResponse) {
       buffer.putUint8(152);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterJobStatusRequest) {
+    }    else if (value is FlutterActions) {
       buffer.putUint8(153);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterSmartSelfieJobResult) {
+    }    else if (value is FlutterConsentInfo) {
       buffer.putUint8(154);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterSmartSelfieJobStatusResponse) {
+    }    else if (value is FlutterEnhancedKycRequest) {
       buffer.putUint8(155);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterSmartSelfieResponse) {
+    }    else if (value is FlutterEnhancedKycAsyncResponse) {
       buffer.putUint8(156);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterDocumentVerificationJobResult) {
+    }    else if (value is FlutterImageLinks) {
       buffer.putUint8(157);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterDocumentVerificationJobStatusResponse) {
+    }    else if (value is FlutterAntifraud) {
       buffer.putUint8(158);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterBiometricKycJobResult) {
+    }    else if (value is FlutterSuspectUser) {
       buffer.putUint8(159);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterBiometricKycJobStatusResponse) {
+    }    else if (value is FlutterJobStatusRequest) {
       buffer.putUint8(160);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterEnhancedDocumentVerificationJobResult) {
+    }    else if (value is FlutterSmartSelfieJobResult) {
       buffer.putUint8(161);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterEnhancedDocumentVerificationJobStatusResponse) {
+    }    else if (value is FlutterSmartSelfieJobStatusResponse) {
       buffer.putUint8(162);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterProductsConfigRequest) {
+    }    else if (value is FlutterSmartSelfieResponse) {
       buffer.putUint8(163);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterProductsConfigResponse) {
+    }    else if (value is FlutterDocumentVerificationJobResult) {
       buffer.putUint8(164);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterIdSelection) {
+    }    else if (value is FlutterDocumentVerificationJobStatusResponse) {
       buffer.putUint8(165);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterValidDocumentsResponse) {
+    }    else if (value is FlutterBiometricKycJobResult) {
       buffer.putUint8(166);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterValidDocument) {
+    }    else if (value is FlutterBiometricKycJobStatusResponse) {
       buffer.putUint8(167);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterCountry) {
+    }    else if (value is FlutterEnhancedDocumentVerificationJobResult) {
       buffer.putUint8(168);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterIdType) {
+    }    else if (value is FlutterEnhancedDocumentVerificationJobStatusResponse) {
       buffer.putUint8(169);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterServicesResponse) {
+    }    else if (value is FlutterProductsConfigRequest) {
       buffer.putUint8(170);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterBankCode) {
+    }    else if (value is FlutterProductsConfigResponse) {
       buffer.putUint8(171);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterHostedWeb) {
+    }    else if (value is FlutterIdSelection) {
       buffer.putUint8(172);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterCountryInfo) {
+    }    else if (value is FlutterValidDocumentsResponse) {
       buffer.putUint8(173);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterAvailableIdType) {
+    }    else if (value is FlutterValidDocument) {
       buffer.putUint8(174);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterConfig) {
+    }    else if (value is FlutterCountry) {
       buffer.putUint8(175);
+      writeValue(buffer, value.encode());
+    }    else if (value is FlutterIdType) {
+      buffer.putUint8(176);
+      writeValue(buffer, value.encode());
+    }    else if (value is FlutterServicesResponse) {
+      buffer.putUint8(177);
+      writeValue(buffer, value.encode());
+    }    else if (value is FlutterBankCode) {
+      buffer.putUint8(178);
+      writeValue(buffer, value.encode());
+    }    else if (value is FlutterHostedWeb) {
+      buffer.putUint8(179);
+      writeValue(buffer, value.encode());
+    }    else if (value is FlutterCountryInfo) {
+      buffer.putUint8(180);
+      writeValue(buffer, value.encode());
+    }    else if (value is FlutterAvailableIdType) {
+      buffer.putUint8(181);
+      writeValue(buffer, value.encode());
+    }    else if (value is FlutterConfig) {
+      buffer.putUint8(182);
       writeValue(buffer, value.encode());
     } else {
       super.writeValue(buffer, value);
@@ -2259,80 +2707,94 @@ class _PigeonCodec extends StandardMessageCodec {
       case 137: 
         return SmartSelfieCaptureResult.decode(readValue(buffer)!);
       case 138: 
-        return FlutterAuthenticationRequest.decode(readValue(buffer)!);
+        return DocumentVerificationCreationParams.decode(readValue(buffer)!);
       case 139: 
-        return FlutterAuthenticationResponse.decode(readValue(buffer)!);
+        return DocumentVerificationEnhancedCreationParams.decode(readValue(buffer)!);
       case 140: 
-        return FlutterPrepUploadRequest.decode(readValue(buffer)!);
+        return DocumentCaptureResult.decode(readValue(buffer)!);
       case 141: 
-        return FlutterPrepUploadResponse.decode(readValue(buffer)!);
+        return BiometricKYCCreationParams.decode(readValue(buffer)!);
       case 142: 
-        return FlutterUploadRequest.decode(readValue(buffer)!);
+        return BiometricKYCCaptureResult.decode(readValue(buffer)!);
       case 143: 
-        return FlutterUploadImageInfo.decode(readValue(buffer)!);
+        return SelfieCaptureViewCreationParams.decode(readValue(buffer)!);
       case 144: 
-        return FlutterIdInfo.decode(readValue(buffer)!);
+        return DocumentCaptureCreationParams.decode(readValue(buffer)!);
       case 145: 
-        return FlutterEnhancedKycResponse.decode(readValue(buffer)!);
+        return FlutterAuthenticationRequest.decode(readValue(buffer)!);
       case 146: 
-        return FlutterActions.decode(readValue(buffer)!);
+        return FlutterAuthenticationResponse.decode(readValue(buffer)!);
       case 147: 
-        return FlutterConsentInfo.decode(readValue(buffer)!);
+        return FlutterPrepUploadRequest.decode(readValue(buffer)!);
       case 148: 
-        return FlutterEnhancedKycRequest.decode(readValue(buffer)!);
+        return FlutterPrepUploadResponse.decode(readValue(buffer)!);
       case 149: 
-        return FlutterEnhancedKycAsyncResponse.decode(readValue(buffer)!);
+        return FlutterUploadRequest.decode(readValue(buffer)!);
       case 150: 
-        return FlutterImageLinks.decode(readValue(buffer)!);
+        return FlutterUploadImageInfo.decode(readValue(buffer)!);
       case 151: 
-        return FlutterAntifraud.decode(readValue(buffer)!);
+        return FlutterIdInfo.decode(readValue(buffer)!);
       case 152: 
-        return FlutterSuspectUser.decode(readValue(buffer)!);
+        return FlutterEnhancedKycResponse.decode(readValue(buffer)!);
       case 153: 
-        return FlutterJobStatusRequest.decode(readValue(buffer)!);
+        return FlutterActions.decode(readValue(buffer)!);
       case 154: 
-        return FlutterSmartSelfieJobResult.decode(readValue(buffer)!);
+        return FlutterConsentInfo.decode(readValue(buffer)!);
       case 155: 
-        return FlutterSmartSelfieJobStatusResponse.decode(readValue(buffer)!);
+        return FlutterEnhancedKycRequest.decode(readValue(buffer)!);
       case 156: 
-        return FlutterSmartSelfieResponse.decode(readValue(buffer)!);
+        return FlutterEnhancedKycAsyncResponse.decode(readValue(buffer)!);
       case 157: 
-        return FlutterDocumentVerificationJobResult.decode(readValue(buffer)!);
+        return FlutterImageLinks.decode(readValue(buffer)!);
       case 158: 
-        return FlutterDocumentVerificationJobStatusResponse.decode(readValue(buffer)!);
+        return FlutterAntifraud.decode(readValue(buffer)!);
       case 159: 
-        return FlutterBiometricKycJobResult.decode(readValue(buffer)!);
+        return FlutterSuspectUser.decode(readValue(buffer)!);
       case 160: 
-        return FlutterBiometricKycJobStatusResponse.decode(readValue(buffer)!);
+        return FlutterJobStatusRequest.decode(readValue(buffer)!);
       case 161: 
-        return FlutterEnhancedDocumentVerificationJobResult.decode(readValue(buffer)!);
+        return FlutterSmartSelfieJobResult.decode(readValue(buffer)!);
       case 162: 
-        return FlutterEnhancedDocumentVerificationJobStatusResponse.decode(readValue(buffer)!);
+        return FlutterSmartSelfieJobStatusResponse.decode(readValue(buffer)!);
       case 163: 
-        return FlutterProductsConfigRequest.decode(readValue(buffer)!);
+        return FlutterSmartSelfieResponse.decode(readValue(buffer)!);
       case 164: 
-        return FlutterProductsConfigResponse.decode(readValue(buffer)!);
+        return FlutterDocumentVerificationJobResult.decode(readValue(buffer)!);
       case 165: 
-        return FlutterIdSelection.decode(readValue(buffer)!);
+        return FlutterDocumentVerificationJobStatusResponse.decode(readValue(buffer)!);
       case 166: 
-        return FlutterValidDocumentsResponse.decode(readValue(buffer)!);
+        return FlutterBiometricKycJobResult.decode(readValue(buffer)!);
       case 167: 
-        return FlutterValidDocument.decode(readValue(buffer)!);
+        return FlutterBiometricKycJobStatusResponse.decode(readValue(buffer)!);
       case 168: 
-        return FlutterCountry.decode(readValue(buffer)!);
+        return FlutterEnhancedDocumentVerificationJobResult.decode(readValue(buffer)!);
       case 169: 
-        return FlutterIdType.decode(readValue(buffer)!);
+        return FlutterEnhancedDocumentVerificationJobStatusResponse.decode(readValue(buffer)!);
       case 170: 
-        return FlutterServicesResponse.decode(readValue(buffer)!);
+        return FlutterProductsConfigRequest.decode(readValue(buffer)!);
       case 171: 
-        return FlutterBankCode.decode(readValue(buffer)!);
+        return FlutterProductsConfigResponse.decode(readValue(buffer)!);
       case 172: 
-        return FlutterHostedWeb.decode(readValue(buffer)!);
+        return FlutterIdSelection.decode(readValue(buffer)!);
       case 173: 
-        return FlutterCountryInfo.decode(readValue(buffer)!);
+        return FlutterValidDocumentsResponse.decode(readValue(buffer)!);
       case 174: 
-        return FlutterAvailableIdType.decode(readValue(buffer)!);
+        return FlutterValidDocument.decode(readValue(buffer)!);
       case 175: 
+        return FlutterCountry.decode(readValue(buffer)!);
+      case 176: 
+        return FlutterIdType.decode(readValue(buffer)!);
+      case 177: 
+        return FlutterServicesResponse.decode(readValue(buffer)!);
+      case 178: 
+        return FlutterBankCode.decode(readValue(buffer)!);
+      case 179: 
+        return FlutterHostedWeb.decode(readValue(buffer)!);
+      case 180: 
+        return FlutterCountryInfo.decode(readValue(buffer)!);
+      case 181: 
+        return FlutterAvailableIdType.decode(readValue(buffer)!);
+      case 182: 
         return FlutterConfig.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);
@@ -2352,6 +2814,60 @@ class SmileIDProductsApi {
   static const MessageCodec<Object?> pigeonChannelCodec = _PigeonCodec();
 
   final String pigeonVar_messageChannelSuffix;
+
+  Future<DocumentCaptureResult> documentVerification(DocumentVerificationCreationParams creationParams) async {
+    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDProductsApi.documentVerification$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+      pigeonVar_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: pigeonVar_binaryMessenger,
+    );
+    final List<Object?>? pigeonVar_replyList =
+        await pigeonVar_channel.send(<Object?>[creationParams]) as List<Object?>?;
+    if (pigeonVar_replyList == null) {
+      throw _createConnectionError(pigeonVar_channelName);
+    } else if (pigeonVar_replyList.length > 1) {
+      throw PlatformException(
+        code: pigeonVar_replyList[0]! as String,
+        message: pigeonVar_replyList[1] as String?,
+        details: pigeonVar_replyList[2],
+      );
+    } else if (pigeonVar_replyList[0] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (pigeonVar_replyList[0] as DocumentCaptureResult?)!;
+    }
+  }
+
+  Future<DocumentCaptureResult> documentVerificationEnhanced(DocumentVerificationEnhancedCreationParams creationParams) async {
+    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDProductsApi.documentVerificationEnhanced$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+      pigeonVar_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: pigeonVar_binaryMessenger,
+    );
+    final List<Object?>? pigeonVar_replyList =
+        await pigeonVar_channel.send(<Object?>[creationParams]) as List<Object?>?;
+    if (pigeonVar_replyList == null) {
+      throw _createConnectionError(pigeonVar_channelName);
+    } else if (pigeonVar_replyList.length > 1) {
+      throw PlatformException(
+        code: pigeonVar_replyList[0]! as String,
+        message: pigeonVar_replyList[1] as String?,
+        details: pigeonVar_replyList[2],
+      );
+    } else if (pigeonVar_replyList[0] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (pigeonVar_replyList[0] as DocumentCaptureResult?)!;
+    }
+  }
 
   Future<SmartSelfieCaptureResult> smartSelfieEnrollment(SmartSelfieCreationParams creationParams) async {
     final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDProductsApi.smartSelfieEnrollment$pigeonVar_messageChannelSuffix';
@@ -2458,6 +2974,87 @@ class SmileIDProductsApi {
       );
     } else {
       return (pigeonVar_replyList[0] as SmartSelfieCaptureResult?)!;
+    }
+  }
+
+  Future<BiometricKYCCaptureResult> biometricKYC(BiometricKYCCreationParams creationParams) async {
+    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDProductsApi.biometricKYC$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+      pigeonVar_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: pigeonVar_binaryMessenger,
+    );
+    final List<Object?>? pigeonVar_replyList =
+        await pigeonVar_channel.send(<Object?>[creationParams]) as List<Object?>?;
+    if (pigeonVar_replyList == null) {
+      throw _createConnectionError(pigeonVar_channelName);
+    } else if (pigeonVar_replyList.length > 1) {
+      throw PlatformException(
+        code: pigeonVar_replyList[0]! as String,
+        message: pigeonVar_replyList[1] as String?,
+        details: pigeonVar_replyList[2],
+      );
+    } else if (pigeonVar_replyList[0] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (pigeonVar_replyList[0] as BiometricKYCCaptureResult?)!;
+    }
+  }
+
+  Future<SmartSelfieCaptureResult> selfieCapture(SmartSelfieCreationParams creationParams) async {
+    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDProductsApi.selfieCapture$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+      pigeonVar_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: pigeonVar_binaryMessenger,
+    );
+    final List<Object?>? pigeonVar_replyList =
+        await pigeonVar_channel.send(<Object?>[creationParams]) as List<Object?>?;
+    if (pigeonVar_replyList == null) {
+      throw _createConnectionError(pigeonVar_channelName);
+    } else if (pigeonVar_replyList.length > 1) {
+      throw PlatformException(
+        code: pigeonVar_replyList[0]! as String,
+        message: pigeonVar_replyList[1] as String?,
+        details: pigeonVar_replyList[2],
+      );
+    } else if (pigeonVar_replyList[0] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (pigeonVar_replyList[0] as SmartSelfieCaptureResult?)!;
+    }
+  }
+
+  Future<DocumentCaptureResult> documentCapture(DocumentCaptureCreationParams creationParams) async {
+    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDProductsApi.documentCapture$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+      pigeonVar_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: pigeonVar_binaryMessenger,
+    );
+    final List<Object?>? pigeonVar_replyList =
+        await pigeonVar_channel.send(<Object?>[creationParams]) as List<Object?>?;
+    if (pigeonVar_replyList == null) {
+      throw _createConnectionError(pigeonVar_channelName);
+    } else if (pigeonVar_replyList.length > 1) {
+      throw PlatformException(
+        code: pigeonVar_replyList[0]! as String,
+        message: pigeonVar_replyList[1] as String?,
+        details: pigeonVar_replyList[2],
+      );
+    } else if (pigeonVar_replyList[0] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (pigeonVar_replyList[0] as DocumentCaptureResult?)!;
     }
   }
 }

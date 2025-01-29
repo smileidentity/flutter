@@ -78,6 +78,174 @@ class SmartSelfieCaptureResult {
   });
 }
 
+class DocumentVerificationCreationParams {
+  final String countryCode;
+  final String? documentType;
+  final double? idAspectRatio;
+  final bool captureBothSides;
+  final String? bypassSelfieCaptureWithFile;
+  final String? userId;
+  final String? jobId;
+  final bool allowNewEnroll;
+  final bool showAttribution;
+  final bool allowGalleryUpload;
+  final bool allowAgentMode;
+  final bool showInstructions;
+  final bool skipApiSubmission;
+  final Map<String, String>? extraPartnerParams;
+
+  const DocumentVerificationCreationParams({
+    required this.countryCode,
+    this.documentType,
+    this.idAspectRatio,
+    this.captureBothSides = true,
+    this.bypassSelfieCaptureWithFile,
+    this.userId,
+    this.jobId,
+    this.allowNewEnroll = false,
+    this.showAttribution = true,
+    this.allowGalleryUpload = false,
+    this.allowAgentMode = false,
+    this.showInstructions = true,
+    this.skipApiSubmission = false,
+    this.extraPartnerParams,
+  });
+}
+
+class DocumentVerificationEnhancedCreationParams {
+  final String countryCode;
+  final String? documentType;
+  final double? idAspectRatio;
+  final bool captureBothSides;
+  final String? bypassSelfieCaptureWithFile;
+  final String? userId;
+  final String? jobId;
+  final bool allowNewEnroll;
+  final bool showAttribution;
+  final bool allowAgentMode;
+  final bool allowGalleryUpload;
+  final bool showInstructions;
+  final bool skipApiSubmission;
+  final Map<String, String>? extraPartnerParams;
+
+  const DocumentVerificationEnhancedCreationParams({
+    required this.countryCode,
+    this.documentType,
+    this.idAspectRatio,
+    this.captureBothSides = true,
+    this.bypassSelfieCaptureWithFile,
+    this.userId,
+    this.jobId,
+    this.allowNewEnroll = false,
+    this.showAttribution = true,
+    this.allowAgentMode = false,
+    this.allowGalleryUpload = false,
+    this.showInstructions = true,
+    this.skipApiSubmission = false,
+    this.extraPartnerParams,
+  });
+}
+
+class DocumentCaptureResult {
+  final String? selfieFile;
+  final String? documentFrontFile;
+  final List<String>? livenessFiles;
+  final String? documentBackFile;
+  final bool? didSubmitDocumentVerificationJob;
+  final bool? didSubmitEnhancedDocVJob;
+
+  const DocumentCaptureResult({
+    this.selfieFile,
+    this.documentFrontFile,
+    this.livenessFiles,
+    this.documentBackFile,
+    this.didSubmitDocumentVerificationJob,
+    this.didSubmitEnhancedDocVJob,
+  });
+}
+
+class BiometricKYCCreationParams {
+  final String? country;
+  final String? idType;
+  final String? idNumber;
+  final String? firstName;
+  final String? middleName;
+  final String? lastName;
+  final String? dob;
+  final String? bankCode;
+  final bool? entered;
+  final String? userId;
+  final String? jobId;
+  final bool allowNewEnroll;
+  final bool allowAgentMode;
+  final bool showAttribution;
+  final bool showInstructions;
+  final Map<String, String>? extraPartnerParams;
+
+  const BiometricKYCCreationParams({
+    this.country,
+    this.idType,
+    this.idNumber,
+    this.firstName,
+    this.middleName,
+    this.lastName,
+    this.dob,
+    this.bankCode,
+    this.entered,
+    this.userId,
+    this.jobId,
+    this.allowNewEnroll = false,
+    this.allowAgentMode = false,
+    this.showAttribution = true,
+    this.showInstructions = true,
+    this.extraPartnerParams,
+  });
+}
+
+class BiometricKYCCaptureResult {
+  final String? selfieFile;
+  final List<String>? livenessFiles;
+  final bool? didSubmitBiometricKycJob;
+
+  const BiometricKYCCaptureResult({
+    this.selfieFile,
+    this.livenessFiles,
+    this.didSubmitBiometricKycJob,
+  });
+}
+
+class SelfieCaptureViewCreationParams {
+  final bool showConfirmationDialog;
+  final bool showInstructions;
+  final bool showAttribution;
+  final bool allowAgent;
+
+  const SelfieCaptureViewCreationParams({
+    this.showConfirmationDialog = true,
+    this.showInstructions = true,
+    this.showAttribution = true,
+    this.allowAgent = true,
+  });
+}
+
+class DocumentCaptureCreationParams {
+  final bool isDocumentFrontSide;
+  final bool showInstructions;
+  final bool showAttribution;
+  final bool allowGalleryUpload;
+  final bool showConfirmationDialog;
+  final double? idAspectRatio;
+
+  const DocumentCaptureCreationParams({
+    this.isDocumentFrontSide = true,
+    this.showInstructions = true,
+    this.showAttribution = true,
+    this.allowGalleryUpload = true,
+    this.showConfirmationDialog = true,
+    this.idAspectRatio,
+  });
+}
+
 /// The Auth Smile request. Auth Smile serves multiple purposes:
 ///
 /// - It is used to fetch the signature needed for subsequent API requests
@@ -851,6 +1019,16 @@ class FlutterConfig {
 @HostApi()
 abstract class SmileIDProductsApi {
   @async
+  DocumentCaptureResult documentVerification(
+    DocumentVerificationCreationParams creationParams,
+  );
+
+  @async
+  DocumentCaptureResult documentVerificationEnhanced(
+    DocumentVerificationEnhancedCreationParams creationParams,
+  );
+
+  @async
   SmartSelfieCaptureResult smartSelfieEnrollment(
     SmartSelfieCreationParams creationParams,
   );
@@ -869,6 +1047,17 @@ abstract class SmileIDProductsApi {
   SmartSelfieCaptureResult smartSelfieAuthenticationEnhanced(
     SmartSelfieEnhancedCreationParams creationParams,
   );
+
+  @async
+  BiometricKYCCaptureResult biometricKYC(
+    BiometricKYCCreationParams creationParams,
+  );
+
+  @async
+  SmartSelfieCaptureResult selfieCapture(SmartSelfieCreationParams creationParams);
+
+  @async
+  DocumentCaptureResult documentCapture(DocumentCaptureCreationParams creationParams);
 }
 
 @HostApi()

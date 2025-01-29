@@ -4,6 +4,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
+@Deprecated(
+  'Due to the expensive nature of platform views, migrate to the more efficient documentVerification function in the SmileID sdk. This widget will be removed in future versions',
+)
 class SmileIDDocumentVerification extends StatelessWidget {
   static const String viewType = "SmileIDDocumentVerification";
   final Map<String, dynamic> creationParams;
@@ -56,8 +59,8 @@ class SmileIDDocumentVerification extends StatelessWidget {
         "allowAgentMode": allowAgentMode,
         "allowGalleryUpload": allowGalleryUpload,
         "showInstructions": showInstructions,
-        "skipApiSubmission" : skipApiSubmission,
-        "extraPartnerParams" : extraPartnerParams,
+        "skipApiSubmission": skipApiSubmission,
+        "extraPartnerParams": extraPartnerParams,
       },
     );
   }
