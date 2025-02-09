@@ -578,7 +578,7 @@ class SelfieCaptureViewCreationParams {
     required this.showConfirmationDialog,
     required this.showInstructions,
     required this.showAttribution,
-    required this.allowAgent,
+    required this.allowAgentMode,
   });
 
   bool showConfirmationDialog;
@@ -587,14 +587,14 @@ class SelfieCaptureViewCreationParams {
 
   bool showAttribution;
 
-  bool allowAgent;
+  bool allowAgentMode;
 
   Object encode() {
     return <Object?>[
       showConfirmationDialog,
       showInstructions,
       showAttribution,
-      allowAgent,
+      allowAgentMode,
     ];
   }
 
@@ -604,7 +604,7 @@ class SelfieCaptureViewCreationParams {
       showConfirmationDialog: result[0]! as bool,
       showInstructions: result[1]! as bool,
       showAttribution: result[2]! as bool,
-      allowAgent: result[3]! as bool,
+      allowAgentMode: result[3]! as bool,
     );
   }
 }
@@ -3004,7 +3004,7 @@ class SmileIDProductsApi {
     }
   }
 
-  Future<SmartSelfieCaptureResult> selfieCapture(SmartSelfieCreationParams creationParams) async {
+  Future<SmartSelfieCaptureResult> selfieCapture(SelfieCaptureViewCreationParams creationParams) async {
     final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDProductsApi.selfieCapture$pigeonVar_messageChannelSuffix';
     final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,

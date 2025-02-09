@@ -488,7 +488,7 @@ data class SelfieCaptureViewCreationParams (
   val showConfirmationDialog: Boolean,
   val showInstructions: Boolean,
   val showAttribution: Boolean,
-  val allowAgent: Boolean
+  val allowAgentMode: Boolean
 )
  {
   companion object {
@@ -496,8 +496,8 @@ data class SelfieCaptureViewCreationParams (
       val showConfirmationDialog = pigeonVar_list[0] as Boolean
       val showInstructions = pigeonVar_list[1] as Boolean
       val showAttribution = pigeonVar_list[2] as Boolean
-      val allowAgent = pigeonVar_list[3] as Boolean
-      return SelfieCaptureViewCreationParams(showConfirmationDialog, showInstructions, showAttribution, allowAgent)
+      val allowAgentMode = pigeonVar_list[3] as Boolean
+      return SelfieCaptureViewCreationParams(showConfirmationDialog, showInstructions, showAttribution, allowAgentMode)
     }
   }
   fun toList(): List<Any?> {
@@ -505,7 +505,7 @@ data class SelfieCaptureViewCreationParams (
       showConfirmationDialog,
       showInstructions,
       showAttribution,
-      allowAgent,
+      allowAgentMode,
     )
   }
 }
@@ -2389,7 +2389,7 @@ interface SmileIDProductsApi {
   fun smartSelfieEnrollmentEnhanced(creationParams: SmartSelfieEnhancedCreationParams, callback: (Result<SmartSelfieCaptureResult>) -> Unit)
   fun smartSelfieAuthenticationEnhanced(creationParams: SmartSelfieEnhancedCreationParams, callback: (Result<SmartSelfieCaptureResult>) -> Unit)
   fun biometricKYC(creationParams: BiometricKYCCreationParams, callback: (Result<BiometricKYCCaptureResult>) -> Unit)
-  fun selfieCapture(creationParams: SmartSelfieCreationParams, callback: (Result<SmartSelfieCaptureResult>) -> Unit)
+  fun selfieCapture(creationParams: SelfieCaptureViewCreationParams, callback: (Result<SmartSelfieCaptureResult>) -> Unit)
   fun documentCapture(creationParams: DocumentCaptureCreationParams, callback: (Result<DocumentCaptureResult>) -> Unit)
 
   companion object {
@@ -2546,7 +2546,7 @@ interface SmileIDProductsApi {
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>
-            val creationParamsArg = args[0] as SmartSelfieCreationParams
+            val creationParamsArg = args[0] as SelfieCaptureViewCreationParams
             api.selfieCapture(creationParamsArg) { result: Result<SmartSelfieCaptureResult> ->
               val error = result.exceptionOrNull()
               if (error != null) {

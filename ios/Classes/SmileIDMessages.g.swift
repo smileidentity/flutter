@@ -556,7 +556,7 @@ struct SelfieCaptureViewCreationParams {
   var showConfirmationDialog: Bool
   var showInstructions: Bool
   var showAttribution: Bool
-  var allowAgent: Bool
+  var allowAgentMode: Bool
 
 
   // swift-format-ignore: AlwaysUseLowerCamelCase
@@ -564,13 +564,13 @@ struct SelfieCaptureViewCreationParams {
     let showConfirmationDialog = pigeonVar_list[0] as! Bool
     let showInstructions = pigeonVar_list[1] as! Bool
     let showAttribution = pigeonVar_list[2] as! Bool
-    let allowAgent = pigeonVar_list[3] as! Bool
+    let allowAgentMode = pigeonVar_list[3] as! Bool
 
     return SelfieCaptureViewCreationParams(
       showConfirmationDialog: showConfirmationDialog,
       showInstructions: showInstructions,
       showAttribution: showAttribution,
-      allowAgent: allowAgent
+      allowAgentMode: allowAgentMode
     )
   }
   func toList() -> [Any?] {
@@ -578,7 +578,7 @@ struct SelfieCaptureViewCreationParams {
       showConfirmationDialog,
       showInstructions,
       showAttribution,
-      allowAgent,
+      allowAgentMode,
     ]
   }
 }
@@ -2565,7 +2565,7 @@ protocol SmileIDProductsApi {
   func smartSelfieEnrollmentEnhanced(creationParams: SmartSelfieEnhancedCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, Error>) -> Void)
   func smartSelfieAuthenticationEnhanced(creationParams: SmartSelfieEnhancedCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, Error>) -> Void)
   func biometricKYC(creationParams: BiometricKYCCreationParams, completion: @escaping (Result<BiometricKYCCaptureResult, Error>) -> Void)
-  func selfieCapture(creationParams: SmartSelfieCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, Error>) -> Void)
+  func selfieCapture(creationParams: SelfieCaptureViewCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, Error>) -> Void)
   func documentCapture(creationParams: DocumentCaptureCreationParams, completion: @escaping (Result<DocumentCaptureResult, Error>) -> Void)
 }
 
@@ -2698,7 +2698,7 @@ class SmileIDProductsApiSetup {
     if let api = api {
       selfieCaptureChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
-        let creationParamsArg = args[0] as! SmartSelfieCreationParams
+        let creationParamsArg = args[0] as! SelfieCaptureViewCreationParams
         api.selfieCapture(creationParams: creationParamsArg) { result in
           switch result {
           case .success(let res):

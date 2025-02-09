@@ -3,8 +3,6 @@ import SwiftUI
 import Flutter
 
 public class SmileIDProductsPluginApi: SmileIDProductsApi {
-  
-    
     
     var navigationController: UINavigationController? = nil
     
@@ -125,11 +123,29 @@ public class SmileIDProductsPluginApi: SmileIDProductsApi {
     }
     
    
-    func selfieCapture(creationParams: SmartSelfieCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, any Error>) -> Void) {
+    func selfieCapture(creationParams: SelfieCaptureViewCreationParams, completion: @escaping (Result<SmartSelfieCaptureResult, any Error>) -> Void) {
+        if let controller = navigationController {
+            let smileSelfieCaptureController = UIHostingController(
+                rootView: SmileSelfieCaptureView(creationParams: creationParams, completion: completion, uiViewController: controller))
+            smileSelfieCaptureController.overrideUserInterfaceStyle = .light
+            
+            controller.pushViewController(smileSelfieCaptureController, animated: true)
+            return
+        }
         
+        completion(.failure(PigeonError(code: "19", message: "Failed to start selfie capture", details: nil)))
     }
     
     func documentCapture(creationParams: DocumentCaptureCreationParams, completion: @escaping (Result<DocumentCaptureResult, any Error>) -> Void) {
+        if let controller = navigationController {
+            let smileDocumentCaptureController = UIHostingController(
+                rootView: SmileDocumentCaptureView(creationParams: creationParams, completion: completion, uiViewController: controller))
+            smileDocumentCaptureController.overrideUserInterfaceStyle = .light
+            
+            controller.pushViewController(smileDocumentCaptureController, animated: true)
+            return
+        }
         
+        completion(.failure(PigeonError(code: "20", message: "Failed to start document capture", details: nil)))
     }
 }

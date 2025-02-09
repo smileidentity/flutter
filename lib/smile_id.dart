@@ -63,7 +63,7 @@ class SmileID {
       final result = await productsInterface.smartSelfieEnrollment(creationParams);
       return SmileIDSdkResultSuccess(result);
     } on PlatformException catch (e) {
-      return SmileIDSdkResultError(e.message ?? "An error occurred communicating with the sdk");
+      return SmileIDSdkResultError(e.message ?? _defaultSdkErrorMessage);
     }
   }
 
@@ -74,7 +74,7 @@ class SmileID {
       final result = await productsInterface.smartSelfieAuthentication(creationParams);
       return SmileIDSdkResultSuccess(result);
     } on PlatformException catch (e) {
-      return SmileIDSdkResultError(e.message ?? "An error occurred communicating with the sdk");
+      return SmileIDSdkResultError(e.message ?? _defaultSdkErrorMessage);
     }
   }
 
@@ -85,7 +85,7 @@ class SmileID {
       final result = await productsInterface.smartSelfieEnrollmentEnhanced(creationParams);
       return SmileIDSdkResultSuccess(result);
     } on PlatformException catch (e) {
-      return SmileIDSdkResultError(e.message ?? "An error occurred communicating with the sdk");
+      return SmileIDSdkResultError(e.message ?? _defaultSdkErrorMessage);
     }
   }
 
@@ -96,7 +96,7 @@ class SmileID {
       final result = await productsInterface.smartSelfieAuthenticationEnhanced(creationParams);
       return SmileIDSdkResultSuccess(result);
     } on PlatformException catch (e) {
-      return SmileIDSdkResultError(e.message ?? "An error occurred communicating with the sdk");
+      return SmileIDSdkResultError(e.message ?? _defaultSdkErrorMessage);
     }
   }
 
@@ -107,7 +107,7 @@ class SmileID {
       final result = await productsInterface.documentVerification(creationParams);
       return SmileIDSdkResultSuccess(result);
     } on PlatformException catch (e) {
-      return SmileIDSdkResultError(e.message ?? "An error occurred communicating with the sdk");
+      return SmileIDSdkResultError(e.message ?? _defaultSdkErrorMessage);
     }
   }
 
@@ -118,7 +118,7 @@ class SmileID {
       final result = await productsInterface.documentVerificationEnhanced(creationParams);
       return SmileIDSdkResultSuccess(result);
     } on PlatformException catch (e) {
-      return SmileIDSdkResultError(e.message ?? "An error occurred communicating with the sdk");
+      return SmileIDSdkResultError(e.message ?? _defaultSdkErrorMessage);
     }
   }
 
@@ -129,7 +129,29 @@ class SmileID {
       final result = await productsInterface.biometricKYC(creationParams);
       return SmileIDSdkResultSuccess(result);
     } on PlatformException catch (e) {
-      return SmileIDSdkResultError(e.message ?? "An error occurred communicating with the sdk");
+      return SmileIDSdkResultError(e.message ?? _defaultSdkErrorMessage);
+    }
+  }
+
+  Future<SmileIDSdkResult<SmartSelfieCaptureResult>> selfieCapture({
+    required SelfieCaptureViewCreationParams creationParams,
+  }) async {
+    try {
+      final result = await productsInterface.selfieCapture(creationParams);
+      return SmileIDSdkResultSuccess(result);
+    } on PlatformException catch (e) {
+      return SmileIDSdkResultError(e.message ?? _defaultSdkErrorMessage);
+    }
+  }
+
+  Future<SmileIDSdkResult<DocumentCaptureResult>> documentCapture({
+    required DocumentCaptureCreationParams creationParams,
+  }) async {
+    try {
+      final result = await productsInterface.documentCapture(creationParams);
+      return SmileIDSdkResultSuccess(result);
+    } on PlatformException catch (e) {
+      return SmileIDSdkResultError(e.message ?? _defaultSdkErrorMessage);
     }
   }
 
@@ -145,3 +167,5 @@ class SmileID {
     platformInterface.submitJob(jobId, deleteFilesOnSuccess);
   }
 }
+
+const _defaultSdkErrorMessage = "An error occurred communicating with the sdk";

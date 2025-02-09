@@ -218,13 +218,13 @@ class SelfieCaptureViewCreationParams {
   final bool showConfirmationDialog;
   final bool showInstructions;
   final bool showAttribution;
-  final bool allowAgent;
+  final bool allowAgentMode;
 
   const SelfieCaptureViewCreationParams({
     this.showConfirmationDialog = true,
     this.showInstructions = true,
     this.showAttribution = true,
-    this.allowAgent = true,
+    this.allowAgentMode = true,
   });
 }
 
@@ -1054,7 +1054,7 @@ abstract class SmileIDProductsApi {
   );
 
   @async
-  SmartSelfieCaptureResult selfieCapture(SmartSelfieCreationParams creationParams);
+  SmartSelfieCaptureResult selfieCapture(SelfieCaptureViewCreationParams creationParams);
 
   @async
   DocumentCaptureResult documentCapture(DocumentCaptureCreationParams creationParams);
