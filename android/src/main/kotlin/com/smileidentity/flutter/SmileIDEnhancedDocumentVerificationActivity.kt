@@ -13,16 +13,16 @@ import kotlinx.collections.immutable.toImmutableMap
 import java.io.File
 
 class SmileIDEnhancedDocumentVerificationActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val countryCode = intent.getStringExtra("countryCode") ?: ""
         val documentType = intent.getStringExtra("documentType")
-        val idAspectRatio = intent.getDoubleExtra("idAspectRatio", -1.0).let {
-            if (it == -1.0) return@let null
-            return@let it.toFloat()
-        }
+        val idAspectRatio =
+            intent.getDoubleExtra("idAspectRatio", -1.0).let {
+                if (it == -1.0) return@let null
+                return@let it.toFloat()
+            }
         val captureBothSides = intent.getBooleanExtra("captureBothSides", true)
         val bypassSelfieCaptureWithFile =
             intent.getStringExtra("bypassSelfieCaptureWithFile")?.let {
@@ -83,13 +83,10 @@ class SmileIDEnhancedDocumentVerificationActivity : ComponentActivity() {
                         setResult(RESULT_CANCELED, intent)
                         finish()
                     }
-
                 }
             }
         }
-
     }
-
 
     companion object {
         const val REQUEST_CODE = 18

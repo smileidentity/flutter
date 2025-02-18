@@ -13,7 +13,6 @@ import com.smileidentity.util.randomUserId
 import kotlinx.collections.immutable.toImmutableMap
 
 class SmileIDBiometricKYCActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -41,17 +40,18 @@ class SmileIDBiometricKYCActivity : ComponentActivity() {
 
         setContent {
             SmileID.BiometricKYC(
-                idInfo = IdInfo(
-                    country = country,
-                    idType = idType,
-                    idNumber = idNumber,
-                    firstName = firstName,
-                    middleName = middleName,
-                    lastName = lastName,
-                    dob = dob,
-                    bankCode = bankCode,
-                    entered = entered,
-                ),
+                idInfo =
+                    IdInfo(
+                        country = country,
+                        idType = idType,
+                        idNumber = idNumber,
+                        firstName = firstName,
+                        middleName = middleName,
+                        lastName = lastName,
+                        dob = dob,
+                        bankCode = bankCode,
+                        entered = entered,
+                    ),
                 userId = userId,
                 jobId = jobId,
                 allowNewEnroll = allowNewEnroll,
@@ -62,7 +62,6 @@ class SmileIDBiometricKYCActivity : ComponentActivity() {
             ) {
                 val intent = Intent()
                 when (it) {
-
                     is SmileIDResult.Success -> {
                         intent.putExtra("selfieFile", it.data.selfieFile.absolutePath)
                         intent.putStringArrayListExtra(

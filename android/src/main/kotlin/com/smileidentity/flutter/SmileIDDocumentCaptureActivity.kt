@@ -39,7 +39,6 @@ import java.net.URLDecoder
 import java.nio.charset.StandardCharsets
 
 class SmileIDDocumentCaptureActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -48,10 +47,11 @@ class SmileIDDocumentCaptureActivity : ComponentActivity() {
         val showAttribution = intent.getBooleanExtra("showAttribution", true)
         val allowGalleryUpload = intent.getBooleanExtra("allowGalleryUpload", false)
         val showConfirmationDialog = intent.getBooleanExtra("showConfirmationDialog", true)
-        val idAspectRatio = intent.getDoubleExtra("idAspectRatio", -1.0).let {
-            if (it == -1.0) return@let null
-            return@let it.toFloat()
-        }
+        val idAspectRatio =
+            intent.getDoubleExtra("idAspectRatio", -1.0).let {
+                if (it == -1.0) return@let null
+                return@let it.toFloat()
+            }
 
         setContent {
             RenderDocumentCaptureContent(
@@ -88,14 +88,14 @@ class SmileIDDocumentCaptureActivity : ComponentActivity() {
         val viewModel: DocumentCaptureViewModel =
             viewModel(
                 factory =
-                viewModelFactory {
-                    DocumentCaptureViewModel(
-                        jobId = jobId,
-                        side = side,
-                        knownAspectRatio = idAspectRatio,
-                        metadata = metadata,
-                    )
-                },
+                    viewModelFactory {
+                        DocumentCaptureViewModel(
+                            jobId = jobId,
+                            side = side,
+                            knownAspectRatio = idAspectRatio,
+                            metadata = metadata,
+                        )
+                    },
             )
 
         CompositionLocalProvider(
@@ -208,13 +208,13 @@ class SmileIDDocumentCaptureActivity : ComponentActivity() {
             titleText = stringResource(R.string.si_doc_v_confirmation_dialog_title),
             subtitleText = stringResource(R.string.si_doc_v_confirmation_dialog_subtitle),
             painter =
-            BitmapPainter(
-                BitmapFactory
-                    .decodeFile(documentImageToConfirm.absolutePath)
-                    .asImageBitmap(),
-            ),
+                BitmapPainter(
+                    BitmapFactory
+                        .decodeFile(documentImageToConfirm.absolutePath)
+                        .asImageBitmap(),
+                ),
             confirmButtonText =
-            stringResource(R.string.si_doc_v_confirmation_dialog_confirm_button),
+                stringResource(R.string.si_doc_v_confirmation_dialog_confirm_button),
             onConfirm = {
                 handleConfirmation(isDocumentFrontSide, documentImageToConfirm)
             },

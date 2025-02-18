@@ -179,15 +179,18 @@ class SmileIDProductsPluginApi :
                     val errorCode = SmileIDBiometricKYCActivity.REQUEST_CODE.toString()
                     when (resultCode) {
                         Activity.RESULT_OK -> {
-                            val result = BiometricKYCCaptureResult(
-                                selfieFile = data?.getStringExtra("selfieFile") ?: "",
-                                livenessFiles = data?.getStringArrayListExtra("livenessFiles")
-                                    ?: emptyList(),
-                                didSubmitBiometricKycJob = data?.getBooleanExtra(
-                                    "didSubmitBiometricKycJob",
-                                    false,
-                                ),
-                            )
+                            val result =
+                                BiometricKYCCaptureResult(
+                                    selfieFile = data?.getStringExtra("selfieFile") ?: "",
+                                    livenessFiles =
+                                        data?.getStringArrayListExtra("livenessFiles")
+                                            ?: emptyList(),
+                                    didSubmitBiometricKycJob =
+                                        data?.getBooleanExtra(
+                                            "didSubmitBiometricKycJob",
+                                            false,
+                                        ),
+                                )
 
                             resultCallback.invoke(Result.success(result))
                         }
@@ -262,7 +265,7 @@ class SmileIDProductsPluginApi :
                 intent,
                 SmileIDDocumentVerificationActivity.REQUEST_CODE,
             )
-        } else
+        } else {
             callback(
                 Result.failure(
                     SmileFlutterError(
@@ -271,6 +274,7 @@ class SmileIDProductsPluginApi :
                     ),
                 ),
             )
+        }
     }
 
     override fun documentVerificationEnhanced(
@@ -306,7 +310,7 @@ class SmileIDProductsPluginApi :
                 intent,
                 SmileIDEnhancedDocumentVerificationActivity.REQUEST_CODE,
             )
-        } else
+        } else {
             callback(
                 Result.failure(
                     SmileFlutterError(
@@ -315,6 +319,7 @@ class SmileIDProductsPluginApi :
                     ),
                 ),
             )
+        }
     }
 
     override fun smartSelfieEnrollment(
@@ -330,7 +335,7 @@ class SmileIDProductsPluginApi :
                 intent,
                 SmileIDSmartSelfieEnrollmentActivity.REQUEST_CODE,
             )
-        } else
+        } else {
             callback(
                 Result.failure(
                     SmileFlutterError(
@@ -339,6 +344,7 @@ class SmileIDProductsPluginApi :
                     ),
                 ),
             )
+        }
     }
 
     override fun smartSelfieAuthentication(
@@ -354,7 +360,7 @@ class SmileIDProductsPluginApi :
                 intent,
                 SmileIDSmartSelfieAuthenticationActivity.REQUEST_CODE,
             )
-        } else
+        } else {
             callback(
                 Result.failure(
                     SmileFlutterError(
@@ -363,6 +369,7 @@ class SmileIDProductsPluginApi :
                     ),
                 ),
             )
+        }
     }
 
     override fun smartSelfieEnrollmentEnhanced(
@@ -378,7 +385,7 @@ class SmileIDProductsPluginApi :
                 intent,
                 SmileIDSmartSelfieEnrollmentEnhancedActivity.REQUEST_CODE,
             )
-        } else
+        } else {
             callback(
                 Result.failure(
                     SmileFlutterError(
@@ -387,6 +394,7 @@ class SmileIDProductsPluginApi :
                     ),
                 ),
             )
+        }
     }
 
     override fun smartSelfieAuthenticationEnhanced(
@@ -402,7 +410,7 @@ class SmileIDProductsPluginApi :
                 intent,
                 SmileIDSmartSelfieAuthenticationEnhancedActivity.REQUEST_CODE,
             )
-        } else
+        } else {
             callback(
                 Result.failure(
                     SmileFlutterError(
@@ -411,6 +419,7 @@ class SmileIDProductsPluginApi :
                     ),
                 ),
             )
+        }
     }
 
     override fun biometricKYC(
@@ -445,7 +454,7 @@ class SmileIDProductsPluginApi :
         if (activity != null) {
             biometricKycResult = callback
             activity!!.startActivityForResult(intent, SmileIDBiometricKYCActivity.REQUEST_CODE)
-        } else
+        } else {
             callback(
                 Result.failure(
                     SmileFlutterError(
@@ -454,6 +463,7 @@ class SmileIDProductsPluginApi :
                     ),
                 ),
             )
+        }
     }
 
     override fun selfieCapture(
@@ -469,7 +479,7 @@ class SmileIDProductsPluginApi :
         if (activity != null) {
             smartSelfieResult = callback
             activity!!.startActivityForResult(intent, SmileIDSelfieCaptureActivity.REQUEST_CODE)
-        } else
+        } else {
             callback(
                 Result.failure(
                     SmileFlutterError(
@@ -478,8 +488,8 @@ class SmileIDProductsPluginApi :
                     ),
                 ),
             )
+        }
     }
-
 
     override fun documentCapture(
         creationParams: DocumentCaptureCreationParams,
@@ -496,7 +506,7 @@ class SmileIDProductsPluginApi :
         if (activity != null) {
             documentCaptureResult = callback
             activity!!.startActivityForResult(intent, SmileIDDocumentCaptureActivity.REQUEST_CODE)
-        } else
+        } else {
             callback(
                 Result.failure(
                     SmileFlutterError(
@@ -505,6 +515,7 @@ class SmileIDProductsPluginApi :
                     ),
                 ),
             )
+        }
     }
 }
 
@@ -568,8 +579,8 @@ private fun handleSelfieResult(
                 SmartSelfieCaptureResult(
                     selfieFile = data?.getStringExtra("selfieFile") ?: "",
                     livenessFiles =
-                    data?.getStringArrayListExtra("livenessFiles")
-                        ?: emptyList(),
+                        data?.getStringArrayListExtra("livenessFiles")
+                            ?: emptyList(),
                     apiResponse = apiResponse,
                 )
             resultCallback.invoke(Result.success(result))
@@ -599,21 +610,31 @@ private fun handleDocumentResult(
     errorCode: String,
     resultCallback: (Result<DocumentCaptureResult>) -> Unit,
 ) {
-
     when (resultCode) {
         Activity.RESULT_OK -> {
-            val result = DocumentCaptureResult(
-                selfieFile = data?.getStringExtra("selfieFile") ?: "",
-                livenessFiles = data?.getStringArrayListExtra("livenessFiles") ?: emptyList(),
-                documentFrontFile = data?.getStringExtra("documentFrontFile") ?: "",
-                documentBackFile = data?.getStringExtra("documentBackFile") ?: "",
-                didSubmitDocumentVerificationJob = if (data?.hasExtra("didSubmitDocumentVerificationJob") == true) data?.getBooleanExtra(
-                    "didSubmitDocumentVerificationJob",
-                    false,
-                ) else null,
-                didSubmitEnhancedDocVJob = if (data?.hasExtra("didSubmitEnhanceDocVJob") == true
-                ) data.getBooleanExtra("didSubmitEnhanceDocVJob", false) else null,
-            )
+            val result =
+                DocumentCaptureResult(
+                    selfieFile = data?.getStringExtra("selfieFile") ?: "",
+                    livenessFiles = data?.getStringArrayListExtra("livenessFiles") ?: emptyList(),
+                    documentFrontFile = data?.getStringExtra("documentFrontFile") ?: "",
+                    documentBackFile = data?.getStringExtra("documentBackFile") ?: "",
+                    didSubmitDocumentVerificationJob =
+                        if (data?.hasExtra("didSubmitDocumentVerificationJob") == true) {
+                            data?.getBooleanExtra(
+                                "didSubmitDocumentVerificationJob",
+                                false,
+                            )
+                        } else {
+                            null
+                        },
+                    didSubmitEnhancedDocVJob =
+                        if (data?.hasExtra("didSubmitEnhanceDocVJob") == true
+                        ) {
+                            data.getBooleanExtra("didSubmitEnhanceDocVJob", false)
+                        } else {
+                            null
+                        },
+                )
 
             resultCallback.invoke(Result.success(result))
         }
