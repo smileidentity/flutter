@@ -1,12 +1,15 @@
 import Flutter
+import SwiftUI
 import SmileID
 import UIKit
 
 public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
+
     public static func register(with registrar: FlutterPluginRegistrar) {
         let messenger: FlutterBinaryMessenger = registrar.messenger()
         let api: SmileIDApi & NSObjectProtocol = SmileIDPlugin()
         SmileIDApiSetup.setUp(binaryMessenger: messenger, api: api)
+        SmileIDProductsPluginApi.setUp(binaryMessenger: messenger)
 
         SmileID.setWrapperInfo(name: .flutter, version: "11.0.1")
 
@@ -57,7 +60,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             smartSelfieAuthenticationEnhancedFactory,
             withId: SmileIDSmartSelfieAuthenticationEnhanced.VIEW_TYPE_ID
         )
-
+        
         let biometricKYCFactory = SmileIDBiometricKYC.Factory(
             messenger: registrar.messenger()
         )
@@ -234,11 +237,13 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
                     timestamp: timestamp,
                     selfieImage: MultipartBody(
                         withImage: getFile(atPath: selfieImage)!,
+                        forKey: URL(fileURLWithPath: selfieImage).lastPathComponent,
                         forName: URL(fileURLWithPath: selfieImage).lastPathComponent
                     )!,
                     livenessImages: livenessImages.map {
                         MultipartBody(
                             withImage: getFile(atPath: $0)!,
+                            forKey: URL(fileURLWithPath: $0).lastPathComponent,
                             forName: URL(fileURLWithPath: $0).lastPathComponent
                         )!
                     },
