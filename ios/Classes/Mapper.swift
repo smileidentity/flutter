@@ -702,3 +702,19 @@ extension FlutterConfig {
         )
     }
 }
+
+extension SmartSelfieResponse {
+    func buildResponse() -> Dictionary<String, Any> {
+        return [
+            "created_at": self.createdAt,
+            "job_id": self.jobId,
+            "job_type": self.jobType.rawValue,
+            "message": self.message,
+            "partner_id": self.partnerId,
+            "partner_params": self.partnerParams,
+            "status": self.status.rawValue,
+            "updated_at": self.updatedAt,
+            "user_id": self.userId,
+        ];
+    }
+}

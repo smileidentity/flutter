@@ -110,8 +110,7 @@ class _FakeFlutterBiometricKycJobStatusResponse_7 extends _i1.SmartFake
         );
 }
 
-class _FakeFlutterEnhancedDocumentVerificationJobStatusResponse_8
-    extends _i1.SmartFake
+class _FakeFlutterEnhancedDocumentVerificationJobStatusResponse_8 extends _i1.SmartFake
     implements _i2.FlutterEnhancedDocumentVerificationJobStatusResponse {
   _FakeFlutterEnhancedDocumentVerificationJobStatusResponse_8(
     Object parent,
@@ -144,8 +143,7 @@ class _FakeFlutterValidDocumentsResponse_10 extends _i1.SmartFake
         );
 }
 
-class _FakeFlutterServicesResponse_11 extends _i1.SmartFake
-    implements _i2.FlutterServicesResponse {
+class _FakeFlutterServicesResponse_11 extends _i1.SmartFake implements _i2.FlutterServicesResponse {
   _FakeFlutterServicesResponse_11(
     Object parent,
     Invocation parentInvocation,
@@ -165,8 +163,7 @@ class _FakeObject_12 extends _i1.SmartFake implements Object {
         );
 }
 
-class _FakeFlutterPartnerParams_13 extends _i1.SmartFake
-    implements _i2.FlutterPartnerParams {
+class _FakeFlutterPartnerParams_13 extends _i1.SmartFake implements _i2.FlutterPartnerParams {
   _FakeFlutterPartnerParams_13(
     Object parent,
     Invocation parentInvocation,
@@ -241,8 +238,7 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
       ) as _i3.Future<void>);
 
   @override
-  _i3.Future<void> setAllowOfflineMode(bool? allowOfflineMode) =>
-      (super.noSuchMethod(
+  _i3.Future<void> setAllowOfflineMode(bool? allowOfflineMode) => (super.noSuchMethod(
         Invocation.method(
           #setAllowOfflineMode,
           [allowOfflineMode],
@@ -252,24 +248,24 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
       ) as _i3.Future<void>);
 
   @override
-  _i3.Future<List<String?>> getSubmittedJobs() => (super.noSuchMethod(
+  _i3.Future<List<String>> getSubmittedJobs() => (super.noSuchMethod(
         Invocation.method(
           #getSubmittedJobs,
           [],
         ),
-        returnValue: _i3.Future<List<String?>>.value(<String?>[]),
-        returnValueForMissingStub: _i3.Future<List<String?>>.value(<String?>[]),
-      ) as _i3.Future<List<String?>>);
+        returnValue: _i3.Future<List<String>>.value(<String>[]),
+        returnValueForMissingStub: _i3.Future<List<String>>.value(<String>[]),
+      ) as _i3.Future<List<String>>);
 
   @override
-  _i3.Future<List<String?>> getUnsubmittedJobs() => (super.noSuchMethod(
+  _i3.Future<List<String>> getUnsubmittedJobs() => (super.noSuchMethod(
         Invocation.method(
           #getUnsubmittedJobs,
           [],
         ),
-        returnValue: _i3.Future<List<String?>>.value(<String?>[]),
-        returnValueForMissingStub: _i3.Future<List<String?>>.value(<String?>[]),
-      ) as _i3.Future<List<String?>>);
+        returnValue: _i3.Future<List<String>>.value(<String>[]),
+        returnValueForMissingStub: _i3.Future<List<String>>.value(<String>[]),
+      ) as _i3.Future<List<String>>);
 
   @override
   _i3.Future<void> cleanup(String? jobId) => (super.noSuchMethod(
@@ -324,9 +320,8 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
             [request],
           ),
         )),
-        returnValueForMissingStub:
-            _i3.Future<_i2.FlutterAuthenticationResponse>.value(
-                _FakeFlutterAuthenticationResponse_0(
+        returnValueForMissingStub: _i3.Future<_i2.FlutterAuthenticationResponse>.value(
+            _FakeFlutterAuthenticationResponse_0(
           this,
           Invocation.method(
             #authenticate,
@@ -336,15 +331,14 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
       ) as _i3.Future<_i2.FlutterAuthenticationResponse>);
 
   @override
-  _i3.Future<_i2.FlutterPrepUploadResponse> prepUpload(
-          _i2.FlutterPrepUploadRequest? request) =>
+  _i3.Future<_i2.FlutterPrepUploadResponse> prepUpload(_i2.FlutterPrepUploadRequest? request) =>
       (super.noSuchMethod(
         Invocation.method(
           #prepUpload,
           [request],
         ),
-        returnValue: _i3.Future<_i2.FlutterPrepUploadResponse>.value(
-            _FakeFlutterPrepUploadResponse_1(
+        returnValue:
+            _i3.Future<_i2.FlutterPrepUploadResponse>.value(_FakeFlutterPrepUploadResponse_1(
           this,
           Invocation.method(
             #prepUpload,
@@ -352,8 +346,7 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
           ),
         )),
         returnValueForMissingStub:
-            _i3.Future<_i2.FlutterPrepUploadResponse>.value(
-                _FakeFlutterPrepUploadResponse_1(
+            _i3.Future<_i2.FlutterPrepUploadResponse>.value(_FakeFlutterPrepUploadResponse_1(
           this,
           Invocation.method(
             #prepUpload,
@@ -387,8 +380,8 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
           #doEnhancedKyc,
           [request],
         ),
-        returnValue: _i3.Future<_i2.FlutterEnhancedKycResponse>.value(
-            _FakeFlutterEnhancedKycResponse_2(
+        returnValue:
+            _i3.Future<_i2.FlutterEnhancedKycResponse>.value(_FakeFlutterEnhancedKycResponse_2(
           this,
           Invocation.method(
             #doEnhancedKyc,
@@ -396,8 +389,7 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
           ),
         )),
         returnValueForMissingStub:
-            _i3.Future<_i2.FlutterEnhancedKycResponse>.value(
-                _FakeFlutterEnhancedKycResponse_2(
+            _i3.Future<_i2.FlutterEnhancedKycResponse>.value(_FakeFlutterEnhancedKycResponse_2(
           this,
           Invocation.method(
             #doEnhancedKyc,
@@ -422,9 +414,8 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
             [request],
           ),
         )),
-        returnValueForMissingStub:
-            _i3.Future<_i2.FlutterEnhancedKycAsyncResponse>.value(
-                _FakeFlutterEnhancedKycAsyncResponse_3(
+        returnValueForMissingStub: _i3.Future<_i2.FlutterEnhancedKycAsyncResponse>.value(
+            _FakeFlutterEnhancedKycAsyncResponse_3(
           this,
           Invocation.method(
             #doEnhancedKycAsync,
@@ -449,9 +440,8 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
             [request],
           ),
         )),
-        returnValueForMissingStub:
-            _i3.Future<_i2.FlutterSmartSelfieJobStatusResponse>.value(
-                _FakeFlutterSmartSelfieJobStatusResponse_4(
+        returnValueForMissingStub: _i3.Future<_i2.FlutterSmartSelfieJobStatusResponse>.value(
+            _FakeFlutterSmartSelfieJobStatusResponse_4(
           this,
           Invocation.method(
             #getSmartSelfieJobStatus,
@@ -487,8 +477,8 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
             allowNewEnroll,
           ],
         ),
-        returnValue: _i3.Future<_i2.FlutterSmartSelfieResponse>.value(
-            _FakeFlutterSmartSelfieResponse_5(
+        returnValue:
+            _i3.Future<_i2.FlutterSmartSelfieResponse>.value(_FakeFlutterSmartSelfieResponse_5(
           this,
           Invocation.method(
             #doSmartSelfieEnrollment,
@@ -506,8 +496,7 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
           ),
         )),
         returnValueForMissingStub:
-            _i3.Future<_i2.FlutterSmartSelfieResponse>.value(
-                _FakeFlutterSmartSelfieResponse_5(
+            _i3.Future<_i2.FlutterSmartSelfieResponse>.value(_FakeFlutterSmartSelfieResponse_5(
           this,
           Invocation.method(
             #doSmartSelfieEnrollment,
@@ -551,8 +540,8 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
             sandboxResult,
           ],
         ),
-        returnValue: _i3.Future<_i2.FlutterSmartSelfieResponse>.value(
-            _FakeFlutterSmartSelfieResponse_5(
+        returnValue:
+            _i3.Future<_i2.FlutterSmartSelfieResponse>.value(_FakeFlutterSmartSelfieResponse_5(
           this,
           Invocation.method(
             #doSmartSelfieAuthentication,
@@ -569,8 +558,7 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
           ),
         )),
         returnValueForMissingStub:
-            _i3.Future<_i2.FlutterSmartSelfieResponse>.value(
-                _FakeFlutterSmartSelfieResponse_5(
+            _i3.Future<_i2.FlutterSmartSelfieResponse>.value(_FakeFlutterSmartSelfieResponse_5(
           this,
           Invocation.method(
             #doSmartSelfieAuthentication,
@@ -589,32 +577,31 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
       ) as _i3.Future<_i2.FlutterSmartSelfieResponse>);
 
   @override
-  _i3.Future<_i2.FlutterDocumentVerificationJobStatusResponse>
-      getDocumentVerificationJobStatus(_i2.FlutterJobStatusRequest? request) =>
-          (super.noSuchMethod(
-            Invocation.method(
-              #getDocumentVerificationJobStatus,
-              [request],
-            ),
-            returnValue: _i3
-                .Future<_i2.FlutterDocumentVerificationJobStatusResponse>.value(
+  _i3.Future<_i2.FlutterDocumentVerificationJobStatusResponse> getDocumentVerificationJobStatus(
+          _i2.FlutterJobStatusRequest? request) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getDocumentVerificationJobStatus,
+          [request],
+        ),
+        returnValue: _i3.Future<_i2.FlutterDocumentVerificationJobStatusResponse>.value(
+            _FakeFlutterDocumentVerificationJobStatusResponse_6(
+          this,
+          Invocation.method(
+            #getDocumentVerificationJobStatus,
+            [request],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i3.Future<_i2.FlutterDocumentVerificationJobStatusResponse>.value(
                 _FakeFlutterDocumentVerificationJobStatusResponse_6(
-              this,
-              Invocation.method(
-                #getDocumentVerificationJobStatus,
-                [request],
-              ),
-            )),
-            returnValueForMissingStub: _i3
-                .Future<_i2.FlutterDocumentVerificationJobStatusResponse>.value(
-                _FakeFlutterDocumentVerificationJobStatusResponse_6(
-              this,
-              Invocation.method(
-                #getDocumentVerificationJobStatus,
-                [request],
-              ),
-            )),
-          ) as _i3.Future<_i2.FlutterDocumentVerificationJobStatusResponse>);
+          this,
+          Invocation.method(
+            #getDocumentVerificationJobStatus,
+            [request],
+          ),
+        )),
+      ) as _i3.Future<_i2.FlutterDocumentVerificationJobStatusResponse>);
 
   @override
   _i3.Future<_i2.FlutterBiometricKycJobStatusResponse> getBiometricKycJobStatus(
@@ -632,9 +619,8 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
             [request],
           ),
         )),
-        returnValueForMissingStub:
-            _i3.Future<_i2.FlutterBiometricKycJobStatusResponse>.value(
-                _FakeFlutterBiometricKycJobStatusResponse_7(
+        returnValueForMissingStub: _i3.Future<_i2.FlutterBiometricKycJobStatusResponse>.value(
+            _FakeFlutterBiometricKycJobStatusResponse_7(
           this,
           Invocation.method(
             #getBiometricKycJobStatus,
@@ -645,16 +631,13 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
 
   @override
   _i3.Future<_i2.FlutterEnhancedDocumentVerificationJobStatusResponse>
-      getEnhancedDocumentVerificationJobStatus(
-              _i2.FlutterJobStatusRequest? request) =>
+      getEnhancedDocumentVerificationJobStatus(_i2.FlutterJobStatusRequest? request) =>
           (super.noSuchMethod(
             Invocation.method(
               #getEnhancedDocumentVerificationJobStatus,
               [request],
             ),
-            returnValue: _i3.Future<
-                    _i2
-                    .FlutterEnhancedDocumentVerificationJobStatusResponse>.value(
+            returnValue: _i3.Future<_i2.FlutterEnhancedDocumentVerificationJobStatusResponse>.value(
                 _FakeFlutterEnhancedDocumentVerificationJobStatusResponse_8(
               this,
               Invocation.method(
@@ -662,18 +645,16 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
                 [request],
               ),
             )),
-            returnValueForMissingStub: _i3.Future<
-                    _i2
-                    .FlutterEnhancedDocumentVerificationJobStatusResponse>.value(
-                _FakeFlutterEnhancedDocumentVerificationJobStatusResponse_8(
+            returnValueForMissingStub:
+                _i3.Future<_i2.FlutterEnhancedDocumentVerificationJobStatusResponse>.value(
+                    _FakeFlutterEnhancedDocumentVerificationJobStatusResponse_8(
               this,
               Invocation.method(
                 #getEnhancedDocumentVerificationJobStatus,
                 [request],
               ),
             )),
-          ) as _i3.Future<
-              _i2.FlutterEnhancedDocumentVerificationJobStatusResponse>);
+          ) as _i3.Future<_i2.FlutterEnhancedDocumentVerificationJobStatusResponse>);
 
   @override
   _i3.Future<_i2.FlutterProductsConfigResponse> getProductsConfig(
@@ -691,9 +672,8 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
             [request],
           ),
         )),
-        returnValueForMissingStub:
-            _i3.Future<_i2.FlutterProductsConfigResponse>.value(
-                _FakeFlutterProductsConfigResponse_9(
+        returnValueForMissingStub: _i3.Future<_i2.FlutterProductsConfigResponse>.value(
+            _FakeFlutterProductsConfigResponse_9(
           this,
           Invocation.method(
             #getProductsConfig,
@@ -718,9 +698,8 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
             [request],
           ),
         )),
-        returnValueForMissingStub:
-            _i3.Future<_i2.FlutterValidDocumentsResponse>.value(
-                _FakeFlutterValidDocumentsResponse_10(
+        returnValueForMissingStub: _i3.Future<_i2.FlutterValidDocumentsResponse>.value(
+            _FakeFlutterValidDocumentsResponse_10(
           this,
           Invocation.method(
             #getValidDocuments,
@@ -735,8 +714,7 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
           #getServices,
           [],
         ),
-        returnValue: _i3.Future<_i2.FlutterServicesResponse>.value(
-            _FakeFlutterServicesResponse_11(
+        returnValue: _i3.Future<_i2.FlutterServicesResponse>.value(_FakeFlutterServicesResponse_11(
           this,
           Invocation.method(
             #getServices,
@@ -744,8 +722,7 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
           ),
         )),
         returnValueForMissingStub:
-            _i3.Future<_i2.FlutterServicesResponse>.value(
-                _FakeFlutterServicesResponse_11(
+            _i3.Future<_i2.FlutterServicesResponse>.value(_FakeFlutterServicesResponse_11(
           this,
           Invocation.method(
             #getServices,
@@ -781,9 +758,8 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
             ],
           ),
         )),
-        returnValueForMissingStub:
-            _i3.Future<_i2.FlutterSmartSelfieJobStatusResponse>.value(
-                _FakeFlutterSmartSelfieJobStatusResponse_4(
+        returnValueForMissingStub: _i3.Future<_i2.FlutterSmartSelfieJobStatusResponse>.value(
+            _FakeFlutterSmartSelfieJobStatusResponse_4(
           this,
           Invocation.method(
             #pollSmartSelfieJobStatus,
@@ -797,92 +773,87 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
       ) as _i3.Future<_i2.FlutterSmartSelfieJobStatusResponse>);
 
   @override
-  _i3.Future<_i2.FlutterDocumentVerificationJobStatusResponse>
-      pollDocumentVerificationJobStatus(
+  _i3.Future<_i2.FlutterDocumentVerificationJobStatusResponse> pollDocumentVerificationJobStatus(
     _i2.FlutterJobStatusRequest? request,
     int? interval,
     int? numAttempts,
   ) =>
-          (super.noSuchMethod(
-            Invocation.method(
-              #pollDocumentVerificationJobStatus,
-              [
-                request,
-                interval,
-                numAttempts,
-              ],
-            ),
-            returnValue: _i3
-                .Future<_i2.FlutterDocumentVerificationJobStatusResponse>.value(
+      (super.noSuchMethod(
+        Invocation.method(
+          #pollDocumentVerificationJobStatus,
+          [
+            request,
+            interval,
+            numAttempts,
+          ],
+        ),
+        returnValue: _i3.Future<_i2.FlutterDocumentVerificationJobStatusResponse>.value(
+            _FakeFlutterDocumentVerificationJobStatusResponse_6(
+          this,
+          Invocation.method(
+            #pollDocumentVerificationJobStatus,
+            [
+              request,
+              interval,
+              numAttempts,
+            ],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i3.Future<_i2.FlutterDocumentVerificationJobStatusResponse>.value(
                 _FakeFlutterDocumentVerificationJobStatusResponse_6(
-              this,
-              Invocation.method(
-                #pollDocumentVerificationJobStatus,
-                [
-                  request,
-                  interval,
-                  numAttempts,
-                ],
-              ),
-            )),
-            returnValueForMissingStub: _i3
-                .Future<_i2.FlutterDocumentVerificationJobStatusResponse>.value(
-                _FakeFlutterDocumentVerificationJobStatusResponse_6(
-              this,
-              Invocation.method(
-                #pollDocumentVerificationJobStatus,
-                [
-                  request,
-                  interval,
-                  numAttempts,
-                ],
-              ),
-            )),
-          ) as _i3.Future<_i2.FlutterDocumentVerificationJobStatusResponse>);
+          this,
+          Invocation.method(
+            #pollDocumentVerificationJobStatus,
+            [
+              request,
+              interval,
+              numAttempts,
+            ],
+          ),
+        )),
+      ) as _i3.Future<_i2.FlutterDocumentVerificationJobStatusResponse>);
 
   @override
-  _i3.Future<_i2.FlutterBiometricKycJobStatusResponse>
-      pollBiometricKycJobStatus(
+  _i3.Future<_i2.FlutterBiometricKycJobStatusResponse> pollBiometricKycJobStatus(
     _i2.FlutterJobStatusRequest? request,
     int? interval,
     int? numAttempts,
   ) =>
-          (super.noSuchMethod(
-            Invocation.method(
-              #pollBiometricKycJobStatus,
-              [
-                request,
-                interval,
-                numAttempts,
-              ],
-            ),
-            returnValue:
-                _i3.Future<_i2.FlutterBiometricKycJobStatusResponse>.value(
-                    _FakeFlutterBiometricKycJobStatusResponse_7(
-              this,
-              Invocation.method(
-                #pollBiometricKycJobStatus,
-                [
-                  request,
-                  interval,
-                  numAttempts,
-                ],
-              ),
-            )),
-            returnValueForMissingStub:
-                _i3.Future<_i2.FlutterBiometricKycJobStatusResponse>.value(
-                    _FakeFlutterBiometricKycJobStatusResponse_7(
-              this,
-              Invocation.method(
-                #pollBiometricKycJobStatus,
-                [
-                  request,
-                  interval,
-                  numAttempts,
-                ],
-              ),
-            )),
-          ) as _i3.Future<_i2.FlutterBiometricKycJobStatusResponse>);
+      (super.noSuchMethod(
+        Invocation.method(
+          #pollBiometricKycJobStatus,
+          [
+            request,
+            interval,
+            numAttempts,
+          ],
+        ),
+        returnValue: _i3.Future<_i2.FlutterBiometricKycJobStatusResponse>.value(
+            _FakeFlutterBiometricKycJobStatusResponse_7(
+          this,
+          Invocation.method(
+            #pollBiometricKycJobStatus,
+            [
+              request,
+              interval,
+              numAttempts,
+            ],
+          ),
+        )),
+        returnValueForMissingStub: _i3.Future<_i2.FlutterBiometricKycJobStatusResponse>.value(
+            _FakeFlutterBiometricKycJobStatusResponse_7(
+          this,
+          Invocation.method(
+            #pollBiometricKycJobStatus,
+            [
+              request,
+              interval,
+              numAttempts,
+            ],
+          ),
+        )),
+      ) as _i3.Future<_i2.FlutterBiometricKycJobStatusResponse>);
 
   @override
   _i3.Future<_i2.FlutterEnhancedDocumentVerificationJobStatusResponse>
@@ -900,9 +871,7 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
                 numAttempts,
               ],
             ),
-            returnValue: _i3.Future<
-                    _i2
-                    .FlutterEnhancedDocumentVerificationJobStatusResponse>.value(
+            returnValue: _i3.Future<_i2.FlutterEnhancedDocumentVerificationJobStatusResponse>.value(
                 _FakeFlutterEnhancedDocumentVerificationJobStatusResponse_8(
               this,
               Invocation.method(
@@ -914,10 +883,9 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
                 ],
               ),
             )),
-            returnValueForMissingStub: _i3.Future<
-                    _i2
-                    .FlutterEnhancedDocumentVerificationJobStatusResponse>.value(
-                _FakeFlutterEnhancedDocumentVerificationJobStatusResponse_8(
+            returnValueForMissingStub:
+                _i3.Future<_i2.FlutterEnhancedDocumentVerificationJobStatusResponse>.value(
+                    _FakeFlutterEnhancedDocumentVerificationJobStatusResponse_8(
               this,
               Invocation.method(
                 #pollEnhancedDocumentVerificationJobStatus,
@@ -928,8 +896,7 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
                 ],
               ),
             )),
-          ) as _i3.Future<
-              _i2.FlutterEnhancedDocumentVerificationJobStatusResponse>);
+          ) as _i3.Future<_i2.FlutterEnhancedDocumentVerificationJobStatusResponse>);
 }
 
 /// A class which mocks [FlutterAuthenticationRequest].
@@ -1024,8 +991,7 @@ class MockFlutterAuthenticationRequest extends _i1.Mock
 /// A class which mocks [FlutterEnhancedKycRequest].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockFlutterEnhancedKycRequest extends _i1.Mock
-    implements _i2.FlutterEnhancedKycRequest {
+class MockFlutterEnhancedKycRequest extends _i1.Mock implements _i2.FlutterEnhancedKycRequest {
   @override
   String get country => (super.noSuchMethod(
         Invocation.getter(#country),
@@ -1169,8 +1135,7 @@ class MockFlutterEnhancedKycRequest extends _i1.Mock
       ) as _i2.FlutterPartnerParams);
 
   @override
-  set partnerParams(_i2.FlutterPartnerParams? _partnerParams) =>
-      super.noSuchMethod(
+  set partnerParams(_i2.FlutterPartnerParams? _partnerParams) => super.noSuchMethod(
         Invocation.setter(
           #partnerParams,
           _partnerParams,

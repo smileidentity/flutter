@@ -52,12 +52,15 @@ class SmileIDPlugin :
     SmileIDApi,
     ActivityAware {
     private var activity: Activity? = null
-    private lateinit var appContext: Context
+    private lateinit var context: Context
+    private val productsApi = SmileIDProductsPluginApi()
+
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         SmileIDApi.setUp(flutterPluginBinding.binaryMessenger, this)
-        appContext = flutterPluginBinding.applicationContext
+        productsApi.onAttachedToEngine(flutterPluginBinding)
+        context = flutterPluginBinding.applicationContext
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDDocumentVerification.VIEW_TYPE_ID,
@@ -107,6 +110,7 @@ class SmileIDPlugin :
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         SmileIDApi.setUp(binding.binaryMessenger, null)
+        productsApi.onDetachedFromEngine(binding)
     }
 
     override fun initializeWithApiKey(
@@ -116,7 +120,7 @@ class SmileIDPlugin :
         enableCrashReporting: Boolean,
     ) {
         SmileID.initialize(
-            context = appContext,
+            context = context,
             apiKey = apiKey,
             config = config.toRequest(),
             useSandbox = useSandbox,
@@ -130,7 +134,7 @@ class SmileIDPlugin :
         enableCrashReporting: Boolean,
     ) {
         SmileID.initialize(
-            context = appContext,
+            context = context,
             config = config.toRequest(),
             useSandbox = useSandbox,
             enableCrashReporting = false,
@@ -139,7 +143,7 @@ class SmileIDPlugin :
 
     override fun initialize(useSandbox: Boolean) {
         SmileID.initialize(
-            context = appContext,
+            context = context,
             useSandbox = useSandbox,
         )
     }
@@ -443,13 +447,16 @@ class SmileIDPlugin :
      */
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         this.activity = binding.activity
+        productsApi.onAttachActivity(this.activity)
+        binding.addActivityResultListener(productsApi)
     }
 
     override fun onDetachedFromActivityForConfigChanges() {}
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {}
 
-    override fun onDetachedFromActivity() {}
+    override fun onDetachedFromActivity() {
+    }
 }
 
 /**

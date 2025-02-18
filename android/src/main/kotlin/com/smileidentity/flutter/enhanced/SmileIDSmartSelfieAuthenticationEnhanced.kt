@@ -37,7 +37,8 @@ internal class SmileIDSmartSelfieAuthenticationEnhanced private constructor(
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {
             val moshi =
-                Moshi.Builder()
+                Moshi
+                    .Builder()
                     .add(FileAdapter)
                     .build()
             when (it) {

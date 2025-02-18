@@ -4,6 +4,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
+@Deprecated(
+  'Due to the expensive nature of platform views, migrate to the more efficient smartSelfieEnrollment function in the SmileID sdk. This widget will be removed in future versions',
+)
 class SmileIDSmartSelfieEnrollment extends StatelessWidget {
   static const String viewType = "SmileIDSmartSelfieEnrollment";
   final Map<String, dynamic> creationParams;
@@ -42,8 +45,8 @@ class SmileIDSmartSelfieEnrollment extends StatelessWidget {
         "allowAgentMode": allowAgentMode,
         "showAttribution": showAttribution,
         "showInstructions": showInstructions,
-        "extraPartnerParams" : extraPartnerParams,
-        "skipApiSubmission" : skipApiSubmission,
+        "extraPartnerParams": extraPartnerParams,
+        "skipApiSubmission": skipApiSubmission,
       },
     );
   }

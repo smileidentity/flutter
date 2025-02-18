@@ -4,6 +4,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
+@Deprecated(
+  'Due to the expensive nature of platform views, migrate to the more efficient smartSelfieAuthentication function in the SmileID sdk. This widget will be removed in future versions',
+)
 class SmileIDSmartSelfieAuthentication extends StatelessWidget {
   static const String viewType = "SmileIDSmartSelfieAuthentication";
   final Map<String, dynamic> creationParams;
