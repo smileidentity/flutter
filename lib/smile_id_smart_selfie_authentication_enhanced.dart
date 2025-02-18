@@ -44,7 +44,7 @@ class SmileIDSmartSelfieAuthenticationEnhanced extends StatelessWidget {
         "showAttribution": showAttribution,
         "showInstructions": showInstructions,
         "skipApiSubmission" : skipApiSubmission,
-        "extraPartnerParams" : extraPartnerParams,
+        "extraPartnerParams": extraPartnerParams,
       },
     );
   }

@@ -246,7 +246,6 @@ class MainContent extends StatelessWidget {
           allowNewEnroll: false,
           showAttribution: true,
           showInstructions: true,
-          skipApiSubmission: false
         ));
 
         switch (result) {
@@ -270,7 +269,6 @@ class MainContent extends StatelessWidget {
           allowNewEnroll: false,
           showAttribution: true,
           showInstructions: true,
-          skipApiSubmission: false
         ));
 
         switch (result) {

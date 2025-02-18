@@ -60,9 +60,9 @@ class SmileIDDocumentVerification extends StatelessWidget {
         "allowAgentMode": allowAgentMode,
         "allowGalleryUpload": allowGalleryUpload,
         "showInstructions": showInstructions,
-        "skipApiSubmission" : skipApiSubmission,
+        "skipApiSubmission": skipApiSubmission,
         "useStrictMode" : useStrictMode,
-        "extraPartnerParams" : extraPartnerParams,
+        "extraPartnerParams": extraPartnerParams,
       },
     );
   }
