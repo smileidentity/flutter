@@ -39,7 +39,9 @@ struct SmileDocumentCaptureView: View , SmileIDFileUtilsProtocol {
                     onError: didError,
                     onSkip: onSkip
                 ).preferredColorScheme(.light)
-            }.environmentObject(localMetadata).padding()
+            }
+            .frame(maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+            .environmentObject(localMetadata).padding()
         }
     }
     

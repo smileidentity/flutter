@@ -27,7 +27,10 @@ struct SmileIDSmartSelfieEnrollmentView: View, SmartSelfieResultDelegate, SmileI
                 skipApiSubmission: creationParams.skipApiSubmission,
                 extraPartnerParams: creationParams.extraPartnerParams ?? [:],
                 delegate: self
-            ).preferredColorScheme(.light)
+            )
+            .frame(maxHeight: .infinity)
+            .preferredColorScheme(.light)
+            
         }
     }
     
