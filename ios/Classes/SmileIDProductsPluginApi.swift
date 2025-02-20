@@ -4,7 +4,7 @@ import Flutter
 
 public class SmileIDProductsPluginApi: SmileIDProductsApi {
     
-    var navigationController : UINavigationController? {
+    weak var navigationController : UINavigationController? {
         if let controller = UIApplication.shared.delegate?.window??.rootViewController as? SmileIDOrientationNavigationController {
             controller.supportedInterfaceOrientations = .portrait
             return controller
