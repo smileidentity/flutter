@@ -64,6 +64,7 @@ struct SmileSelfieCaptureView: View, SmileIDFileUtilsProtocol, SmartSelfieResult
                     }
                 }
             }
+            .frame(maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
         }
     }
     
