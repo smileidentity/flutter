@@ -1,4 +1,7 @@
 # Release Notes
+## 10.3.4
+* Added enhanced SmartSelfie™ capture to docV, enhanced docV, and biometric kyc
+* Added consent information to BioMetric KYC and Enhanced Document Verification
 
 ## 10.3.3
 
