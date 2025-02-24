@@ -38,6 +38,7 @@ class SmileIDBiometricKYC extends StatelessWidget {
     bool allowAgentMode = false,
     bool showAttribution = true,
     bool showInstructions = true,
+    bool useStrictMode = false,
     Map<String, String>? extraPartnerParams,
     required Function(String resultJson) onSuccess,
     required Function(String errorMessage) onError,
@@ -61,6 +62,7 @@ class SmileIDBiometricKYC extends StatelessWidget {
         "allowAgentMode": allowAgentMode,
         "showAttribution": showAttribution,
         "showInstructions": showInstructions,
+        "useStrictMode": useStrictMode,
         "extraPartnerParams": extraPartnerParams,
       },
     );
