@@ -36,12 +36,19 @@ class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDel
                 bankCode:  args["bankCode"] as? String,
                 entered:  args["entered"] as? Bool
             ),
+            consentInformation: ConsentInformation(
+                consentGrantedDate: args["consentGrantedDate"] as! String,
+                personalDetailsConsentGranted: args["personalDetailsConsentGranted"] as? Bool ?? false,
+                contactInformationConsentGranted: args["contactInformationConsentGranted"] as? Bool ?? false,
+                documentInformationConsentGranted: args["documentInformationConsentGranted"] as? Bool ?? false
+            ),
             userId: args["userId"] as? String ?? generateUserId(),
             jobId: args["jobId"] as? String ?? generateJobId(),
             allowNewEnroll: args["allowNewEnroll"] as? Bool ?? false,
             allowAgentMode: args["allowAgentMode"] as? Bool ?? false,
             showAttribution: args["showAttribution"] as? Bool ?? true,
             showInstructions: args["showInstructions"] as? Bool ?? true,
+            useStrictMode: args["useStrictMode"] as? Bool ?? false,
             extraPartnerParams: args["extraPartnerParams"] as? [String: String] ?? [:],
             delegate: self
         )

@@ -8,9 +8,9 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
     private var _view: UIView
     private var _channel: FlutterMethodChannel
     private var _childViewController: UIViewController?
-
+    
     static let VIEW_TYPE_ID = "SmileIDEnhancedDocumentVerification"
-
+    
     init(
         frame: CGRect,
         viewIdentifier viewId: Int64,
@@ -29,6 +29,12 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
         let screen = SmileID.enhancedDocumentVerificationScreen(
             userId: args["userId"] as? String ?? "user-\(UUID().uuidString)",
             jobId: args["jobId"] as? String ?? "job-\(UUID().uuidString)",
+            consentInformation: ConsentInformation(
+                consentGrantedDate: args["consentGrantedDate"] as! String,
+                personalDetailsConsentGranted: args["personalDetailsConsentGranted"] as? Bool ?? false,
+                contactInformationConsentGranted: args["contactInformationConsentGranted"] as? Bool ?? false,
+                documentInformationConsentGranted: args["documentInformationConsentGranted"] as? Bool ?? false
+            ),
             allowNewEnroll: args["allowNewEnroll"] as? Bool ?? false,
             countryCode: args["countryCode"] as! String,
             documentType: args["documentType"] as? String,
@@ -40,16 +46,17 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
             showInstructions: args["showInstructions"] as? Bool ?? true,
             skipApiSubmission: args["skipApiSubmission"] as? Bool ?? false,
             showAttribution: args["showAttribution"] as? Bool ?? true,
+            useStrictMode: args["useStrictMode"] as? Bool ?? false,
             extraPartnerParams: args["extraPartnerParams"] as? [String: String] ?? [:],
             delegate: self
         )
         _childViewController = embedView(screen, in: _view, frame: frame)
     }
-
+    
     func view() -> UIView {
         return _view
     }
-
+    
     func didSucceed(selfie: URL, documentFrontImage: URL, documentBackImage: URL?, didSubmitEnhancedDocVJob: Bool) {
         _childViewController?.removeFromParent()
         let arguments: [String: Any] = [
@@ -60,25 +67,25 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: arguments, options: [])
             if let jsonString = String(data: jsonData, encoding: .utf8) {
-             _channel.invokeMethod("onSuccess", arguments: jsonString)
-           }
+                _channel.invokeMethod("onSuccess", arguments: jsonString)
+            }
         } catch {
             didError(error: error)
         }
     }
-
+    
     func didError(error: Error) {
         print("[Smile ID] An error occurred - \(error.localizedDescription)")
         _channel.invokeMethod("onError", arguments: error.localizedDescription)
     }
-
+    
     class Factory : NSObject, FlutterPlatformViewFactory {
         private var messenger: FlutterBinaryMessenger
         init(messenger: FlutterBinaryMessenger) {
             self.messenger = messenger
             super.init()
         }
-
+        
         func create(
             withFrame frame: CGRect,
             viewIdentifier viewId: Int64,
@@ -91,9 +98,9 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
                 binaryMessenger: messenger
             )
         }
-
+        
         public func createArgsCodec() -> FlutterMessageCodec & NSObjectProtocol {
-              return FlutterStandardMessageCodec.sharedInstance()
+            return FlutterStandardMessageCodec.sharedInstance()
         }
     }
 }

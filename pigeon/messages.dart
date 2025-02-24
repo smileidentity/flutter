@@ -11,6 +11,19 @@ import 'package:pigeon/pigeon.dart';
   dartPackageName: 'smileid',
 ))
 
+
+class FlutterConsentInformation {
+  final String consentGrantedDate;
+  final bool personalDetailsConsentGranted;
+  final bool contactInfoConsentGranted;
+  final bool documentInfoConsentGranted;
+
+  FlutterConsentInformation(this.consentGrantedDate,
+      this.personalDetailsConsentGranted,
+      this.contactInfoConsentGranted,
+      this.documentInfoConsentGranted);
+}
+
 enum FlutterJobType {
   enhancedKyc,
   documentVerification,
@@ -296,6 +309,7 @@ class FlutterEnhancedKycRequest {
   final FlutterPartnerParams partnerParams;
   final String timestamp;
   final String signature;
+  final FlutterConsentInformation consentInformation;
 
   FlutterEnhancedKycRequest(
       {required this.country,
@@ -310,7 +324,8 @@ class FlutterEnhancedKycRequest {
       this.callbackUrl,
       required this.partnerParams,
       required this.timestamp,
-      required this.signature});
+      required this.signature,
+      required this.consentInformation});
 }
 
 class FlutterEnhancedKycAsyncResponse {

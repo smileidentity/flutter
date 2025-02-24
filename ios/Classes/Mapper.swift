@@ -1,29 +1,32 @@
 import SmileID
 
-func convertNullableMapToNonNull(data: [String? : String?]?) -> [String : String]? {
-  guard let unwrappedData = data else { return nil }
-  var convertedDictionary = [String : String]()
-  for (key, value) in unwrappedData {
-    if let unwrappedKey = key, let unwrappedValue = value {
-      convertedDictionary[unwrappedKey] = unwrappedValue
+func convertNullableMapToNonNull(data: [String?: String?]?) -> [String: String]? {
+    guard let unwrappedData = data else {
+        return nil
     }
-  }
-  return convertedDictionary
+    var convertedDictionary = [String: String]()
+    for (key, value) in unwrappedData {
+        if let unwrappedKey = key, let unwrappedValue = value {
+            convertedDictionary[unwrappedKey] = unwrappedValue
+        }
+    }
+    return convertedDictionary
 }
 
 func convertFlexibleDictionaryToOptionalStringDictionary(
     _ flexDict: FlexibleDictionary?
-) -> [String? : String?]? {
+) -> [String?: String?]? {
     guard let flexDict = flexDict else {
         return nil
     }
-    
+
     guard let data = try? JSONEncoder().encode(flexDict),
           let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []),
-          let dictionary = jsonObject as? [String: Any] else {
+          let dictionary = jsonObject as? [String: Any]
+    else {
         return nil
     }
-    
+
     let convertedDict = dictionary.mapValues { value -> String? in
         if let stringValue = value as? String {
             return stringValue
@@ -33,7 +36,7 @@ func convertFlexibleDictionaryToOptionalStringDictionary(
             return nil
         }
     }
-    
+
     return convertedDict.isEmpty ? nil : convertedDict
 }
 
@@ -142,7 +145,7 @@ extension JobType {
 
 extension JobTypeV2 {
     func toResponse() -> FlutterJobTypeV2 {
-        switch(self) {
+        switch (self) {
         case .smartSelfieAuthentication:
             FlutterJobTypeV2.smartSelfieAuthentication
         case .smartSelfieEnrollment:
@@ -179,7 +182,9 @@ extension PrepUploadResponse {
 extension FlutterUploadRequest {
     func toRequest() throws -> Data {
         let uploadRequest = UploadRequest(
-            images: images.compactMap { $0?.toRequest() },
+            images: images.compactMap {
+                $0?.toRequest()
+            },
             idInfo: idInfo?.toRequest()
         )
         return try LocalStorage.toZip(uploadRequest: uploadRequest)
@@ -234,12 +239,24 @@ extension FlutterIdInfo {
     }
 }
 
+extension FlutterConsentInformation {
+    func toRequest() -> ConsentInformation {
+        ConsentInformation(
+            consentGrantedDate: consentGrantedDate,
+            personalDetailsConsentGranted: personalDetailsConsentGranted,
+            contactInformationConsentGranted: contactInfoConsentGranted,
+            documentInformationConsentGranted: documentInfoConsentGranted
+        )
+    }
+}
+
 extension FlutterEnhancedKycRequest {
     func toRequest() -> EnhancedKycRequest {
         EnhancedKycRequest(
             country: country,
             idType: idType,
             idNumber: idNumber,
+            consentInformation: consentInformation.toRequest(),
             firstName: firstName,
             middleName: middleName,
             lastName: lastName,
@@ -282,7 +299,7 @@ extension EnhancedKycAsyncResponse {
 
 extension SmartSelfieStatus {
     func toResponse() -> FlutterSmartSelfieStatus {
-        switch(self) {
+        switch (self) {
         case .approved:
             FlutterSmartSelfieStatus.approved
         case .pending:
@@ -391,7 +408,9 @@ extension ImageLinks {
 extension Antifraud {
     func toResponse() -> FlutterAntifraud {
         FlutterAntifraud(
-            suspectUsers: suspectUsers?.map { $0.toResponse() } ?? []
+            suspectUsers: suspectUsers?.map {
+                $0.toResponse()
+            } ?? []
         )
     }
 }
@@ -598,7 +617,9 @@ extension IdSelection {
 extension ValidDocumentsResponse {
     func toResponse() -> FlutterValidDocumentsResponse {
         FlutterValidDocumentsResponse(
-            validDocuments: validDocuments.map { $0.toResponse() }
+            validDocuments: validDocuments.map {
+                $0.toResponse()
+            }
         )
     }
 }
@@ -607,7 +628,9 @@ extension ValidDocument {
     func toResponse() -> FlutterValidDocument {
         FlutterValidDocument(
             country: country.toResponse(),
-            idTypes: idTypes.map { $0.toResponse() }
+            idTypes: idTypes.map {
+                $0.toResponse()
+            }
         )
     }
 }
@@ -626,7 +649,9 @@ extension IdType {
     func toResponse() -> FlutterIdType {
         FlutterIdType(
             code: code,
-            example: example.map { $0 },
+            example: example.map {
+                $0
+            },
             hasBack: hasBack,
             name: name
         )
@@ -636,7 +661,9 @@ extension IdType {
 extension ServicesResponse {
     func toResponse() -> FlutterServicesResponse {
         FlutterServicesResponse(
-            bankCodes: bankCodes.map { $0.toResponse() },
+            bankCodes: bankCodes.map {
+                $0.toResponse()
+            },
             hostedWeb: hostedWeb.toResponse()
         )
     }
@@ -654,12 +681,24 @@ extension BankCode {
 extension HostedWeb {
     func toResponse() -> FlutterHostedWeb {
         FlutterHostedWeb(
-            basicKyc: Dictionary(uniqueKeysWithValues: basicKyc.map { ($0.countryCode, $0.toResponse()) }),
-            biometricKyc: Dictionary(uniqueKeysWithValues: biometricKyc.map { ($0.countryCode, $0.toResponse()) }),
-            enhancedKyc: Dictionary(uniqueKeysWithValues: enhancedKyc.map { ($0.countryCode, $0.toResponse()) }),
-            documentVerification: Dictionary(uniqueKeysWithValues: docVerification.map { ($0.countryCode, $0.toResponse()) }),
-            enhancedKycSmartSelfie: Dictionary(uniqueKeysWithValues: enhancedKycSmartSelfie.map { ($0.countryCode, $0.toResponse()) }),
-            enhancedDocumentVerification: Dictionary(uniqueKeysWithValues: enhancedDocumentVerification.map { ($0.countryCode, $0.toResponse()) })
+            basicKyc: Dictionary(uniqueKeysWithValues: basicKyc.map {
+                ($0.countryCode, $0.toResponse())
+            }),
+            biometricKyc: Dictionary(uniqueKeysWithValues: biometricKyc.map {
+                ($0.countryCode, $0.toResponse())
+            }),
+            enhancedKyc: Dictionary(uniqueKeysWithValues: enhancedKyc.map {
+                ($0.countryCode, $0.toResponse())
+            }),
+            documentVerification: Dictionary(uniqueKeysWithValues: docVerification.map {
+                ($0.countryCode, $0.toResponse())
+            }),
+            enhancedKycSmartSelfie: Dictionary(uniqueKeysWithValues: enhancedKycSmartSelfie.map {
+                ($0.countryCode, $0.toResponse())
+            }),
+            enhancedDocumentVerification: Dictionary(uniqueKeysWithValues: enhancedDocumentVerification.map {
+                ($0.countryCode, $0.toResponse())
+            })
         )
     }
 }
@@ -669,7 +708,9 @@ extension CountryInfo {
         FlutterCountryInfo(
             countryCode: countryCode,
             name: name,
-            availableIdTypes: availableIdTypes.map { $0.toResponse() }
+            availableIdTypes: availableIdTypes.map {
+                $0.toResponse()
+            }
         )
     }
 }
@@ -679,7 +720,9 @@ extension AvailableIdType {
         FlutterAvailableIdType(
             idTypeKey: idTypeKey,
             label: label,
-            requiredFields: requiredFields?.map { $0.rawValue } ?? [],
+            requiredFields: requiredFields?.map {
+                $0.rawValue
+            } ?? [],
             testData: testData,
             idNumberRegex: idNumberRegex
         )
