@@ -37,10 +37,10 @@ class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDel
                 entered:  args["entered"] as? Bool
             ),
             consentInformation: ConsentInformation(
-                consentGrantedDate: args["consentGrantedDate"] as! String,
+                consentGrantedDate: args["consentGrantedDate"] as? String ?? getCurrentIsoTimestamp(),
                 personalDetailsConsentGranted: args["personalDetailsConsentGranted"] as? Bool ?? false,
-                contactInformationConsentGranted: args["contactInformationConsentGranted"] as? Bool ?? false,
-                documentInformationConsentGranted: args["documentInformationConsentGranted"] as? Bool ?? false
+                contactInformationConsentGranted: args["contactInfoConsentGranted"] as? Bool ?? false,
+                documentInformationConsentGranted: args["documentInfoConsentGranted"] as? Bool ?? false
             ),
             userId: args["userId"] as? String ?? generateUserId(),
             jobId: args["jobId"] as? String ?? generateJobId(),

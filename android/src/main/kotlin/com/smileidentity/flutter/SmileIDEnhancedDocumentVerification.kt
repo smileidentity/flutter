@@ -6,6 +6,7 @@ import com.smileidentity.SmileID
 import com.smileidentity.compose.EnhancedDocumentVerificationScreen
 import com.smileidentity.flutter.results.DocumentCaptureResult
 import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
+import com.smileidentity.flutter.utils.getCurrentIsoTimestamp
 import com.smileidentity.models.ConsentInformation
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
@@ -43,7 +44,7 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
             showInstructions = args["showInstructions"] as? Boolean ?: true,
             useStrictMode = args["useStrictMode"] as? Boolean ?: false,
             consentInformation = ConsentInformation(
-                consentGrantedDate = args["consent"] as String,
+                consentGrantedDate = args["consentGrantedDate"] as? String ?: getCurrentIsoTimestamp(),
                 personalDetailsConsentGranted = args["personalDetailsConsentGranted"] as? Boolean
                     ?: false,
                 contactInfoConsentGranted = args["contactInfoConsentGranted"] as? Boolean ?: false,

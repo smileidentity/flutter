@@ -6,6 +6,7 @@ import com.smileidentity.SmileID
 import com.smileidentity.compose.BiometricKYC
 import com.smileidentity.flutter.results.SmartSelfieCaptureResult
 import com.smileidentity.flutter.utils.SelfieCaptureResultAdapter
+import com.smileidentity.flutter.utils.getCurrentIsoTimestamp
 import com.smileidentity.models.ConsentInformation
 import com.smileidentity.models.IdInfo
 import com.smileidentity.results.SmileIDResult
@@ -44,7 +45,7 @@ internal class SmileIDBiometricKYC private constructor(
                 entered = args["entered"] as? Boolean?,
             ),
             consentInformation = ConsentInformation(
-                consentGrantedDate = args["consent"] as String,
+                consentGrantedDate = args["consentGrantedDate"] as? String ?: getCurrentIsoTimestamp(),
                 personalDetailsConsentGranted = args["personalDetailsConsentGranted"] as? Boolean
                     ?: false,
                 contactInfoConsentGranted = args["contactInfoConsentGranted"] as? Boolean ?: false,
