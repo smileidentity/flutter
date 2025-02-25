@@ -2,6 +2,8 @@
 ## 10.3.4
 * Added enhanced SmartSelfie™ capture to docV, enhanced docV, and biometric kyc
 * Added consent information to BioMetric KYC and Enhanced Document Verification
+* Bump android to 10.5.0 (https://github.com/smileidentity/android/releases/tag/v10.5.0)
+* Bump iOS to 10.4.0 (https://github.com/smileidentity/ios/releases/tag/v10.4.0)
 
 ## 10.3.3
 
