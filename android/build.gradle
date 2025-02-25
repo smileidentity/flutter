@@ -1,5 +1,5 @@
 def kotlinVersion = findProperty('kotlinVersion') ?: '2.1.0'
-def smileVersion = findProperty('smileVersion') ?: '10.5.0'
+def smileVersion = findProperty('smileVersion') ?: '10.4.4-SNAPSHOT'
 def kotlinCompilerExtension = findProperty('kotlinCompilerExtensionVersion') ?: '1.5.14'
 
 ext {
