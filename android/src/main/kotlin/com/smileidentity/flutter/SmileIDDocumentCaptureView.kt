@@ -116,9 +116,9 @@ internal class SmileIDDocumentCaptureView private constructor(
             instructionsSubtitleText = stringResource(instructionSubTitle),
             captureTitleText = stringResource(captureTitleText),
             knownIdAspectRatio = idAspectRatio,
-            onConfirm = { file -> handleConfirmation(isDocumentFrontSide,file) },
-            onError = {throwable -> onError(throwable) },
-            onSkip = { }
+            onConfirm = { file -> handleConfirmation(isDocumentFrontSide, file) },
+            onError = { throwable -> onError(throwable) },
+            onSkip = { },
         )
     }
 

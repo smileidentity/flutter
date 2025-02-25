@@ -43,14 +43,19 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
             allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false,
             showInstructions = args["showInstructions"] as? Boolean ?: true,
             useStrictMode = args["useStrictMode"] as? Boolean ?: false,
-            consentInformation = ConsentInformation(
-                consentGrantedDate = args["consentGrantedDate"] as? String ?: getCurrentIsoTimestamp(),
-                personalDetailsConsentGranted = args["personalDetailsConsentGranted"] as? Boolean
-                    ?: false,
-                contactInfoConsentGranted = args["contactInfoConsentGranted"] as? Boolean ?: false,
-                documentInfoConsentGranted = args["documentInfoConsentGranted"] as? Boolean
-                    ?: false,
-            ),
+            consentInformation =
+                ConsentInformation(
+                    consentGrantedDate =
+                        args["consentGrantedDate"] as? String ?: getCurrentIsoTimestamp(),
+                    personalDetailsConsentGranted =
+                        args["personalDetailsConsentGranted"] as? Boolean
+                            ?: false,
+                    contactInfoConsentGranted =
+                        args["contactInfoConsentGranted"] as? Boolean ?: false,
+                    documentInfoConsentGranted =
+                        args["documentInfoConsentGranted"] as? Boolean
+                            ?: false,
+                ),
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {
             when (it) {

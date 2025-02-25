@@ -33,25 +33,30 @@ internal class SmileIDBiometricKYC private constructor(
         val extraPartnerParams = args["extraPartnerParams"] as? Map<String, String> ?: emptyMap()
         SmileID.BiometricKYC(
             idInfo =
-            IdInfo(
-                country = args["country"] as? String ?: "",
-                idType = args["idType"] as? String?,
-                idNumber = args["idNumber"] as? String?,
-                firstName = args["firstName"] as? String?,
-                middleName = args["middleName"] as? String?,
-                lastName = args["lastName"] as? String?,
-                dob = args["dob"] as? String?,
-                bankCode = args["bankCode"] as? String?,
-                entered = args["entered"] as? Boolean?,
-            ),
-            consentInformation = ConsentInformation(
-                consentGrantedDate = args["consentGrantedDate"] as? String ?: getCurrentIsoTimestamp(),
-                personalDetailsConsentGranted = args["personalDetailsConsentGranted"] as? Boolean
-                    ?: false,
-                contactInfoConsentGranted = args["contactInfoConsentGranted"] as? Boolean ?: false,
-                documentInfoConsentGranted = args["documentInfoConsentGranted"] as? Boolean
-                    ?: false,
-            ),
+                IdInfo(
+                    country = args["country"] as? String ?: "",
+                    idType = args["idType"] as? String?,
+                    idNumber = args["idNumber"] as? String?,
+                    firstName = args["firstName"] as? String?,
+                    middleName = args["middleName"] as? String?,
+                    lastName = args["lastName"] as? String?,
+                    dob = args["dob"] as? String?,
+                    bankCode = args["bankCode"] as? String?,
+                    entered = args["entered"] as? Boolean?,
+                ),
+            consentInformation =
+                ConsentInformation(
+                    consentGrantedDate =
+                        args["consentGrantedDate"] as? String ?: getCurrentIsoTimestamp(),
+                    personalDetailsConsentGranted =
+                        args["personalDetailsConsentGranted"] as? Boolean
+                            ?: false,
+                    contactInfoConsentGranted =
+                        args["contactInfoConsentGranted"] as? Boolean ?: false,
+                    documentInfoConsentGranted =
+                        args["documentInfoConsentGranted"] as? Boolean
+                            ?: false,
+                ),
             userId = args["userId"] as? String ?: randomUserId(),
             jobId = args["jobId"] as? String ?: randomJobId(),
             allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
