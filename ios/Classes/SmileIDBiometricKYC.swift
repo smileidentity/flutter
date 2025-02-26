@@ -36,16 +36,24 @@ class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDel
                 bankCode:  args["bankCode"] as? String,
                 entered:  args["entered"] as? Bool
             ),
+            consentInformation: ConsentInformation(
+                consentGrantedDate: args["consentGrantedDate"] as? String ?? getCurrentIsoTimestamp(),
+                personalDetailsConsentGranted: args["personalDetailsConsentGranted"] as? Bool ?? false,
+                contactInformationConsentGranted: args["contactInfoConsentGranted"] as? Bool ?? false,
+                documentInformationConsentGranted: args["documentInfoConsentGranted"] as? Bool ?? false
+            ),
             userId: args["userId"] as? String ?? generateUserId(),
             jobId: args["jobId"] as? String ?? generateJobId(),
             allowNewEnroll: args["allowNewEnroll"] as? Bool ?? false,
             allowAgentMode: args["allowAgentMode"] as? Bool ?? false,
             showAttribution: args["showAttribution"] as? Bool ?? true,
             showInstructions: args["showInstructions"] as? Bool ?? true,
+            useStrictMode: args["useStrictMode"] as? Bool ?? false,
             extraPartnerParams: args["extraPartnerParams"] as? [String: String] ?? [:],
             delegate: self
         )
-        _childViewController = embedView(screen, in: _view, frame: frame)
+        let navView = NavigationView{screen}
+        _childViewController = embedView(navView, in: _view, frame: frame)
     }
 
     func view() -> UIView {

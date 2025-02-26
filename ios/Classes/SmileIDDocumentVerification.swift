@@ -40,10 +40,12 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerif
             showInstructions: args["showInstructions"] as? Bool ?? true,
             showAttribution: args["showAttribution"] as? Bool ?? true,
             skipApiSubmission: args["skipApiSubmission"] as? Bool ?? false,
+            useStrictMode: args["useStrictMode"] as? Bool ?? false,
             extraPartnerParams: args["extraPartnerParams"] as? [String: String] ?? [:],
             delegate: self
         )
-        _childViewController = embedView(screen, in: _view, frame: frame)
+        let navView = NavigationView{screen}
+        _childViewController = embedView(navView, in: _view, frame: frame)
     }
 
     func view() -> UIView {

@@ -3,7 +3,7 @@ import UIKit
 import SmileID
 import SwiftUI
 
-class SmileIDSmartSelfieEnrollmentEnhanced : NSObject, FlutterPlatformView, SmartSelfieResultDelegate,SmileIDFileUtilsProtocol {
+class SmileIDSmartSelfieEnrollmentEnhanced: NSObject, FlutterPlatformView, SmartSelfieResultDelegate, SmileIDFileUtilsProtocol {
     var fileManager: FileManager = Foundation.FileManager.default
     private var _view: UIView
     private var _channel: FlutterMethodChannel
@@ -59,8 +59,9 @@ class SmileIDSmartSelfieEnrollmentEnhanced : NSObject, FlutterPlatformView, Smar
         _channel.invokeMethod("onError", arguments: error.localizedDescription)
     }
 
-    class Factory : NSObject, FlutterPlatformViewFactory {
+    class Factory: NSObject, FlutterPlatformViewFactory {
         private var messenger: FlutterBinaryMessenger
+
         init(messenger: FlutterBinaryMessenger) {
             self.messenger = messenger
             super.init()
@@ -80,7 +81,7 @@ class SmileIDSmartSelfieEnrollmentEnhanced : NSObject, FlutterPlatformView, Smar
         }
 
         public func createArgsCodec() -> FlutterMessageCodec & NSObjectProtocol {
-              return FlutterStandardMessageCodec.sharedInstance()
+            return FlutterStandardMessageCodec.sharedInstance()
         }
     }
 }
@@ -89,13 +90,14 @@ struct SmartSelfieSuccessData: Encodable {
     let selfieFile: String
     let livenessFiles: [String]
     let apiResponse: SmartSelfieResponse?
-    
+
     func toJSONString() -> String? {
         let jsonEncoder = JSONEncoder()
         jsonEncoder.outputFormatting = .withoutEscapingSlashes
         let json = try? jsonEncoder.encode(self)
         guard let data = json,
-                let jsonString = String(data: data, encoding: .utf8) else {
+              let jsonString = String(data: data, encoding: .utf8)
+        else {
             return nil
         }
         return jsonString

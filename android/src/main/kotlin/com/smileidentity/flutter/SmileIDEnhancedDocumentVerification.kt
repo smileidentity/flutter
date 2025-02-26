@@ -6,6 +6,8 @@ import com.smileidentity.SmileID
 import com.smileidentity.compose.EnhancedDocumentVerificationScreen
 import com.smileidentity.flutter.results.DocumentCaptureResult
 import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
+import com.smileidentity.flutter.utils.getCurrentIsoTimestamp
+import com.smileidentity.models.ConsentInformation
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
@@ -40,7 +42,20 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
             allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
             allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false,
             showInstructions = args["showInstructions"] as? Boolean ?: true,
-            skipApiSubmission = args["skipApiSubmission"] as? Boolean ?: false,
+            useStrictMode = args["useStrictMode"] as? Boolean ?: false,
+            consentInformation =
+                ConsentInformation(
+                    consentGrantedDate =
+                        args["consentGrantedDate"] as? String ?: getCurrentIsoTimestamp(),
+                    personalDetailsConsentGranted =
+                        args["personalDetailsConsentGranted"] as? Boolean
+                            ?: false,
+                    contactInfoConsentGranted =
+                        args["contactInfoConsentGranted"] as? Boolean ?: false,
+                    documentInfoConsentGranted =
+                        args["documentInfoConsentGranted"] as? Boolean
+                            ?: false,
+                ),
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {
             when (it) {

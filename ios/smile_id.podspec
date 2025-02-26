@@ -15,7 +15,7 @@ A new Flutter project.
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
   # NB! Update the s.version above when changing this version
-  s.dependency 'SmileID', '10.3.2'
+  s.dependency 'SmileID', '10.4.0'
   s.platform = :ios, '13.0'
 
   # Flutter.framework does not contain a i386 slice.

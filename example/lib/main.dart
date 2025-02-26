@@ -119,16 +119,20 @@ class MainContent extends StatelessWidget {
                             idNumber: "B0000000",
                             callbackUrl: "https://somedummyurl.com/demo",
                             partnerParams: FlutterPartnerParams(
-                              jobType: FlutterJobType.enhancedKyc,
-                              jobId: userId,
-                              userId: userId,
+                                jobType: FlutterJobType.enhancedKyc,
+                                jobId: userId,
+                                userId: userId,
                                 extras: {
                                   "name": "Dummy Name",
                                   "work": "SmileID",
-                                }
-                            ),
+                                }),
                             timestamp: authResponse!.timestamp,
-                            signature: authResponse.signature))
+                            signature: authResponse.signature,
+                            consentInformation: FlutterConsentInformation(
+                                consentGrantedDate: "",
+                                personalDetailsConsentGranted: true,
+                                contactInfoConsentGranted: true,
+                                documentInfoConsentGranted: true)))
                       },
                   onError: (error) => {print("error: $error")});
         });
@@ -262,21 +266,21 @@ class MainContent extends StatelessWidget {
           MaterialPageRoute<void>(
             builder: (BuildContext context) => MyScaffold(
                 body: SmileIDSmartSelfieEnrollmentEnhanced(
-                  onSuccess: (String? result) {
-                    // Your success handling logic
-                    Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
-                    String formattedResult = jsonEncode(jsonResult);
-                    final snackBar = SnackBar(content: Text("Success: $formattedResult"));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    Navigator.of(context).pop();
-                  },
-                  onError: (String errorMessage) {
-                    // Your error handling logic
-                    final snackBar = SnackBar(content: Text("Error: $errorMessage"));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    Navigator.of(context).pop();
-                  },
-                )),
+              onSuccess: (String? result) {
+                // Your success handling logic
+                Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
+                String formattedResult = jsonEncode(jsonResult);
+                final snackBar = SnackBar(content: Text("Success: $formattedResult"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.of(context).pop();
+              },
+              onError: (String errorMessage) {
+                // Your error handling logic
+                final snackBar = SnackBar(content: Text("Error: $errorMessage"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.of(context).pop();
+              },
+            )),
           ),
         );
       },
@@ -291,21 +295,21 @@ class MainContent extends StatelessWidget {
           MaterialPageRoute<void>(
             builder: (BuildContext context) => MyScaffold(
                 body: SmileIDSmartSelfieAuthenticationEnhanced(
-                  onSuccess: (String? result) {
-                    // Your success handling logic
-                    Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
-                    String formattedResult = jsonEncode(jsonResult);
-                    final snackBar = SnackBar(content: Text("Success: $formattedResult"));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    Navigator.of(context).pop();
-                  },
-                  onError: (String errorMessage) {
-                    // Your error handling logic
-                    final snackBar = SnackBar(content: Text("Error: $errorMessage"));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    Navigator.of(context).pop();
-                  },
-                )),
+              onSuccess: (String? result) {
+                // Your success handling logic
+                Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
+                String formattedResult = jsonEncode(jsonResult);
+                final snackBar = SnackBar(content: Text("Success: $formattedResult"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.of(context).pop();
+              },
+              onError: (String errorMessage) {
+                // Your error handling logic
+                final snackBar = SnackBar(content: Text("Error: $errorMessage"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.of(context).pop();
+              },
+            )),
           ),
         );
       },
