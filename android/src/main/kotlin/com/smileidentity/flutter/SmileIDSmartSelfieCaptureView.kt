@@ -78,54 +78,64 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
         val viewModel: SelfieViewModel =
             viewModel(
                 factory =
-                    viewModelFactory {
-                        SelfieViewModel(
-                            isEnroll = false,
-                            userId = userId,
-                            jobId = jobId,
-                            allowNewEnroll = false,
-                            skipApiSubmission = true,
-                            metadata = metadata,
-                        )
-                    },
+                viewModelFactory {
+                    SelfieViewModel(
+                        isEnroll = false,
+                        userId = userId,
+                        jobId = jobId,
+                        allowNewEnroll = false,
+                        skipApiSubmission = true,
+                        metadata = metadata,
+                    )
+                },
             )
         val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
         CompositionLocalProvider(
             LocalMetadata provides remember { Metadata.default().items.toMutableStateList() },
         ) {
             MaterialTheme(colorScheme = SmileID.colorScheme, typography = SmileID.typography) {
-                Surface(content = {
-                    when {
-                        useStrictMode -> RenderStrictModeCapture(
-                            userId,
-                            showInstructions,
-                            showAttribution,
-                        )
-                        showInstructions && !acknowledgedInstructions ->
-                            SmartSelfieInstructionsScreen(
-                                showAttribution = showAttribution,
-                            ) {
-                                acknowledgedInstructions = true
-                            }
-                        uiState.processingState != null -> HandleProcessingState(viewModel)
-                        uiState.selfieToConfirm != null ->
-                            HandleSelfieConfirmation(
-                                showConfirmationDialog,
-                                uiState,
-                                viewModel,
+                Surface(
+                    content = {
+                        when {
+                            useStrictMode -> RenderStrictModeCapture(
+                                userId,
+                                showInstructions,
+                                showAttribution,
                             )
 
-                        else -> RenderSelfieCaptureScreen(userId, jobId, allowAgentMode, viewModel)
-                    }
-                })
+                            showInstructions && !acknowledgedInstructions ->
+                                SmartSelfieInstructionsScreen(
+                                    showAttribution = showAttribution,
+                                ) {
+                                    acknowledgedInstructions = true
+                                }
+
+                            uiState.processingState != null -> HandleProcessingState(viewModel)
+                            uiState.selfieToConfirm != null ->
+                                HandleSelfieConfirmation(
+                                    showConfirmationDialog,
+                                    uiState,
+                                    viewModel,
+                                )
+
+                            else -> RenderSelfieCaptureScreen(
+                                userId,
+                                jobId,
+                                allowAgentMode,
+                                viewModel,
+                            )
+                        }
+                    },
+                )
             }
         }
     }
 
     @Composable
-    private fun RenderStrictModeCapture(userId: String,
-                                        showInstructions: Boolean,
-                                        showAttribution: Boolean) {
+    private fun RenderStrictModeCapture(
+        userId: String, showInstructions: Boolean,
+        showAttribution: Boolean,
+    ) {
         val context = LocalContext.current
         val selfieQualityModel = remember { SelfieQualityModel.newInstance(context) }
         OrchestratedSelfieCaptureScreenEnhanced(
@@ -154,11 +164,11 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
     ) {
         Box(
             modifier =
-                Modifier
-                    .background(color = Color.White)
-                    .windowInsetsPadding(WindowInsets.statusBars)
-                    .consumeWindowInsets(WindowInsets.statusBars)
-                    .fillMaxSize(),
+            Modifier
+                .background(color = Color.White)
+                .windowInsetsPadding(WindowInsets.statusBars)
+                .consumeWindowInsets(WindowInsets.statusBars)
+                .fillMaxSize(),
         ) {
             SelfieCaptureScreen(
                 userId = userId,
@@ -181,26 +191,26 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
             ImageCaptureConfirmationDialog(
                 titleText = stringResource(R.string.si_smart_selfie_confirmation_dialog_title),
                 subtitleText =
-                    stringResource(
-                        R.string.si_smart_selfie_confirmation_dialog_subtitle,
-                    ),
+                stringResource(
+                    R.string.si_smart_selfie_confirmation_dialog_subtitle,
+                ),
                 painter =
-                    BitmapPainter(
-                        BitmapFactory
-                            .decodeFile(uiState.selfieToConfirm!!.absolutePath)
-                            .asImageBitmap(),
-                    ),
+                BitmapPainter(
+                    BitmapFactory
+                        .decodeFile(uiState.selfieToConfirm!!.absolutePath)
+                        .asImageBitmap(),
+                ),
                 confirmButtonText =
-                    stringResource(
-                        R.string.si_smart_selfie_confirmation_dialog_confirm_button,
-                    ),
+                stringResource(
+                    R.string.si_smart_selfie_confirmation_dialog_confirm_button,
+                ),
                 onConfirm = {
                     viewModel.submitJob()
                 },
                 retakeButtonText =
-                    stringResource(
-                        R.string.si_smart_selfie_confirmation_dialog_retake_button,
-                    ),
+                stringResource(
+                    R.string.si_smart_selfie_confirmation_dialog_retake_button,
+                ),
                 onRetake = viewModel::onSelfieRejected,
                 scaleFactor = 1.25f,
             )
@@ -216,7 +226,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
         }
     }
 
-    private fun handleResult(res : SmileIDResult<SmartSelfieResult>){
+    private fun handleResult(res: SmileIDResult<SmartSelfieResult>) {
         when (res) {
             is SmileIDResult.Success -> {
                 val result =
