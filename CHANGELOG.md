@@ -1,5 +1,15 @@
 # Release Notes
+
+## 10.3.5
+
+* Added enhanced SmartSelfie™ capture Selfie capture screen component
+* Make consent information optional on Biometric KYC, Enhanced KYC and Enhanced Document
+  Verification
+* Bump android to 10.5.1 (https://github.com/smileidentity/android/releases/tag/v10.5.1)
+* Bump iOS to 10.4.1 (https://github.com/smileidentity/ios/releases/tag/v10.4.1)
+
 ## 10.3.4
+
 * Added enhanced SmartSelfie™ capture to docV, enhanced docV, and biometric kyc
 * Added consent information to BioMetric KYC and Enhanced Document Verification
 * Bump android to 10.5.0 (https://github.com/smileidentity/android/releases/tag/v10.5.0)
@@ -12,7 +22,7 @@
 ## 10.3.2
 
 * Fixed metadata version check to support versions below Kotlin 2.0
-* Fixed document capture view on android to properly handle showInstructions and showConfirmation 
+* Fixed document capture view on android to properly handle showInstructions and showConfirmation
   screens
 
 ## 10.3.1
@@ -23,7 +33,8 @@
 
 ## 10.3.0
 
-* Introduce screens for the new Enhanced Selfie Capture Enrollment and Authentication Products (Android).
+* Introduce screens for the new Enhanced Selfie Capture Enrollment and Authentication Products (
+  Android).
 * Migrate to Gradle Plugin setup
 * Update to Kotlin 2.0
 * Bump android to 10.4.0 (https://github.com/smileidentity/android/releases/tag/v10.4.0)

@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -33,11 +34,14 @@ import com.smileidentity.compose.components.ImageCaptureConfirmationDialog
 import com.smileidentity.compose.components.LocalMetadata
 import com.smileidentity.compose.selfie.SelfieCaptureScreen
 import com.smileidentity.compose.selfie.SmartSelfieInstructionsScreen
+import com.smileidentity.compose.selfie.enhanced.OrchestratedSelfieCaptureScreenEnhanced
 import com.smileidentity.compose.theme.colorScheme
 import com.smileidentity.compose.theme.typography
 import com.smileidentity.flutter.results.SmartSelfieCaptureResult
 import com.smileidentity.flutter.utils.SelfieCaptureResultAdapter
+import com.smileidentity.ml.SelfieQualityModel
 import com.smileidentity.models.v2.Metadata
+import com.smileidentity.results.SmartSelfieResult
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
@@ -66,6 +70,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
         val showInstructions = args["showInstructions"] as? Boolean ?: true
         val showAttribution = args["showAttribution"] as? Boolean ?: true
         val allowAgentMode = args["allowAgentMode"] as? Boolean ?: true
+        val useStrictMode = args["useStrictMode"] as? Boolean ?: false
         var acknowledgedInstructions by rememberSaveable { mutableStateOf(false) }
         val userId = randomUserId()
         val jobId = randomJobId()
@@ -91,6 +96,11 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
             MaterialTheme(colorScheme = SmileID.colorScheme, typography = SmileID.typography) {
                 Surface(content = {
                     when {
+                        useStrictMode -> RenderStrictModeCapture(
+                            userId,
+                            showInstructions,
+                            showAttribution,
+                        )
                         showInstructions && !acknowledgedInstructions ->
                             SmartSelfieInstructionsScreen(
                                 showAttribution = showAttribution,
@@ -110,6 +120,29 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                 })
             }
         }
+    }
+
+    @Composable
+    private fun RenderStrictModeCapture(userId: String,
+                                        showInstructions: Boolean,
+                                        showAttribution: Boolean) {
+        val context = LocalContext.current
+        val selfieQualityModel = remember { SelfieQualityModel.newInstance(context) }
+        OrchestratedSelfieCaptureScreenEnhanced(
+            modifier = Modifier
+                .background(color = Color.White)
+                .windowInsetsPadding(WindowInsets.statusBars)
+                .consumeWindowInsets(WindowInsets.statusBars)
+                .fillMaxSize(),
+            userId = userId,
+            allowNewEnroll = false,
+            showInstructions = showInstructions,
+            isEnroll = true,
+            showAttribution = showAttribution,
+            selfieQualityModel = selfieQualityModel,
+            skipApiSubmission = true,
+            onResult = { res -> handleResult(res) },
+        )
     }
 
     @Composable
@@ -179,34 +212,38 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
     @Composable
     private fun HandleProcessingState(viewModel: SelfieViewModel) {
         viewModel.onFinished { res ->
-            when (res) {
-                is SmileIDResult.Success -> {
-                    val result =
-                        SmartSelfieCaptureResult(
-                            selfieFile = res.data.selfieFile,
-                            livenessFiles = res.data.livenessFiles,
-                        )
-                    val moshi =
-                        SmileID.moshi
-                            .newBuilder()
-                            .add(SelfieCaptureResultAdapter.FACTORY)
-                            .build()
-                    val json =
-                        try {
-                            moshi
-                                .adapter(SmartSelfieCaptureResult::class.java)
-                                .toJson(result)
-                        } catch (e: Exception) {
-                            onError(e)
-                            return@onFinished
-                        }
-                    json?.let { js ->
-                        onSuccessJson(js)
-                    }
-                }
+            handleResult(res)
+        }
+    }
 
-                is SmileIDResult.Error -> onError(res.throwable)
+    private fun handleResult(res : SmileIDResult<SmartSelfieResult>){
+        when (res) {
+            is SmileIDResult.Success -> {
+                val result =
+                    SmartSelfieCaptureResult(
+                        selfieFile = res.data.selfieFile,
+                        livenessFiles = res.data.livenessFiles,
+                    )
+                val moshi =
+                    SmileID.moshi
+                        .newBuilder()
+                        .add(SelfieCaptureResultAdapter.FACTORY)
+                        .build()
+                val json =
+                    try {
+                        moshi
+                            .adapter(SmartSelfieCaptureResult::class.java)
+                            .toJson(result)
+                    } catch (e: Exception) {
+                        onError(e)
+                        return
+                    }
+                json?.let { js ->
+                    onSuccessJson(js)
+                }
             }
+
+            is SmileIDResult.Error -> onError(res.throwable)
         }
     }
 
