@@ -272,12 +272,13 @@ fun FlutterEnhancedKycRequest.toRequest() =
         sourceSdk = "android (flutter)",
         timestamp = timestamp,
         signature = signature,
-        consentInformation = consentInformation?.toRequest() ?: ConsentInformation(
-            consentGrantedDate = getCurrentIsoTimestamp(),
-            personalDetailsConsentGranted = false,
-            contactInfoConsentGranted = false,
-            documentInfoConsentGranted = false,
-        ),
+        consentInformation =
+            consentInformation?.toRequest() ?: ConsentInformation(
+                consentGrantedDate = getCurrentIsoTimestamp(),
+                personalDetailsConsentGranted = false,
+                contactInfoConsentGranted = false,
+                documentInfoConsentGranted = false,
+            ),
     )
 
 fun EnhancedKycResponse.toResponse() =
@@ -597,25 +598,25 @@ fun HostedWeb.toResponse() =
     FlutterHostedWeb(
         basicKyc = basicKyc.groupBy { it.countryCode }.mapValues { it.value.first().toResponse() },
         biometricKyc =
-        biometricKyc
-            .groupBy { it.countryCode }
-            .mapValues { it.value.first().toResponse() },
+            biometricKyc
+                .groupBy { it.countryCode }
+                .mapValues { it.value.first().toResponse() },
         enhancedKyc =
-        enhancedKyc
-            .groupBy { it.countryCode }
-            .mapValues { it.value.first().toResponse() },
+            enhancedKyc
+                .groupBy { it.countryCode }
+                .mapValues { it.value.first().toResponse() },
         documentVerification =
-        docVerification
-            .groupBy { it.countryCode }
-            .mapValues { it.value.first().toResponse() },
+            docVerification
+                .groupBy { it.countryCode }
+                .mapValues { it.value.first().toResponse() },
         enhancedKycSmartSelfie =
-        enhancedKycSmartSelfie
-            .groupBy { it.countryCode }
-            .mapValues { it.value.first().toResponse() },
+            enhancedKycSmartSelfie
+                .groupBy { it.countryCode }
+                .mapValues { it.value.first().toResponse() },
         enhancedDocumentVerification =
-        enhancedDocumentVerification
-            .groupBy { it.countryCode }
-            .mapValues { it.value.first().toResponse() },
+            enhancedDocumentVerification
+                .groupBy { it.countryCode }
+                .mapValues { it.value.first().toResponse() },
     )
 
 fun CountryInfo.toResponse() =
