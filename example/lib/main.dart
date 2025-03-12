@@ -357,9 +357,10 @@ class MainContent extends StatelessWidget {
             builder: (BuildContext context) => MyScaffold(
                 body: SmileIDSmartSelfieCaptureView(
               showConfirmationDialog: false,
-              showInstructions: true,
+              showInstructions: false,
               showAttribution: false,
               allowAgentMode: false,
+              useStrictMode: true,
               onSuccess: (String? result) {
                 // Your success handling logic
                 Map<String, dynamic> jsonResult = json.decode(result ?? '{}');

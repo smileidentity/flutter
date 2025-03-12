@@ -21,6 +21,7 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView, SmileIDFileU
         let showInstructions = args["showInstructions"] as? Bool ?? true
         let showAttribution = args["showAttribution"] as? Bool ?? true
         let allowAgentMode = args["allowAgentMode"] as? Bool ?? true
+        let useStrictMode = args["useStrictMode"] as? Bool ?? false
 
         self._viewModel = SelfieViewModel(
             isEnroll: false,
@@ -43,6 +44,7 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView, SmileIDFileU
             showInstructions: showInstructions,
             allowAgentMode: allowAgentMode,
             showAttribution: showAttribution,
+            useStrictMode : useStrictMode,
             channel: _channel
         )
         self._childViewController = UIHostingController(rootView: AnyView(rootView))
@@ -69,44 +71,44 @@ struct SmileIDRootView: View {
     let showInstructions: Bool
     let allowAgentMode: Bool
     let showAttribution: Bool
+    let useStrictMode: Bool
     let channel: FlutterMethodChannel
     static let shared = FileManager()
     private let fileManager = Foundation.FileManager.default
     
     var body: some View {
         NavigationView {
-            Group {
-                if showInstructions, !acknowledgedInstructions {
-                    SmartSelfieInstructionsScreen(showAttribution: showAttribution) {
-                        acknowledgedInstructions = true
-                    }
-                    .padding()
-                } else if viewModel.processingState != nil {
-                    Color.clear.onAppear {
-                        self.viewModel.onFinished(callback: self)
-                    }
-                } else if let selfieToConfirm = viewModel.selfieToConfirm{
-                    if(showConfirmationDialog){
-                        ImageCaptureConfirmationDialog(
-                            title: SmileIDResourcesHelper.localizedString(for: "Confirmation.GoodSelfie"),
-                            subtitle: SmileIDResourcesHelper.localizedString(for: "Confirmation.FaceClear"),
-                            image: UIImage(data: selfieToConfirm)!,
-                            confirmationButtonText: SmileIDResourcesHelper.localizedString(for: "Confirmation.YesUse"),
-                            onConfirm: viewModel.submitJob,
-                            retakeButtonText: SmileIDResourcesHelper.localizedString(for: "Confirmation.Retake"),
-                            onRetake: viewModel.onSelfieRejected,
-                            scaleFactor: 1.25
-                        ).preferredColorScheme(.light)
-                    }else{
-                        Color.clear.onAppear {
-                            self.viewModel.submitJob()
-                        }
-                    }
-                } else {
-                    SelfieCaptureScreen(
-                        viewModel: viewModel, allowAgentMode: allowAgentMode
-                    ).preferredColorScheme(.light)
-                }
+            selfieCaptureScreen
+            .preferredColorScheme(.light)
+        }
+    }
+    
+    private var selfieCaptureScreen: some View {
+        Group {
+            if useStrictMode {
+                AnyView(OrchestratedEnhancedSelfieCaptureScreen(
+                    userId: generateUserId(),
+                    isEnroll: false,
+                    allowNewEnroll: false,
+                    showAttribution: showAttribution,
+                    showInstructions: showInstructions,
+                    skipApiSubmission: true,
+                    extraPartnerParams: [:],
+                    onResult: self
+                ))
+            } else {
+                AnyView(OrchestratedSelfieCaptureScreen(
+                    userId: generateUserId(),
+                    jobId: generateJobId(),
+                    isEnroll: false,
+                    allowNewEnroll: false,
+                    allowAgentMode: allowAgentMode,
+                    showAttribution: showAttribution,
+                    showInstructions: showInstructions,
+                    extraPartnerParams: [:],
+                    skipApiSubmission: true,
+                    onResult: self
+                ))
             }
         }
     }
