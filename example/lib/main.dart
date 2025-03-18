@@ -357,7 +357,7 @@ class MainContent extends StatelessWidget {
             builder: (BuildContext context) => MyScaffold(
                 body: SmileIDSmartSelfieCaptureView(
               showConfirmationDialog: false,
-              showInstructions: false,
+              showInstructions: true,
               showAttribution: false,
               allowAgentMode: false,
               useStrictMode: true,
