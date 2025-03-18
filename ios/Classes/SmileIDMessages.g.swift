@@ -94,13 +94,13 @@ enum FlutterSmartSelfieStatus: Int {
 
 /// Generated class from Pigeon that represents data sent in messages.
 struct FlutterConsentInformation {
-  var consentGrantedDate: String? = nil
+  var consentGrantedDate: String
   var personalDetailsConsentGranted: Bool
   var contactInfoConsentGranted: Bool
   var documentInfoConsentGranted: Bool
 
   static func fromList(_ list: [Any?]) -> FlutterConsentInformation? {
-    let consentGrantedDate: String? = nilOrValue(list[0])
+    let consentGrantedDate = list[0] as! String
     let personalDetailsConsentGranted = list[1] as! Bool
     let contactInfoConsentGranted = list[2] as! Bool
     let documentInfoConsentGranted = list[3] as! Bool

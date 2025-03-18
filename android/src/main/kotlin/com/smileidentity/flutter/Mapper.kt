@@ -250,7 +250,7 @@ fun FlutterIdInfo.toRequest() =
 
 fun FlutterConsentInformation.toRequest() =
     ConsentInformation(
-        consentGrantedDate = consentGrantedDate ?: getCurrentIsoTimestamp(),
+        consentGrantedDate = consentGrantedDate,
         personalDetailsConsentGranted = personalDetailsConsentGranted,
         contactInfoConsentGranted = contactInfoConsentGranted,
         documentInfoConsentGranted = documentInfoConsentGranted,

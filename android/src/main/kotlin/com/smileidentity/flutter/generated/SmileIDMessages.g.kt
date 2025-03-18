@@ -127,7 +127,7 @@ enum class FlutterSmartSelfieStatus(val raw: Int) {
 
 /** Generated class from Pigeon that represents data sent in messages. */
 data class FlutterConsentInformation (
-  val consentGrantedDate: String? = null,
+  val consentGrantedDate: String,
   val personalDetailsConsentGranted: Boolean,
   val contactInfoConsentGranted: Boolean,
   val documentInfoConsentGranted: Boolean
@@ -136,7 +136,7 @@ data class FlutterConsentInformation (
   companion object {
     @Suppress("UNCHECKED_CAST")
     fun fromList(list: List<Any?>): FlutterConsentInformation {
-      val consentGrantedDate = list[0] as String?
+      val consentGrantedDate = list[0] as String
       val personalDetailsConsentGranted = list[1] as Boolean
       val contactInfoConsentGranted = list[2] as Boolean
       val documentInfoConsentGranted = list[3] as Boolean

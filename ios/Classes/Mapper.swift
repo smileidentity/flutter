@@ -252,7 +252,7 @@ extension FlutterIdInfo {
 extension FlutterConsentInformation {
     func toRequest() -> ConsentInformation {
         ConsentInformation(
-            consentGrantedDate: consentGrantedDate ?? getCurrentIsoTimestamp() ,
+            consentGrantedDate: consentGrantedDate,
             personalDetailsConsentGranted: personalDetailsConsentGranted,
             contactInformationConsentGranted: contactInfoConsentGranted,
             documentInformationConsentGranted: documentInfoConsentGranted

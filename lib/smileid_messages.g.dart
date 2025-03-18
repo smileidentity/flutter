@@ -70,13 +70,13 @@ enum FlutterSmartSelfieStatus {
 
 class FlutterConsentInformation {
   FlutterConsentInformation({
-    this.consentGrantedDate,
+    required this.consentGrantedDate,
     required this.personalDetailsConsentGranted,
     required this.contactInfoConsentGranted,
     required this.documentInfoConsentGranted,
   });
 
-  String? consentGrantedDate;
+  String consentGrantedDate;
 
   bool personalDetailsConsentGranted;
 
@@ -96,7 +96,7 @@ class FlutterConsentInformation {
   static FlutterConsentInformation decode(Object result) {
     result as List<Object?>;
     return FlutterConsentInformation(
-      consentGrantedDate: result[0] as String?,
+      consentGrantedDate: result[0]! as String,
       personalDetailsConsentGranted: result[1]! as bool,
       contactInfoConsentGranted: result[2]! as bool,
       documentInfoConsentGranted: result[3]! as bool,

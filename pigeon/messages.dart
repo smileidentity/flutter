@@ -13,7 +13,7 @@ import 'package:pigeon/pigeon.dart';
 
 
 class FlutterConsentInformation {
-  final String? consentGrantedDate;
+  final String consentGrantedDate;
   final bool personalDetailsConsentGranted;
   final bool contactInfoConsentGranted;
   final bool documentInfoConsentGranted;
