@@ -19,7 +19,7 @@ internal class SmileIDSmartSelfieEnrollment private constructor(
     viewId: Int,
     messenger: BinaryMessenger,
     args: Map<String, Any?>,
-) : SmileComposablePlatformView(context, VIEW_TYPE_ID, viewId, messenger, args) {
+) : SmileSelfieComposablePlatformView(context, VIEW_TYPE_ID, viewId, messenger, args) {
     companion object {
         const val VIEW_TYPE_ID = "SmileIDSmartSelfieEnrollment"
     }
@@ -33,38 +33,10 @@ internal class SmileIDSmartSelfieEnrollment private constructor(
             allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
             showAttribution = args["showAttribution"] as? Boolean ?: true,
             showInstructions = args["showInstructions"] as? Boolean ?: true,
+            skipApiSubmission = args["skipApiSubmission"] as? Boolean ?: false,
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
-        ) {
-            when (it) {
-                is SmileIDResult.Success -> {
-                    val result =
-                        SmartSelfieCaptureResult(
-                            selfieFile = it.data.selfieFile,
-                            livenessFiles = it.data.livenessFiles,
-                            apiResponse = it.data.apiResponse,
-                        )
-                    val moshi =
-                        SmileID.moshi
-                            .newBuilder()
-                            .add(SelfieCaptureResultAdapter.FACTORY)
-                            .build()
-                    val json =
-                        try {
-                            moshi
-                                .adapter(SmartSelfieCaptureResult::class.java)
-                                .toJson(result)
-                        } catch (e: Exception) {
-                            onError(e)
-                            return@SmartSelfieEnrollment
-                        }
-                    json?.let { js ->
-                        onSuccessJson(js)
-                    }
-                }
-
-                is SmileIDResult.Error -> onError(it.throwable)
-            }
-        }
+            onResult = { res -> handleResult(res) },
+        )
     }
 
     class Factory(

@@ -30,6 +30,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.smileidentity.R
 import com.smileidentity.SmileID
 import com.smileidentity.SmileIDOptIn
+import com.smileidentity.compose.SmartSelfieEnrollment
+import com.smileidentity.compose.SmartSelfieEnrollmentEnhanced
 import com.smileidentity.compose.components.ImageCaptureConfirmationDialog
 import com.smileidentity.compose.components.LocalMetadata
 import com.smileidentity.compose.selfie.SelfieCaptureScreen
@@ -58,7 +60,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
     viewId: Int,
     messenger: BinaryMessenger,
     args: Map<String, Any?>,
-) : SmileComposablePlatformView(context, VIEW_TYPE_ID, viewId, messenger, args) {
+) : SmileSelfieComposablePlatformView(context, VIEW_TYPE_ID, viewId, messenger, args) {
     companion object {
         const val VIEW_TYPE_ID = "SmileIDSmartSelfieCaptureView"
     }
@@ -66,198 +68,43 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
     @OptIn(SmileIDOptIn::class)
     @Composable
     override fun Content(args: Map<String, Any?>) {
-        val showConfirmationDialog = args["showConfirmationDialog"] as? Boolean ?: true
         val showInstructions = args["showInstructions"] as? Boolean ?: true
         val showAttribution = args["showAttribution"] as? Boolean ?: true
         val allowAgentMode = args["allowAgentMode"] as? Boolean ?: true
+        val allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false
         val useStrictMode = args["useStrictMode"] as? Boolean ?: false
-        var acknowledgedInstructions by rememberSaveable { mutableStateOf(false) }
         val userId = randomUserId()
         val jobId = randomJobId()
-        val metadata = LocalMetadata.current
-        val viewModel: SelfieViewModel =
-            viewModel(
-                factory =
-                    viewModelFactory {
-                        SelfieViewModel(
-                            isEnroll = false,
-                            userId = userId,
-                            jobId = jobId,
-                            allowNewEnroll = false,
-                            skipApiSubmission = true,
-                            metadata = metadata,
-                        )
-                    },
-            )
-        val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
         CompositionLocalProvider(
             LocalMetadata provides remember { Metadata.default().items.toMutableStateList() },
         ) {
             MaterialTheme(colorScheme = SmileID.colorScheme, typography = SmileID.typography) {
                 Surface(
                     content = {
-                        when {
-                            useStrictMode ->
-                                RenderStrictModeCapture(
-                                    userId,
-                                    showInstructions,
-                                    showAttribution,
-                                )
-
-                            showInstructions && !acknowledgedInstructions ->
-                                SmartSelfieInstructionsScreen(
-                                    showAttribution = showAttribution,
-                                ) {
-                                    acknowledgedInstructions = true
-                                }
-
-                            uiState.processingState != null -> HandleProcessingState(viewModel)
-                            uiState.selfieToConfirm != null ->
-                                HandleSelfieConfirmation(
-                                    showConfirmationDialog,
-                                    uiState,
-                                    viewModel,
-                                )
-
-                            else ->
-                                RenderSelfieCaptureScreen(
-                                    userId,
-                                    jobId,
-                                    allowAgentMode,
-                                    viewModel,
-                                )
+                        if (useStrictMode) {
+                            SmileID.SmartSelfieEnrollmentEnhanced(
+                                userId = userId,
+                                allowNewEnroll = allowNewEnroll,
+                                showAttribution = showAttribution,
+                                showInstructions = showInstructions,
+                                skipApiSubmission = true,
+                                onResult = { res -> handleResult(res) },
+                            )
+                        } else {
+                            SmileID.SmartSelfieEnrollment(
+                                userId = userId,
+                                jobId = jobId,
+                                allowNewEnroll = allowNewEnroll,
+                                allowAgentMode = allowAgentMode,
+                                showAttribution = showAttribution,
+                                showInstructions = showInstructions,
+                                skipApiSubmission = true,
+                                onResult = { res -> handleResult(res) },
+                            )
                         }
                     },
                 )
             }
-        }
-    }
-
-    @Composable
-    private fun RenderStrictModeCapture(
-        userId: String,
-        showInstructions: Boolean,
-        showAttribution: Boolean,
-    ) {
-        val context = LocalContext.current
-        val selfieQualityModel = remember { SelfieQualityModel.newInstance(context) }
-        OrchestratedSelfieCaptureScreenEnhanced(
-            modifier =
-                Modifier
-                    .background(color = Color.White)
-                    .windowInsetsPadding(WindowInsets.statusBars)
-                    .consumeWindowInsets(WindowInsets.statusBars)
-                    .fillMaxSize(),
-            userId = userId,
-            allowNewEnroll = false,
-            showInstructions = showInstructions,
-            isEnroll = true,
-            showAttribution = showAttribution,
-            selfieQualityModel = selfieQualityModel,
-            skipApiSubmission = true,
-            onResult = { res -> handleResult(res) },
-        )
-    }
-
-    @Composable
-    private fun RenderSelfieCaptureScreen(
-        userId: String,
-        jobId: String,
-        allowAgentMode: Boolean,
-        viewModel: SelfieViewModel,
-    ) {
-        Box(
-            modifier =
-                Modifier
-                    .background(color = Color.White)
-                    .windowInsetsPadding(WindowInsets.statusBars)
-                    .consumeWindowInsets(WindowInsets.statusBars)
-                    .fillMaxSize(),
-        ) {
-            SelfieCaptureScreen(
-                userId = userId,
-                jobId = jobId,
-                allowAgentMode = allowAgentMode ?: true,
-                allowNewEnroll = false,
-                skipApiSubmission = true,
-                viewModel = viewModel,
-            )
-        }
-    }
-
-    @Composable
-    private fun HandleSelfieConfirmation(
-        showConfirmation: Boolean,
-        uiState: SelfieUiState,
-        viewModel: SelfieViewModel,
-    ) {
-        if (showConfirmation) {
-            ImageCaptureConfirmationDialog(
-                titleText = stringResource(R.string.si_smart_selfie_confirmation_dialog_title),
-                subtitleText =
-                    stringResource(
-                        R.string.si_smart_selfie_confirmation_dialog_subtitle,
-                    ),
-                painter =
-                    BitmapPainter(
-                        BitmapFactory
-                            .decodeFile(uiState.selfieToConfirm!!.absolutePath)
-                            .asImageBitmap(),
-                    ),
-                confirmButtonText =
-                    stringResource(
-                        R.string.si_smart_selfie_confirmation_dialog_confirm_button,
-                    ),
-                onConfirm = {
-                    viewModel.submitJob()
-                },
-                retakeButtonText =
-                    stringResource(
-                        R.string.si_smart_selfie_confirmation_dialog_retake_button,
-                    ),
-                onRetake = viewModel::onSelfieRejected,
-                scaleFactor = 1.25f,
-            )
-        } else {
-            viewModel.submitJob()
-        }
-    }
-
-    @Composable
-    private fun HandleProcessingState(viewModel: SelfieViewModel) {
-        viewModel.onFinished { res ->
-            handleResult(res)
-        }
-    }
-
-    private fun handleResult(res: SmileIDResult<SmartSelfieResult>) {
-        when (res) {
-            is SmileIDResult.Success -> {
-                val result =
-                    SmartSelfieCaptureResult(
-                        selfieFile = res.data.selfieFile,
-                        livenessFiles = res.data.livenessFiles,
-                    )
-                val moshi =
-                    SmileID.moshi
-                        .newBuilder()
-                        .add(SelfieCaptureResultAdapter.FACTORY)
-                        .build()
-                val json =
-                    try {
-                        moshi
-                            .adapter(SmartSelfieCaptureResult::class.java)
-                            .toJson(result)
-                    } catch (e: Exception) {
-                        onError(e)
-                        return
-                    }
-                json?.let { js ->
-                    onSuccessJson(js)
-                }
-            }
-
-            is SmileIDResult.Error -> onError(res.throwable)
         }
     }
 

@@ -3,10 +3,12 @@
 ## 10.3.5
 
 * Added enhanced SmartSelfie™ capture Selfie capture screen component
+* Added `skipApiSubmission` to SmartSelfie™ capture which defaults to `false` and will allow Selfie
+  capture without submission to the api
 * Make consent information optional on Biometric KYC, Enhanced KYC and Enhanced Document
   Verification
-* Bump android to 10.5.1 (https://github.com/smileidentity/android/releases/tag/v10.5.1)
-* Bump iOS to 10.4.1 (https://github.com/smileidentity/ios/releases/tag/v10.4.1)
+* Bump android to 10.5.2 (https://github.com/smileidentity/android/releases/tag/v10.5.2)
+* Bump iOS to 10.4.2 (https://github.com/smileidentity/ios/releases/tag/v10.4.2)
 
 ## 10.3.4
 
