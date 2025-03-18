@@ -2168,7 +2168,7 @@ class _SmileIDApiCodec extends StandardMessageCodec {
   @override
   Object? readValueOfType(int type, ReadBuffer buffer) {
     switch (type) {
-      case 128:
+      case 128: 
         return FlutterActions.decode(readValue(buffer)!);
       case 129: 
         return FlutterAntifraud.decode(readValue(buffer)!);
@@ -2234,9 +2234,9 @@ class _SmileIDApiCodec extends StandardMessageCodec {
         return FlutterPrepUploadResponse.decode(readValue(buffer)!);
       case 160: 
         return FlutterProductsConfigRequest.decode(readValue(buffer)!);
-      case 161:
+      case 161: 
         return FlutterProductsConfigResponse.decode(readValue(buffer)!);
-      case 162:
+      case 162: 
         return FlutterServicesResponse.decode(readValue(buffer)!);
       case 163: 
         return FlutterSmartSelfieJobResult.decode(readValue(buffer)!);
@@ -2254,7 +2254,7 @@ class _SmileIDApiCodec extends StandardMessageCodec {
         return FlutterUploadRequest.decode(readValue(buffer)!);
       case 170: 
         return FlutterValidDocument.decode(readValue(buffer)!);
-      case 171:
+      case 171: 
         return FlutterValidDocumentsResponse.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);

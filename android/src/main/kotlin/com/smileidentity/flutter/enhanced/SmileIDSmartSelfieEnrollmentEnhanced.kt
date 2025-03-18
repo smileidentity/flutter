@@ -4,13 +4,8 @@ import android.content.Context
 import androidx.compose.runtime.Composable
 import com.smileidentity.SmileID
 import com.smileidentity.compose.SmartSelfieEnrollmentEnhanced
-import com.smileidentity.flutter.SmileComposablePlatformView
 import com.smileidentity.flutter.SmileSelfieComposablePlatformView
-import com.smileidentity.networking.FileAdapter
-import com.smileidentity.results.SmartSelfieResult
-import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomUserId
-import com.squareup.moshi.Moshi
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView

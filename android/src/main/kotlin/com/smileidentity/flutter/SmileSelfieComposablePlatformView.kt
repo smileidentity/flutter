@@ -15,7 +15,6 @@ internal abstract class SmileSelfieComposablePlatformView(
     messenger: BinaryMessenger,
     args: Map<String, Any?>,
 ) : SmileComposablePlatformView(context, viewTypeId, viewId, messenger, args) {
-
     protected fun handleResult(res: SmileIDResult<SmartSelfieResult>) {
         when (res) {
             is SmileIDResult.Success -> {
@@ -23,7 +22,7 @@ internal abstract class SmileSelfieComposablePlatformView(
                     SmartSelfieCaptureResult(
                         selfieFile = res.data.selfieFile,
                         livenessFiles = res.data.livenessFiles,
-                        apiResponse = res.data.apiResponse
+                        apiResponse = res.data.apiResponse,
                     )
                 val moshi =
                     SmileID.moshi
