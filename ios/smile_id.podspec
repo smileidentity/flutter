@@ -4,7 +4,7 @@
 Pod::Spec.new do |s|
   s.name = 'smile_id'
   # NB! Keep this version in sync with the Native iOS SDK version
-  s.version = '10.3.5'
+  s.version = '10.4.2'
   s.summary = 'Official Smile ID SDK for Flutter'
   s.description = <<-DESC
 A new Flutter project.
