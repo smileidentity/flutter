@@ -26,6 +26,7 @@ import com.smileidentity.SmileID
 import com.smileidentity.SmileIDOptIn
 import com.smileidentity.flutter.enhanced.SmileIDSmartSelfieAuthenticationEnhanced
 import com.smileidentity.flutter.enhanced.SmileIDSmartSelfieEnrollmentEnhanced
+import com.smileidentity.flutter.results.SmileIDResultsAdapter
 import com.smileidentity.networking.asFormDataPart
 import com.smileidentity.networking.pollBiometricKycJobStatus
 import com.smileidentity.networking.pollDocumentVerificationJobStatus
@@ -122,6 +123,7 @@ class SmileIDPlugin :
             useSandbox = useSandbox,
             enableCrashReporting = false,
         )
+        SmileIDResultsAdapter.createFactory()
     }
 
     override fun initializeWithConfig(
@@ -135,6 +137,7 @@ class SmileIDPlugin :
             useSandbox = useSandbox,
             enableCrashReporting = false,
         )
+        SmileIDResultsAdapter.createFactory()
     }
 
     override fun initialize(useSandbox: Boolean) {
@@ -142,6 +145,7 @@ class SmileIDPlugin :
             context = appContext,
             useSandbox = useSandbox,
         )
+        SmileIDResultsAdapter.createFactory()
     }
 
     override fun setCallbackUrl(callbackUrl: String) {

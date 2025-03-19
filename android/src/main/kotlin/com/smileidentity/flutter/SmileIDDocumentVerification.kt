@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.compose.runtime.Composable
 import com.smileidentity.SmileID
 import com.smileidentity.compose.DocumentVerification
-import com.smileidentity.flutter.results.DocumentCaptureResult
-import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
+import com.smileidentity.flutter.results.SmileIDCaptureResult
+import com.smileidentity.flutter.results.SmileIDCaptureResultAdapterRegistry
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
@@ -50,23 +50,19 @@ internal class SmileIDDocumentVerification private constructor(
         ) {
             when (it) {
                 is SmileIDResult.Success -> {
-                    val result =
-                        DocumentCaptureResult(
-                            selfieFile = it.data.selfieFile,
-                            documentFrontFile = it.data.documentFrontFile,
-                            livenessFiles = it.data.livenessFiles,
-                            documentBackFile = it.data.documentBackFile,
-                            didSubmitDocumentVerificationJob =
-                                it.data.didSubmitDocumentVerificationJob,
-                        )
-                    val moshi =
-                        SmileID.moshi
-                            .newBuilder()
-                            .add(DocumentCaptureResultAdapter.FACTORY)
-                            .build()
                     val json =
                         try {
-                            moshi.adapter(DocumentCaptureResult::class.java).toJson(result)
+                            SmileIDCaptureResultAdapterRegistry.documentVerificationAdapter
+                                .toJson(
+                                    SmileIDCaptureResult.DocumentCaptureResult.DocumentVerification(
+                                        selfieFile = it.data.selfieFile,
+                                        documentFrontFile = it.data.documentFrontFile,
+                                        livenessFiles = it.data.livenessFiles,
+                                        documentBackFile = it.data.documentBackFile,
+                                        didSubmitDocumentVerificationJob =
+                                            it.data.didSubmitDocumentVerificationJob,
+                                    ),
+                                )
                         } catch (e: Exception) {
                             onError(e)
                             return@DocumentVerification

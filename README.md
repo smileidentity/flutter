@@ -29,9 +29,7 @@ Full documentation is available at https://docs.usesmileid.com/integration-optio
 #### 0. Requirements
 
 * Flutter 3.0.0+
-* Dart 3.0.5+
-* A `smile_config.json` file
-  from [https://portal.usesmileid.com/sdk](https://portal.usesmileid.com/sdk)
+* Dart 3.0.5+ A smile_config.json file from [SmileID](https://portal.usesmileid.com/sdk)
 * See: https://github.com/smileidentity/android for Android specific requirements
 * See: https://github.com/smileidentity/ios for iOS specific requirements
 

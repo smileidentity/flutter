@@ -17,8 +17,8 @@ import com.smileidentity.compose.document.DocumentCaptureScreen
 import com.smileidentity.compose.document.DocumentCaptureSide
 import com.smileidentity.compose.theme.colorScheme
 import com.smileidentity.compose.theme.typography
-import com.smileidentity.flutter.results.DocumentCaptureResult
-import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
+import com.smileidentity.flutter.results.SmileIDCaptureResult
+import com.smileidentity.flutter.results.SmileIDCaptureResultAdapterRegistry
 import com.smileidentity.models.v2.Metadata
 import com.smileidentity.util.randomJobId
 import io.flutter.plugin.common.BinaryMessenger
@@ -126,27 +126,21 @@ internal class SmileIDDocumentCaptureView private constructor(
         isDocumentFrontSide: Boolean,
         file: File,
     ) {
-        val moshi =
-            SmileID.moshi
-                .newBuilder()
-                .add(DocumentCaptureResultAdapter.FACTORY)
-                .build()
-        val result =
-            DocumentCaptureResult(
-                documentFrontFile = if (isDocumentFrontSide) file else null,
-                documentBackFile = if (!isDocumentFrontSide) file else null,
-            )
         val json =
             try {
-                moshi
-                    .adapter(DocumentCaptureResult::class.java)
-                    .toJson(result)
+                SmileIDCaptureResultAdapterRegistry.documentCaptureAdapter
+                    .toJson(
+                        SmileIDCaptureResult.DocumentCaptureResult.DocumentCapture(
+                            documentFrontFile = if (isDocumentFrontSide) file else null,
+                            documentBackFile = if (isDocumentFrontSide) null else file,
+                        ),
+                    )
             } catch (e: Exception) {
                 onError(e)
                 return
             }
-        json?.let {
-            onSuccessJson(it)
+        json?.let { js ->
+            onSuccessJson(js)
         }
     }
 

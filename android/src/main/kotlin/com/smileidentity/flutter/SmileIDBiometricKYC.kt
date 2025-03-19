@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.compose.runtime.Composable
 import com.smileidentity.SmileID
 import com.smileidentity.compose.BiometricKYC
-import com.smileidentity.flutter.results.SmartSelfieCaptureResult
-import com.smileidentity.flutter.utils.SelfieCaptureResultAdapter
+import com.smileidentity.flutter.results.SmileIDCaptureResult
+import com.smileidentity.flutter.results.SmileIDCaptureResultAdapterRegistry
 import com.smileidentity.flutter.utils.getCurrentIsoTimestamp
 import com.smileidentity.models.ConsentInformation
 import com.smileidentity.models.IdInfo
@@ -68,22 +68,16 @@ internal class SmileIDBiometricKYC private constructor(
         ) {
             when (it) {
                 is SmileIDResult.Success -> {
-                    val result =
-                        SmartSelfieCaptureResult(
-                            selfieFile = it.data.selfieFile,
-                            livenessFiles = it.data.livenessFiles,
-                            didSubmitBiometricKycJob = it.data.didSubmitBiometricKycJob,
-                        )
-                    val moshi =
-                        SmileID.moshi
-                            .newBuilder()
-                            .add(SelfieCaptureResultAdapter.FACTORY)
-                            .build()
                     val json =
                         try {
-                            moshi
-                                .adapter(SmartSelfieCaptureResult::class.java)
-                                .toJson(result)
+                            SmileIDCaptureResultAdapterRegistry.biometricKycAdapter
+                                .toJson(
+                                    SmileIDCaptureResult.BiometricKYC(
+                                        selfieFile = it.data.selfieFile,
+                                        livenessFiles = it.data.livenessFiles,
+                                        didSubmitBiometricKycJob = it.data.didSubmitBiometricKycJob,
+                                    ),
+                                )
                         } catch (e: Exception) {
                             onError(e)
                             return@BiometricKYC

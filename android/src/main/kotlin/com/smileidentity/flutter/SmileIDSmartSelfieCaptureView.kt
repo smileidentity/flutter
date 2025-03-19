@@ -14,7 +14,11 @@ import com.smileidentity.compose.SmartSelfieEnrollmentEnhanced
 import com.smileidentity.compose.components.LocalMetadata
 import com.smileidentity.compose.theme.colorScheme
 import com.smileidentity.compose.theme.typography
+import com.smileidentity.flutter.results.SmileIDCaptureResult
+import com.smileidentity.flutter.results.SmileIDCaptureResultAdapterRegistry
 import com.smileidentity.models.v2.Metadata
+import com.smileidentity.results.SmartSelfieResult
+import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
 import io.flutter.plugin.common.BinaryMessenger
@@ -72,6 +76,31 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                     },
                 )
             }
+        }
+    }
+
+    override fun handleResult(res: SmileIDResult<SmartSelfieResult>) {
+        when (res) {
+            is SmileIDResult.Success -> {
+                val json =
+                    try {
+                        SmileIDCaptureResultAdapterRegistry.selfieAdapter
+                            .toJson(
+                                SmileIDCaptureResult.SmartSelfieCapture(
+                                    selfieFile = res.data.selfieFile,
+                                    livenessFiles = res.data.livenessFiles,
+                                ),
+                            )
+                    } catch (e: Exception) {
+                        onError(e)
+                        return
+                    }
+                json?.let { js ->
+                    onSuccessJson(js)
+                }
+            }
+
+            is SmileIDResult.Error -> onError(res.throwable)
         }
     }
 
