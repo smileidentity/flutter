@@ -91,7 +91,6 @@ struct SmileIDRootView: View {
             if useStrictMode {
                 AnyView(OrchestratedEnhancedSelfieCaptureScreen(
                     userId: generateUserId(),
-                    isEnroll: false,
                     allowNewEnroll: allowNewEnroll,
                     showAttribution: showAttribution,
                     showInstructions: showInstructions,
@@ -103,8 +102,7 @@ struct SmileIDRootView: View {
                 AnyView(OrchestratedSelfieCaptureScreen(
                     userId: generateUserId(),
                     jobId: generateJobId(),
-                    isEnroll: allowNewEnroll,
-                    allowNewEnroll: false,
+                    allowNewEnroll: allowNewEnroll,
                     allowAgentMode: allowAgentMode,
                     showAttribution: showAttribution,
                     showInstructions: showInstructions,
