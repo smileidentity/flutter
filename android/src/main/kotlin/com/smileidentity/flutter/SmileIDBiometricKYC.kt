@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import com.smileidentity.SmileID
 import com.smileidentity.compose.BiometricKYC
 import com.smileidentity.flutter.results.SmileIDCaptureResult
-import com.smileidentity.flutter.results.SmileIDCaptureResultAdapterRegistry
 import com.smileidentity.flutter.utils.getCurrentIsoTimestamp
 import com.smileidentity.models.ConsentInformation
 import com.smileidentity.models.IdInfo
@@ -70,11 +69,15 @@ internal class SmileIDBiometricKYC private constructor(
                 is SmileIDResult.Success -> {
                     val json =
                         try {
-                            SmileIDCaptureResultAdapterRegistry.biometricKycAdapter
+                            SmileID.moshi
+                                .adapter(SmileIDCaptureResult.BiometricKYC::class.java)
                                 .toJson(
                                     SmileIDCaptureResult.BiometricKYC(
-                                        selfieFile = it.data.selfieFile,
-                                        livenessFiles = it.data.livenessFiles,
+                                        selfieFile = it.data.selfieFile.absolutePath,
+                                        livenessFiles =
+                                            it.data.livenessFiles.map { file ->
+                                                file.absolutePath
+                                            },
                                         didSubmitBiometricKycJob = it.data.didSubmitBiometricKycJob,
                                     ),
                                 )

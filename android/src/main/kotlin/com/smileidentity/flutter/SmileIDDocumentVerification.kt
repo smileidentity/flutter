@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import com.smileidentity.SmileID
 import com.smileidentity.compose.DocumentVerification
 import com.smileidentity.flutter.results.SmileIDCaptureResult
-import com.smileidentity.flutter.results.SmileIDCaptureResultAdapterRegistry
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
@@ -52,16 +51,26 @@ internal class SmileIDDocumentVerification private constructor(
                 is SmileIDResult.Success -> {
                     val json =
                         try {
-                            SmileIDCaptureResultAdapterRegistry.documentVerificationAdapter
-                                .toJson(
-                                    SmileIDCaptureResult.DocumentCaptureResult.DocumentVerification(
-                                        selfieFile = it.data.selfieFile,
-                                        documentFrontFile = it.data.documentFrontFile,
-                                        livenessFiles = it.data.livenessFiles,
-                                        documentBackFile = it.data.documentBackFile,
-                                        didSubmitDocumentVerificationJob =
-                                            it.data.didSubmitDocumentVerificationJob,
-                                    ),
+                            SmileID.moshi
+                                .adapter(
+                                    SmileIDCaptureResult.DocumentCaptureResult
+                                        .DocumentVerification::class.java,
+                                ).toJson(
+                                    SmileIDCaptureResult.DocumentCaptureResult
+                                        .DocumentVerification(
+                                            selfieFile = it.data.selfieFile.absolutePath,
+                                            livenessFiles =
+                                                it.data.livenessFiles?.map { file ->
+                                                    file.absolutePath
+                                                },
+                                            documentFrontFile =
+                                                it.data.documentFrontFile.absolutePath,
+                                            documentBackFile =
+                                                it.data.documentBackFile
+                                                    ?.absolutePath,
+                                            didSubmitDocumentVerificationJob =
+                                                it.data.didSubmitDocumentVerificationJob,
+                                        ),
                                 )
                         } catch (e: Exception) {
                             onError(e)

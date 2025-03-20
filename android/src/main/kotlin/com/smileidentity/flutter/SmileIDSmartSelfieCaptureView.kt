@@ -15,7 +15,6 @@ import com.smileidentity.compose.components.LocalMetadata
 import com.smileidentity.compose.theme.colorScheme
 import com.smileidentity.compose.theme.typography
 import com.smileidentity.flutter.results.SmileIDCaptureResult
-import com.smileidentity.flutter.results.SmileIDCaptureResultAdapterRegistry
 import com.smileidentity.models.v2.Metadata
 import com.smileidentity.results.SmartSelfieResult
 import com.smileidentity.results.SmileIDResult
@@ -84,11 +83,15 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
             is SmileIDResult.Success -> {
                 val json =
                     try {
-                        SmileIDCaptureResultAdapterRegistry.selfieAdapter
+                        SmileID.moshi
+                            .adapter(SmileIDCaptureResult.SmartSelfieCapture::class.java)
                             .toJson(
                                 SmileIDCaptureResult.SmartSelfieCapture(
-                                    selfieFile = res.data.selfieFile,
-                                    livenessFiles = res.data.livenessFiles,
+                                    selfieFile = res.data.selfieFile.absolutePath,
+                                    livenessFiles =
+                                        res.data.livenessFiles.map { file ->
+                                            file.absolutePath
+                                        },
                                 ),
                             )
                     } catch (e: Exception) {

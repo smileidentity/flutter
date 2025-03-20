@@ -1,54 +1,63 @@
 package com.smileidentity.flutter.results
 
 import com.smileidentity.models.v2.SmartSelfieResponse
-import java.io.File
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true, generator = "sealed:type")
 sealed class SmileIDCaptureResult {
-    abstract val selfieFile: File?
-    abstract val livenessFiles: List<File>?
+    abstract val selfieFile: String?
+    abstract val livenessFiles: List<String>?
 
+    @JsonClass(generateAdapter = true)
     data class SmartSelfieCapture(
-        override val selfieFile: File?,
-        override val livenessFiles: List<File>?,
+        @Json(name = "selfieFile") override val selfieFile: String?,
+        @Json(name = "livenessFiles") override val livenessFiles: List<String>?,
     ) : SmileIDCaptureResult()
 
+    @JsonClass(generateAdapter = true)
     data class SmartSelfieCaptureResponse(
-        override val selfieFile: File?,
-        override val livenessFiles: List<File>?,
+        @Json(name = "selfieFile") override val selfieFile: String?,
+        @Json(name = "livenessFiles") override val livenessFiles: List<String>?,
         val apiResponse: SmartSelfieResponse? = null,
     ) : SmileIDCaptureResult()
 
     sealed class DocumentCaptureResult : SmileIDCaptureResult() {
-        abstract val documentFrontFile: File?
-        abstract val documentBackFile: File?
+        abstract val documentFrontFile: String?
+        abstract val documentBackFile: String?
 
+        @JsonClass(generateAdapter = true)
         data class DocumentCapture(
-            override val selfieFile: File? = null,
-            override val livenessFiles: List<File>? = null,
-            override val documentFrontFile: File? = null,
-            override val documentBackFile: File? = null,
+            @Json(name = "selfieFile") override val selfieFile: String? = null,
+            @Json(name = "livenessFiles") override val livenessFiles: List<String>? = null,
+            @Json(name = "documentFrontFile") override val documentFrontFile: String?,
+            @Json(name = "documentBackFile") override val documentBackFile: String?,
         ) : DocumentCaptureResult()
 
+        @JsonClass(generateAdapter = true)
         data class DocumentVerification(
-            override val selfieFile: File? = null,
-            override val livenessFiles: List<File>? = null,
-            override val documentFrontFile: File? = null,
-            override val documentBackFile: File? = null,
-            val didSubmitDocumentVerificationJob: Boolean? = null,
+            @Json(name = "selfieFile") override val selfieFile: String?,
+            @Json(name = "livenessFiles") override val livenessFiles: List<String>?,
+            @Json(name = "documentFrontFile") override val documentFrontFile: String?,
+            @Json(name = "documentBackFile") override val documentBackFile: String?,
+            @Json(name = "didSubmitDocumentVerificationJob") val didSubmitDocumentVerificationJob:
+                Boolean? = null,
         ) : DocumentCaptureResult()
 
+        @JsonClass(generateAdapter = true)
         data class EnhancedDocumentVerification(
-            override val selfieFile: File?,
-            override val livenessFiles: List<File>?,
-            override val documentFrontFile: File?,
-            override val documentBackFile: File?,
-            val didSubmitEnhancedDocVJob: Boolean? = null,
+            @Json(name = "selfieFile") override val selfieFile: String?,
+            @Json(name = "livenessFiles") override val livenessFiles: List<String>?,
+            @Json(name = "documentFrontFile") override val documentFrontFile: String?,
+            @Json(name = "documentBackFile") override val documentBackFile: String?,
+            @Json(name = "didSubmitEnhancedDocVJob") val didSubmitEnhancedDocVJob: Boolean? = null,
         ) : DocumentCaptureResult()
     }
 
+    @JsonClass(generateAdapter = true)
     data class BiometricKYC(
-        override val selfieFile: File?,
-        override val livenessFiles: List<File>?,
-        val didSubmitBiometricKycJob: Boolean? = null,
+        @Json(name = "selfieFile") override val selfieFile: String?,
+        @Json(name = "livenessFiles") override val livenessFiles: List<String>?,
+        @Json(name = "didSubmitBiometricKycJob")val didSubmitBiometricKycJob: Boolean? = null,
     ) : SmileIDCaptureResult()
 }

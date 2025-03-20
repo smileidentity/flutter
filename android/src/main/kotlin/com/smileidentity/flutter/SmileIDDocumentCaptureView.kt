@@ -18,7 +18,6 @@ import com.smileidentity.compose.document.DocumentCaptureSide
 import com.smileidentity.compose.theme.colorScheme
 import com.smileidentity.compose.theme.typography
 import com.smileidentity.flutter.results.SmileIDCaptureResult
-import com.smileidentity.flutter.results.SmileIDCaptureResultAdapterRegistry
 import com.smileidentity.models.v2.Metadata
 import com.smileidentity.util.randomJobId
 import io.flutter.plugin.common.BinaryMessenger
@@ -105,7 +104,12 @@ internal class SmileIDDocumentCaptureView private constructor(
             }
         DocumentCaptureScreen(
             jobId = jobId,
-            side = if (isDocumentFrontSide) DocumentCaptureSide.Front else DocumentCaptureSide.Back,
+            side =
+                if (isDocumentFrontSide) {
+                    DocumentCaptureSide.Front
+                } else {
+                    DocumentCaptureSide.Back
+                },
             showInstructions = showInstructions,
             showAttribution = showAttribution,
             allowGallerySelection = allowGalleryUpload,
@@ -128,11 +132,22 @@ internal class SmileIDDocumentCaptureView private constructor(
     ) {
         val json =
             try {
-                SmileIDCaptureResultAdapterRegistry.documentCaptureAdapter
+                SmileID.moshi
+                    .adapter(SmileIDCaptureResult.DocumentCaptureResult::class.java)
                     .toJson(
                         SmileIDCaptureResult.DocumentCaptureResult.DocumentCapture(
-                            documentFrontFile = if (isDocumentFrontSide) file else null,
-                            documentBackFile = if (isDocumentFrontSide) null else file,
+                            documentFrontFile =
+                                if (isDocumentFrontSide) {
+                                    file.absolutePath
+                                } else {
+                                    null
+                                },
+                            documentBackFile =
+                                if (isDocumentFrontSide) {
+                                    null
+                                } else {
+                                    file.absolutePath
+                                },
                         ),
                     )
             } catch (e: Exception) {

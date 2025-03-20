@@ -1,8 +1,8 @@
 package com.smileidentity.flutter
 
 import android.content.Context
+import com.smileidentity.SmileID
 import com.smileidentity.flutter.results.SmileIDCaptureResult
-import com.smileidentity.flutter.results.SmileIDCaptureResultAdapterRegistry
 import com.smileidentity.results.SmartSelfieResult
 import com.smileidentity.results.SmileIDResult
 import io.flutter.plugin.common.BinaryMessenger
@@ -19,11 +19,16 @@ internal abstract class SmileSelfieComposablePlatformView(
             is SmileIDResult.Success -> {
                 val json =
                     try {
-                        SmileIDCaptureResultAdapterRegistry.smartSelfieAdapter
-                            .toJson(
+                        SmileID.moshi
+                            .adapter(
+                                SmileIDCaptureResult.SmartSelfieCaptureResponse::class.java,
+                            ).toJson(
                                 SmileIDCaptureResult.SmartSelfieCaptureResponse(
-                                    selfieFile = res.data.selfieFile,
-                                    livenessFiles = res.data.livenessFiles,
+                                    selfieFile = res.data.selfieFile.absolutePath,
+                                    livenessFiles =
+                                        res.data.livenessFiles.map { file ->
+                                            file.absolutePath
+                                        },
                                     apiResponse = res.data.apiResponse,
                                 ),
                             )

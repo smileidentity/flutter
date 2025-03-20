@@ -24,6 +24,7 @@ buildscript {
         } else {
             classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         }
+        classpath "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:2.1.10-1.0.31"
         classpath "org.jlleitschuh.gradle:ktlint-gradle:12.1.2"
     }
 }
@@ -38,6 +39,7 @@ allprojects {
 
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
+apply plugin: "com.google.devtools.ksp"
 apply plugin: "org.jlleitschuh.gradle.ktlint"
 if (kotlinVersion?.startsWith("2")) {
     apply plugin: "org.jetbrains.kotlin.plugin.compose"
@@ -94,6 +96,8 @@ android {
         implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core"
         implementation "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.8"
         implementation "com.google.mlkit:object-detection:17.0.2"
+
+        ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.2")
 
         testImplementation "org.jetbrains.kotlin:kotlin-test"
         testImplementation "io.mockk:mockk:1.13.13"
