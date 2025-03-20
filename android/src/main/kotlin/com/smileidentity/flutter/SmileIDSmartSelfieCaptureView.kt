@@ -38,7 +38,6 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
         val showInstructions = args["showInstructions"] as? Boolean ?: true
         val showAttribution = args["showAttribution"] as? Boolean ?: true
         val allowAgentMode = args["allowAgentMode"] as? Boolean ?: true
-        val allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false
         val useStrictMode = args["useStrictMode"] as? Boolean ?: false
         val userId = randomUserId()
         val jobId = randomJobId()
@@ -51,7 +50,6 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                         if (useStrictMode) {
                             SmileID.SmartSelfieEnrollmentEnhanced(
                                 userId = userId,
-                                allowNewEnroll = allowNewEnroll,
                                 showAttribution = showAttribution,
                                 showInstructions = showInstructions,
                                 skipApiSubmission = true,
@@ -61,7 +59,6 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                             SmileID.SmartSelfieEnrollment(
                                 userId = userId,
                                 jobId = jobId,
-                                allowNewEnroll = allowNewEnroll,
                                 allowAgentMode = allowAgentMode,
                                 showAttribution = showAttribution,
                                 showInstructions = showInstructions,
