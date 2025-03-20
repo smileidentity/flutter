@@ -17,18 +17,16 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView, SmileIDFileU
         arguments args: [String: Any?],
         binaryMessenger messenger: FlutterBinaryMessenger
     ) {
-        let showConfirmationDialog = args["showConfirmationDialog"] as? Bool ?? true
         let showInstructions = args["showInstructions"] as? Bool ?? true
         let showAttribution = args["showAttribution"] as? Bool ?? true
         let allowAgentMode = args["allowAgentMode"] as? Bool ?? true
         let useStrictMode = args["useStrictMode"] as? Bool ?? false
-        let allowNewEnroll = args["allowNewEnroll"] as? Bool ?? false
 
         _viewModel = SelfieViewModel(
             isEnroll: false,
             userId: generateUserId(),
             jobId: generateJobId(),
-            allowNewEnroll: allowNewEnroll,
+            allowNewEnroll: false,
             skipApiSubmission: true,
             extraPartnerParams: [:],
             localMetadata: LocalMetadata()
@@ -41,12 +39,10 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView, SmileIDFileU
 
         let rootView = SmileIDRootView(
             viewModel: _viewModel,
-            showConfirmationDialog: showConfirmationDialog,
             showInstructions: showInstructions,
             allowAgentMode: allowAgentMode,
             showAttribution: showAttribution,
             useStrictMode: useStrictMode,
-            allowNewEnroll: allowNewEnroll,
             channel: _channel
         )
         _childViewController = UIHostingController(rootView: AnyView(rootView))
@@ -69,12 +65,10 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView, SmileIDFileU
 struct SmileIDRootView: View {
     @ObservedObject var viewModel: SelfieViewModel
     @State private var acknowledgedInstructions = false
-    let showConfirmationDialog: Bool
     let showInstructions: Bool
     let allowAgentMode: Bool
     let showAttribution: Bool
     let useStrictMode: Bool
-    let allowNewEnroll: Bool
     let channel: FlutterMethodChannel
     static let shared = FileManager()
     private let fileManager = Foundation.FileManager.default
@@ -89,27 +83,22 @@ struct SmileIDRootView: View {
     private var selfieCaptureScreen: some View {
         Group {
             if useStrictMode {
-                AnyView(OrchestratedEnhancedSelfieCaptureScreen(
+                SmileID.smartSelfieEnrollmentScreenEnhanced(
                     userId: generateUserId(),
-                    allowNewEnroll: allowNewEnroll,
                     showAttribution: showAttribution,
                     showInstructions: showInstructions,
                     skipApiSubmission: true,
-                    extraPartnerParams: [:],
-                    onResult: self
-                ))
+                    delegate: self
+                )
             } else {
-                AnyView(OrchestratedSelfieCaptureScreen(
+                SmileID.smartSelfieEnrollmentScreen(
                     userId: generateUserId(),
-                    jobId: generateJobId(),
-                    allowNewEnroll: allowNewEnroll,
                     allowAgentMode: allowAgentMode,
                     showAttribution: showAttribution,
                     showInstructions: showInstructions,
-                    extraPartnerParams: [:],
                     skipApiSubmission: true,
-                    onResult: self
-                ))
+                    delegate: self
+                )
             }
         }
     }
@@ -117,9 +106,7 @@ struct SmileIDRootView: View {
     private func encodeToJSONString<T: Encodable>(_ value: T) -> String? {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
-        guard let jsonData = try? encoder.encode(value) else {
-            return nil
-        }
+        guard let jsonData = try? encoder.encode(value) else { return nil }
         return String(data: jsonData, encoding: .utf8)
     }
 
@@ -140,9 +127,7 @@ extension SmileIDRootView: SmartSelfieResultDelegate {
         //        self.childViewController.removeFromParent()
         var arguments: [String: Any] = [
             "selfieFile": getFilePath(fileName: selfieImage.absoluteString),
-            "livenessFiles": livenessImages.map {
-                getFilePath(fileName: $0.absoluteString)
-            },
+            "livenessFiles": livenessImages.map { getFilePath(fileName: $0.absoluteString) },
         ]
         if let apiResponse = apiResponse {
             let encoder = JSONEncoder()
