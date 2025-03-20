@@ -18,10 +18,11 @@ class FlutterConsentInformation {
   final bool contactInfoConsentGranted;
   final bool documentInfoConsentGranted;
 
-  FlutterConsentInformation(this.consentGrantedDate,
-      this.personalDetailsConsentGranted,
-      this.contactInfoConsentGranted,
-      this.documentInfoConsentGranted);
+  FlutterConsentInformation(this.consentGrantedDate,{
+    this.personalDetailsConsentGranted = false,
+    this.contactInfoConsentGranted = false,
+    this.documentInfoConsentGranted = false,
+  });
 }
 
 enum FlutterJobType {
@@ -309,7 +310,7 @@ class FlutterEnhancedKycRequest {
   final FlutterPartnerParams partnerParams;
   final String timestamp;
   final String signature;
-  final FlutterConsentInformation consentInformation;
+  final FlutterConsentInformation? consentInformation;
 
   FlutterEnhancedKycRequest(
       {required this.country,
@@ -325,7 +326,7 @@ class FlutterEnhancedKycRequest {
       required this.partnerParams,
       required this.timestamp,
       required this.signature,
-      required this.consentInformation});
+      this.consentInformation});
 }
 
 class FlutterEnhancedKycAsyncResponse {

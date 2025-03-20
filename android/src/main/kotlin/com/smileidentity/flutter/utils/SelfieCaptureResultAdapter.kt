@@ -17,6 +17,7 @@ class SelfieCaptureResultAdapter : JsonAdapter<SmartSelfieCaptureResult>() {
         reader.beginObject()
         var selfieFile: File? = null
         var livenessFiles: List<File>? = null
+        var didSubmitBiometricKycJob: Boolean? = false
         var apiResponse: SmartSelfieResponse? = null
 
         while (reader.hasNext()) {
@@ -36,6 +37,7 @@ class SelfieCaptureResultAdapter : JsonAdapter<SmartSelfieCaptureResult>() {
                 "apiResponse" ->
                     apiResponse =
                         SmileID.moshi.adapter(SmartSelfieResponse::class.java).fromJson(reader)
+                "didSubmitBiometricKycJob" -> reader.nextBoolean()
 
                 else -> reader.skipValue()
             }
@@ -46,6 +48,7 @@ class SelfieCaptureResultAdapter : JsonAdapter<SmartSelfieCaptureResult>() {
             selfieFile = selfieFile,
             livenessFiles = livenessFiles,
             apiResponse = apiResponse,
+            didSubmitBiometricKycJob = didSubmitBiometricKycJob,
         )
     }
 
@@ -65,7 +68,7 @@ class SelfieCaptureResultAdapter : JsonAdapter<SmartSelfieCaptureResult>() {
         writer.beginArray()
         value.livenessFiles?.forEach { writer.value(it.absolutePath) }
         writer.endArray()
-
+        writer.name("didSubmitBiometricKycJob").value(value.didSubmitBiometricKycJob)
         writer.name("apiResponse")
         if (value.apiResponse != null) {
             SmileID.moshi.adapter(SmartSelfieResponse::class.java).toJson(

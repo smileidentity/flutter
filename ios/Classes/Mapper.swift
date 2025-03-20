@@ -61,11 +61,15 @@ func getFile(atPath path: String) -> Data? {
 extension FlutterPartnerParams {
     func toRequest() -> PartnerParams {
         let mappedExtras = (extras?
-           .compactMapValues { $0 }
-           .filter { $0.key != nil && !$0.key!.isEmpty && !$0.value.isEmpty }
-           .reduce(into: [String: String]()) { dict, pair in
-               dict[pair.key!] = pair.value
-           }) ?? [:]
+        .compactMapValues {
+            $0
+        }
+        .filter {
+            $0.key != nil && !$0.key!.isEmpty && !$0.value.isEmpty
+        }
+        .reduce(into: [String: String]()) { dict, pair in
+            dict[pair.key!] = pair.value
+        }) ?? [:]
         return PartnerParams(
             jobId: jobId,
             userId: userId,
@@ -262,7 +266,13 @@ extension FlutterEnhancedKycRequest {
             country: country,
             idType: idType,
             idNumber: idNumber,
-            consentInformation: consentInformation.toRequest(),
+            consentInformation: consentInformation?
+                .toRequest() ?? ConsentInformation(
+                    consentGrantedDate: getCurrentIsoTimestamp(),
+                    personalDetailsConsentGranted: false,
+                    contactInformationConsentGranted: false,
+                    documentInformationConsentGranted: false
+                ),
             firstName: firstName,
             middleName: middleName,
             lastName: lastName,
