@@ -17,7 +17,6 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView, SmileIDFileU
         arguments args: [String: Any?],
         binaryMessenger messenger: FlutterBinaryMessenger
     ) {
-        let showConfirmationDialog = args["showConfirmationDialog"] as? Bool ?? true
         let showInstructions = args["showInstructions"] as? Bool ?? true
         let showAttribution = args["showAttribution"] as? Bool ?? true
         let allowAgentMode = args["allowAgentMode"] as? Bool ?? true
@@ -27,6 +26,7 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView, SmileIDFileU
             isEnroll: false,
             userId: generateUserId(),
             jobId: generateJobId(),
+            allowNewEnroll: false,
             skipApiSubmission: true,
             extraPartnerParams: [:],
             localMetadata: LocalMetadata()
@@ -39,7 +39,6 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView, SmileIDFileU
 
         let rootView = SmileIDRootView(
             viewModel: _viewModel,
-            showConfirmationDialog: showConfirmationDialog,
             showInstructions: showInstructions,
             allowAgentMode: allowAgentMode,
             showAttribution: showAttribution,
@@ -66,7 +65,6 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView, SmileIDFileU
 struct SmileIDRootView: View {
     @ObservedObject var viewModel: SelfieViewModel
     @State private var acknowledgedInstructions = false
-    let showConfirmationDialog: Bool
     let showInstructions: Bool
     let allowAgentMode: Bool
     let showAttribution: Bool
@@ -85,27 +83,22 @@ struct SmileIDRootView: View {
     private var selfieCaptureScreen: some View {
         Group {
             if useStrictMode {
-                AnyView(OrchestratedEnhancedSelfieCaptureScreen(
+                SmileID.smartSelfieEnrollmentScreenEnhanced(
                     userId: generateUserId(),
-                    isEnroll: false,
                     showAttribution: showAttribution,
                     showInstructions: showInstructions,
                     skipApiSubmission: true,
-                    extraPartnerParams: [:],
-                    onResult: self
-                ))
+                    delegate: self
+                )
             } else {
-                AnyView(OrchestratedSelfieCaptureScreen(
+                SmileID.smartSelfieEnrollmentScreen(
                     userId: generateUserId(),
-                    jobId: generateJobId(),
-                    isEnroll: false,
                     allowAgentMode: allowAgentMode,
                     showAttribution: showAttribution,
                     showInstructions: showInstructions,
-                    extraPartnerParams: [:],
                     skipApiSubmission: true,
-                    onResult: self
-                ))
+                    delegate: self
+                )
             }
         }
     }
