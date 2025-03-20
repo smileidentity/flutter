@@ -29,12 +29,6 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
         let screen = SmileID.enhancedDocumentVerificationScreen(
             userId: args["userId"] as? String ?? "user-\(UUID().uuidString)",
             jobId: args["jobId"] as? String ?? "job-\(UUID().uuidString)",
-            consentInformation: ConsentInformation(
-                consentGrantedDate: args["consentGrantedDate"] as? String ?? getCurrentIsoTimestamp(),
-                personalDetailsConsentGranted: args["personalDetailsConsentGranted"] as? Bool ?? false,
-                contactInformationConsentGranted: args["contactInfoConsentGranted"] as? Bool ?? false,
-                documentInformationConsentGranted: args["documentInfoConsentGranted"] as? Bool ?? false
-            ),
             allowNewEnroll: args["allowNewEnroll"] as? Bool ?? false,
             countryCode: args["countryCode"] as! String,
             documentType: args["documentType"] as? String,
@@ -48,6 +42,12 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
             showAttribution: args["showAttribution"] as? Bool ?? true,
             useStrictMode: args["useStrictMode"] as? Bool ?? false,
             extraPartnerParams: args["extraPartnerParams"] as? [String: String] ?? [:],
+            consentInformation: ConsentInformation(
+                consentGrantedDate: args["consentGrantedDate"] as? String ?? getCurrentIsoTimestamp(),
+                personalDetailsConsentGranted: args["personalDetailsConsentGranted"] as? Bool ?? false,
+                contactInformationConsentGranted: args["contactInfoConsentGranted"] as? Bool ?? false,
+                documentInformationConsentGranted: args["documentInfoConsentGranted"] as? Bool ?? false
+            ),
             delegate: self
         )
         let navView = NavigationView{screen}

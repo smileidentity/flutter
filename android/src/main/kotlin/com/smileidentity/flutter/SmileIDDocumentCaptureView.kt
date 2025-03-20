@@ -17,8 +17,7 @@ import com.smileidentity.compose.document.DocumentCaptureScreen
 import com.smileidentity.compose.document.DocumentCaptureSide
 import com.smileidentity.compose.theme.colorScheme
 import com.smileidentity.compose.theme.typography
-import com.smileidentity.flutter.results.DocumentCaptureResult
-import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
+import com.smileidentity.flutter.results.SmileIDCaptureResult
 import com.smileidentity.models.v2.Metadata
 import com.smileidentity.util.randomJobId
 import io.flutter.plugin.common.BinaryMessenger
@@ -105,7 +104,12 @@ internal class SmileIDDocumentCaptureView private constructor(
             }
         DocumentCaptureScreen(
             jobId = jobId,
-            side = if (isDocumentFrontSide) DocumentCaptureSide.Front else DocumentCaptureSide.Back,
+            side =
+                if (isDocumentFrontSide) {
+                    DocumentCaptureSide.Front
+                } else {
+                    DocumentCaptureSide.Back
+                },
             showInstructions = showInstructions,
             showAttribution = showAttribution,
             allowGallerySelection = allowGalleryUpload,
@@ -126,27 +130,32 @@ internal class SmileIDDocumentCaptureView private constructor(
         isDocumentFrontSide: Boolean,
         file: File,
     ) {
-        val moshi =
-            SmileID.moshi
-                .newBuilder()
-                .add(DocumentCaptureResultAdapter.FACTORY)
-                .build()
-        val result =
-            DocumentCaptureResult(
-                documentFrontFile = if (isDocumentFrontSide) file else null,
-                documentBackFile = if (!isDocumentFrontSide) file else null,
-            )
         val json =
             try {
-                moshi
-                    .adapter(DocumentCaptureResult::class.java)
-                    .toJson(result)
+                SmileID.moshi
+                    .adapter(SmileIDCaptureResult.DocumentCaptureResult::class.java)
+                    .toJson(
+                        SmileIDCaptureResult.DocumentCaptureResult.DocumentCapture(
+                            documentFrontFile =
+                                if (isDocumentFrontSide) {
+                                    file.absolutePath
+                                } else {
+                                    null
+                                },
+                            documentBackFile =
+                                if (isDocumentFrontSide) {
+                                    null
+                                } else {
+                                    file.absolutePath
+                                },
+                        ),
+                    )
             } catch (e: Exception) {
                 onError(e)
                 return
             }
-        json?.let {
-            onSuccessJson(it)
+        json?.let { js ->
+            onSuccessJson(js)
         }
     }
 

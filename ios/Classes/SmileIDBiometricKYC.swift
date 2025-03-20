@@ -36,12 +36,6 @@ class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDel
                 bankCode:  args["bankCode"] as? String,
                 entered:  args["entered"] as? Bool
             ),
-            consentInformation: ConsentInformation(
-                consentGrantedDate: args["consentGrantedDate"] as? String ?? getCurrentIsoTimestamp(),
-                personalDetailsConsentGranted: args["personalDetailsConsentGranted"] as? Bool ?? false,
-                contactInformationConsentGranted: args["contactInfoConsentGranted"] as? Bool ?? false,
-                documentInformationConsentGranted: args["documentInfoConsentGranted"] as? Bool ?? false
-            ),
             userId: args["userId"] as? String ?? generateUserId(),
             jobId: args["jobId"] as? String ?? generateJobId(),
             allowNewEnroll: args["allowNewEnroll"] as? Bool ?? false,
@@ -50,6 +44,12 @@ class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDel
             showInstructions: args["showInstructions"] as? Bool ?? true,
             useStrictMode: args["useStrictMode"] as? Bool ?? false,
             extraPartnerParams: args["extraPartnerParams"] as? [String: String] ?? [:],
+            consentInformation: ConsentInformation(
+                consentGrantedDate: args["consentGrantedDate"] as? String ?? getCurrentIsoTimestamp(),
+                personalDetailsConsentGranted: args["personalDetailsConsentGranted"] as? Bool ?? false,
+                contactInformationConsentGranted: args["contactInfoConsentGranted"] as? Bool ?? false,
+                documentInformationConsentGranted: args["documentInfoConsentGranted"] as? Bool ?? false
+            ),
             delegate: self
         )
         let navView = NavigationView{screen}
