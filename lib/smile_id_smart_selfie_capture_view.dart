@@ -25,6 +25,7 @@ class SmileIDSmartSelfieCaptureView extends StatelessWidget {
     bool showInstructions = true,
     bool showAttribution = true,
     bool allowAgentMode = true,
+    bool useStrictMode = false,
     required Function(String resultJson) onSuccess,
     required Function(String errorMessage) onError,
   }) {
@@ -36,6 +37,7 @@ class SmileIDSmartSelfieCaptureView extends StatelessWidget {
         "showInstructions": showInstructions,
         "showAttribution": showAttribution,
         "allowAgentMode": allowAgentMode,
+        "useStrictMode": useStrictMode,
       },
     );
   }

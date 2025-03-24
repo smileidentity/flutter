@@ -30,12 +30,11 @@ Full documentation is available at https://docs.usesmileid.com/integration-optio
 
 * Flutter 3.0.0+
 * Dart 3.0.5+
-* A `smile_config.json` file from [https://portal.usesmileid.com/sdk](https://portal.usesmileid.com/sdk)
+* A `smile_config.json` file from [SmileID](https://portal.usesmileid.com/sdk)
 * See: https://github.com/smileidentity/android for Android specific requirements
 * See: https://github.com/smileidentity/ios for iOS specific requirements
 
 #### 1. Dependency
-
 
 The latest release is available on [pub.dev](https://pub.dev/packages/smile_id)
 
@@ -50,7 +49,7 @@ dependencies:
 
 #### Android
 
-Place the `smile_config.json` file under your application's assets, located at `src/main/assets` 
+Place the `smile_config.json` file under your application's assets, located at `src/main/assets`
 (This should be at the same level as your `java` and `res` directories). You may need to create the
 directory if it does not already exist.
 

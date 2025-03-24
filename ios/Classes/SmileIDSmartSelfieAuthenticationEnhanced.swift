@@ -29,6 +29,7 @@ class SmileIDSmartSelfieAuthenticationEnhanced : NSObject, FlutterPlatformView, 
             allowNewEnroll: args["allowNewEnroll"] as? Bool ?? false,
             showAttribution: args["showAttribution"] as? Bool ?? true,
             showInstructions: args["showInstructions"] as? Bool ?? true,
+            skipApiSubmission: args["skipApiSubmission"] as? Bool ?? false,
             extraPartnerParams: args["extraPartnerParams"] as? [String: String] ?? [:],
             delegate: self
         )
@@ -90,6 +91,7 @@ struct EnhancedSelfieAuthenticationRootView: View {
     let allowNewEnroll: Bool
     let showAttribution: Bool
     let showInstructions: Bool
+    let skipApiSubmission: Bool
     let extraPartnerParams: [String: String]
     let delegate: SmartSelfieResultDelegate
 
@@ -100,6 +102,7 @@ struct EnhancedSelfieAuthenticationRootView: View {
                 allowNewEnroll: allowNewEnroll,
                 showAttribution: showAttribution,
                 showInstructions: showInstructions,
+                skipApiSubmission: skipApiSubmission,
                 extraPartnerParams: extraPartnerParams,
                 delegate: delegate
             )
