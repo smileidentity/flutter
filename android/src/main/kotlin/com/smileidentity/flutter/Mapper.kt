@@ -196,7 +196,7 @@ fun FlutterPrepUploadRequest.toRequest() =
     PrepUploadRequest(
         partnerParams = partnerParams.toRequest(),
         callbackUrl = callbackUrl,
-        allowNewEnroll = allowNewEnroll.toString(),
+        allowNewEnroll = allowNewEnroll,
         partnerId = partnerId,
         sourceSdk = "android (flutter)",
         timestamp = timestamp,

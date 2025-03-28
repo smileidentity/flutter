@@ -1,5 +1,12 @@
 # Release Notes
 
+## 10.4.0
+* Changes the `allow_new_enroll` flag to be a real boolean instead of a string for prepUpload
+  requests and multi-part requests. This is a breaking change for stored offline jobs, where the job
+  is written using an older sdk version and then submission is attempted using this version.
+* Bump android to 10.6.0 (https://github.com/smileidentity/android/releases/tag/v10.6.0)
+* Bump iOS to 10.5.0 (https://github.com/smileidentity/ios/releases/tag/v10.5.0)
+
 ## 10.3.5
 
 * Added enhanced SmartSelfie™ capture Selfie capture screen component
