@@ -4,8 +4,7 @@ import android.content.Context
 import androidx.compose.runtime.Composable
 import com.smileidentity.SmileID
 import com.smileidentity.compose.EnhancedDocumentVerificationScreen
-import com.smileidentity.flutter.results.DocumentCaptureResult
-import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
+import com.smileidentity.flutter.results.SmileIDCaptureResult
 import com.smileidentity.flutter.utils.getCurrentIsoTimestamp
 import com.smileidentity.models.ConsentInformation
 import com.smileidentity.results.SmileIDResult
@@ -60,24 +59,28 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
         ) {
             when (it) {
                 is SmileIDResult.Success -> {
-                    val result =
-                        DocumentCaptureResult(
-                            selfieFile = it.data.selfieFile,
-                            documentFrontFile = it.data.documentFrontFile,
-                            livenessFiles = it.data.livenessFiles,
-                            documentBackFile = it.data.documentBackFile,
-                            didSubmitEnhancedDocVJob = it.data.didSubmitEnhancedDocVJob,
-                        )
-                    val moshi =
-                        SmileID.moshi
-                            .newBuilder()
-                            .add(DocumentCaptureResultAdapter.FACTORY)
-                            .build()
                     val json =
                         try {
-                            moshi
-                                .adapter(DocumentCaptureResult::class.java)
-                                .toJson(result)
+                            SmileID.moshi
+                                .adapter(
+                                    SmileIDCaptureResult.DocumentCaptureResult
+                                        .EnhancedDocumentVerification::class.java,
+                                ).toJson(
+                                    SmileIDCaptureResult.DocumentCaptureResult
+                                        .EnhancedDocumentVerification(
+                                            selfieFile = it.data.selfieFile.absolutePath,
+                                            livenessFiles =
+                                                it.data.livenessFiles?.map { file ->
+                                                    file.absolutePath
+                                                },
+                                            documentFrontFile =
+                                                it.data.documentFrontFile.absolutePath,
+                                            documentBackFile =
+                                                it.data.documentBackFile?.absolutePath,
+                                            didSubmitEnhancedDocVJob =
+                                                it.data.didSubmitEnhancedDocVJob,
+                                        ),
+                                )
                         } catch (e: Exception) {
                             onError(e)
                             return@EnhancedDocumentVerificationScreen
