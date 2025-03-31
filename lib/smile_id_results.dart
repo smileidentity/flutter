@@ -21,11 +21,13 @@ class SmileIDResultsService implements SmileIDProductsResultApi {
   Future<void> onSmartSelfieEnrollmentResult(
       SmartSelfieCaptureResult? successResult, String? errorResult) async {
     if (successResult != null) {
-      return smartSelfieEnrollmentResultCallback(SmileIDSdkResultSuccess(successResult));
+      return smartSelfieEnrollmentResultCallback(
+          SmileIDSdkResultSuccess(successResult));
     }
 
     if (errorResult != null) {
-      return smartSelfieEnrollmentResultCallback(SmileIDSdkResultError(errorResult));
+      return smartSelfieEnrollmentResultCallback(
+          SmileIDSdkResultError(errorResult));
     }
   }
 }

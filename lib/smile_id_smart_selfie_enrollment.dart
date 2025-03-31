@@ -48,21 +48,25 @@ class SmileIDSmartSelfieEnrollment extends StatefulWidget {
   }
 
   @override
-  State<SmileIDSmartSelfieEnrollment> createState() => _SmileIDSmartSelfieEnrollmentState();
+  State<SmileIDSmartSelfieEnrollment> createState() =>
+      _SmileIDSmartSelfieEnrollmentState();
 }
 
-class _SmileIDSmartSelfieEnrollmentState extends State<SmileIDSmartSelfieEnrollment> {
+class _SmileIDSmartSelfieEnrollmentState
+    extends State<SmileIDSmartSelfieEnrollment> {
   @override
   void initState() {
     super.initState();
-    SmileIDResultsService.instance.smartSelfieEnrollmentResultCallback = (result) {
+    SmileIDResultsService.instance.smartSelfieEnrollmentResultCallback =
+        (result) {
       widget.onResult(result);
     };
   }
 
   @override
   void dispose() {
-    SmileIDResultsService.instance.smartSelfieEnrollmentResultCallback = (event) {};
+    SmileIDResultsService.instance.smartSelfieEnrollmentResultCallback =
+        (event) {};
     super.dispose();
   }
 
@@ -77,7 +81,8 @@ class _SmileIDSmartSelfieEnrollmentState extends State<SmileIDSmartSelfieEnrollm
               controller: controller as AndroidViewController,
               hitTestBehavior: PlatformViewHitTestBehavior.opaque,
               gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{
-                Factory<OneSequenceGestureRecognizer>(EagerGestureRecognizer.new)
+                Factory<OneSequenceGestureRecognizer>(
+                    EagerGestureRecognizer.new)
               },
             );
           },

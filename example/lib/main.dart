@@ -106,21 +106,22 @@ class MainContent extends StatelessWidget {
               ))
               .then(
                   (authResponse) => {
-                        SmileID.api.doEnhancedKycAsync(FlutterEnhancedKycRequest(
-                            country: "GH",
-                            idType: "DRIVERS_LICENSE",
-                            idNumber: "B0000000",
-                            callbackUrl: "https://somedummyurl.com/demo",
-                            partnerParams: FlutterPartnerParams(
-                                jobType: FlutterJobType.enhancedKyc,
-                                jobId: userId,
-                                userId: userId,
-                                extras: {
-                                  "name": "Dummy Name",
-                                  "work": "SmileID",
-                                }),
-                            timestamp: authResponse!.timestamp,
-                            signature: authResponse.signature))
+                        SmileID.api.doEnhancedKycAsync(
+                            FlutterEnhancedKycRequest(
+                                country: "GH",
+                                idType: "DRIVERS_LICENSE",
+                                idNumber: "B0000000",
+                                callbackUrl: "https://somedummyurl.com/demo",
+                                partnerParams: FlutterPartnerParams(
+                                    jobType: FlutterJobType.enhancedKyc,
+                                    jobId: userId,
+                                    userId: userId,
+                                    extras: {
+                                      "name": "Dummy Name",
+                                      "work": "SmileID",
+                                    }),
+                                timestamp: authResponse!.timestamp,
+                                signature: authResponse.signature))
                       },
                   onError: (error) => {print("error: $error")});
         });
@@ -181,7 +182,8 @@ class MainContent extends StatelessWidget {
             print('verification liveness: ${data.livenessFiles}');
             print('verification backFile: ${data.documentBackFile}');
             print('verification frontFile: ${data.documentFrontFile}');
-            print('verification didSubmitEnhancedDocVJob: ${data.didSubmitEnhancedDocVJob}');
+            print(
+                'verification didSubmitEnhancedDocVJob: ${data.didSubmitEnhancedDocVJob}');
           case SmileIDSdkResultError<DocumentCaptureResult>(:final error):
             print('error occurred with document verification enhanced: $error');
         }
@@ -199,16 +201,21 @@ class MainContent extends StatelessWidget {
               body: SmileIDSmartSelfieEnrollment(
                 onResult: (result) {
                   switch (result) {
-                    case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(:final data):
+                    case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(
+                        :final data
+                      ):
                       final formattedResult = jsonEncode({
                         'selfie': data.selfieFile,
                         'liveness': data.livenessFiles,
                         'apiResponse': data.apiResponse
                       });
-                      final snackBar = SnackBar(content: Text("Success: $formattedResult"));
+                      final snackBar =
+                          SnackBar(content: Text("Success: $formattedResult"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       Navigator.of(context).pop();
-                    case SmileIDSdkResultError<SmartSelfieCaptureResult>(:final error):
+                    case SmileIDSdkResultError<SmartSelfieCaptureResult>(
+                        :final error
+                      ):
                       final snackBar = SnackBar(content: Text("Error: $error"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       Navigator.of(context).pop();
@@ -264,7 +271,8 @@ class MainContent extends StatelessWidget {
             print('enrollment liveness: ${data.livenessFiles}');
             print('enrollment apiResponse: ${data.apiResponse}');
           case SmileIDSdkResultError<SmartSelfieCaptureResult>(:final error):
-            print('error occurred with smart selfie enrollment enhanced: $error');
+            print(
+                'error occurred with smart selfie enrollment enhanced: $error');
         }
       },
     );
@@ -287,7 +295,8 @@ class MainContent extends StatelessWidget {
             print('enrollment liveness: ${data.livenessFiles}');
             print('enrollment apiResponse: ${data.apiResponse}');
           case SmileIDSdkResultError<SmartSelfieCaptureResult>(:final error):
-            print('error occurred with smart selfie authentication enhanced: $error');
+            print(
+                'error occurred with smart selfie authentication enhanced: $error');
         }
       },
     );
@@ -309,7 +318,8 @@ class MainContent extends StatelessWidget {
           case SmileIDSdkResultSuccess<BiometricKYCCaptureResult>(:final data):
             print('biometric kyc selfie: ${data.selfieFile}');
             print('biometric kyc liveness: ${data.livenessFiles}');
-            print('biometric kyc didSubmitKycJob: ${data.didSubmitBiometricKycJob}');
+            print(
+                'biometric kyc didSubmitKycJob: ${data.didSubmitBiometricKycJob}');
           case SmileIDSdkResultError<BiometricKYCCaptureResult>(:final error):
             print('error occurred with biometric kyc: $error');
         }

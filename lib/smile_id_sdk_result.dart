@@ -5,13 +5,15 @@ sealed class SmileIDSdkResult<T extends Object> {
   const SmileIDSdkResult();
 }
 
-final class SmileIDSdkResultSuccess<T extends Object> extends SmileIDSdkResult<T> {
+final class SmileIDSdkResultSuccess<T extends Object>
+    extends SmileIDSdkResult<T> {
   final T data;
 
   const SmileIDSdkResultSuccess(this.data);
 }
 
-final class SmileIDSdkResultError<T extends Object> extends SmileIDSdkResult<T> {
+final class SmileIDSdkResultError<T extends Object>
+    extends SmileIDSdkResult<T> {
   final String error;
 
   const SmileIDSdkResultError(this.error);

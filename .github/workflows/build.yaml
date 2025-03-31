@@ -22,7 +22,8 @@ jobs:
         run: flutter pub get && cd example && flutter pub get && cd ..
 
       - name: Lint Flutter
-        run: flutter analyze
+        run: dart format . --set-exit-if-changed && flutter analyze
+
   Android:
     runs-on: ubuntu-latest
     timeout-minutes: 10
