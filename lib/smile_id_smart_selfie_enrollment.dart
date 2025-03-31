@@ -3,9 +3,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:smile_id/smile_id_results.dart';
 import 'package:smile_id/smile_id_sdk_result.dart';
 import 'package:smile_id/smileid_messages.g.dart';
+
+import 'product_result_adapters.dart';
+import 'result_clients_interfaces.dart';
+import 'smile_id_product_views_api.dart';
 
 class SmileIDSmartSelfieEnrollment extends StatefulWidget {
   static const String viewType = "SmileIDSmartSelfieEnrollment";
@@ -53,21 +56,20 @@ class SmileIDSmartSelfieEnrollment extends StatefulWidget {
 }
 
 class _SmileIDSmartSelfieEnrollmentState
-    extends State<SmileIDSmartSelfieEnrollment> {
+    extends State<SmileIDSmartSelfieEnrollment>
+    implements SmartSelfieCaptureResultClient {
+  late SmileIDProductViewsResultApi api;
+
   @override
   void initState() {
     super.initState();
-    SmileIDResultsService.instance.smartSelfieEnrollmentResultCallback =
-        (result) {
-      widget.onResult(result);
-    };
+    api = SelfieEnrollmentProductToSelfieCaptureResultAdapter(this);
   }
 
   @override
   void dispose() {
-    SmileIDResultsService.instance.smartSelfieEnrollmentResultCallback =
-        (event) {};
     super.dispose();
+    api.dispose();
   }
 
   @override
@@ -110,5 +112,11 @@ class _SmileIDSmartSelfieEnrollmentState
       default:
         throw UnsupportedError("Unsupported platform");
     }
+  }
+
+  @override
+  void onResult(SmileIDSdkResult<SmartSelfieCaptureResult> result) {
+    if (!mounted) return;
+    widget.onResult(result);
   }
 }

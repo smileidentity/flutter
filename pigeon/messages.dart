@@ -1216,7 +1216,6 @@ abstract class SmileIDApi {
 
 @FlutterApi()
 abstract class SmileIDProductsResultApi {
-  @async
   void onSmartSelfieEnrollmentResult(
       SmartSelfieCaptureResult? successResult, String? errorResult);
 }
