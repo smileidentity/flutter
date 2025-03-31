@@ -250,17 +250,17 @@ class SmileIDPlugin :
                 .doSmartSelfieEnrollment(
                     userId = userId,
                     selfieImage =
-                    File(selfieImage).asFormDataPart(
-                        partName = "selfie_image",
-                        mediaType = "image/jpeg",
-                    ),
-                    livenessImages =
-                    livenessImages.map {
                         File(selfieImage).asFormDataPart(
-                            partName = "liveness_images",
+                            partName = "selfie_image",
                             mediaType = "image/jpeg",
-                        )
-                    },
+                        ),
+                    livenessImages =
+                        livenessImages.map {
+                            File(selfieImage).asFormDataPart(
+                                partName = "liveness_images",
+                                mediaType = "image/jpeg",
+                            )
+                        },
                     partnerParams = convertNullableMapToNonNull(partnerParams),
                     callbackUrl = callbackUrl,
                     sandboxResult = sandboxResult?.toInt(),
@@ -287,17 +287,17 @@ class SmileIDPlugin :
                 .doSmartSelfieAuthentication(
                     userId = userId,
                     selfieImage =
-                    File(selfieImage).asFormDataPart(
-                        partName = "selfie_image",
-                        mediaType = "image/jpeg",
-                    ),
-                    livenessImages =
-                    livenessImages.map {
                         File(selfieImage).asFormDataPart(
-                            partName = "liveness_images",
+                            partName = "selfie_image",
                             mediaType = "image/jpeg",
-                        )
-                    },
+                        ),
+                    livenessImages =
+                        livenessImages.map {
+                            File(selfieImage).asFormDataPart(
+                                partName = "liveness_images",
+                                mediaType = "image/jpeg",
+                            )
+                        },
                     partnerParams = convertNullableMapToNonNull(partnerParams),
                     callbackUrl = callbackUrl,
                     sandboxResult = sandboxResult?.toInt(),

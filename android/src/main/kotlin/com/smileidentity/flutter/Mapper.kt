@@ -665,18 +665,19 @@ fun SmartSelfieResponse.buildBundle() =
         this.putString("user_id", userId)
     }
 
-fun SmartSelfieResponse.toMap(): Map<String, Any?> = mapOf(
-    "code" to code,
-    "created_at" to createdAt,
-    "job_id" to jobId,
-    "job_type" to jobType.name,
-    "message" to message,
-    "partner_id" to partnerId,
-    "partner_params" to partnerParams,
-    "status" to status.name,
-    "updated_at" to updatedAt,
-    "user_id" to userId
-)
+fun SmartSelfieResponse.toMap(): Map<String, Any?> =
+    mapOf(
+        "code" to code,
+        "created_at" to createdAt,
+        "job_id" to jobId,
+        "job_type" to jobType.name,
+        "message" to message,
+        "partner_id" to partnerId,
+        "partner_params" to partnerParams,
+        "status" to status.name,
+        "updated_at" to updatedAt,
+        "user_id" to userId,
+    )
 
 fun List<File>.pathList(): ArrayList<String> =
     ArrayList<String>().let {
