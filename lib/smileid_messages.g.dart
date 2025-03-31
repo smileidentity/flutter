@@ -15,6 +15,16 @@ PlatformException _createConnectionError(String channelName) {
   );
 }
 
+List<Object?> wrapResponse({Object? result, PlatformException? error, bool empty = false}) {
+  if (empty) {
+    return <Object?>[];
+  }
+  if (error == null) {
+    return <Object?>[result];
+  }
+  return <Object?>[error.code, error.message, error.details];
+}
+
 enum FlutterJobType {
   enhancedKyc,
   documentVerification,
@@ -3831,6 +3841,40 @@ class SmileIDApi {
       );
     } else {
       return (pigeonVar_replyList[0] as FlutterEnhancedDocumentVerificationJobStatusResponse?)!;
+    }
+  }
+}
+
+abstract class SmileIDProductsResultApi {
+  static const MessageCodec<Object?> pigeonChannelCodec = _PigeonCodec();
+
+  Future<void> onSmartSelfieEnrollmentResult(SmartSelfieCaptureResult? successResult, String? errorResult);
+
+  static void setUp(SmileIDProductsResultApi? api, {BinaryMessenger? binaryMessenger, String messageChannelSuffix = '',}) {
+    messageChannelSuffix = messageChannelSuffix.isNotEmpty ? '.$messageChannelSuffix' : '';
+    {
+      final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.smileid.SmileIDProductsResultApi.onSmartSelfieEnrollmentResult$messageChannelSuffix', pigeonChannelCodec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        pigeonVar_channel.setMessageHandler(null);
+      } else {
+        pigeonVar_channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+          'Argument for dev.flutter.pigeon.smileid.SmileIDProductsResultApi.onSmartSelfieEnrollmentResult was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final SmartSelfieCaptureResult? arg_successResult = (args[0] as SmartSelfieCaptureResult?);
+          final String? arg_errorResult = (args[1] as String?);
+          try {
+            await api.onSmartSelfieEnrollmentResult(arg_successResult, arg_errorResult);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
     }
   }
 }

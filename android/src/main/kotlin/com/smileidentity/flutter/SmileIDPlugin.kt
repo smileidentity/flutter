@@ -20,6 +20,7 @@ import FlutterSmartSelfieResponse
 import FlutterUploadRequest
 import FlutterValidDocumentsResponse
 import SmileIDApi
+import SmileIDProductsResultApi
 import android.app.Activity
 import android.content.Context
 import com.smileidentity.SmileID
@@ -61,6 +62,8 @@ class SmileIDPlugin :
         SmileIDApi.setUp(flutterPluginBinding.binaryMessenger, this)
         productsApi.onAttachedToEngine(flutterPluginBinding)
         context = flutterPluginBinding.applicationContext
+        val smileIDResultApi =
+            SmileIDProductsResultApi(binaryMessenger = flutterPluginBinding.binaryMessenger)
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDDocumentVerification.VIEW_TYPE_ID,
@@ -69,7 +72,10 @@ class SmileIDPlugin :
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDSmartSelfieEnrollment.VIEW_TYPE_ID,
-            SmileIDSmartSelfieEnrollment.Factory(flutterPluginBinding.binaryMessenger),
+            SmileIDSmartSelfieEnrollment.Factory(
+                flutterPluginBinding.binaryMessenger,
+                smileIDResultApi,
+            ),
         )
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
@@ -244,17 +250,17 @@ class SmileIDPlugin :
                 .doSmartSelfieEnrollment(
                     userId = userId,
                     selfieImage =
-                        File(selfieImage).asFormDataPart(
-                            partName = "selfie_image",
-                            mediaType = "image/jpeg",
-                        ),
+                    File(selfieImage).asFormDataPart(
+                        partName = "selfie_image",
+                        mediaType = "image/jpeg",
+                    ),
                     livenessImages =
-                        livenessImages.map {
-                            File(selfieImage).asFormDataPart(
-                                partName = "liveness_images",
-                                mediaType = "image/jpeg",
-                            )
-                        },
+                    livenessImages.map {
+                        File(selfieImage).asFormDataPart(
+                            partName = "liveness_images",
+                            mediaType = "image/jpeg",
+                        )
+                    },
                     partnerParams = convertNullableMapToNonNull(partnerParams),
                     callbackUrl = callbackUrl,
                     sandboxResult = sandboxResult?.toInt(),
@@ -281,17 +287,17 @@ class SmileIDPlugin :
                 .doSmartSelfieAuthentication(
                     userId = userId,
                     selfieImage =
-                        File(selfieImage).asFormDataPart(
-                            partName = "selfie_image",
-                            mediaType = "image/jpeg",
-                        ),
+                    File(selfieImage).asFormDataPart(
+                        partName = "selfie_image",
+                        mediaType = "image/jpeg",
+                    ),
                     livenessImages =
-                        livenessImages.map {
-                            File(selfieImage).asFormDataPart(
-                                partName = "liveness_images",
-                                mediaType = "image/jpeg",
-                            )
-                        },
+                    livenessImages.map {
+                        File(selfieImage).asFormDataPart(
+                            partName = "liveness_images",
+                            mediaType = "image/jpeg",
+                        )
+                    },
                     partnerParams = convertNullableMapToNonNull(partnerParams),
                     callbackUrl = callbackUrl,
                     sandboxResult = sandboxResult?.toInt(),

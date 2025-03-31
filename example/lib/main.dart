@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:smile_id/smile_id_sdk_result.dart';
+import 'package:smile_id/smile_id_smart_selfie_enrollment.dart';
 import 'package:smile_id/smileid_messages.g.dart';
 import 'package:smile_id/smile_id.dart';
 
@@ -191,23 +193,31 @@ class MainContent extends StatelessWidget {
     return ElevatedButton(
       child: const Text("SmartSelfie Enrollment"),
       onPressed: () async {
-        final result = await SmileID().smartSelfieEnrollment(
-          creationParams: SmartSelfieCreationParams(
-              allowNewEnroll: false,
-              allowAgentMode: false,
-              showAttribution: true,
-              showInstructions: true,
-              skipApiSubmission: false),
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => MyScaffold(
+              body: SmileIDSmartSelfieEnrollment(
+                onResult: (result) {
+                  switch (result) {
+                    case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(:final data):
+                      final formattedResult = jsonEncode({
+                        'selfie': data.selfieFile,
+                        'liveness': data.livenessFiles,
+                        'apiResponse': data.apiResponse
+                      });
+                      final snackBar = SnackBar(content: Text("Success: $formattedResult"));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      Navigator.of(context).pop();
+                    case SmileIDSdkResultError<SmartSelfieCaptureResult>(:final error):
+                      final snackBar = SnackBar(content: Text("Error: $error"));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      Navigator.of(context).pop();
+                  }
+                },
+              ),
+            ),
+          ),
         );
-
-        switch (result) {
-          case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(:final data):
-            print('enrollment selfie: ${data.selfieFile}');
-            print('enrollment liveness: ${data.livenessFiles}');
-            print('enrollment apiResponse: ${data.apiResponse}');
-          case SmileIDSdkResultError<SmartSelfieCaptureResult>(:final error):
-            print('error occurred with smart selfie enrollment: $error');
-        }
       },
     );
   }

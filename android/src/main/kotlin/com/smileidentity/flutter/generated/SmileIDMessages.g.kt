@@ -33,6 +33,9 @@ private fun wrapError(exception: Throwable): List<Any?> {
   }
 }
 
+private fun createConnectionError(channelName: String): SmileFlutterError {
+  return SmileFlutterError("channel-error",  "Unable to establish connection on channel: '$channelName'.", "")}
+
 /**
  * Error class for passing custom error details to Flutter via a thrown PlatformException.
  * @property code The error code.
@@ -3227,6 +3230,32 @@ interface SmileIDApi {
           channel.setMessageHandler(null)
         }
       }
+    }
+  }
+}
+/** Generated class from Pigeon that represents Flutter messages that can be called from Kotlin. */
+class SmileIDProductsResultApi(private val binaryMessenger: BinaryMessenger, private val messageChannelSuffix: String = "") {
+  companion object {
+    /** The codec used by SmileIDProductsResultApi. */
+    val codec: MessageCodec<Any?> by lazy {
+      SmileIDMessagesPigeonCodec()
+    }
+  }
+  fun onSmartSelfieEnrollmentResult(successResultArg: SmartSelfieCaptureResult?, errorResultArg: String?, callback: (Result<Unit>) -> Unit)
+{
+    val separatedMessageChannelSuffix = if (messageChannelSuffix.isNotEmpty()) ".$messageChannelSuffix" else ""
+    val channelName = "dev.flutter.pigeon.smileid.SmileIDProductsResultApi.onSmartSelfieEnrollmentResult$separatedMessageChannelSuffix"
+    val channel = BasicMessageChannel<Any?>(binaryMessenger, channelName, codec)
+    channel.send(listOf(successResultArg, errorResultArg)) {
+      if (it is List<*>) {
+        if (it.size > 1) {
+          callback(Result.failure(SmileFlutterError(it[0] as String, it[1] as String, it[2] as String?)))
+        } else {
+          callback(Result.success(Unit))
+        }
+      } else {
+        callback(Result.failure(createConnectionError(channelName)))
+      } 
     }
   }
 }
