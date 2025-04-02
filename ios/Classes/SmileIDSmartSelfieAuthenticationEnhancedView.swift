@@ -20,6 +20,7 @@ struct SmileIDSmartSelfieAuthenticationEnhancedView: View, SmartSelfieResultDele
                 allowNewEnroll: creationParams.allowNewEnroll,
                 showAttribution: creationParams.showAttribution,
                 showInstructions: creationParams.showInstructions,
+                skipApiSubmission: creationParams.skipApiSubmission,
                 extraPartnerParams: creationParams.extraPartnerParams ?? [:],
                 delegate: self
             )

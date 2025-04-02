@@ -228,6 +228,7 @@ data class SmartSelfieEnhancedCreationParams (
   val allowNewEnroll: Boolean,
   val showAttribution: Boolean,
   val showInstructions: Boolean,
+  val skipApiSubmission: Boolean,
   val extraPartnerParams: Map<String, String>? = null
 )
  {
@@ -237,8 +238,9 @@ data class SmartSelfieEnhancedCreationParams (
       val allowNewEnroll = pigeonVar_list[1] as Boolean
       val showAttribution = pigeonVar_list[2] as Boolean
       val showInstructions = pigeonVar_list[3] as Boolean
-      val extraPartnerParams = pigeonVar_list[4] as Map<String, String>?
-      return SmartSelfieEnhancedCreationParams(userId, allowNewEnroll, showAttribution, showInstructions, extraPartnerParams)
+      val skipApiSubmission = pigeonVar_list[4] as Boolean
+      val extraPartnerParams = pigeonVar_list[5] as Map<String, String>?
+      return SmartSelfieEnhancedCreationParams(userId, allowNewEnroll, showAttribution, showInstructions, skipApiSubmission, extraPartnerParams)
     }
   }
   fun toList(): List<Any?> {
@@ -247,6 +249,7 @@ data class SmartSelfieEnhancedCreationParams (
       allowNewEnroll,
       showAttribution,
       showInstructions,
+      skipApiSubmission,
       extraPartnerParams,
     )
   }
@@ -971,7 +974,8 @@ data class FlutterEnhancedKycRequest (
   val callbackUrl: String? = null,
   val partnerParams: FlutterPartnerParams,
   val timestamp: String,
-  val signature: String
+  val signature: String,
+  val consentInformation: FlutterConsentInformation? = null
 )
  {
   companion object {
@@ -989,7 +993,8 @@ data class FlutterEnhancedKycRequest (
       val partnerParams = pigeonVar_list[10] as FlutterPartnerParams
       val timestamp = pigeonVar_list[11] as String
       val signature = pigeonVar_list[12] as String
-      return FlutterEnhancedKycRequest(country, idType, idNumber, firstName, middleName, lastName, dob, phoneNumber, bankCode, callbackUrl, partnerParams, timestamp, signature)
+      val consentInformation = pigeonVar_list[13] as FlutterConsentInformation?
+      return FlutterEnhancedKycRequest(country, idType, idNumber, firstName, middleName, lastName, dob, phoneNumber, bankCode, callbackUrl, partnerParams, timestamp, signature, consentInformation)
     }
   }
   fun toList(): List<Any?> {
@@ -1007,6 +1012,7 @@ data class FlutterEnhancedKycRequest (
       partnerParams,
       timestamp,
       signature,
+      consentInformation,
     )
   }
 }
