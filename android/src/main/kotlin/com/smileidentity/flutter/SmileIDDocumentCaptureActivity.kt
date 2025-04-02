@@ -26,7 +26,6 @@ import com.smileidentity.SmileID
 import com.smileidentity.compose.components.ImageCaptureConfirmationDialog
 import com.smileidentity.compose.components.LocalMetadata
 import com.smileidentity.compose.document.DocumentCaptureInstructionsScreen
-import com.smileidentity.compose.document.DocumentCaptureScreen
 import com.smileidentity.compose.document.DocumentCaptureSide
 import com.smileidentity.compose.theme.colorScheme
 import com.smileidentity.compose.theme.typography
@@ -271,8 +270,8 @@ class SmileIDDocumentCaptureActivity : ComponentActivity() {
 //            showConfirmation = true,
 //            onSkip = true,
 //            viewModel = true,
-////            galleryDocumentUri = galleryDocumentUri,
-////            viewModel = viewModel,
+// //            galleryDocumentUri = galleryDocumentUri,
+// //            viewModel = viewModel,
 //        )
     }
 
