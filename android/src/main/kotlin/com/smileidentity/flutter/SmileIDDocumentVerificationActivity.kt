@@ -56,7 +56,7 @@ class SmileIDDocumentVerificationActivity : ComponentActivity() {
                 allowAgentMode = allowAgentMode,
                 allowGalleryUpload = allowGalleryUpload,
                 showInstructions = showInstructions,
-                skipApiSubmission = skipApiSubmission,
+//                skipApiSubmission = skipApiSubmission, // todo fix me
                 extraPartnerParams = extraPartnerParams.toImmutableMap(),
             ) {
                 val intent = Intent()

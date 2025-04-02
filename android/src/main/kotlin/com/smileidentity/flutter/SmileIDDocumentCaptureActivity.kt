@@ -188,8 +188,9 @@ class SmileIDDocumentCaptureActivity : ComponentActivity() {
             allowPhotoFromGallery = allowGalleryUpload,
             showSkipButton = false,
             onSkip = {},
-            onInstructionsAcknowledgedSelectFromGallery = { uri ->
-                onInstructionsAcknowledged(uri)
+            onInstructionsAcknowledgedSelectFromGallery = {
+                // todo needs an arg here
+//                onInstructionsAcknowledged()
             },
             onInstructionsAcknowledgedTakePhoto = {
                 onInstructionsAcknowledged(null)
@@ -240,28 +241,39 @@ class SmileIDDocumentCaptureActivity : ComponentActivity() {
             } else {
                 R.string.si_doc_v_capture_instructions_back_title
             }
-        DocumentCaptureScreen(
-            modifier = Modifier.fillMaxSize(),
-            jobId = jobId,
-            side = if (isDocumentFrontSide) DocumentCaptureSide.Front else DocumentCaptureSide.Back,
-            captureTitleText = stringResource(captureTitleText),
-            knownIdAspectRatio = idAspectRatio,
-            onConfirm = { file ->
-                if (!showConfirmation) {
-                    handleConfirmation(isDocumentFrontSide, file)
-                } else {
-                    onConfirm(file)
-                }
-            },
-            onError = { throwable ->
-                val intent = Intent()
-                intent.putExtra("error", throwable.message)
-                setResult(RESULT_CANCELED, intent)
-                finish()
-            },
-            galleryDocumentUri = galleryDocumentUri,
-            viewModel = viewModel,
-        )
+        // todo - relook at this
+//        DocumentCaptureScreen(
+//            modifier = Modifier.fillMaxSize(),
+//            jobId = jobId,
+//            side = if (isDocumentFrontSide) DocumentCaptureSide.Front else DocumentCaptureSide.Back,
+//            captureTitleText = stringResource(captureTitleText),
+//            knownIdAspectRatio = idAspectRatio,
+//            onConfirm = { file ->
+//                if (!showConfirmation) {
+//                    handleConfirmation(isDocumentFrontSide, file)
+//                } else {
+//                    onConfirm(file)
+//                }
+//            },
+//            onError = { throwable ->
+//                val intent = Intent()
+//                intent.putExtra("error", throwable.message)
+//                setResult(RESULT_CANCELED, intent)
+//                finish()
+//            },
+//            showInstructions = true,
+//            showAttribution = true,
+//            allowGallerySelection = true,
+//            showSkipButton = true,
+//            instructionsHeroImage = true,
+//            instructionsTitleText = true,
+//            instructionsSubtitleText = true,
+//            showConfirmation = true,
+//            onSkip = true,
+//            viewModel = true,
+////            galleryDocumentUri = galleryDocumentUri,
+////            viewModel = viewModel,
+//        )
     }
 
     private fun handleConfirmation(
