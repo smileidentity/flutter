@@ -198,6 +198,7 @@ class SmartSelfieEnhancedCreationParams {
     required this.allowNewEnroll,
     required this.showAttribution,
     required this.showInstructions,
+    required this.skipApiSubmission,
     this.extraPartnerParams,
   });
 
@@ -209,6 +210,8 @@ class SmartSelfieEnhancedCreationParams {
 
   bool showInstructions;
 
+  bool skipApiSubmission;
+
   Map<String, String>? extraPartnerParams;
 
   Object encode() {
@@ -217,6 +220,7 @@ class SmartSelfieEnhancedCreationParams {
       allowNewEnroll,
       showAttribution,
       showInstructions,
+      skipApiSubmission,
       extraPartnerParams,
     ];
   }
@@ -228,7 +232,8 @@ class SmartSelfieEnhancedCreationParams {
       allowNewEnroll: result[1]! as bool,
       showAttribution: result[2]! as bool,
       showInstructions: result[3]! as bool,
-      extraPartnerParams: (result[4] as Map<Object?, Object?>?)?.cast<String, String>(),
+      skipApiSubmission: result[4]! as bool,
+      extraPartnerParams: (result[5] as Map<Object?, Object?>?)?.cast<String, String>(),
     );
   }
 }
@@ -1223,6 +1228,7 @@ class FlutterEnhancedKycRequest {
     required this.partnerParams,
     required this.timestamp,
     required this.signature,
+    this.consentInformation,
   });
 
   String country;
@@ -1251,6 +1257,8 @@ class FlutterEnhancedKycRequest {
 
   String signature;
 
+  FlutterConsentInformation? consentInformation;
+
   Object encode() {
     return <Object?>[
       country,
@@ -1266,6 +1274,7 @@ class FlutterEnhancedKycRequest {
       partnerParams,
       timestamp,
       signature,
+      consentInformation,
     ];
   }
 
@@ -1285,6 +1294,7 @@ class FlutterEnhancedKycRequest {
       partnerParams: result[10]! as FlutterPartnerParams,
       timestamp: result[11]! as String,
       signature: result[12]! as String,
+      consentInformation: result[13] as FlutterConsentInformation?,
     );
   }
 }

@@ -233,6 +233,7 @@ struct SmartSelfieEnhancedCreationParams {
   var allowNewEnroll: Bool
   var showAttribution: Bool
   var showInstructions: Bool
+  var skipApiSubmission: Bool
   var extraPartnerParams: [String: String]? = nil
 
 
@@ -242,13 +243,15 @@ struct SmartSelfieEnhancedCreationParams {
     let allowNewEnroll = pigeonVar_list[1] as! Bool
     let showAttribution = pigeonVar_list[2] as! Bool
     let showInstructions = pigeonVar_list[3] as! Bool
-    let extraPartnerParams: [String: String]? = nilOrValue(pigeonVar_list[4])
+    let skipApiSubmission = pigeonVar_list[4] as! Bool
+    let extraPartnerParams: [String: String]? = nilOrValue(pigeonVar_list[5])
 
     return SmartSelfieEnhancedCreationParams(
       userId: userId,
       allowNewEnroll: allowNewEnroll,
       showAttribution: showAttribution,
       showInstructions: showInstructions,
+      skipApiSubmission: skipApiSubmission,
       extraPartnerParams: extraPartnerParams
     )
   }
@@ -258,6 +261,7 @@ struct SmartSelfieEnhancedCreationParams {
       allowNewEnroll,
       showAttribution,
       showInstructions,
+      skipApiSubmission,
       extraPartnerParams,
     ]
   }
@@ -1125,6 +1129,7 @@ struct FlutterEnhancedKycRequest {
   var partnerParams: FlutterPartnerParams
   var timestamp: String
   var signature: String
+  var consentInformation: FlutterConsentInformation? = nil
 
 
   // swift-format-ignore: AlwaysUseLowerCamelCase
@@ -1142,6 +1147,7 @@ struct FlutterEnhancedKycRequest {
     let partnerParams = pigeonVar_list[10] as! FlutterPartnerParams
     let timestamp = pigeonVar_list[11] as! String
     let signature = pigeonVar_list[12] as! String
+    let consentInformation: FlutterConsentInformation? = nilOrValue(pigeonVar_list[13])
 
     return FlutterEnhancedKycRequest(
       country: country,
@@ -1156,7 +1162,8 @@ struct FlutterEnhancedKycRequest {
       callbackUrl: callbackUrl,
       partnerParams: partnerParams,
       timestamp: timestamp,
-      signature: signature
+      signature: signature,
+      consentInformation: consentInformation
     )
   }
   func toList() -> [Any?] {
@@ -1174,6 +1181,7 @@ struct FlutterEnhancedKycRequest {
       partnerParams,
       timestamp,
       signature,
+      consentInformation,
     ]
   }
 }

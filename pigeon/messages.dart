@@ -69,6 +69,7 @@ class SmartSelfieEnhancedCreationParams {
   final bool allowNewEnroll;
   final bool showAttribution;
   final bool showInstructions;
+  final bool skipApiSubmission;
   final Map<String, String>? extraPartnerParams;
 
   SmartSelfieEnhancedCreationParams({
@@ -76,6 +77,7 @@ class SmartSelfieEnhancedCreationParams {
     this.allowNewEnroll = false,
     this.showAttribution = true,
     this.showInstructions = true,
+    this.skipApiSubmission = false,
     this.extraPartnerParams,
   });
 }
@@ -524,6 +526,7 @@ class FlutterEnhancedKycRequest {
   final FlutterPartnerParams partnerParams;
   final String timestamp;
   final String signature;
+  final FlutterConsentInformation? consentInformation;
 
   FlutterEnhancedKycRequest({
     required this.country,
@@ -539,7 +542,7 @@ class FlutterEnhancedKycRequest {
     required this.partnerParams,
     required this.timestamp,
     required this.signature,
-  });
+    this.consentInformation});
 }
 
 class FlutterEnhancedKycAsyncResponse {
