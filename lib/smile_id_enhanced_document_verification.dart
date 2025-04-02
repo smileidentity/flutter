@@ -68,7 +68,7 @@ class SmileIDEnhancedDocumentVerification extends StatelessWidget {
         "allowGalleryUpload": allowGalleryUpload,
         "showInstructions": showInstructions,
         "skipApiSubmission": skipApiSubmission,
-        "useStrictMode" : useStrictMode,
+        "useStrictMode": useStrictMode,
         "extraPartnerParams": extraPartnerParams,
       },
     );

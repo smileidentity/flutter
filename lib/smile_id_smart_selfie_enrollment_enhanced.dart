@@ -43,7 +43,7 @@ class SmileIDSmartSelfieEnrollmentEnhanced extends StatelessWidget {
         "allowNewEnroll": allowNewEnroll,
         "showAttribution": showAttribution,
         "showInstructions": showInstructions,
-        "skipApiSubmission" : skipApiSubmission,
+        "skipApiSubmission": skipApiSubmission,
         "extraPartnerParams": extraPartnerParams,
       },
     );
@@ -60,7 +60,8 @@ class SmileIDSmartSelfieEnrollmentEnhanced extends StatelessWidget {
               controller: controller as AndroidViewController,
               hitTestBehavior: PlatformViewHitTestBehavior.opaque,
               gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{
-                Factory<OneSequenceGestureRecognizer>(EagerGestureRecognizer.new)
+                Factory<OneSequenceGestureRecognizer>(
+                    EagerGestureRecognizer.new)
               },
             );
           },

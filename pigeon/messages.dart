@@ -10,14 +10,14 @@ import 'package:pigeon/pigeon.dart';
   swiftOptions: SwiftOptions(),
   dartPackageName: 'smileid',
 ))
-
 class FlutterConsentInformation {
   final String consentGrantedDate;
   final bool personalDetailsConsentGranted;
   final bool contactInfoConsentGranted;
   final bool documentInfoConsentGranted;
 
-  FlutterConsentInformation(this.consentGrantedDate,{
+  FlutterConsentInformation(
+    this.consentGrantedDate, {
     this.personalDetailsConsentGranted = false,
     this.contactInfoConsentGranted = false,
     this.documentInfoConsentGranted = false,
@@ -529,21 +529,21 @@ class FlutterEnhancedKycRequest {
   final String signature;
   final FlutterConsentInformation? consentInformation;
 
-  FlutterEnhancedKycRequest({
-    required this.country,
-    required this.idType,
-    required this.idNumber,
-    this.firstName,
-    this.middleName,
-    this.lastName,
-    this.dob,
-    this.phoneNumber,
-    this.bankCode,
-    this.callbackUrl,
-    required this.partnerParams,
-    required this.timestamp,
-    required this.signature,
-    this.consentInformation});
+  FlutterEnhancedKycRequest(
+      {required this.country,
+      required this.idType,
+      required this.idNumber,
+      this.firstName,
+      this.middleName,
+      this.lastName,
+      this.dob,
+      this.phoneNumber,
+      this.bankCode,
+      this.callbackUrl,
+      required this.partnerParams,
+      required this.timestamp,
+      required this.signature,
+      this.consentInformation});
 }
 
 class FlutterEnhancedKycAsyncResponse {

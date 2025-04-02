@@ -263,6 +263,7 @@ class MainContent extends StatelessWidget {
           allowNewEnroll: false,
           showAttribution: true,
           showInstructions: true,
+          skipApiSubmission: false,
         ));
 
         switch (result) {
@@ -283,11 +284,13 @@ class MainContent extends StatelessWidget {
       child: const Text("SmartSelfie Authentication (Enhanced)"),
       onPressed: () async {
         final result = await SmileID().smartSelfieAuthenticationEnhanced(
-            creationParams: SmartSelfieEnhancedCreationParams(
-          allowNewEnroll: false,
-          showAttribution: true,
-          showInstructions: true,
-        ));
+          creationParams: SmartSelfieEnhancedCreationParams(
+            allowNewEnroll: false,
+            showAttribution: true,
+            showInstructions: true,
+            skipApiSubmission: false,
+          ),
+        );
 
         switch (result) {
           case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(:final data):

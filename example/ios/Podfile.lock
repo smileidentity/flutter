@@ -5,6 +5,8 @@ PODS:
     - FingerprintJS/SystemControl
   - FingerprintJS/SystemControl (1.5.0)
   - Flutter (1.0.0)
+  - integration_test (0.0.1):
+    - Flutter
   - lottie-ios (4.5.1)
   - smile_id (10.5.0):
     - Flutter
@@ -17,6 +19,7 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - smile_id (from `.symlinks/plugins/smile_id/ios`)
 
 SPEC REPOS:
@@ -29,12 +32,15 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
   smile_id:
     :path: ".symlinks/plugins/smile_id/ios"
 
 SPEC CHECKSUMS:
   FingerprintJS: 96410117a394cca04d0f1e2374944c8697f2cceb
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
   lottie-ios: 248b380fa1b97d18e792c37d90da7ab2aa0d6562
   smile_id: f8be3ddf99fd3c82d5d559a36a2fdad01bb72462
   SmileID: eab70b212dcc89e5614035e1746016db172c8f50
