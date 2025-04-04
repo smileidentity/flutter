@@ -13,7 +13,7 @@ class SelfieEnrollmentProductToSelfieCaptureResultAdapter
 
   @override
   void onSmartSelfieEnrollmentResult(
-      SmartSelfieCaptureResult? successResult, String? errorResult) async {
+      SmartSelfieCaptureResult? successResult, String? errorResult) {
     super.onSmartSelfieEnrollmentResult(successResult, errorResult);
     if (successResult != null) {
       client.onResult(SmileIDSdkResultSuccess(successResult));
