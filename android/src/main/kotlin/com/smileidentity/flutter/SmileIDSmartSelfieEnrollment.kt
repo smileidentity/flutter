@@ -56,8 +56,8 @@ internal class SmileIDSmartSelfieEnrollment private constructor(
                     api.onSmartSelfieEnrollmentResult(
                         successResultArg = null,
                         errorResultArg =
-                            it.throwable.message
-                                ?: "Unknown error with Smart Selfie Enrollment",
+                        it.throwable.message
+                            ?: "Unknown error with Smart Selfie Enrollment",
                     ) {}
             }
         }
