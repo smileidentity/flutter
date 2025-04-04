@@ -13,8 +13,8 @@ import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
-import kotlinx.collections.immutable.toImmutableMap
 import java.io.File
+import kotlinx.collections.immutable.toImmutableMap
 
 internal class SmileIDDocumentVerification private constructor(
     context: Context,
@@ -35,9 +35,9 @@ internal class SmileIDDocumentVerification private constructor(
             idAspectRatio = (args["idAspectRatio"] as Double?)?.toFloat(),
             captureBothSides = args["captureBothSides"] as? Boolean ?: true,
             bypassSelfieCaptureWithFile =
-                (args["bypassSelfieCaptureWithFile"] as? String)?.let {
-                    File(it)
-                },
+            (args["bypassSelfieCaptureWithFile"] as? String)?.let {
+                File(it)
+            },
             userId = args["userId"] as? String ?: randomUserId(),
             jobId = args["jobId"] as? String ?: randomJobId(),
             allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
@@ -57,7 +57,7 @@ internal class SmileIDDocumentVerification private constructor(
                             livenessFiles = it.data.livenessFiles,
                             documentBackFile = it.data.documentBackFile,
                             didSubmitDocumentVerificationJob =
-                                it.data.didSubmitDocumentVerificationJob,
+                            it.data.didSubmitDocumentVerificationJob,
                         )
                     val moshi =
                         SmileID.moshi
@@ -84,11 +84,7 @@ internal class SmileIDDocumentVerification private constructor(
     class Factory(
         private val messenger: BinaryMessenger,
     ) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
-        override fun create(
-            context: Context,
-            viewId: Int,
-            args: Any?,
-        ): PlatformView {
+        override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
             @Suppress("UNCHECKED_CAST")
             return SmileIDDocumentVerification(
                 context,

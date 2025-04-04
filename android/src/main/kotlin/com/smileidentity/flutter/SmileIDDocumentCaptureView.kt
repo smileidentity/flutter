@@ -122,10 +122,7 @@ internal class SmileIDDocumentCaptureView private constructor(
         )
     }
 
-    private fun handleConfirmation(
-        isDocumentFrontSide: Boolean,
-        file: File,
-    ) {
+    private fun handleConfirmation(isDocumentFrontSide: Boolean, file: File) {
         val moshi =
             SmileID.moshi
                 .newBuilder()
@@ -153,11 +150,7 @@ internal class SmileIDDocumentCaptureView private constructor(
     class Factory(
         private val messenger: BinaryMessenger,
     ) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
-        override fun create(
-            context: Context,
-            viewId: Int,
-            args: Any?,
-        ): PlatformView {
+        override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
             @Suppress("UNCHECKED_CAST")
             return SmileIDDocumentCaptureView(
                 context,
