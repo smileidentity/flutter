@@ -41,17 +41,17 @@ class SmileIDBiometricKYCActivity : ComponentActivity() {
         setContent {
             SmileID.BiometricKYC(
                 idInfo =
-                    IdInfo(
-                        country = country,
-                        idType = idType,
-                        idNumber = idNumber,
-                        firstName = firstName,
-                        middleName = middleName,
-                        lastName = lastName,
-                        dob = dob,
-                        bankCode = bankCode,
-                        entered = entered,
-                    ),
+                IdInfo(
+                    country = country,
+                    idType = idType,
+                    idNumber = idNumber,
+                    firstName = firstName,
+                    middleName = middleName,
+                    lastName = lastName,
+                    dob = dob,
+                    bankCode = bankCode,
+                    entered = entered,
+                ),
                 userId = userId,
                 jobId = jobId,
                 allowNewEnroll = allowNewEnroll,
