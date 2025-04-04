@@ -40,11 +40,7 @@ class SmileIDProductsPluginApi :
         SmileIDProductsApi.setUp(binding.binaryMessenger, null)
     }
 
-    override fun onActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        data: Intent?,
-    ): Boolean {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
         when (requestCode) {
             SmileIDSmartSelfieEnrollmentActivity.REQUEST_CODE -> {
                 smartSelfieResult?.let { resultCallback ->
@@ -183,13 +179,13 @@ class SmileIDProductsPluginApi :
                                 BiometricKYCCaptureResult(
                                     selfieFile = data?.getStringExtra("selfieFile") ?: "",
                                     livenessFiles =
-                                        data?.getStringArrayListExtra("livenessFiles")
-                                            ?: emptyList(),
+                                    data?.getStringArrayListExtra("livenessFiles")
+                                        ?: emptyList(),
                                     didSubmitBiometricKycJob =
-                                        data?.getBooleanExtra(
-                                            "didSubmitBiometricKycJob",
-                                            false,
-                                        ),
+                                    data?.getBooleanExtra(
+                                        "didSubmitBiometricKycJob",
+                                        false,
+                                    ),
                                 )
 
                             resultCallback.invoke(Result.success(result))
@@ -579,8 +575,8 @@ private fun handleSelfieResult(
                 SmartSelfieCaptureResult(
                     selfieFile = data?.getStringExtra("selfieFile") ?: "",
                     livenessFiles =
-                        data?.getStringArrayListExtra("livenessFiles")
-                            ?: emptyList(),
+                    data?.getStringArrayListExtra("livenessFiles")
+                        ?: emptyList(),
                     apiResponse = apiResponse,
                 )
             resultCallback.invoke(Result.success(result))
@@ -619,21 +615,21 @@ private fun handleDocumentResult(
                     documentFrontFile = data?.getStringExtra("documentFrontFile") ?: "",
                     documentBackFile = data?.getStringExtra("documentBackFile") ?: "",
                     didSubmitDocumentVerificationJob =
-                        if (data?.hasExtra("didSubmitDocumentVerificationJob") == true) {
-                            data?.getBooleanExtra(
-                                "didSubmitDocumentVerificationJob",
-                                false,
-                            )
-                        } else {
-                            null
-                        },
+                    if (data?.hasExtra("didSubmitDocumentVerificationJob") == true) {
+                        data?.getBooleanExtra(
+                            "didSubmitDocumentVerificationJob",
+                            false,
+                        )
+                    } else {
+                        null
+                    },
                     didSubmitEnhancedDocVJob =
-                        if (data?.hasExtra("didSubmitEnhanceDocVJob") == true
-                        ) {
-                            data.getBooleanExtra("didSubmitEnhanceDocVJob", false)
-                        } else {
-                            null
-                        },
+                    if (data?.hasExtra("didSubmitEnhanceDocVJob") == true
+                    ) {
+                        data.getBooleanExtra("didSubmitEnhanceDocVJob", false)
+                    } else {
+                        null
+                    },
                 )
 
             resultCallback.invoke(Result.success(result))

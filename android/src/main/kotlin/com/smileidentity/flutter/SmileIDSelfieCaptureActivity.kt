@@ -80,16 +80,16 @@ class SmileIDSelfieCaptureActivity : ComponentActivity() {
         val viewModel: SelfieViewModel =
             viewModel(
                 factory =
-                    viewModelFactory {
-                        SelfieViewModel(
-                            isEnroll = false,
-                            userId = userId,
-                            jobId = jobId,
-                            allowNewEnroll = false,
-                            skipApiSubmission = true,
-                            metadata = metadata,
-                        )
-                    },
+                viewModelFactory {
+                    SelfieViewModel(
+                        isEnroll = false,
+                        userId = userId,
+                        jobId = jobId,
+                        allowNewEnroll = false,
+                        skipApiSubmission = true,
+                        metadata = metadata,
+                    )
+                },
             )
         val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
         CompositionLocalProvider(
@@ -137,11 +137,11 @@ class SmileIDSelfieCaptureActivity : ComponentActivity() {
     ) {
         Box(
             modifier =
-                Modifier
-                    .background(color = Color.White)
-                    .windowInsetsPadding(WindowInsets.statusBars)
-                    .consumeWindowInsets(WindowInsets.statusBars)
-                    .fillMaxSize(),
+            Modifier
+                .background(color = Color.White)
+                .windowInsetsPadding(WindowInsets.statusBars)
+                .consumeWindowInsets(WindowInsets.statusBars)
+                .fillMaxSize(),
         ) {
             SelfieCaptureScreen(
                 userId = userId,
@@ -164,26 +164,26 @@ class SmileIDSelfieCaptureActivity : ComponentActivity() {
             ImageCaptureConfirmationDialog(
                 titleText = stringResource(R.string.si_smart_selfie_confirmation_dialog_title),
                 subtitleText =
-                    stringResource(
-                        R.string.si_smart_selfie_confirmation_dialog_subtitle,
-                    ),
+                stringResource(
+                    R.string.si_smart_selfie_confirmation_dialog_subtitle,
+                ),
                 painter =
-                    BitmapPainter(
-                        BitmapFactory
-                            .decodeFile(uiState.selfieToConfirm!!.absolutePath)
-                            .asImageBitmap(),
-                    ),
+                BitmapPainter(
+                    BitmapFactory
+                        .decodeFile(uiState.selfieToConfirm!!.absolutePath)
+                        .asImageBitmap(),
+                ),
                 confirmButtonText =
-                    stringResource(
-                        R.string.si_smart_selfie_confirmation_dialog_confirm_button,
-                    ),
+                stringResource(
+                    R.string.si_smart_selfie_confirmation_dialog_confirm_button,
+                ),
                 onConfirm = {
                     viewModel.submitJob()
                 },
                 retakeButtonText =
-                    stringResource(
-                        R.string.si_smart_selfie_confirmation_dialog_retake_button,
-                    ),
+                stringResource(
+                    R.string.si_smart_selfie_confirmation_dialog_retake_button,
+                ),
                 onRetake = viewModel::onSelfieRejected,
                 scaleFactor = 1.25f,
             )

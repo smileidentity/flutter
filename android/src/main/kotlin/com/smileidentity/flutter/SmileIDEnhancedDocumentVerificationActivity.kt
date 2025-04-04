@@ -9,8 +9,8 @@ import com.smileidentity.compose.EnhancedDocumentVerificationScreen
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
-import kotlinx.collections.immutable.toImmutableMap
 import java.io.File
+import kotlinx.collections.immutable.toImmutableMap
 
 class SmileIDEnhancedDocumentVerificationActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
