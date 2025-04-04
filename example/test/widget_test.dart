@@ -17,8 +17,8 @@ void main() {
     // Verify that text is displayed.
     expect(
       find.byWidgetPredicate(
-        (Widget widget) => widget is Text &&
-                           widget.data!.startsWith('Smile ID'),
+        (Widget widget) =>
+            widget is Text && widget.data!.startsWith('Smile ID'),
       ),
       findsOneWidget,
     );

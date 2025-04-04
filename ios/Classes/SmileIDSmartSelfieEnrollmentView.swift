@@ -30,7 +30,7 @@ struct SmileIDSmartSelfieEnrollmentView: View, SmartSelfieResultDelegate, SmileI
             )
             .frame(maxHeight: .infinity)
             .preferredColorScheme(.light)
-            
+
         }
     }
     

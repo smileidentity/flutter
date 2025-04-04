@@ -3,20 +3,21 @@ import 'package:pigeon/pigeon.dart';
 @ConfigurePigeon(PigeonOptions(
   dartOut: 'lib/smileid_messages.g.dart',
   dartOptions: DartOptions(),
-  kotlinOut: 'android/src/main/kotlin/com/smileidentity/flutter/generated/SmileIDMessages.g.kt',
+  kotlinOut:
+      'android/src/main/kotlin/com/smileidentity/flutter/generated/SmileIDMessages.g.kt',
   kotlinOptions: KotlinOptions(errorClassName: "SmileFlutterError"),
   swiftOut: 'ios/Classes/SmileIDMessages.g.swift',
   swiftOptions: SwiftOptions(),
   dartPackageName: 'smileid',
 ))
-
 class FlutterConsentInformation {
   final String consentGrantedDate;
   final bool personalDetailsConsentGranted;
   final bool contactInfoConsentGranted;
   final bool documentInfoConsentGranted;
 
-  FlutterConsentInformation(this.consentGrantedDate,{
+  FlutterConsentInformation(
+    this.consentGrantedDate, {
     this.personalDetailsConsentGranted = false,
     this.contactInfoConsentGranted = false,
     this.documentInfoConsentGranted = false,
@@ -528,21 +529,21 @@ class FlutterEnhancedKycRequest {
   final String signature;
   final FlutterConsentInformation? consentInformation;
 
-  FlutterEnhancedKycRequest({
-    required this.country,
-    required this.idType,
-    required this.idNumber,
-    this.firstName,
-    this.middleName,
-    this.lastName,
-    this.dob,
-    this.phoneNumber,
-    this.bankCode,
-    this.callbackUrl,
-    required this.partnerParams,
-    required this.timestamp,
-    required this.signature,
-    this.consentInformation});
+  FlutterEnhancedKycRequest(
+      {required this.country,
+      required this.idType,
+      required this.idNumber,
+      this.firstName,
+      this.middleName,
+      this.lastName,
+      this.dob,
+      this.phoneNumber,
+      this.bankCode,
+      this.callbackUrl,
+      required this.partnerParams,
+      required this.timestamp,
+      required this.signature,
+      this.consentInformation});
 }
 
 class FlutterEnhancedKycAsyncResponse {
@@ -1071,10 +1072,12 @@ abstract class SmileIDProductsApi {
   );
 
   @async
-  SmartSelfieCaptureResult selfieCapture(SelfieCaptureViewCreationParams creationParams);
+  SmartSelfieCaptureResult selfieCapture(
+      SelfieCaptureViewCreationParams creationParams);
 
   @async
-  DocumentCaptureResult documentCapture(DocumentCaptureCreationParams creationParams);
+  DocumentCaptureResult documentCapture(
+      DocumentCaptureCreationParams creationParams);
 }
 
 @HostApi()
@@ -1109,7 +1112,8 @@ abstract class SmileIDApi {
   void submitJob(String jobId, bool deleteFilesOnSuccess);
 
   @async
-  FlutterAuthenticationResponse authenticate(FlutterAuthenticationRequest request);
+  FlutterAuthenticationResponse authenticate(
+      FlutterAuthenticationRequest request);
 
   @async
   FlutterPrepUploadResponse prepUpload(FlutterPrepUploadRequest request);
@@ -1121,10 +1125,12 @@ abstract class SmileIDApi {
   FlutterEnhancedKycResponse doEnhancedKyc(FlutterEnhancedKycRequest request);
 
   @async
-  FlutterEnhancedKycAsyncResponse doEnhancedKycAsync(FlutterEnhancedKycRequest request);
+  FlutterEnhancedKycAsyncResponse doEnhancedKycAsync(
+      FlutterEnhancedKycRequest request);
 
   @async
-  FlutterSmartSelfieJobStatusResponse getSmartSelfieJobStatus(FlutterJobStatusRequest request);
+  FlutterSmartSelfieJobStatusResponse getSmartSelfieJobStatus(
+      FlutterJobStatusRequest request);
 
   @async
   FlutterSmartSelfieResponse doSmartSelfieEnrollment(
@@ -1157,18 +1163,22 @@ abstract class SmileIDApi {
   );
 
   @async
-  FlutterBiometricKycJobStatusResponse getBiometricKycJobStatus(FlutterJobStatusRequest request);
+  FlutterBiometricKycJobStatusResponse getBiometricKycJobStatus(
+      FlutterJobStatusRequest request);
 
   @async
-  FlutterEnhancedDocumentVerificationJobStatusResponse getEnhancedDocumentVerificationJobStatus(
+  FlutterEnhancedDocumentVerificationJobStatusResponse
+      getEnhancedDocumentVerificationJobStatus(
     FlutterJobStatusRequest request,
   );
 
   @async
-  FlutterProductsConfigResponse getProductsConfig(FlutterProductsConfigRequest request);
+  FlutterProductsConfigResponse getProductsConfig(
+      FlutterProductsConfigRequest request);
 
   @async
-  FlutterValidDocumentsResponse getValidDocuments(FlutterProductsConfigRequest request);
+  FlutterValidDocumentsResponse getValidDocuments(
+      FlutterProductsConfigRequest request);
 
   @async
   FlutterServicesResponse getServices();
@@ -1181,7 +1191,8 @@ abstract class SmileIDApi {
   );
 
   @async
-  FlutterDocumentVerificationJobStatusResponse pollDocumentVerificationJobStatus(
+  FlutterDocumentVerificationJobStatusResponse
+      pollDocumentVerificationJobStatus(
     FlutterJobStatusRequest request,
     int interval,
     int numAttempts,
@@ -1195,9 +1206,16 @@ abstract class SmileIDApi {
   );
 
   @async
-  FlutterEnhancedDocumentVerificationJobStatusResponse pollEnhancedDocumentVerificationJobStatus(
+  FlutterEnhancedDocumentVerificationJobStatusResponse
+      pollEnhancedDocumentVerificationJobStatus(
     FlutterJobStatusRequest request,
     int interval,
     int numAttempts,
   );
+}
+
+@FlutterApi()
+abstract class SmileIDProductsResultApi {
+  void onSmartSelfieEnrollmentResult(
+      SmartSelfieCaptureResult? successResult, String? errorResult);
 }
