@@ -35,7 +35,6 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   FingerprintJS: 96410117a394cca04d0f1e2374944c8697f2cceb
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  integration_test: ce0a3ffa1de96d1a89ca0ac26fca7ea18a749ef4
   lottie-ios: 248b380fa1b97d18e792c37d90da7ab2aa0d6562
   smile_id: fee9749a68178e65f541553d23d0270e6187fcfa
   SmileID: 7f9c9db916d4c3997fcafb8b811afec30e88c751
