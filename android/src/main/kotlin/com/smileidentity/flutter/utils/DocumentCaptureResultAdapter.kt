@@ -55,10 +55,7 @@ class DocumentCaptureResultAdapter : JsonAdapter<DocumentCaptureResult>() {
     }
 
     @ToJson
-    override fun toJson(
-        writer: JsonWriter,
-        value: DocumentCaptureResult?,
-    ) {
+    override fun toJson(writer: JsonWriter, value: DocumentCaptureResult?) {
         if (value == null) {
             writer.nullValue()
             return
@@ -95,12 +92,11 @@ class DocumentCaptureResultAdapter : JsonAdapter<DocumentCaptureResult>() {
                     type: Type,
                     annotations: Set<Annotation>,
                     moshi: Moshi,
-                ): JsonAdapter<*>? =
-                    if (type == DocumentCaptureResult::class.java) {
-                        DocumentCaptureResultAdapter()
-                    } else {
-                        null
-                    }
+                ): JsonAdapter<*>? = if (type == DocumentCaptureResult::class.java) {
+                    DocumentCaptureResultAdapter()
+                } else {
+                    null
+                }
             }
     }
 }

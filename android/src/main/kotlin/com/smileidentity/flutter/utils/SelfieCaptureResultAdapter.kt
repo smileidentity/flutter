@@ -53,10 +53,7 @@ class SelfieCaptureResultAdapter : JsonAdapter<SmartSelfieCaptureResult>() {
     }
 
     @ToJson
-    override fun toJson(
-        writer: JsonWriter,
-        value: SmartSelfieCaptureResult?,
-    ) {
+    override fun toJson(writer: JsonWriter, value: SmartSelfieCaptureResult?) {
         if (value == null) {
             writer.nullValue()
             return

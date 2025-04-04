@@ -44,18 +44,18 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
             showInstructions = args["showInstructions"] as? Boolean ?: true,
             useStrictMode = args["useStrictMode"] as? Boolean ?: false,
             consentInformation =
-                ConsentInformation(
-                    consentGrantedDate =
-                        args["consentGrantedDate"] as? String ?: getCurrentIsoTimestamp(),
-                    personalDetailsConsentGranted =
-                        args["personalDetailsConsentGranted"] as? Boolean
-                            ?: false,
-                    contactInfoConsentGranted =
-                        args["contactInfoConsentGranted"] as? Boolean ?: false,
-                    documentInfoConsentGranted =
-                        args["documentInfoConsentGranted"] as? Boolean
-                            ?: false,
-                ),
+            ConsentInformation(
+                consentGrantedDate =
+                args["consentGrantedDate"] as? String ?: getCurrentIsoTimestamp(),
+                personalDetailsConsentGranted =
+                args["personalDetailsConsentGranted"] as? Boolean
+                    ?: false,
+                contactInfoConsentGranted =
+                args["contactInfoConsentGranted"] as? Boolean ?: false,
+                documentInfoConsentGranted =
+                args["documentInfoConsentGranted"] as? Boolean
+                    ?: false,
+            ),
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {
             when (it) {
@@ -95,11 +95,7 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
     class Factory(
         private val messenger: BinaryMessenger,
     ) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
-        override fun create(
-            context: Context,
-            viewId: Int,
-            args: Any?,
-        ): PlatformView {
+        override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
             @Suppress("UNCHECKED_CAST")
             return SmileIDEnhancedDocumentVerification(
                 context,

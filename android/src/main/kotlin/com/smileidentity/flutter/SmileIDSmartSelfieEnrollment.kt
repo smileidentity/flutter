@@ -39,11 +39,7 @@ internal class SmileIDSmartSelfieEnrollment private constructor(
     class Factory(
         private val messenger: BinaryMessenger,
     ) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
-        override fun create(
-            context: Context,
-            viewId: Int,
-            args: Any?,
-        ): PlatformView {
+        override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
             @Suppress("UNCHECKED_CAST")
             return SmileIDSmartSelfieEnrollment(
                 context,
