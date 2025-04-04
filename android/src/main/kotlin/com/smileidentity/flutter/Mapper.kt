@@ -45,7 +45,6 @@ import FlutterUploadImageInfo
 import FlutterUploadRequest
 import FlutterValidDocument
 import FlutterValidDocumentsResponse
-import android.os.Bundle
 import com.smileidentity.flutter.utils.getCurrentIsoTimestamp
 import com.smileidentity.models.ActionResult
 import com.smileidentity.models.Actions
@@ -90,10 +89,10 @@ import com.smileidentity.models.UploadImageInfo
 import com.smileidentity.models.UploadRequest
 import com.smileidentity.models.ValidDocument
 import com.smileidentity.models.ValidDocumentsResponse
+import com.smileidentity.models.v2.JobType as JobTypeV2
 import com.smileidentity.models.v2.SmartSelfieResponse
 import com.smileidentity.models.v2.SmartSelfieStatus
 import java.io.File
-import com.smileidentity.models.v2.JobType as JobTypeV2
 
 /**
  * Pigeon does not allow non nullable types in this example here
@@ -105,323 +104,292 @@ import com.smileidentity.models.v2.JobType as JobTypeV2
  *
  *  The fix is these two helper functions to convert maps to nullable types, and vice versa
  */
-fun convertNullableMapToNonNull(map: Map<String?, String?>?): Map<String, String> =
-    map
-        ?.filterKeys { it != null }
-        ?.filterValues { it != null }
-        ?.mapKeys { it.key!! }
-        ?.mapValues { it.value!! } ?: mapOf()
+fun convertNullableMapToNonNull(map: Map<String?, String?>?): Map<String, String> = map
+    ?.filterKeys { it != null }
+    ?.filterValues { it != null }
+    ?.mapKeys { it.key!! }
+    ?.mapValues { it.value!! } ?: mapOf()
 
-fun convertNonNullMapToNullable(map: Map<String, String>): Map<String?, String?> =
-    map
-        .mapKeys { it.key }
-        .mapValues { it.value }
+fun convertNonNullMapToNullable(map: Map<String, String>): Map<String?, String?> = map
+    .mapKeys { it.key }
+    .mapValues { it.value }
 
-fun FlutterJobType.toRequest() =
-    when (this) {
-        FlutterJobType.ENHANCED_KYC -> JobType.EnhancedKyc
-        FlutterJobType.DOCUMENT_VERIFICATION -> JobType.DocumentVerification
-        FlutterJobType.BIOMETRIC_KYC -> JobType.BiometricKyc
-        FlutterJobType.ENHANCED_DOCUMENT_VERIFICATION -> JobType.EnhancedDocumentVerification
-        FlutterJobType.SMART_SELFIE_ENROLLMENT -> JobType.SmartSelfieEnrollment
-        FlutterJobType.SMART_SELFIE_AUTHENTICATION -> JobType.SmartSelfieAuthentication
-    }
+fun FlutterJobType.toRequest() = when (this) {
+    FlutterJobType.ENHANCEDKYC -> JobType.EnhancedKyc
+    FlutterJobType.DOCUMENTVERIFICATION -> JobType.DocumentVerification
+    FlutterJobType.BIOMETRICKYC -> JobType.BiometricKyc
+    FlutterJobType.ENHANCEDDOCUMENTVERIFICATION -> JobType.EnhancedDocumentVerification
+    FlutterJobType.SMARTSELFIEENROLLMENT -> JobType.SmartSelfieEnrollment
+    FlutterJobType.SMARTSELFIEAUTHENTICATION -> JobType.SmartSelfieAuthentication
+}
 
-fun JobType.toResponse() =
-    when (this) {
-        JobType.EnhancedKyc -> FlutterJobType.ENHANCED_KYC
-        JobType.DocumentVerification -> FlutterJobType.DOCUMENT_VERIFICATION
-        JobType.BiometricKyc -> FlutterJobType.BIOMETRIC_KYC
-        JobType.EnhancedDocumentVerification -> FlutterJobType.ENHANCED_DOCUMENT_VERIFICATION
-        JobType.SmartSelfieEnrollment -> FlutterJobType.SMART_SELFIE_ENROLLMENT
-        JobType.SmartSelfieAuthentication -> FlutterJobType.SMART_SELFIE_AUTHENTICATION
-        else -> TODO("Not yet implemented")
-    }
+fun JobType.toResponse() = when (this) {
+    JobType.EnhancedKyc -> FlutterJobType.ENHANCEDKYC
+    JobType.DocumentVerification -> FlutterJobType.DOCUMENTVERIFICATION
+    JobType.BiometricKyc -> FlutterJobType.BIOMETRICKYC
+    JobType.EnhancedDocumentVerification -> FlutterJobType.ENHANCEDDOCUMENTVERIFICATION
+    JobType.SmartSelfieEnrollment -> FlutterJobType.SMARTSELFIEENROLLMENT
+    JobType.SmartSelfieAuthentication -> FlutterJobType.SMARTSELFIEAUTHENTICATION
+    else -> TODO("Not yet implemented")
+}
 
-fun FlutterJobTypeV2.toRequest() =
-    when (this) {
-        FlutterJobTypeV2.SMART_SELFIE_AUTHENTICATION -> JobTypeV2.SmartSelfieAuthentication
-        FlutterJobTypeV2.SMART_SELFIE_ENROLLMENT -> JobTypeV2.SmartSelfieEnrollment
-    }
+fun FlutterJobTypeV2.toRequest() = when (this) {
+    FlutterJobTypeV2.SMARTSELFIEAUTHENTICATION -> JobTypeV2.SmartSelfieAuthentication
+    FlutterJobTypeV2.SMARTSELFIEENROLLMENT -> JobTypeV2.SmartSelfieEnrollment
+}
 
-fun JobTypeV2.toResponse() =
-    when (this) {
-        JobTypeV2.SmartSelfieAuthentication -> FlutterJobTypeV2.SMART_SELFIE_AUTHENTICATION
-        JobTypeV2.SmartSelfieEnrollment -> FlutterJobTypeV2.SMART_SELFIE_ENROLLMENT
-        else -> TODO("Not yet implemented")
-    }
+fun JobTypeV2.toResponse() = when (this) {
+    JobTypeV2.SmartSelfieAuthentication -> FlutterJobTypeV2.SMARTSELFIEAUTHENTICATION
+    JobTypeV2.SmartSelfieEnrollment -> FlutterJobTypeV2.SMARTSELFIEENROLLMENT
+    else -> TODO("Not yet implemented")
+}
 
-fun FlutterAuthenticationRequest.toRequest() =
-    AuthenticationRequest(
-        jobType = jobType.toRequest(),
-        country = country,
-        idType = idType,
-        updateEnrolledImage = updateEnrolledImage,
-        jobId = jobId,
-        userId = userId,
-    )
+fun FlutterAuthenticationRequest.toRequest() = AuthenticationRequest(
+    jobType = jobType.toRequest(),
+    country = country,
+    idType = idType,
+    updateEnrolledImage = updateEnrolledImage,
+    jobId = jobId,
+    userId = userId,
+)
 
-fun PartnerParams.toResponse() =
-    FlutterPartnerParams(
-        jobType = jobType?.toResponse(),
-        jobId = jobId,
-        userId = userId,
-        extras = convertNonNullMapToNullable(extras),
-    )
+fun PartnerParams.toResponse() = FlutterPartnerParams(
+    jobType = jobType?.toResponse(),
+    jobId = jobId,
+    userId = userId,
+    extras = convertNonNullMapToNullable(extras),
+)
 
-fun FlutterPartnerParams.toRequest() =
-    PartnerParams(
-        jobType = jobType?.toRequest(),
-        jobId = jobId,
-        userId = userId,
-        extras = convertNullableMapToNonNull(extras),
-    )
+fun FlutterPartnerParams.toRequest() = PartnerParams(
+    jobType = jobType?.toRequest(),
+    jobId = jobId,
+    userId = userId,
+    extras = convertNullableMapToNonNull(extras),
+)
 
-fun ConsentInfo.toRequest() =
-    FlutterConsentInfo(
-        canAccess = canAccess,
-        consentRequired = consentRequired,
-    )
+fun ConsentInfo.toRequest() = FlutterConsentInfo(
+    canAccess = canAccess,
+    consentRequired = consentRequired,
+)
 
-fun AuthenticationResponse.toResponse() =
-    FlutterAuthenticationResponse(
-        success = success,
-        signature = signature,
-        timestamp = timestamp,
-        partnerParams = partnerParams.toResponse(),
-        callbackUrl = callbackUrl,
-        consentInfo = consentInfo?.toRequest(),
-    )
+fun AuthenticationResponse.toResponse() = FlutterAuthenticationResponse(
+    success = success,
+    signature = signature,
+    timestamp = timestamp,
+    partnerParams = partnerParams.toResponse(),
+    callbackUrl = callbackUrl,
+    consentInfo = consentInfo?.toRequest(),
+)
 
-fun FlutterPrepUploadRequest.toRequest() =
-    PrepUploadRequest(
-        partnerParams = partnerParams.toRequest(),
-        callbackUrl = callbackUrl,
-        allowNewEnroll = allowNewEnroll,
-        partnerId = partnerId,
-        sourceSdk = "android (flutter)",
-        timestamp = timestamp,
-        signature = signature,
-    )
+fun FlutterPrepUploadRequest.toRequest() = PrepUploadRequest(
+    partnerParams = partnerParams.toRequest(),
+    callbackUrl = callbackUrl,
+    allowNewEnroll = allowNewEnroll,
+    partnerId = partnerId,
+    sourceSdk = "android (flutter)",
+    timestamp = timestamp,
+    signature = signature,
+)
 
-fun PrepUploadResponse.toResponse() =
-    FlutterPrepUploadResponse(
-        code = code,
-        refId = refId,
-        uploadUrl = uploadUrl,
-        smileJobId = smileJobId,
-    )
+fun PrepUploadResponse.toResponse() = FlutterPrepUploadResponse(
+    code = code,
+    refId = refId,
+    uploadUrl = uploadUrl,
+    smileJobId = smileJobId,
+)
 
-fun FlutterUploadRequest.toRequest() =
-    UploadRequest(
-        images = images.mapNotNull { it?.toRequest() },
-        idInfo = idInfo?.toRequest(),
-    )
+fun FlutterUploadRequest.toRequest() = UploadRequest(
+    images = images.mapNotNull { it?.toRequest() },
+    idInfo = idInfo?.toRequest(),
+)
 
-fun FlutterUploadImageInfo.toRequest() =
-    UploadImageInfo(
-        imageTypeId = imageTypeId.toRequest(),
-        image = File(imageName),
-    )
+fun FlutterUploadImageInfo.toRequest() = UploadImageInfo(
+    imageTypeId = imageTypeId.toRequest(),
+    image = File(imageName),
+)
 
-fun FlutterImageType.toRequest() =
-    when (this) {
-        FlutterImageType.SELFIE_JPG_FILE -> ImageType.SelfieJpgFile
-        FlutterImageType.ID_CARD_JPG_FILE -> ImageType.IdCardJpgFile
-        FlutterImageType.SELFIE_JPG_BASE64 -> ImageType.SelfieJpgBase64
-        FlutterImageType.ID_CARD_JPG_BASE64 -> ImageType.IdCardJpgBase64
-        FlutterImageType.LIVENESS_JPG_FILE -> ImageType.LivenessJpgFile
-        FlutterImageType.ID_CARD_REAR_JPG_FILE -> ImageType.IdCardRearJpgFile
-        FlutterImageType.LIVENESS_JPG_BASE64 -> ImageType.LivenessJpgBase64
-        FlutterImageType.ID_CARD_REAR_JPG_BASE64 -> ImageType.IdCardRearJpgBase64
-    }
+fun FlutterImageType.toRequest() = when (this) {
+    FlutterImageType.SELFIEJPGFILE -> ImageType.SelfieJpgFile
+    FlutterImageType.IDCARDJPGFILE -> ImageType.IdCardJpgFile
+    FlutterImageType.SELFIEJPGBASE64 -> ImageType.SelfieJpgBase64
+    FlutterImageType.IDCARDJPGBASE64 -> ImageType.IdCardJpgBase64
+    FlutterImageType.LIVENESSJPGFILE -> ImageType.LivenessJpgFile
+    FlutterImageType.IDCARDREARJPGFILE -> ImageType.IdCardRearJpgFile
+    FlutterImageType.LIVENESSJPGBASE64 -> ImageType.LivenessJpgBase64
+    FlutterImageType.IDCARDREARJPGBASE64 -> ImageType.IdCardRearJpgBase64
+}
 
-fun FlutterIdInfo.toRequest() =
-    IdInfo(
-        country = country,
-        idType = idType,
-        idNumber = idNumber,
-        firstName = firstName,
-        middleName = middleName,
-        lastName = lastName,
-        dob = dob,
-        bankCode = bankCode,
-        entered = entered,
-    )
+fun FlutterIdInfo.toRequest() = IdInfo(
+    country = country,
+    idType = idType,
+    idNumber = idNumber,
+    firstName = firstName,
+    middleName = middleName,
+    lastName = lastName,
+    dob = dob,
+    bankCode = bankCode,
+    entered = entered,
+)
 
-fun FlutterConsentInformation.toRequest() =
-    ConsentInformation(
-        consentGrantedDate = consentGrantedDate,
-        personalDetailsConsentGranted = personalDetailsConsentGranted,
-        contactInfoConsentGranted = contactInfoConsentGranted,
-        documentInfoConsentGranted = documentInfoConsentGranted,
-    )
+fun FlutterConsentInformation.toRequest() = ConsentInformation(
+    consentGrantedDate = consentGrantedDate,
+    personalDetailsConsentGranted = personalDetailsConsentGranted,
+    contactInfoConsentGranted = contactInfoConsentGranted,
+    documentInfoConsentGranted = documentInfoConsentGranted,
+)
 
-fun FlutterEnhancedKycRequest.toRequest() =
-    EnhancedKycRequest(
-        country = country,
-        idType = idType,
-        idNumber = idNumber,
-        firstName = firstName,
-        middleName = middleName,
-        lastName = lastName,
-        dob = dob,
-        phoneNumber = phoneNumber,
-        bankCode = bankCode,
-        callbackUrl = callbackUrl,
-        partnerParams = partnerParams.toRequest(),
-        sourceSdk = "android (flutter)",
-        timestamp = timestamp,
-        signature = signature,
-        consentInformation =
-            consentInformation?.toRequest() ?: ConsentInformation(
-                consentGrantedDate = getCurrentIsoTimestamp(),
-                personalDetailsConsentGranted = false,
-                contactInfoConsentGranted = false,
-                documentInfoConsentGranted = false,
-            ),
-    )
+fun FlutterEnhancedKycRequest.toRequest() = EnhancedKycRequest(
+    country = country,
+    idType = idType,
+    idNumber = idNumber,
+    firstName = firstName,
+    middleName = middleName,
+    lastName = lastName,
+    dob = dob,
+    phoneNumber = phoneNumber,
+    bankCode = bankCode,
+    callbackUrl = callbackUrl,
+    partnerParams = partnerParams.toRequest(),
+    sourceSdk = "android (flutter)",
+    timestamp = timestamp,
+    signature = signature,
+    consentInformation =
+    consentInformation?.toRequest() ?: ConsentInformation(
+        consentGrantedDate = getCurrentIsoTimestamp(),
+        personalDetailsConsentGranted = false,
+        contactInfoConsentGranted = false,
+        documentInfoConsentGranted = false,
+    ),
+)
 
-fun EnhancedKycResponse.toResponse() =
-    FlutterEnhancedKycResponse(
-        smileJobId = smileJobId,
-        partnerParams = partnerParams.toResponse(),
-        resultText = resultText,
-        resultCode = resultCode,
-        actions = actions.toResponse(),
-        country = country,
-        idType = idType,
-        idNumber = idNumber,
-        fullName = fullName,
-        expirationDate = expirationDate,
-        dob = dob,
-        base64Photo = base64Photo,
-    )
+fun EnhancedKycResponse.toResponse() = FlutterEnhancedKycResponse(
+    smileJobId = smileJobId,
+    partnerParams = partnerParams.toResponse(),
+    resultText = resultText,
+    resultCode = resultCode,
+    actions = actions.toResponse(),
+    country = country,
+    idType = idType,
+    idNumber = idNumber,
+    fullName = fullName,
+    expirationDate = expirationDate,
+    dob = dob,
+    base64Photo = base64Photo,
+)
 
-fun EnhancedKycAsyncResponse.toResponse() =
-    FlutterEnhancedKycAsyncResponse(
-        success = success,
-    )
+fun EnhancedKycAsyncResponse.toResponse() = FlutterEnhancedKycAsyncResponse(
+    success = success,
+)
 
-fun Actions.toResponse() =
-    FlutterActions(
-        documentCheck = documentCheck.toResponse(),
-        humanReviewCompare = humanReviewCompare.toResponse(),
-        humanReviewDocumentCheck = humanReviewDocumentCheck.toResponse(),
-        humanReviewLivenessCheck = humanReviewLivenessCheck.toResponse(),
-        humanReviewSelfieCheck = humanReviewSelfieCheck.toResponse(),
-        humanReviewUpdateSelfie = humanReviewUpdateSelfie.toResponse(),
-        livenessCheck = livenessCheck.toResponse(),
-        registerSelfie = registerSelfie.toResponse(),
-        returnPersonalInfo = returnPersonalInfo.toResponse(),
-        selfieCheck = selfieCheck.toResponse(),
-        selfieProvided = selfieProvided.toResponse(),
-        selfieToIdAuthorityCompare = selfieToIdAuthorityCompare.toResponse(),
-        selfieToIdCardCompare = selfieToIdCardCompare.toResponse(),
-        selfieToRegisteredSelfieCompare = selfieToRegisteredSelfieCompare.toResponse(),
-        updateRegisteredSelfieOnFile = updateRegisteredSelfieOnFile.toResponse(),
-        verifyDocument = verifyDocument.toResponse(),
-        verifyIdNumber = verifyIdNumber.toResponse(),
-    )
+fun Actions.toResponse() = FlutterActions(
+    documentCheck = documentCheck.toResponse(),
+    humanReviewCompare = humanReviewCompare.toResponse(),
+    humanReviewDocumentCheck = humanReviewDocumentCheck.toResponse(),
+    humanReviewLivenessCheck = humanReviewLivenessCheck.toResponse(),
+    humanReviewSelfieCheck = humanReviewSelfieCheck.toResponse(),
+    humanReviewUpdateSelfie = humanReviewUpdateSelfie.toResponse(),
+    livenessCheck = livenessCheck.toResponse(),
+    registerSelfie = registerSelfie.toResponse(),
+    returnPersonalInfo = returnPersonalInfo.toResponse(),
+    selfieCheck = selfieCheck.toResponse(),
+    selfieProvided = selfieProvided.toResponse(),
+    selfieToIdAuthorityCompare = selfieToIdAuthorityCompare.toResponse(),
+    selfieToIdCardCompare = selfieToIdCardCompare.toResponse(),
+    selfieToRegisteredSelfieCompare = selfieToRegisteredSelfieCompare.toResponse(),
+    updateRegisteredSelfieOnFile = updateRegisteredSelfieOnFile.toResponse(),
+    verifyDocument = verifyDocument.toResponse(),
+    verifyIdNumber = verifyIdNumber.toResponse(),
+)
 
-fun ActionResult.toResponse() =
-    when (this) {
-        ActionResult.Passed -> FlutterActionResult.PASSED
-        ActionResult.Completed -> FlutterActionResult.COMPLETED
-        ActionResult.Approved -> FlutterActionResult.APPROVED
-        ActionResult.Verified -> FlutterActionResult.VERIFIED
-        ActionResult.ProvisionallyApproved -> FlutterActionResult.PROVISIONALLY_APPROVED
-        ActionResult.Returned -> FlutterActionResult.RETURNED
-        ActionResult.NotReturned -> FlutterActionResult.NOT_RETURNED
-        ActionResult.Failed -> FlutterActionResult.FAILED
-        ActionResult.Rejected -> FlutterActionResult.REJECTED
-        ActionResult.UnderReview -> FlutterActionResult.UNDER_REVIEW
-        ActionResult.UnableToDetermine -> FlutterActionResult.UNABLE_TO_DETERMINE
-        ActionResult.NotApplicable -> FlutterActionResult.NOT_APPLICABLE
-        ActionResult.NotVerified -> FlutterActionResult.NOT_VERIFIED
-        ActionResult.NotDone -> FlutterActionResult.NOT_DONE
-        ActionResult.IssuerUnavailable -> FlutterActionResult.ISSUER_UNAVAILABLE
-        ActionResult.IdAuthorityPhotoNotAvailable ->
-            FlutterActionResult.ID_AUTHORITY_PHOTO_NOT_AVAILABLE
+fun ActionResult.toResponse() = when (this) {
+    ActionResult.Passed -> FlutterActionResult.PASSED
+    ActionResult.Completed -> FlutterActionResult.COMPLETED
+    ActionResult.Approved -> FlutterActionResult.APPROVED
+    ActionResult.Verified -> FlutterActionResult.VERIFIED
+    ActionResult.ProvisionallyApproved -> FlutterActionResult.PROVISIONALLYAPPROVED
+    ActionResult.Returned -> FlutterActionResult.RETURNED
+    ActionResult.NotReturned -> FlutterActionResult.NOTRETURNED
+    ActionResult.Failed -> FlutterActionResult.FAILED
+    ActionResult.Rejected -> FlutterActionResult.REJECTED
+    ActionResult.UnderReview -> FlutterActionResult.UNDERREVIEW
+    ActionResult.UnableToDetermine -> FlutterActionResult.UNABLETODETERMINE
+    ActionResult.NotApplicable -> FlutterActionResult.NOTAPPLICABLE
+    ActionResult.NotVerified -> FlutterActionResult.NOTVERIFIED
+    ActionResult.NotDone -> FlutterActionResult.NOTDONE
+    ActionResult.IssuerUnavailable -> FlutterActionResult.ISSUERUNAVAILABLE
+    ActionResult.IdAuthorityPhotoNotAvailable ->
+        FlutterActionResult.IDAUTHORITYPHOTONOTAVAILABLE
 
-        ActionResult.SentToHumanReview -> FlutterActionResult.SENT_TO_HUMAN_REVIEW
-        ActionResult.Unknown -> FlutterActionResult.UNKNOWN
-    }
+    ActionResult.SentToHumanReview -> FlutterActionResult.SENTTOHUMANREVIEW
+    ActionResult.Unknown -> FlutterActionResult.UNKNOWN
+}
 
-fun ImageLinks.toResponse() =
-    FlutterImageLinks(
-        selfieImageUrl = selfieImageUrl,
-        error = error,
-    )
+fun ImageLinks.toResponse() = FlutterImageLinks(
+    selfieImageUrl = selfieImageUrl,
+    error = error,
+)
 
-fun Antifraud.toResponse() =
-    FlutterAntifraud(
-        suspectUsers = suspectUsers.map { it.toResponse() },
-    )
+fun Antifraud.toResponse() = FlutterAntifraud(
+    suspectUsers = suspectUsers.map { it.toResponse() },
+)
 
-fun SuspectUser.toResponse() =
-    FlutterSuspectUser(
-        reason = reason,
-        userId = userId,
-    )
+fun SuspectUser.toResponse() = FlutterSuspectUser(
+    reason = reason,
+    userId = userId,
+)
 
-fun FlutterJobStatusRequest.toRequest() =
-    JobStatusRequest(
-        userId = userId,
-        jobId = jobId,
-        includeImageLinks = includeImageLinks,
-        includeHistory = includeHistory,
-        partnerId = partnerId,
-        timestamp = timestamp,
-        signature = signature,
-    )
+fun FlutterJobStatusRequest.toRequest() = JobStatusRequest(
+    userId = userId,
+    jobId = jobId,
+    includeImageLinks = includeImageLinks,
+    includeHistory = includeHistory,
+    partnerId = partnerId,
+    timestamp = timestamp,
+    signature = signature,
+)
 
-fun SmartSelfieJobStatusResponse.toResponse() =
-    FlutterSmartSelfieJobStatusResponse(
-        timestamp = timestamp,
-        jobComplete = jobComplete,
-        jobSuccess = jobSuccess,
-        code = code,
-        result = result?.toResponse() as? FlutterSmartSelfieJobResult,
-        resultString = result?.toResponse() as? String,
-        imageLinks = imageLinks?.toResponse(),
-    )
+fun SmartSelfieJobStatusResponse.toResponse() = FlutterSmartSelfieJobStatusResponse(
+    timestamp = timestamp,
+    jobComplete = jobComplete,
+    jobSuccess = jobSuccess,
+    code = code,
+    result = result?.toResponse() as? FlutterSmartSelfieJobResult,
+    resultString = result?.toResponse() as? String,
+    imageLinks = imageLinks?.toResponse(),
+)
 
-fun SmartSelfieJobResult.toResponse(): Any =
-    when (this) {
-        is JobResult.Freeform -> this.result
-        is SmartSelfieJobResult.Entry ->
-            FlutterSmartSelfieJobResult(
-                actions = actions.toResponse(),
-                resultCode = resultCode,
-                resultText = resultText,
-                smileJobId = smileJobId,
-                partnerParams = partnerParams.toResponse(),
-                confidence = confidence,
-            )
-    }
+fun SmartSelfieJobResult.toResponse(): Any = when (this) {
+    is JobResult.Freeform -> this.result
+    is SmartSelfieJobResult.Entry ->
+        FlutterSmartSelfieJobResult(
+            actions = actions.toResponse(),
+            resultCode = resultCode,
+            resultText = resultText,
+            smileJobId = smileJobId,
+            partnerParams = partnerParams.toResponse(),
+            confidence = confidence,
+        )
+}
 
-fun SmartSelfieStatus.toResponse() =
-    when (this) {
-        SmartSelfieStatus.Approved -> FlutterSmartSelfieStatus.APPROVED
-        SmartSelfieStatus.Pending -> FlutterSmartSelfieStatus.PENDING
-        SmartSelfieStatus.Rejected -> FlutterSmartSelfieStatus.REJECTED
-        SmartSelfieStatus.Unknown -> FlutterSmartSelfieStatus.UNKNOWN
-    }
+fun SmartSelfieStatus.toResponse() = when (this) {
+    SmartSelfieStatus.Approved -> FlutterSmartSelfieStatus.APPROVED
+    SmartSelfieStatus.Pending -> FlutterSmartSelfieStatus.PENDING
+    SmartSelfieStatus.Rejected -> FlutterSmartSelfieStatus.REJECTED
+    SmartSelfieStatus.Unknown -> FlutterSmartSelfieStatus.UNKNOWN
+}
 
-fun SmartSelfieResponse.toResponse() =
-    FlutterSmartSelfieResponse(
-        code = code,
-        createdAt = createdAt,
-        jobId = jobId,
-        jobType = jobType.toResponse(),
-        message = message,
-        partnerId = partnerId,
-        partnerParams = convertNonNullMapToNullable(partnerParams),
-        status = status.toResponse(),
-        updatedAt = updatedAt,
-        userId = userId,
-    )
+fun SmartSelfieResponse.toResponse() = FlutterSmartSelfieResponse(
+    code = code,
+    createdAt = createdAt,
+    jobId = jobId,
+    jobType = jobType.toResponse(),
+    message = message,
+    partnerId = partnerId,
+    partnerParams = convertNonNullMapToNullable(partnerParams),
+    status = status.toResponse(),
+    updatedAt = updatedAt,
+    userId = userId,
+)
 
 fun DocumentVerificationJobStatusResponse.toResponse() =
     FlutterDocumentVerificationJobStatusResponse(
@@ -434,68 +402,65 @@ fun DocumentVerificationJobStatusResponse.toResponse() =
         imageLinks = imageLinks?.toResponse(),
     )
 
-fun DocumentVerificationJobResult.toResponse(): Any =
-    when (this) {
-        is JobResult.Freeform -> this.result
-        is DocumentVerificationJobResult.Entry ->
-            FlutterDocumentVerificationJobResult(
-                actions = actions.toResponse(),
-                resultCode = resultCode,
-                resultText = resultText,
-                smileJobId = smileJobId,
-                partnerParams = partnerParams.toResponse(),
-                country = country,
-                idType = idType,
-                fullName = fullName,
-                idNumber = idNumber,
-                dob = dob,
-                gender = gender,
-                expirationDate = expirationDate,
-                documentImageBase64 = documentImageBase64,
-                phoneNumber = phoneNumber,
-                phoneNumber2 = phoneNumber2,
-                address = address,
-            )
-    }
+fun DocumentVerificationJobResult.toResponse(): Any = when (this) {
+    is JobResult.Freeform -> this.result
+    is DocumentVerificationJobResult.Entry ->
+        FlutterDocumentVerificationJobResult(
+            actions = actions.toResponse(),
+            resultCode = resultCode,
+            resultText = resultText,
+            smileJobId = smileJobId,
+            partnerParams = partnerParams.toResponse(),
+            country = country,
+            idType = idType,
+            fullName = fullName,
+            idNumber = idNumber,
+            dob = dob,
+            gender = gender,
+            expirationDate = expirationDate,
+            documentImageBase64 = documentImageBase64,
+            phoneNumber = phoneNumber,
+            phoneNumber2 = phoneNumber2,
+            address = address,
+        )
+}
 
-fun BiometricKycJobStatusResponse.toResponse() =
-    FlutterBiometricKycJobStatusResponse(
-        timestamp = timestamp,
-        jobComplete = jobComplete,
-        jobSuccess = jobSuccess,
-        code = code,
-        result = result?.toResponse() as? FlutterBiometricKycJobResult,
-        resultString = result?.toResponse() as? String,
-        imageLinks = imageLinks?.toResponse(),
-    )
+fun BiometricKycJobStatusResponse.toResponse() = FlutterBiometricKycJobStatusResponse(
+    timestamp = timestamp,
+    jobComplete = jobComplete,
+    jobSuccess = jobSuccess,
+    code = code,
+    result = result?.toResponse() as? FlutterBiometricKycJobResult,
+    resultString = result?.toResponse() as? String,
+    imageLinks = imageLinks?.toResponse(),
+)
 
-fun BiometricKycJobResult.toResponse(): Any =
-    when (this) {
-        is JobResult.Freeform -> this.result
-        is BiometricKycJobResult.Entry ->
-            FlutterBiometricKycJobResult(
-                actions = actions.toResponse(),
-                resultCode = resultCode,
-                resultText = resultText,
-                resultType = resultType,
-                smileJobId = smileJobId,
-                partnerParams = partnerParams.toResponse(),
-                antifraud = antifraud?.toResponse(),
-                dob = dob,
-                photoBase64 = photoBase64,
-                gender = gender,
-                idType = idType,
-                address = address,
-                country = country,
-                documentImageBase64 = documentImageBase64,
-                fullData = fullData?.mapKeys { it.key }?.mapValues { it.value.toString() },
-                fullName = fullName,
-                idNumber = idNumber,
-                phoneNumber = phoneNumber,
-                phoneNumber2 = phoneNumber2,
-                expirationDate = expirationDate,
-            )
-    }
+fun BiometricKycJobResult.toResponse(): Any = when (this) {
+    is JobResult.Freeform -> this.result
+    is BiometricKycJobResult.Entry ->
+        FlutterBiometricKycJobResult(
+            actions = actions.toResponse(),
+            resultCode = resultCode,
+            resultText = resultText,
+            resultType = resultType,
+            smileJobId = smileJobId,
+            partnerParams = partnerParams.toResponse(),
+            antifraud = antifraud?.toResponse(),
+            dob = dob,
+            photoBase64 = photoBase64,
+            gender = gender,
+            idType = idType,
+            address = address,
+            country = country,
+            documentImageBase64 = documentImageBase64,
+            fullData = fullData?.mapKeys { it.key }?.mapValues { it.value.toString() },
+            fullName = fullName,
+            idNumber = idNumber,
+            phoneNumber = phoneNumber,
+            phoneNumber2 = phoneNumber2,
+            expirationDate = expirationDate,
+        )
+}
 
 fun EnhancedDocumentVerificationJobStatusResponse.toResponse() =
     FlutterEnhancedDocumentVerificationJobStatusResponse(
@@ -508,181 +473,124 @@ fun EnhancedDocumentVerificationJobStatusResponse.toResponse() =
         imageLinks = imageLinks?.toResponse(),
     )
 
-fun EnhancedDocumentVerificationJobResult.toResponse(): Any =
-    when (this) {
-        is JobResult.Freeform -> this.result
-        is EnhancedDocumentVerificationJobResult.Entry ->
-            FlutterEnhancedDocumentVerificationJobResult(
-                actions = actions.toResponse(),
-                resultCode = resultCode,
-                resultText = resultText,
-                smileJobId = smileJobId,
-                resultType = resultType,
-                partnerParams = partnerParams.toResponse(),
-                antifraud = antifraud?.toResponse(),
-                dob = dob,
-                photoBase64 = photoBase64,
-                gender = gender,
-                idType = idType,
-                address = address,
-                country = country,
-                documentImageBase64 = documentImageBase64,
-                fullData = fullData?.mapKeys { it.key }?.mapValues { it.value.toString() },
-                fullName = fullName,
-                idNumber = idNumber,
-                phoneNumber = phoneNumber,
-                phoneNumber2 = phoneNumber2,
-                expirationDate = expirationDate,
-            )
-    }
-
-fun FlutterProductsConfigRequest.toRequest() =
-    ProductsConfigRequest(
-        partnerId = partnerId,
-        timestamp = timestamp,
-        signature = signature,
-    )
-
-fun ProductsConfigResponse.toResponse() =
-    FlutterProductsConfigResponse(
-        consentRequired = consentRequired.mapKeys { it.key },
-        idSelection = idSelection.toResponse(),
-    )
-
-fun IdSelection.toResponse() =
-    FlutterIdSelection(
-        basicKyc = basicKyc.mapKeys { it.key },
-        biometricKyc = biometricKyc.mapKeys { it.key },
-        enhancedKyc = enhancedKyc.mapKeys { it.key },
-        documentVerification = documentVerification.mapKeys { it.key },
-    )
-
-fun ValidDocumentsResponse.toResponse() =
-    FlutterValidDocumentsResponse(
-        validDocuments = validDocuments.map { it.toResponse() },
-    )
-
-fun ValidDocument.toResponse() =
-    FlutterValidDocument(
-        country = country.toResponse(),
-        idTypes = idTypes.map { it.toResponse() },
-    )
-
-fun Country.toResponse() =
-    FlutterCountry(
-        name = name,
-        code = code,
-        continent = continent,
-    )
-
-fun IdType.toResponse() =
-    FlutterIdType(
-        name = name,
-        code = code,
-        example = example.map { it },
-        hasBack = hasBack,
-    )
-
-fun ServicesResponse.toResponse() =
-    FlutterServicesResponse(
-        bankCodes = bankCodes.map { it.toResponse() },
-        hostedWeb = hostedWeb.toResponse(),
-    )
-
-fun BankCode.toResponse() =
-    FlutterBankCode(
-        name = name,
-        code = code,
-    )
-
-fun HostedWeb.toResponse() =
-    FlutterHostedWeb(
-        basicKyc = basicKyc.groupBy { it.countryCode }.mapValues { it.value.first().toResponse() },
-        biometricKyc =
-            biometricKyc
-                .groupBy { it.countryCode }
-                .mapValues { it.value.first().toResponse() },
-        enhancedKyc =
-            enhancedKyc
-                .groupBy { it.countryCode }
-                .mapValues { it.value.first().toResponse() },
-        documentVerification =
-            docVerification
-                .groupBy { it.countryCode }
-                .mapValues { it.value.first().toResponse() },
-        enhancedKycSmartSelfie =
-            enhancedKycSmartSelfie
-                .groupBy { it.countryCode }
-                .mapValues { it.value.first().toResponse() },
-        enhancedDocumentVerification =
-            enhancedDocumentVerification
-                .groupBy { it.countryCode }
-                .mapValues { it.value.first().toResponse() },
-    )
-
-fun CountryInfo.toResponse() =
-    FlutterCountryInfo(
-        countryCode = countryCode,
-        name = name,
-        availableIdTypes = availableIdTypes.map { it.toResponse() },
-    )
-
-fun AvailableIdType.toResponse() =
-    FlutterAvailableIdType(
-        idTypeKey = idTypeKey,
-        label = label,
-        requiredFields = requiredFields.map { it.name },
-        testData = testData,
-        idNumberRegex = idNumberRegex,
-    )
-
-fun FlutterConfig.toRequest() =
-    Config(
-        partnerId = partnerId,
-        authToken = authToken,
-        prodLambdaUrl = prodBaseUrl,
-        testLambdaUrl = sandboxBaseUrl,
-    )
-
-fun SmartSelfieResponse.buildBundle() =
-    Bundle().apply {
-        this.putString("code", code)
-        this.putString("created_at", createdAt)
-        this.putString("job_id", jobId)
-        this.putString("job_type", jobType.name)
-        this.putString("message", message)
-        this.putString("partner_id", partnerId)
-        this.putBundle(
-            "partner_params",
-            Bundle().apply {
-                partnerParams.forEach {
-                    putString(it.key, it.value)
-                }
-            },
+fun EnhancedDocumentVerificationJobResult.toResponse(): Any = when (this) {
+    is JobResult.Freeform -> this.result
+    is EnhancedDocumentVerificationJobResult.Entry ->
+        FlutterEnhancedDocumentVerificationJobResult(
+            actions = actions.toResponse(),
+            resultCode = resultCode,
+            resultText = resultText,
+            smileJobId = smileJobId,
+            resultType = resultType,
+            partnerParams = partnerParams.toResponse(),
+            antifraud = antifraud?.toResponse(),
+            dob = dob,
+            photoBase64 = photoBase64,
+            gender = gender,
+            idType = idType,
+            address = address,
+            country = country,
+            documentImageBase64 = documentImageBase64,
+            fullData = fullData?.mapKeys { it.key }?.mapValues { it.value.toString() },
+            fullName = fullName,
+            idNumber = idNumber,
+            phoneNumber = phoneNumber,
+            phoneNumber2 = phoneNumber2,
+            expirationDate = expirationDate,
         )
-        this.putString("status", status.name)
-        this.putString("updated_at", updatedAt)
-        this.putString("user_id", userId)
-    }
+}
 
-fun SmartSelfieResponse.toMap(): Map<String, Any?> =
-    mapOf(
-        "code" to code,
-        "created_at" to createdAt,
-        "job_id" to jobId,
-        "job_type" to jobType.name,
-        "message" to message,
-        "partner_id" to partnerId,
-        "partner_params" to partnerParams,
-        "status" to status.name,
-        "updated_at" to updatedAt,
-        "user_id" to userId,
-    )
+fun FlutterProductsConfigRequest.toRequest() = ProductsConfigRequest(
+    partnerId = partnerId,
+    timestamp = timestamp,
+    signature = signature,
+)
 
-fun List<File>.pathList(): ArrayList<String> =
-    ArrayList<String>().let {
-        this.forEach { item ->
-            it.add(item.absolutePath)
-        }
-        return it
-    }
+fun ProductsConfigResponse.toResponse() = FlutterProductsConfigResponse(
+    consentRequired = consentRequired.mapKeys { it.key },
+    idSelection = idSelection.toResponse(),
+)
+
+fun IdSelection.toResponse() = FlutterIdSelection(
+    basicKyc = basicKyc.mapKeys { it.key },
+    biometricKyc = biometricKyc.mapKeys { it.key },
+    enhancedKyc = enhancedKyc.mapKeys { it.key },
+    documentVerification = documentVerification.mapKeys { it.key },
+)
+
+fun ValidDocumentsResponse.toResponse() = FlutterValidDocumentsResponse(
+    validDocuments = validDocuments.map { it.toResponse() },
+)
+
+fun ValidDocument.toResponse() = FlutterValidDocument(
+    country = country.toResponse(),
+    idTypes = idTypes.map { it.toResponse() },
+)
+
+fun Country.toResponse() = FlutterCountry(
+    name = name,
+    code = code,
+    continent = continent,
+)
+
+fun IdType.toResponse() = FlutterIdType(
+    name = name,
+    code = code,
+    example = example.map { it },
+    hasBack = hasBack,
+)
+
+fun ServicesResponse.toResponse() = FlutterServicesResponse(
+    bankCodes = bankCodes.map { it.toResponse() },
+    hostedWeb = hostedWeb.toResponse(),
+)
+
+fun BankCode.toResponse() = FlutterBankCode(
+    name = name,
+    code = code,
+)
+
+fun HostedWeb.toResponse() = FlutterHostedWeb(
+    basicKyc = basicKyc.groupBy { it.countryCode }.mapValues { it.value.first().toResponse() },
+    biometricKyc =
+    biometricKyc
+        .groupBy { it.countryCode }
+        .mapValues { it.value.first().toResponse() },
+    enhancedKyc =
+    enhancedKyc
+        .groupBy { it.countryCode }
+        .mapValues { it.value.first().toResponse() },
+    documentVerification =
+    docVerification
+        .groupBy { it.countryCode }
+        .mapValues { it.value.first().toResponse() },
+    enhancedKycSmartSelfie =
+    enhancedKycSmartSelfie
+        .groupBy { it.countryCode }
+        .mapValues { it.value.first().toResponse() },
+    enhancedDocumentVerification =
+    enhancedDocumentVerification
+        .groupBy { it.countryCode }
+        .mapValues { it.value.first().toResponse() },
+)
+
+fun CountryInfo.toResponse() = FlutterCountryInfo(
+    countryCode = countryCode,
+    name = name,
+    availableIdTypes = availableIdTypes.map { it.toResponse() },
+)
+
+fun AvailableIdType.toResponse() = FlutterAvailableIdType(
+    idTypeKey = idTypeKey,
+    label = label,
+    requiredFields = requiredFields.map { it.name },
+    testData = testData,
+    idNumberRegex = idNumberRegex,
+)
+
+fun FlutterConfig.toRequest() = Config(
+    partnerId = partnerId,
+    authToken = authToken,
+    prodLambdaUrl = prodBaseUrl,
+    testLambdaUrl = sandboxBaseUrl,
+)

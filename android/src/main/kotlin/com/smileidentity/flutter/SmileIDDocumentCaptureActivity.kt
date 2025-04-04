@@ -87,14 +87,14 @@ class SmileIDDocumentCaptureActivity : ComponentActivity() {
         val viewModel: DocumentCaptureViewModel =
             viewModel(
                 factory =
-                    viewModelFactory {
-                        DocumentCaptureViewModel(
-                            jobId = jobId,
-                            side = side,
-                            knownAspectRatio = idAspectRatio,
-                            metadata = metadata,
-                        )
-                    },
+                viewModelFactory {
+                    DocumentCaptureViewModel(
+                        jobId = jobId,
+                        side = side,
+                        knownAspectRatio = idAspectRatio,
+                        metadata = metadata,
+                    )
+                },
             )
 
         CompositionLocalProvider(
@@ -208,13 +208,13 @@ class SmileIDDocumentCaptureActivity : ComponentActivity() {
             titleText = stringResource(R.string.si_doc_v_confirmation_dialog_title),
             subtitleText = stringResource(R.string.si_doc_v_confirmation_dialog_subtitle),
             painter =
-                BitmapPainter(
-                    BitmapFactory
-                        .decodeFile(documentImageToConfirm.absolutePath)
-                        .asImageBitmap(),
-                ),
+            BitmapPainter(
+                BitmapFactory
+                    .decodeFile(documentImageToConfirm.absolutePath)
+                    .asImageBitmap(),
+            ),
             confirmButtonText =
-                stringResource(R.string.si_doc_v_confirmation_dialog_confirm_button),
+            stringResource(R.string.si_doc_v_confirmation_dialog_confirm_button),
             onConfirm = {
                 handleConfirmation(isDocumentFrontSide, documentImageToConfirm)
             },
@@ -275,10 +275,7 @@ class SmileIDDocumentCaptureActivity : ComponentActivity() {
 //        )
     }
 
-    private fun handleConfirmation(
-        isDocumentFrontSide: Boolean,
-        file: File,
-    ) {
+    private fun handleConfirmation(isDocumentFrontSide: Boolean, file: File) {
         val intent = Intent()
 
         intent.putExtra(
