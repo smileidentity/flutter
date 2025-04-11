@@ -1,0 +1,3 @@
+dart format .
+
+ktlint --format

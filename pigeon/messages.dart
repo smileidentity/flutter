@@ -10,15 +10,14 @@ import 'package:pigeon/pigeon.dart';
   swiftOptions: SwiftOptions(),
   dartPackageName: 'smileid',
 ))
-
-
 class FlutterConsentInformation {
   final String consentGrantedDate;
   final bool personalDetailsConsentGranted;
   final bool contactInfoConsentGranted;
   final bool documentInfoConsentGranted;
 
-  FlutterConsentInformation(this.consentGrantedDate,{
+  FlutterConsentInformation(
+    this.consentGrantedDate, {
     this.personalDetailsConsentGranted = false,
     this.contactInfoConsentGranted = false,
     this.documentInfoConsentGranted = false,
@@ -44,6 +43,224 @@ class FlutterPartnerParams {
   Map<String?, String?>? extras;
 
   FlutterPartnerParams(this.jobType, this.jobId, this.userId);
+}
+
+class SmartSelfieCreationParams {
+  final String? userId;
+  final bool allowNewEnroll;
+  final bool allowAgentMode;
+  final bool showAttribution;
+  final bool showInstructions;
+  final bool skipApiSubmission;
+  final Map<String, String>? extraPartnerParams;
+
+  SmartSelfieCreationParams({
+    this.userId,
+    this.allowNewEnroll = false,
+    this.allowAgentMode = false,
+    this.showAttribution = true,
+    this.showInstructions = true,
+    this.skipApiSubmission = false,
+    this.extraPartnerParams,
+  });
+}
+
+class SmartSelfieEnhancedCreationParams {
+  final String? userId;
+  final bool allowNewEnroll;
+  final bool showAttribution;
+  final bool showInstructions;
+  final bool skipApiSubmission;
+  final Map<String, String>? extraPartnerParams;
+
+  SmartSelfieEnhancedCreationParams({
+    this.userId,
+    this.allowNewEnroll = false,
+    this.showAttribution = true,
+    this.showInstructions = true,
+    this.skipApiSubmission = false,
+    this.extraPartnerParams,
+  });
+}
+
+class SmartSelfieCaptureResult {
+  final String? selfieFile;
+  final List<String>? livenessFiles;
+  final Map<String, Object?>? apiResponse;
+
+  SmartSelfieCaptureResult({
+    this.selfieFile,
+    this.livenessFiles,
+    this.apiResponse,
+  });
+}
+
+class DocumentVerificationCreationParams {
+  final String countryCode;
+  final String? documentType;
+  final double? idAspectRatio;
+  final bool captureBothSides;
+  final String? bypassSelfieCaptureWithFile;
+  final String? userId;
+  final String? jobId;
+  final bool allowNewEnroll;
+  final bool showAttribution;
+  final bool allowGalleryUpload;
+  final bool allowAgentMode;
+  final bool showInstructions;
+  final bool skipApiSubmission;
+  final Map<String, String>? extraPartnerParams;
+
+  const DocumentVerificationCreationParams({
+    required this.countryCode,
+    this.documentType,
+    this.idAspectRatio,
+    this.captureBothSides = true,
+    this.bypassSelfieCaptureWithFile,
+    this.userId,
+    this.jobId,
+    this.allowNewEnroll = false,
+    this.showAttribution = true,
+    this.allowGalleryUpload = false,
+    this.allowAgentMode = false,
+    this.showInstructions = true,
+    this.skipApiSubmission = false,
+    this.extraPartnerParams,
+  });
+}
+
+class DocumentVerificationEnhancedCreationParams {
+  final String countryCode;
+  final String? documentType;
+  final double? idAspectRatio;
+  final bool captureBothSides;
+  final String? bypassSelfieCaptureWithFile;
+  final String? userId;
+  final String? jobId;
+  final bool allowNewEnroll;
+  final bool showAttribution;
+  final bool allowAgentMode;
+  final bool allowGalleryUpload;
+  final bool showInstructions;
+  final bool skipApiSubmission;
+  final Map<String, String>? extraPartnerParams;
+
+  const DocumentVerificationEnhancedCreationParams({
+    required this.countryCode,
+    this.documentType,
+    this.idAspectRatio,
+    this.captureBothSides = true,
+    this.bypassSelfieCaptureWithFile,
+    this.userId,
+    this.jobId,
+    this.allowNewEnroll = false,
+    this.showAttribution = true,
+    this.allowAgentMode = false,
+    this.allowGalleryUpload = false,
+    this.showInstructions = true,
+    this.skipApiSubmission = false,
+    this.extraPartnerParams,
+  });
+}
+
+class DocumentCaptureResult {
+  final String? selfieFile;
+  final String? documentFrontFile;
+  final List<String>? livenessFiles;
+  final String? documentBackFile;
+  final bool? didSubmitDocumentVerificationJob;
+  final bool? didSubmitEnhancedDocVJob;
+
+  const DocumentCaptureResult({
+    this.selfieFile,
+    this.documentFrontFile,
+    this.livenessFiles,
+    this.documentBackFile,
+    this.didSubmitDocumentVerificationJob,
+    this.didSubmitEnhancedDocVJob,
+  });
+}
+
+class BiometricKYCCreationParams {
+  final String? country;
+  final String? idType;
+  final String? idNumber;
+  final String? firstName;
+  final String? middleName;
+  final String? lastName;
+  final String? dob;
+  final String? bankCode;
+  final bool? entered;
+  final String? userId;
+  final String? jobId;
+  final bool allowNewEnroll;
+  final bool allowAgentMode;
+  final bool showAttribution;
+  final bool showInstructions;
+  final Map<String, String>? extraPartnerParams;
+
+  const BiometricKYCCreationParams({
+    this.country,
+    this.idType,
+    this.idNumber,
+    this.firstName,
+    this.middleName,
+    this.lastName,
+    this.dob,
+    this.bankCode,
+    this.entered,
+    this.userId,
+    this.jobId,
+    this.allowNewEnroll = false,
+    this.allowAgentMode = false,
+    this.showAttribution = true,
+    this.showInstructions = true,
+    this.extraPartnerParams,
+  });
+}
+
+class BiometricKYCCaptureResult {
+  final String? selfieFile;
+  final List<String>? livenessFiles;
+  final bool? didSubmitBiometricKycJob;
+
+  const BiometricKYCCaptureResult({
+    this.selfieFile,
+    this.livenessFiles,
+    this.didSubmitBiometricKycJob,
+  });
+}
+
+class SelfieCaptureViewCreationParams {
+  final bool showConfirmationDialog;
+  final bool showInstructions;
+  final bool showAttribution;
+  final bool allowAgentMode;
+
+  const SelfieCaptureViewCreationParams({
+    this.showConfirmationDialog = true,
+    this.showInstructions = true,
+    this.showAttribution = true,
+    this.allowAgentMode = true,
+  });
+}
+
+class DocumentCaptureCreationParams {
+  final bool isDocumentFrontSide;
+  final bool showInstructions;
+  final bool showAttribution;
+  final bool allowGalleryUpload;
+  final bool showConfirmationDialog;
+  final double? idAspectRatio;
+
+  const DocumentCaptureCreationParams({
+    this.isDocumentFrontSide = true,
+    this.showInstructions = true,
+    this.showAttribution = true,
+    this.allowGalleryUpload = true,
+    this.showConfirmationDialog = true,
+    this.idAspectRatio,
+  });
 }
 
 /// The Auth Smile request. Auth Smile serves multiple purposes:
@@ -818,23 +1035,67 @@ class FlutterConfig {
 }
 
 @HostApi()
+abstract class SmileIDProductsApi {
+  @async
+  DocumentCaptureResult documentVerification(
+    DocumentVerificationCreationParams creationParams,
+  );
+
+  @async
+  DocumentCaptureResult documentVerificationEnhanced(
+    DocumentVerificationEnhancedCreationParams creationParams,
+  );
+
+  @async
+  SmartSelfieCaptureResult smartSelfieEnrollment(
+    SmartSelfieCreationParams creationParams,
+  );
+
+  @async
+  SmartSelfieCaptureResult smartSelfieAuthentication(
+    SmartSelfieCreationParams creationParams,
+  );
+
+  @async
+  SmartSelfieCaptureResult smartSelfieEnrollmentEnhanced(
+    SmartSelfieEnhancedCreationParams creationParams,
+  );
+
+  @async
+  SmartSelfieCaptureResult smartSelfieAuthenticationEnhanced(
+    SmartSelfieEnhancedCreationParams creationParams,
+  );
+
+  @async
+  BiometricKYCCaptureResult biometricKYC(
+    BiometricKYCCreationParams creationParams,
+  );
+
+  @async
+  SmartSelfieCaptureResult selfieCapture(
+      SelfieCaptureViewCreationParams creationParams);
+
+  @async
+  DocumentCaptureResult documentCapture(
+      DocumentCaptureCreationParams creationParams);
+}
+
+@HostApi()
 abstract class SmileIDApi {
   void initializeWithApiKey(
-      String apiKey,
-      FlutterConfig config,
-      bool useSandbox,
-      bool enableCrashReporting
+    String apiKey,
+    FlutterConfig config,
+    bool useSandbox,
+    bool enableCrashReporting,
   );
 
   void initializeWithConfig(
-      FlutterConfig config,
-      bool useSandbox,
-      bool enableCrashReporting
+    FlutterConfig config,
+    bool useSandbox,
+    bool enableCrashReporting,
   );
 
-  void initialize(
-      bool useSandbox
-  );
+  void initialize(bool useSandbox);
 
   void setCallbackUrl(String callbackUrl);
 
@@ -898,15 +1159,18 @@ abstract class SmileIDApi {
 
   @async
   FlutterDocumentVerificationJobStatusResponse getDocumentVerificationJobStatus(
-      FlutterJobStatusRequest request);
+    FlutterJobStatusRequest request,
+  );
 
   @async
   FlutterBiometricKycJobStatusResponse getBiometricKycJobStatus(
       FlutterJobStatusRequest request);
 
   @async
-  FlutterEnhancedDocumentVerificationJobStatusResponse getEnhancedDocumentVerificationJobStatus(
-      FlutterJobStatusRequest request);
+  FlutterEnhancedDocumentVerificationJobStatusResponse
+      getEnhancedDocumentVerificationJobStatus(
+    FlutterJobStatusRequest request,
+  );
 
   @async
   FlutterProductsConfigResponse getProductsConfig(
@@ -921,17 +1185,37 @@ abstract class SmileIDApi {
 
   @async
   FlutterSmartSelfieJobStatusResponse pollSmartSelfieJobStatus(
-      FlutterJobStatusRequest request, int interval, int numAttempts);
+    FlutterJobStatusRequest request,
+    int interval,
+    int numAttempts,
+  );
 
   @async
-  FlutterDocumentVerificationJobStatusResponse pollDocumentVerificationJobStatus(
-      FlutterJobStatusRequest request, int interval, int numAttempts);
+  FlutterDocumentVerificationJobStatusResponse
+      pollDocumentVerificationJobStatus(
+    FlutterJobStatusRequest request,
+    int interval,
+    int numAttempts,
+  );
 
   @async
   FlutterBiometricKycJobStatusResponse pollBiometricKycJobStatus(
-      FlutterJobStatusRequest request, int interval, int numAttempts);
+    FlutterJobStatusRequest request,
+    int interval,
+    int numAttempts,
+  );
 
   @async
-  FlutterEnhancedDocumentVerificationJobStatusResponse pollEnhancedDocumentVerificationJobStatus(
-      FlutterJobStatusRequest request, int interval, int numAttempts);
+  FlutterEnhancedDocumentVerificationJobStatusResponse
+      pollEnhancedDocumentVerificationJobStatus(
+    FlutterJobStatusRequest request,
+    int interval,
+    int numAttempts,
+  );
+}
+
+@FlutterApi()
+abstract class SmileIDProductsResultApi {
+  void onSmartSelfieEnrollmentResult(
+      SmartSelfieCaptureResult? successResult, String? errorResult);
 }

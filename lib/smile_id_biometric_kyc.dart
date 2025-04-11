@@ -4,6 +4,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
+@Deprecated(
+  'Due to the expensive nature of platform views, migrate to the more efficient biometricKYC function in the SmileID sdk. This widget will be removed in future versions',
+)
 class SmileIDBiometricKYC extends StatelessWidget {
   static const String viewType = "SmileIDBiometricKYC";
   final Map<String, dynamic> creationParams;
@@ -87,7 +90,8 @@ class SmileIDBiometricKYC extends StatelessWidget {
               controller: controller as AndroidViewController,
               hitTestBehavior: PlatformViewHitTestBehavior.opaque,
               gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{
-                Factory<OneSequenceGestureRecognizer>(EagerGestureRecognizer.new)
+                Factory<OneSequenceGestureRecognizer>(
+                    EagerGestureRecognizer.new)
               },
             );
           },

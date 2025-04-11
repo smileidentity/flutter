@@ -4,6 +4,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
+@Deprecated(
+  'Due to the expensive nature of platform views, migrate to the more efficient selfieCapture function in the SmileID sdk. This widget will be removed in future versions',
+)
 class SmileIDSmartSelfieCaptureView extends StatelessWidget {
   static const String viewType = "SmileIDSmartSelfieCaptureView";
   final Map<String, dynamic> creationParams;
@@ -53,7 +56,8 @@ class SmileIDSmartSelfieCaptureView extends StatelessWidget {
               controller: controller as AndroidViewController,
               hitTestBehavior: PlatformViewHitTestBehavior.opaque,
               gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{
-                Factory<OneSequenceGestureRecognizer>(EagerGestureRecognizer.new)
+                Factory<OneSequenceGestureRecognizer>(
+                    EagerGestureRecognizer.new)
               },
             );
           },

@@ -1,12 +1,16 @@
 import Flutter
+import SwiftUI
 import SmileID
 import UIKit
 
 public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
+    
     public static func register(with registrar: FlutterPluginRegistrar) {
         let messenger: FlutterBinaryMessenger = registrar.messenger()
         let api: SmileIDApi & NSObjectProtocol = SmileIDPlugin()
         SmileIDApiSetup.setUp(binaryMessenger: messenger, api: api)
+        SmileIDProductsPluginApi.setUp(binaryMessenger: messenger)
+        let smileIDProductsResultApi = SmileIDProductsResultApi(binaryMessenger: messenger)
         
         let documentVerificationFactory = SmileIDDocumentVerification.Factory(
             messenger: registrar.messenger()
@@ -25,7 +29,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         )
         
         let smartSelfieEnrollmentFactory = SmileIDSmartSelfieEnrollment.Factory(
-            messenger: registrar.messenger()
+            api: smileIDProductsResultApi
         )
         registrar.register(
             smartSelfieEnrollmentFactory,
@@ -39,22 +43,22 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
             smartSelfieAuthenticationFactory,
             withId: SmileIDSmartSelfieAuthentication.VIEW_TYPE_ID
         )
-
-         let smartSelfieEnrollmentEnhancedFactory = SmileIDSmartSelfieEnrollmentEnhanced.Factory(
-             messenger: registrar.messenger()
-         )
-         registrar.register(
-             smartSelfieEnrollmentEnhancedFactory,
-             withId: SmileIDSmartSelfieEnrollmentEnhanced.VIEW_TYPE_ID
-         )
-
-         let smartSelfieAuthenticationEnhancedFactory = SmileIDSmartSelfieAuthenticationEnhanced.Factory(
-             messenger: registrar.messenger()
-         )
-         registrar.register(
-             smartSelfieAuthenticationEnhancedFactory,
-             withId: SmileIDSmartSelfieAuthenticationEnhanced.VIEW_TYPE_ID
-         )
+        
+        let smartSelfieEnrollmentEnhancedFactory = SmileIDSmartSelfieEnrollmentEnhanced.Factory(
+            messenger: registrar.messenger()
+        )
+        registrar.register(
+            smartSelfieEnrollmentEnhancedFactory,
+            withId: SmileIDSmartSelfieEnrollmentEnhanced.VIEW_TYPE_ID
+        )
+        
+        let smartSelfieAuthenticationEnhancedFactory = SmileIDSmartSelfieAuthenticationEnhanced.Factory(
+            messenger: registrar.messenger()
+        )
+        registrar.register(
+            smartSelfieAuthenticationEnhancedFactory,
+            withId: SmileIDSmartSelfieAuthenticationEnhanced.VIEW_TYPE_ID
+        )
         
         let biometricKYCFactory = SmileIDBiometricKYC.Factory(
             messenger: registrar.messenger()
