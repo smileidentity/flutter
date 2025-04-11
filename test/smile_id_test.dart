@@ -9,7 +9,6 @@ import 'package:smile_id/smile_id.dart';
 @GenerateNiceMocks([MockSpec<FlutterEnhancedKycRequest>()])
 import 'smile_id_test.mocks.dart';
 
-
 void main() {
   setUp(() {
     final SmileIDApi platformInterface = MockSmileIDApi();
@@ -17,14 +16,13 @@ void main() {
   });
 
   test("initialize call is proxied", () {
-    SmileID.initialize(
-        useSandbox: true
-    );
+    SmileID.initialize(useSandbox: true);
     verify(SmileID.platformInterface.initialize(true));
   });
 
   test("authenticate call is proxied", () {
-    final FlutterAuthenticationRequest request = MockFlutterAuthenticationRequest();
+    final FlutterAuthenticationRequest request =
+        MockFlutterAuthenticationRequest();
     SmileID.api.authenticate(request);
     verify(SmileID.platformInterface.authenticate(request));
   });

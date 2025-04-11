@@ -6,14 +6,16 @@ class SmileIDService {
   SmileIDService(this.platformInterface);
 
   /// Returns a signature and timestamp that can be used to authenticate future requests
-  Future<FlutterAuthenticationResponse?> authenticate(FlutterAuthenticationRequest request) {
+  Future<FlutterAuthenticationResponse?> authenticate(
+      FlutterAuthenticationRequest request) {
     return platformInterface.authenticate(request);
   }
 
   /// Used by Job Types that need to upload a file to the server. The response contains the URL
   /// (`FlutterPrepUploadResponse.uploadUrl`) that the file should eventually be uploaded to (via
   /// `upload`)
-  Future<FlutterPrepUploadResponse> prepareUpload(FlutterPrepUploadRequest request) {
+  Future<FlutterPrepUploadResponse> prepareUpload(
+      FlutterPrepUploadRequest request) {
     return platformInterface.prepUpload(request);
   }
 
@@ -30,7 +32,8 @@ class SmileIDService {
   ///
   /// This will be done synchronously, and the result will be returned in the response. If the ID
   /// provider is unavailable, the response will be an error.
-  Future<FlutterEnhancedKycResponse> doEnhancedKyc(FlutterEnhancedKycRequest request) {
+  Future<FlutterEnhancedKycResponse> doEnhancedKyc(
+      FlutterEnhancedKycRequest request) {
     return platformInterface.doEnhancedKyc(request);
   }
 
@@ -39,7 +42,8 @@ class SmileIDService {
   ///
   /// If the ID provider is unavailable, the response will be delivered to the callback URL once
   /// the ID provider is available again.
-  Future<FlutterEnhancedKycAsyncResponse> doEnhancedKycAsync(FlutterEnhancedKycRequest request) {
+  Future<FlutterEnhancedKycAsyncResponse> doEnhancedKycAsync(
+      FlutterEnhancedKycRequest request) {
     return platformInterface.doEnhancedKycAsync(request);
   }
 
@@ -62,8 +66,7 @@ class SmileIDService {
       Map<String?, String?>? partnerParams,
       String? callbackUrl,
       int? sandboxResult,
-      bool? allowNewEnroll
-      ) {
+      bool? allowNewEnroll) {
     return platformInterface.doSmartSelfieEnrollment(
         signature,
         timestamp,
@@ -73,22 +76,21 @@ class SmileIDService {
         partnerParams,
         callbackUrl,
         sandboxResult,
-        allowNewEnroll
-    );
+        allowNewEnroll);
   }
 
   /// Perform a synchronous SmartSelfie Authentication. The response will include the final result
   /// of the authentication.
   Future<FlutterSmartSelfieResponse> doSmartSelfieAuthentication(
-      String signature,
-      String timestamp,
-      String selfieImage,
-      List<String> livenessImages,
-      String userId,
-      Map<String?, String?>? partnerParams,
-      String? callbackUrl,
-      int? sandboxResult,
-      ) {
+    String signature,
+    String timestamp,
+    String selfieImage,
+    List<String> livenessImages,
+    String userId,
+    Map<String?, String?>? partnerParams,
+    String? callbackUrl,
+    int? sandboxResult,
+  ) {
     return platformInterface.doSmartSelfieAuthentication(
         signature,
         timestamp,
@@ -97,15 +99,14 @@ class SmileIDService {
         userId,
         partnerParams,
         callbackUrl,
-        sandboxResult
-    );
+        sandboxResult);
   }
 
   /// Fetches the status of a Job. This can be used to check if a Job is complete, and if so,
   /// whether it was successful. This should be called when the Job is known to be a
   /// Document Verification.
-  Future<FlutterDocumentVerificationJobStatusResponse> getDocumentVerificationJobStatus(
-      FlutterJobStatusRequest request) {
+  Future<FlutterDocumentVerificationJobStatusResponse>
+      getDocumentVerificationJobStatus(FlutterJobStatusRequest request) {
     return platformInterface.getDocumentVerificationJobStatus(request);
   }
 
@@ -119,18 +120,21 @@ class SmileIDService {
   /// Fetches the status of a Job. This can be used to check if a Job is complete, and if so,
   /// whether it was successful. This should be called when the Job is known to be Enhanced DocV.
   Future<FlutterEnhancedDocumentVerificationJobStatusResponse>
-      getEnhancedDocumentVerificationJobStatus(FlutterJobStatusRequest request) {
+      getEnhancedDocumentVerificationJobStatus(
+          FlutterJobStatusRequest request) {
     return platformInterface.getEnhancedDocumentVerificationJobStatus(request);
   }
 
   /// Returns the ID types that are enabled for authenticated partner and which of those require
   /// consent
-  Future<FlutterProductsConfigResponse> getProductsConfig(FlutterProductsConfigRequest request) {
+  Future<FlutterProductsConfigResponse> getProductsConfig(
+      FlutterProductsConfigRequest request) {
     return platformInterface.getProductsConfig(request);
   }
 
   /// Returns Global DocV supported products and metadata
-  Future<FlutterValidDocumentsResponse> getValidDocuments(FlutterProductsConfigRequest request) {
+  Future<FlutterValidDocumentsResponse> getValidDocuments(
+      FlutterProductsConfigRequest request) {
     return platformInterface.getValidDocuments(request);
   }
 
@@ -183,7 +187,8 @@ class SmileIDService {
   /// ```
   Future<FlutterSmartSelfieJobStatusResponse> pollSmartSelfieJobStatus(
       FlutterJobStatusRequest request, int interval, int numAttempts) {
-    return platformInterface.pollSmartSelfieJobStatus(request, interval, numAttempts);
+    return platformInterface.pollSmartSelfieJobStatus(
+        request, interval, numAttempts);
   }
 
   /// Polls the status of a document verification job
@@ -228,9 +233,11 @@ class SmileIDService {
   /// - [FlutterJobStatusRequest]
   /// - [FlutterDocumentVerificationJobStatusResponse]
   /// ```
-  Future<FlutterDocumentVerificationJobStatusResponse> pollDocumentVerificationJobStatus(
-      FlutterJobStatusRequest request, int interval, int numAttempts) {
-    return platformInterface.pollDocumentVerificationJobStatus(request, interval, numAttempts);
+  Future<FlutterDocumentVerificationJobStatusResponse>
+      pollDocumentVerificationJobStatus(
+          FlutterJobStatusRequest request, int interval, int numAttempts) {
+    return platformInterface.pollDocumentVerificationJobStatus(
+        request, interval, numAttempts);
   }
 
   /// Polls the status of a biometric kyc job
@@ -277,7 +284,8 @@ class SmileIDService {
   /// ```
   Future<FlutterBiometricKycJobStatusResponse> pollBiometricKycJobStatus(
       FlutterJobStatusRequest request, int interval, int numAttempts) {
-    return platformInterface.pollBiometricKycJobStatus(request, interval, numAttempts);
+    return platformInterface.pollBiometricKycJobStatus(
+        request, interval, numAttempts);
   }
 
   /// Polls the status of a an enhanced document verification job
@@ -322,8 +330,10 @@ class SmileIDService {
   /// - [FlutterJobStatusRequest]
   /// - [FlutterEnhancedDocumentVerificationJobStatusResponse]
   /// ```
-  Future<FlutterEnhancedDocumentVerificationJobStatusResponse> pollEnhancedDocumentVerificationJobStatus(
-      FlutterJobStatusRequest request, int interval, int numAttempts) {
-    return platformInterface.pollEnhancedDocumentVerificationJobStatus(request, interval, numAttempts);
+  Future<FlutterEnhancedDocumentVerificationJobStatusResponse>
+      pollEnhancedDocumentVerificationJobStatus(
+          FlutterJobStatusRequest request, int interval, int numAttempts) {
+    return platformInterface.pollEnhancedDocumentVerificationJobStatus(
+        request, interval, numAttempts);
   }
 }

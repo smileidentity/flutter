@@ -19,7 +19,8 @@ class SmileID {
     required bool useSandbox,
     required bool enableCrashReporting,
   }) {
-    platformInterface.initializeWithApiKey(apiKey, config, useSandbox, enableCrashReporting);
+    platformInterface.initializeWithApiKey(
+        apiKey, config, useSandbox, enableCrashReporting);
   }
 
   static void initializeWithConfig({
@@ -27,7 +28,8 @@ class SmileID {
     required bool useSandbox,
     required bool enableCrashReporting,
   }) {
-    platformInterface.initializeWithConfig(config, useSandbox, enableCrashReporting);
+    platformInterface.initializeWithConfig(
+        config, useSandbox, enableCrashReporting);
   }
 
   static void initialize({
@@ -60,7 +62,8 @@ class SmileID {
     required SmartSelfieCreationParams creationParams,
   }) async {
     try {
-      final result = await productsInterface.smartSelfieEnrollment(creationParams);
+      final result =
+          await productsInterface.smartSelfieEnrollment(creationParams);
       return SmileIDSdkResultSuccess(result);
     } on PlatformException catch (e) {
       return SmileIDSdkResultError(e.message ?? _defaultSdkErrorMessage);
@@ -71,29 +74,34 @@ class SmileID {
     required SmartSelfieCreationParams creationParams,
   }) async {
     try {
-      final result = await productsInterface.smartSelfieAuthentication(creationParams);
+      final result =
+          await productsInterface.smartSelfieAuthentication(creationParams);
       return SmileIDSdkResultSuccess(result);
     } on PlatformException catch (e) {
       return SmileIDSdkResultError(e.message ?? _defaultSdkErrorMessage);
     }
   }
 
-  Future<SmileIDSdkResult<SmartSelfieCaptureResult>> smartSelfieEnrollmentEnhanced({
+  Future<SmileIDSdkResult<SmartSelfieCaptureResult>>
+      smartSelfieEnrollmentEnhanced({
     required SmartSelfieEnhancedCreationParams creationParams,
   }) async {
     try {
-      final result = await productsInterface.smartSelfieEnrollmentEnhanced(creationParams);
+      final result =
+          await productsInterface.smartSelfieEnrollmentEnhanced(creationParams);
       return SmileIDSdkResultSuccess(result);
     } on PlatformException catch (e) {
       return SmileIDSdkResultError(e.message ?? _defaultSdkErrorMessage);
     }
   }
 
-  Future<SmileIDSdkResult<SmartSelfieCaptureResult>> smartSelfieAuthenticationEnhanced({
+  Future<SmileIDSdkResult<SmartSelfieCaptureResult>>
+      smartSelfieAuthenticationEnhanced({
     required SmartSelfieEnhancedCreationParams creationParams,
   }) async {
     try {
-      final result = await productsInterface.smartSelfieAuthenticationEnhanced(creationParams);
+      final result = await productsInterface
+          .smartSelfieAuthenticationEnhanced(creationParams);
       return SmileIDSdkResultSuccess(result);
     } on PlatformException catch (e) {
       return SmileIDSdkResultError(e.message ?? _defaultSdkErrorMessage);
@@ -104,7 +112,8 @@ class SmileID {
     required DocumentVerificationCreationParams creationParams,
   }) async {
     try {
-      final result = await productsInterface.documentVerification(creationParams);
+      final result =
+          await productsInterface.documentVerification(creationParams);
       return SmileIDSdkResultSuccess(result);
     } on PlatformException catch (e) {
       return SmileIDSdkResultError(e.message ?? _defaultSdkErrorMessage);
@@ -115,7 +124,8 @@ class SmileID {
     required DocumentVerificationEnhancedCreationParams creationParams,
   }) async {
     try {
-      final result = await productsInterface.documentVerificationEnhanced(creationParams);
+      final result =
+          await productsInterface.documentVerificationEnhanced(creationParams);
       return SmileIDSdkResultSuccess(result);
     } on PlatformException catch (e) {
       return SmileIDSdkResultError(e.message ?? _defaultSdkErrorMessage);
