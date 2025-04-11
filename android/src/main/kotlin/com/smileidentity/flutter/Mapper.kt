@@ -600,31 +600,29 @@ fun FlutterConfig.toRequest() = Config(
     testLambdaUrl = sandboxBaseUrl,
 )
 
-fun SmartSelfieResponse.buildBundle() =
-    Bundle().apply {
-        this.putString("code", code)
-        this.putString("created_at", createdAt)
-        this.putString("job_id", jobId)
-        this.putString("job_type", jobType.name)
-        this.putString("message", message)
-        this.putString("partner_id", partnerId)
-        this.putBundle(
-            "partner_params",
-            Bundle().apply {
-                partnerParams.forEach {
-                    putString(it.key, it.value)
-                }
-            },
-        )
-        this.putString("status", status.name)
-        this.putString("updated_at", updatedAt)
-        this.putString("user_id", userId)
-    }
+fun SmartSelfieResponse.buildBundle() = Bundle().apply {
+    this.putString("code", code)
+    this.putString("created_at", createdAt)
+    this.putString("job_id", jobId)
+    this.putString("job_type", jobType.name)
+    this.putString("message", message)
+    this.putString("partner_id", partnerId)
+    this.putBundle(
+        "partner_params",
+        Bundle().apply {
+            partnerParams.forEach {
+                putString(it.key, it.value)
+            }
+        },
+    )
+    this.putString("status", status.name)
+    this.putString("updated_at", updatedAt)
+    this.putString("user_id", userId)
+}
 
-fun List<File>.pathList(): ArrayList<String> =
-    ArrayList<String>().let {
-        this.forEach { item ->
-            it.add(item.absolutePath)
-        }
-        return it
+fun List<File>.pathList(): ArrayList<String> = ArrayList<String>().let {
+    this.forEach { item ->
+        it.add(item.absolutePath)
     }
+    return it
+}
