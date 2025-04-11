@@ -45,6 +45,7 @@ import FlutterUploadImageInfo
 import FlutterUploadRequest
 import FlutterValidDocument
 import FlutterValidDocumentsResponse
+import android.os.Bundle
 import com.smileidentity.flutter.utils.getCurrentIsoTimestamp
 import com.smileidentity.models.ActionResult
 import com.smileidentity.models.Actions
@@ -114,39 +115,35 @@ fun convertNonNullMapToNullable(map: Map<String, String>): Map<String?, String?>
     .mapKeys { it.key }
     .mapValues { it.value }
 
-fun FlutterJobType.toRequest() =
-    when (this) {
-        FlutterJobType.ENHANCED_KYC -> JobType.EnhancedKyc
-        FlutterJobType.DOCUMENT_VERIFICATION -> JobType.DocumentVerification
-        FlutterJobType.BIOMETRIC_KYC -> JobType.BiometricKyc
-        FlutterJobType.ENHANCED_DOCUMENT_VERIFICATION -> JobType.EnhancedDocumentVerification
-        FlutterJobType.SMART_SELFIE_ENROLLMENT -> JobType.SmartSelfieEnrollment
-        FlutterJobType.SMART_SELFIE_AUTHENTICATION -> JobType.SmartSelfieAuthentication
-    }
+fun FlutterJobType.toRequest() = when (this) {
+    FlutterJobType.ENHANCED_KYC -> JobType.EnhancedKyc
+    FlutterJobType.DOCUMENT_VERIFICATION -> JobType.DocumentVerification
+    FlutterJobType.BIOMETRIC_KYC -> JobType.BiometricKyc
+    FlutterJobType.ENHANCED_DOCUMENT_VERIFICATION -> JobType.EnhancedDocumentVerification
+    FlutterJobType.SMART_SELFIE_ENROLLMENT -> JobType.SmartSelfieEnrollment
+    FlutterJobType.SMART_SELFIE_AUTHENTICATION -> JobType.SmartSelfieAuthentication
+}
 
-fun JobType.toResponse() =
-    when (this) {
-        JobType.EnhancedKyc -> FlutterJobType.ENHANCED_KYC
-        JobType.DocumentVerification -> FlutterJobType.DOCUMENT_VERIFICATION
-        JobType.BiometricKyc -> FlutterJobType.BIOMETRIC_KYC
-        JobType.EnhancedDocumentVerification -> FlutterJobType.ENHANCED_DOCUMENT_VERIFICATION
-        JobType.SmartSelfieEnrollment -> FlutterJobType.SMART_SELFIE_ENROLLMENT
-        JobType.SmartSelfieAuthentication -> FlutterJobType.SMART_SELFIE_AUTHENTICATION
-        else -> TODO("Not yet implemented")
-    }
+fun JobType.toResponse() = when (this) {
+    JobType.EnhancedKyc -> FlutterJobType.ENHANCED_KYC
+    JobType.DocumentVerification -> FlutterJobType.DOCUMENT_VERIFICATION
+    JobType.BiometricKyc -> FlutterJobType.BIOMETRIC_KYC
+    JobType.EnhancedDocumentVerification -> FlutterJobType.ENHANCED_DOCUMENT_VERIFICATION
+    JobType.SmartSelfieEnrollment -> FlutterJobType.SMART_SELFIE_ENROLLMENT
+    JobType.SmartSelfieAuthentication -> FlutterJobType.SMART_SELFIE_AUTHENTICATION
+    else -> TODO("Not yet implemented")
+}
 
-fun FlutterJobTypeV2.toRequest() =
-    when (this) {
-        FlutterJobTypeV2.SMART_SELFIE_AUTHENTICATION -> JobTypeV2.SmartSelfieAuthentication
-        FlutterJobTypeV2.SMART_SELFIE_ENROLLMENT -> JobTypeV2.SmartSelfieEnrollment
-    }
+fun FlutterJobTypeV2.toRequest() = when (this) {
+    FlutterJobTypeV2.SMART_SELFIE_AUTHENTICATION -> JobTypeV2.SmartSelfieAuthentication
+    FlutterJobTypeV2.SMART_SELFIE_ENROLLMENT -> JobTypeV2.SmartSelfieEnrollment
+}
 
-fun JobTypeV2.toResponse() =
-    when (this) {
-        JobTypeV2.SmartSelfieAuthentication -> FlutterJobTypeV2.SMART_SELFIE_AUTHENTICATION
-        JobTypeV2.SmartSelfieEnrollment -> FlutterJobTypeV2.SMART_SELFIE_ENROLLMENT
-        else -> TODO("Not yet implemented")
-    }
+fun JobTypeV2.toResponse() = when (this) {
+    JobTypeV2.SmartSelfieAuthentication -> FlutterJobTypeV2.SMART_SELFIE_AUTHENTICATION
+    JobTypeV2.SmartSelfieEnrollment -> FlutterJobTypeV2.SMART_SELFIE_ENROLLMENT
+    else -> TODO("Not yet implemented")
+}
 
 fun FlutterAuthenticationRequest.toRequest() = AuthenticationRequest(
     jobType = jobType.toRequest(),
@@ -212,17 +209,16 @@ fun FlutterUploadImageInfo.toRequest() = UploadImageInfo(
     image = File(imageName),
 )
 
-fun FlutterImageType.toRequest() =
-    when (this) {
-        FlutterImageType.SELFIE_JPG_FILE -> ImageType.SelfieJpgFile
-        FlutterImageType.ID_CARD_JPG_FILE -> ImageType.IdCardJpgFile
-        FlutterImageType.SELFIE_JPG_BASE64 -> ImageType.SelfieJpgBase64
-        FlutterImageType.ID_CARD_JPG_BASE64 -> ImageType.IdCardJpgBase64
-        FlutterImageType.LIVENESS_JPG_FILE -> ImageType.LivenessJpgFile
-        FlutterImageType.ID_CARD_REAR_JPG_FILE -> ImageType.IdCardRearJpgFile
-        FlutterImageType.LIVENESS_JPG_BASE64 -> ImageType.LivenessJpgBase64
-        FlutterImageType.ID_CARD_REAR_JPG_BASE64 -> ImageType.IdCardRearJpgBase64
-    }
+fun FlutterImageType.toRequest() = when (this) {
+    FlutterImageType.SELFIE_JPG_FILE -> ImageType.SelfieJpgFile
+    FlutterImageType.ID_CARD_JPG_FILE -> ImageType.IdCardJpgFile
+    FlutterImageType.SELFIE_JPG_BASE64 -> ImageType.SelfieJpgBase64
+    FlutterImageType.ID_CARD_JPG_BASE64 -> ImageType.IdCardJpgBase64
+    FlutterImageType.LIVENESS_JPG_FILE -> ImageType.LivenessJpgFile
+    FlutterImageType.ID_CARD_REAR_JPG_FILE -> ImageType.IdCardRearJpgFile
+    FlutterImageType.LIVENESS_JPG_BASE64 -> ImageType.LivenessJpgBase64
+    FlutterImageType.ID_CARD_REAR_JPG_BASE64 -> ImageType.IdCardRearJpgBase64
+}
 
 fun FlutterIdInfo.toRequest() = IdInfo(
     country = country,
@@ -310,29 +306,28 @@ fun Actions.toResponse() = FlutterActions(
     verifyIdNumber = verifyIdNumber.toResponse(),
 )
 
-fun ActionResult.toResponse() =
-    when (this) {
-        ActionResult.Passed -> FlutterActionResult.PASSED
-        ActionResult.Completed -> FlutterActionResult.COMPLETED
-        ActionResult.Approved -> FlutterActionResult.APPROVED
-        ActionResult.Verified -> FlutterActionResult.VERIFIED
-        ActionResult.ProvisionallyApproved -> FlutterActionResult.PROVISIONALLY_APPROVED
-        ActionResult.Returned -> FlutterActionResult.RETURNED
-        ActionResult.NotReturned -> FlutterActionResult.NOT_RETURNED
-        ActionResult.Failed -> FlutterActionResult.FAILED
-        ActionResult.Rejected -> FlutterActionResult.REJECTED
-        ActionResult.UnderReview -> FlutterActionResult.UNDER_REVIEW
-        ActionResult.UnableToDetermine -> FlutterActionResult.UNABLE_TO_DETERMINE
-        ActionResult.NotApplicable -> FlutterActionResult.NOT_APPLICABLE
-        ActionResult.NotVerified -> FlutterActionResult.NOT_VERIFIED
-        ActionResult.NotDone -> FlutterActionResult.NOT_DONE
-        ActionResult.IssuerUnavailable -> FlutterActionResult.ISSUER_UNAVAILABLE
-        ActionResult.IdAuthorityPhotoNotAvailable ->
-            FlutterActionResult.ID_AUTHORITY_PHOTO_NOT_AVAILABLE
+fun ActionResult.toResponse() = when (this) {
+    ActionResult.Passed -> FlutterActionResult.PASSED
+    ActionResult.Completed -> FlutterActionResult.COMPLETED
+    ActionResult.Approved -> FlutterActionResult.APPROVED
+    ActionResult.Verified -> FlutterActionResult.VERIFIED
+    ActionResult.ProvisionallyApproved -> FlutterActionResult.PROVISIONALLY_APPROVED
+    ActionResult.Returned -> FlutterActionResult.RETURNED
+    ActionResult.NotReturned -> FlutterActionResult.NOT_RETURNED
+    ActionResult.Failed -> FlutterActionResult.FAILED
+    ActionResult.Rejected -> FlutterActionResult.REJECTED
+    ActionResult.UnderReview -> FlutterActionResult.UNDER_REVIEW
+    ActionResult.UnableToDetermine -> FlutterActionResult.UNABLE_TO_DETERMINE
+    ActionResult.NotApplicable -> FlutterActionResult.NOT_APPLICABLE
+    ActionResult.NotVerified -> FlutterActionResult.NOT_VERIFIED
+    ActionResult.NotDone -> FlutterActionResult.NOT_DONE
+    ActionResult.IssuerUnavailable -> FlutterActionResult.ISSUER_UNAVAILABLE
+    ActionResult.IdAuthorityPhotoNotAvailable ->
+        FlutterActionResult.ID_AUTHORITY_PHOTO_NOT_AVAILABLE
 
-        ActionResult.SentToHumanReview -> FlutterActionResult.SENT_TO_HUMAN_REVIEW
-        ActionResult.Unknown -> FlutterActionResult.UNKNOWN
-    }
+    ActionResult.SentToHumanReview -> FlutterActionResult.SENT_TO_HUMAN_REVIEW
+    ActionResult.Unknown -> FlutterActionResult.UNKNOWN
+}
 
 fun ImageLinks.toResponse() = FlutterImageLinks(
     selfieImageUrl = selfieImageUrl,
