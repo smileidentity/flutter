@@ -60,9 +60,9 @@ class SmileIDDocumentVerification extends StatelessWidget {
         "allowAgentMode": allowAgentMode,
         "allowGalleryUpload": allowGalleryUpload,
         "showInstructions": showInstructions,
-        "skipApiSubmission" : skipApiSubmission,
-        "useStrictMode" : useStrictMode,
-        "extraPartnerParams" : extraPartnerParams,
+        "skipApiSubmission": skipApiSubmission,
+        "useStrictMode": useStrictMode,
+        "extraPartnerParams": extraPartnerParams,
       },
     );
   }
@@ -79,7 +79,8 @@ class SmileIDDocumentVerification extends StatelessWidget {
               controller: controller as AndroidViewController,
               hitTestBehavior: PlatformViewHitTestBehavior.opaque,
               gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{
-                Factory<OneSequenceGestureRecognizer>(EagerGestureRecognizer.new)
+                Factory<OneSequenceGestureRecognizer>(
+                    EagerGestureRecognizer.new)
               },
             );
           },

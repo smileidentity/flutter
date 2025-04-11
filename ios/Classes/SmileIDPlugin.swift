@@ -10,6 +10,8 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         let api: SmileIDApi & NSObjectProtocol = SmileIDPlugin()
         SmileIDApiSetup.setUp(binaryMessenger: messenger, api: api)
         SmileIDProductsPluginApi.setUp(binaryMessenger: messenger)
+        let smileIDProductsResultApi = SmileIDProductsResultApi(binaryMessenger: messenger)
+
 
         SmileID.setWrapperInfo(name: .flutter, version: "11.0.1")
 
@@ -30,7 +32,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         )
 
         let smartSelfieEnrollmentFactory = SmileIDSmartSelfieEnrollment.Factory(
-            messenger: registrar.messenger()
+            api: smileIDProductsResultApi
         )
         registrar.register(
             smartSelfieEnrollmentFactory,

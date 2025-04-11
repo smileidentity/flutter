@@ -59,7 +59,8 @@ class SmileIDDocumentCaptureView extends StatelessWidget {
               controller: controller as AndroidViewController,
               hitTestBehavior: PlatformViewHitTestBehavior.opaque,
               gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{
-                Factory<OneSequenceGestureRecognizer>(EagerGestureRecognizer.new)
+                Factory<OneSequenceGestureRecognizer>(
+                    EagerGestureRecognizer.new)
               },
             );
           },
