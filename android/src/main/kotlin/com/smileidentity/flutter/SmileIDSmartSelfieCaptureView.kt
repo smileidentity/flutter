@@ -96,7 +96,6 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
         }
     }
 
-
     class Factory(
         private val messenger: BinaryMessenger,
         private val api: SmileIDProductsResultApi,

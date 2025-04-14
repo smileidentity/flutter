@@ -74,17 +74,20 @@ class SmileIDEnhancedDocumentVerification extends StatefulWidget {
   }
 
   @override
-  State<SmileIDEnhancedDocumentVerification> createState() => _SmileIDEnhancedDocumentVerificationState();
+  State<SmileIDEnhancedDocumentVerification> createState() =>
+      _SmileIDEnhancedDocumentVerificationState();
 }
 
-class _SmileIDEnhancedDocumentVerificationState extends State<SmileIDEnhancedDocumentVerification>
+class _SmileIDEnhancedDocumentVerificationState
+    extends State<SmileIDEnhancedDocumentVerification>
     implements DocumentCaptureResultClient {
   late SmileIDProductViewsResultApi api;
 
   @override
   void initState() {
     super.initState();
-    api = EnhancedDocumentVerificationProductToDocumentCaptureResultAdapter(this);
+    api =
+        EnhancedDocumentVerificationProductToDocumentCaptureResultAdapter(this);
   }
 
   @override
@@ -104,7 +107,8 @@ class _SmileIDEnhancedDocumentVerificationState extends State<SmileIDEnhancedDoc
               controller: controller as AndroidViewController,
               hitTestBehavior: PlatformViewHitTestBehavior.opaque,
               gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{
-                Factory<OneSequenceGestureRecognizer>(EagerGestureRecognizer.new)
+                Factory<OneSequenceGestureRecognizer>(
+                    EagerGestureRecognizer.new)
               },
             );
           },

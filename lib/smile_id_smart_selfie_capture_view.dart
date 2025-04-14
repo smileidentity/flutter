@@ -45,10 +45,12 @@ class SmileIDSmartSelfieCaptureView extends StatefulWidget {
   }
 
   @override
-  State<SmileIDSmartSelfieCaptureView> createState() => _SmileIDSmartSelfieCaptureViewState();
+  State<SmileIDSmartSelfieCaptureView> createState() =>
+      _SmileIDSmartSelfieCaptureViewState();
 }
 
-class _SmileIDSmartSelfieCaptureViewState extends State<SmileIDSmartSelfieCaptureView>
+class _SmileIDSmartSelfieCaptureViewState
+    extends State<SmileIDSmartSelfieCaptureView>
     implements SmartSelfieCaptureResultClient {
   late SmileIDProductViewsResultApi api;
 
@@ -75,7 +77,8 @@ class _SmileIDSmartSelfieCaptureViewState extends State<SmileIDSmartSelfieCaptur
               controller: controller as AndroidViewController,
               hitTestBehavior: PlatformViewHitTestBehavior.opaque,
               gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{
-                Factory<OneSequenceGestureRecognizer>(EagerGestureRecognizer.new)
+                Factory<OneSequenceGestureRecognizer>(
+                    EagerGestureRecognizer.new)
               },
             );
           },

@@ -47,7 +47,8 @@ class SmileIDDocumentCaptureView extends StatefulWidget {
   }
 
   @override
-  State<SmileIDDocumentCaptureView> createState() => _SmileIDDocumentCaptureViewState();
+  State<SmileIDDocumentCaptureView> createState() =>
+      _SmileIDDocumentCaptureViewState();
 }
 
 class _SmileIDDocumentCaptureViewState extends State<SmileIDDocumentCaptureView>
@@ -77,7 +78,8 @@ class _SmileIDDocumentCaptureViewState extends State<SmileIDDocumentCaptureView>
               controller: controller as AndroidViewController,
               hitTestBehavior: PlatformViewHitTestBehavior.opaque,
               gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{
-                Factory<OneSequenceGestureRecognizer>(EagerGestureRecognizer.new)
+                Factory<OneSequenceGestureRecognizer>(
+                    EagerGestureRecognizer.new)
               },
             );
           },

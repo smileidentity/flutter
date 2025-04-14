@@ -67,10 +67,12 @@ class SmileIDDocumentVerification extends StatefulWidget {
   }
 
   @override
-  State<SmileIDDocumentVerification> createState() => _SmileIDDocumentVerificationState();
+  State<SmileIDDocumentVerification> createState() =>
+      _SmileIDDocumentVerificationState();
 }
 
-class _SmileIDDocumentVerificationState extends State<SmileIDDocumentVerification>
+class _SmileIDDocumentVerificationState
+    extends State<SmileIDDocumentVerification>
     implements DocumentCaptureResultClient {
   late SmileIDProductViewsResultApi api;
 
@@ -97,7 +99,8 @@ class _SmileIDDocumentVerificationState extends State<SmileIDDocumentVerificatio
               controller: controller as AndroidViewController,
               hitTestBehavior: PlatformViewHitTestBehavior.opaque,
               gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{
-                Factory<OneSequenceGestureRecognizer>(EagerGestureRecognizer.new)
+                Factory<OneSequenceGestureRecognizer>(
+                    EagerGestureRecognizer.new)
               },
             );
           },

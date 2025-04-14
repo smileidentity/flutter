@@ -3,7 +3,8 @@ import 'smile_id_product_views_api.dart';
 import 'smile_id_sdk_result.dart';
 import 'smileid_messages.g.dart';
 
-class DocumentVerificationProductToDocumentCaptureResultAdapter extends SmileIDProductViewsResultApi {
+class DocumentVerificationProductToDocumentCaptureResultAdapter
+    extends SmileIDProductViewsResultApi {
   final DocumentCaptureResultClient client;
 
   DocumentVerificationProductToDocumentCaptureResultAdapter(this.client) {
@@ -11,7 +12,8 @@ class DocumentVerificationProductToDocumentCaptureResultAdapter extends SmileIDP
   }
 
   @override
-  void onDocumentVerificationResult(DocumentCaptureResult? successResult, String? errorResult) {
+  void onDocumentVerificationResult(
+      DocumentCaptureResult? successResult, String? errorResult) {
     super.onDocumentVerificationResult(successResult, errorResult);
     if (successResult != null) {
       client.onResult(SmileIDSdkResultSuccess(successResult));
@@ -21,15 +23,18 @@ class DocumentVerificationProductToDocumentCaptureResultAdapter extends SmileIDP
   }
 }
 
-class EnhancedDocumentVerificationProductToDocumentCaptureResultAdapter extends SmileIDProductViewsResultApi {
+class EnhancedDocumentVerificationProductToDocumentCaptureResultAdapter
+    extends SmileIDProductViewsResultApi {
   final DocumentCaptureResultClient client;
 
-  EnhancedDocumentVerificationProductToDocumentCaptureResultAdapter(this.client) {
+  EnhancedDocumentVerificationProductToDocumentCaptureResultAdapter(
+      this.client) {
     SmileIDProductsResultApi.setUp(this);
   }
 
   @override
-  void onDocumentVerificationEnhancedResult(DocumentCaptureResult? successResult, String? errorResult) {
+  void onDocumentVerificationEnhancedResult(
+      DocumentCaptureResult? successResult, String? errorResult) {
     super.onDocumentVerificationEnhancedResult(successResult, errorResult);
     if (successResult != null) {
       client.onResult(SmileIDSdkResultSuccess(successResult));
@@ -39,7 +44,8 @@ class EnhancedDocumentVerificationProductToDocumentCaptureResultAdapter extends 
   }
 }
 
-class SmartSelfieEnrollmentProductToSelfieCaptureResultAdapter extends SmileIDProductViewsResultApi {
+class SmartSelfieEnrollmentProductToSelfieCaptureResultAdapter
+    extends SmileIDProductViewsResultApi {
   final SmartSelfieCaptureResultClient client;
 
   SmartSelfieEnrollmentProductToSelfieCaptureResultAdapter(this.client) {
@@ -47,7 +53,8 @@ class SmartSelfieEnrollmentProductToSelfieCaptureResultAdapter extends SmileIDPr
   }
 
   @override
-  void onSmartSelfieEnrollmentResult(SmartSelfieCaptureResult? successResult, String? errorResult) {
+  void onSmartSelfieEnrollmentResult(
+      SmartSelfieCaptureResult? successResult, String? errorResult) {
     super.onSmartSelfieEnrollmentResult(successResult, errorResult);
     if (successResult != null) {
       client.onResult(SmileIDSdkResultSuccess(successResult));
@@ -57,7 +64,8 @@ class SmartSelfieEnrollmentProductToSelfieCaptureResultAdapter extends SmileIDPr
   }
 }
 
-class SmartSelfieAuthenticationProductToSelfieCaptureResultAdapter extends SmileIDProductViewsResultApi {
+class SmartSelfieAuthenticationProductToSelfieCaptureResultAdapter
+    extends SmileIDProductViewsResultApi {
   final SmartSelfieCaptureResultClient client;
 
   SmartSelfieAuthenticationProductToSelfieCaptureResultAdapter(this.client) {
@@ -65,7 +73,8 @@ class SmartSelfieAuthenticationProductToSelfieCaptureResultAdapter extends Smile
   }
 
   @override
-  void onSmartSelfieAuthenticationResult(SmartSelfieCaptureResult? successResult, String? errorResult) {
+  void onSmartSelfieAuthenticationResult(
+      SmartSelfieCaptureResult? successResult, String? errorResult) {
     super.onSmartSelfieAuthenticationResult(successResult, errorResult);
     if (successResult != null) {
       client.onResult(SmileIDSdkResultSuccess(successResult));
@@ -75,15 +84,18 @@ class SmartSelfieAuthenticationProductToSelfieCaptureResultAdapter extends Smile
   }
 }
 
-class SmartSelfieEnrollmentEnhancedProductToSelfieCaptureResultAdapter extends SmileIDProductViewsResultApi {
+class SmartSelfieEnrollmentEnhancedProductToSelfieCaptureResultAdapter
+    extends SmileIDProductViewsResultApi {
   final SmartSelfieCaptureResultClient client;
 
-  SmartSelfieEnrollmentEnhancedProductToSelfieCaptureResultAdapter(this.client) {
+  SmartSelfieEnrollmentEnhancedProductToSelfieCaptureResultAdapter(
+      this.client) {
     SmileIDProductsResultApi.setUp(this);
   }
 
   @override
-  void onSmartSelfieEnrollmentEnhancedResult(SmartSelfieCaptureResult? successResult, String? errorResult) {
+  void onSmartSelfieEnrollmentEnhancedResult(
+      SmartSelfieCaptureResult? successResult, String? errorResult) {
     super.onSmartSelfieEnrollmentEnhancedResult(successResult, errorResult);
     if (successResult != null) {
       client.onResult(SmileIDSdkResultSuccess(successResult));
@@ -93,15 +105,18 @@ class SmartSelfieEnrollmentEnhancedProductToSelfieCaptureResultAdapter extends S
   }
 }
 
-class SmartSelfieAuthenticationEnhancedProductToSelfieCaptureResultAdapter extends SmileIDProductViewsResultApi {
+class SmartSelfieAuthenticationEnhancedProductToSelfieCaptureResultAdapter
+    extends SmileIDProductViewsResultApi {
   final SmartSelfieCaptureResultClient client;
 
-  SmartSelfieAuthenticationEnhancedProductToSelfieCaptureResultAdapter(this.client) {
+  SmartSelfieAuthenticationEnhancedProductToSelfieCaptureResultAdapter(
+      this.client) {
     SmileIDProductsResultApi.setUp(this);
   }
 
   @override
-  void onSmartSelfieAuthenticationEnhancedResult(SmartSelfieCaptureResult? successResult, String? errorResult) {
+  void onSmartSelfieAuthenticationEnhancedResult(
+      SmartSelfieCaptureResult? successResult, String? errorResult) {
     super.onSmartSelfieAuthenticationEnhancedResult(successResult, errorResult);
     if (successResult != null) {
       client.onResult(SmileIDSdkResultSuccess(successResult));
@@ -111,7 +126,8 @@ class SmartSelfieAuthenticationEnhancedProductToSelfieCaptureResultAdapter exten
   }
 }
 
-class BiometricKycProductToBiometricKYCCaptureResultAdapter extends SmileIDProductViewsResultApi {
+class BiometricKycProductToBiometricKYCCaptureResultAdapter
+    extends SmileIDProductViewsResultApi {
   final BiometricKYCCaptureResultClient client;
 
   BiometricKycProductToBiometricKYCCaptureResultAdapter(this.client) {
@@ -119,7 +135,8 @@ class BiometricKycProductToBiometricKYCCaptureResultAdapter extends SmileIDProdu
   }
 
   @override
-  void onBiometricKYCResult(BiometricKYCCaptureResult? successResult, String? errorResult) {
+  void onBiometricKYCResult(
+      BiometricKYCCaptureResult? successResult, String? errorResult) {
     super.onBiometricKYCResult(successResult, errorResult);
     if (successResult != null) {
       client.onResult(SmileIDSdkResultSuccess(successResult));
@@ -129,7 +146,8 @@ class BiometricKycProductToBiometricKYCCaptureResultAdapter extends SmileIDProdu
   }
 }
 
-class SmartSelfieCaptureProductToSelfieCaptureResultAdapter extends SmileIDProductViewsResultApi {
+class SmartSelfieCaptureProductToSelfieCaptureResultAdapter
+    extends SmileIDProductViewsResultApi {
   final SmartSelfieCaptureResultClient client;
 
   SmartSelfieCaptureProductToSelfieCaptureResultAdapter(this.client) {
@@ -137,7 +155,8 @@ class SmartSelfieCaptureProductToSelfieCaptureResultAdapter extends SmileIDProdu
   }
 
   @override
-  void onSelfieCaptureResult(SmartSelfieCaptureResult? successResult, String? errorResult) {
+  void onSelfieCaptureResult(
+      SmartSelfieCaptureResult? successResult, String? errorResult) {
     super.onSelfieCaptureResult(successResult, errorResult);
     if (successResult != null) {
       client.onResult(SmileIDSdkResultSuccess(successResult));
@@ -147,7 +166,8 @@ class SmartSelfieCaptureProductToSelfieCaptureResultAdapter extends SmileIDProdu
   }
 }
 
-class DocumentCaptureProductToDocumentCaptureResultAdapter extends SmileIDProductViewsResultApi {
+class DocumentCaptureProductToDocumentCaptureResultAdapter
+    extends SmileIDProductViewsResultApi {
   final DocumentCaptureResultClient client;
 
   DocumentCaptureProductToDocumentCaptureResultAdapter(this.client) {
@@ -155,7 +175,8 @@ class DocumentCaptureProductToDocumentCaptureResultAdapter extends SmileIDProduc
   }
 
   @override
-  void onDocumentCaptureResult(DocumentCaptureResult? successResult, String? errorResult) {
+  void onDocumentCaptureResult(
+      DocumentCaptureResult? successResult, String? errorResult) {
     super.onDocumentCaptureResult(successResult, errorResult);
     if (successResult != null) {
       client.onResult(SmileIDSdkResultSuccess(successResult));

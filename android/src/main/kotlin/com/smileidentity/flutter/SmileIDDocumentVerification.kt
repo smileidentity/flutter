@@ -71,7 +71,6 @@ internal class SmileIDDocumentVerification private constructor(
                     errorResultArg = it.throwable.message
                         ?: "Unknown error with Document Verification",
                 ) {}
-
             }
         }
     }

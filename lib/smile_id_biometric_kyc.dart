@@ -81,7 +81,8 @@ class SmileIDBiometricKYC extends StatefulWidget {
   State<SmileIDBiometricKYC> createState() => _SmileIDBiometricKYCState();
 }
 
-class _SmileIDBiometricKYCState extends State<SmileIDBiometricKYC> implements BiometricKYCCaptureResultClient {
+class _SmileIDBiometricKYCState extends State<SmileIDBiometricKYC>
+    implements BiometricKYCCaptureResultClient {
   late SmileIDProductViewsResultApi api;
 
   @override
@@ -107,7 +108,8 @@ class _SmileIDBiometricKYCState extends State<SmileIDBiometricKYC> implements Bi
               controller: controller as AndroidViewController,
               hitTestBehavior: PlatformViewHitTestBehavior.opaque,
               gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{
-                Factory<OneSequenceGestureRecognizer>(EagerGestureRecognizer.new)
+                Factory<OneSequenceGestureRecognizer>(
+                    EagerGestureRecognizer.new)
               },
             );
           },

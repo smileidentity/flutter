@@ -630,5 +630,5 @@ fun SmartSelfieResponse.toMap() = mapOf(
     "job_type" to jobType.name,
     "message" to message,
     "partner_id" to partnerId,
-    "partner_params" to partnerParams
+    "partner_params" to partnerParams,
 )

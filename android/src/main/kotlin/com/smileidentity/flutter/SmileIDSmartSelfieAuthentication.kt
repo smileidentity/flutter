@@ -37,7 +37,6 @@ internal class SmileIDSmartSelfieAuthentication private constructor(
             skipApiSubmission = args["skipApiSubmission"] as? Boolean ?: false,
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {
-
             when (it) {
                 is SmileIDResult.Error -> api.onSmartSelfieAuthenticationResult(
                     successResultArg = null,
