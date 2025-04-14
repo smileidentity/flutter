@@ -39,10 +39,11 @@ class SmileIDSmartSelfieAuthenticationEnhanced : NSObject, FlutterPlatformView, 
 
     func didSucceed(selfieImage: URL, livenessImages: [URL], apiResponse: SmartSelfieResponse?) {
         _childViewController?.removeFromParent()
-        let result = SmartSelfieCaptureResult(selfieFile: getFilePath(fileName: selfieImage.absoluteString), livenessFiles: livenessImages.map {
-            getFilePath(fileName: $0.absoluteString)
-        },
-        apiResponse: apiResponse?.buildResponse(),)
+        let result = SmartSelfieCaptureResult(
+            selfieFile: getFilePath(fileName: selfieImage.absoluteString),
+            livenessFiles: livenessImages.map { getFilePath(fileName: $0.absoluteString)},
+            apiResponse: apiResponse?.buildResponse()
+        )
         _api.onSmartSelfieAuthenticationEnhancedResult(successResult: result, errorResult: nil) {_ in}
     }
 

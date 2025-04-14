@@ -15,7 +15,7 @@ class SmileIDSmartSelfieEnrollmentEnhanced: NSObject, FlutterPlatformView, Smart
         frame: CGRect,
         viewIdentifier viewId: Int64,
         arguments args: [String: Any?],
-        api: SmileIDProductsResultApi,
+        api: SmileIDProductsResultApi
     ) {
         _view = UIView()
         _api = api

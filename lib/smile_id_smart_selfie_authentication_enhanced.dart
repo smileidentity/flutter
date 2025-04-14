@@ -15,7 +15,7 @@ class SmileIDSmartSelfieAuthenticationEnhanced extends StatefulWidget {
   final Map<String, dynamic> creationParams;
 
   /// Called when the user successfully completes the smart selfie enrollment flow. The result is sealed class
-  /// that is either a SmileIDSdkResultSuccess<DocumentCaptureResult> or a SmileIDSdkResultError
+  /// that is either a SmileIDSdkResultSuccess<SmartSelfieCaptureResult> or a SmileIDSdkResultError
   final Function(SmileIDSdkResult<SmartSelfieCaptureResult>) onResult;
 
   const SmileIDSmartSelfieAuthenticationEnhanced._({

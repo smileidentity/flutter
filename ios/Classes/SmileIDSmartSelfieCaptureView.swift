@@ -113,8 +113,7 @@ extension SmileIDRootView: SmartSelfieResultDelegate {
         //        self.childViewController.removeFromParent()
         let result = SmartSelfieCaptureResult(
             selfieFile: getFilePath(fileName: selfieImage.absoluteString),
-            livenessFiles: livenessImages.map { getFilePath(fileName: $0.absoluteString) ?? ""
-            },
+            livenessFiles: livenessImages.map { getFilePath(fileName: $0.absoluteString) ?? "" },
             apiResponse: apiResponse?.buildResponse()
         )
         api.onSelfieCaptureResult(successResult: result, errorResult: nil) {_ in}

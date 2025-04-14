@@ -18,8 +18,7 @@ class SmileIDProductViewsResultApi implements SmileIDProductsResultApi {
   ) async {
     if (successResult != null) {
       log('''
-SmartSelfieEnrollment Result: \t${successResult.prettyPrint}''',
-          level: _infoLevel);
+SmartSelfieEnrollment Result: \t${successResult.prettyPrint}''', level: _infoLevel);
     } else if (errorResult != null) {
       log('SmartSelfieEnrollment Error: $errorResult', level: _warningLevel);
     }
@@ -28,8 +27,7 @@ SmartSelfieEnrollment Result: \t${successResult.prettyPrint}''',
   @protected
   @mustCallSuper
   @override
-  void onBiometricKYCResult(
-      BiometricKYCCaptureResult? successResult, String? errorResult) {
+  void onBiometricKYCResult(BiometricKYCCaptureResult? successResult, String? errorResult) {
     if (successResult != null) {
       log('''
 BiometricKYC Result: \tBiometricKYCCaptureResult(
@@ -45,8 +43,7 @@ BiometricKYC Result: \tBiometricKYCCaptureResult(
   @protected
   @mustCallSuper
   @override
-  void onDocumentCaptureResult(
-      DocumentCaptureResult? successResult, String? errorResult) {
+  void onDocumentCaptureResult(DocumentCaptureResult? successResult, String? errorResult) {
     if (successResult != null) {
       log('''
 DocumentCapture Result: \t${successResult.prettyPrint}''', level: _infoLevel);
@@ -58,27 +55,22 @@ DocumentCapture Result: \t${successResult.prettyPrint}''', level: _infoLevel);
   @protected
   @mustCallSuper
   @override
-  void onDocumentVerificationEnhancedResult(
-      DocumentCaptureResult? successResult, String? errorResult) {
+  void onDocumentVerificationEnhancedResult(DocumentCaptureResult? successResult, String? errorResult) {
     if (successResult != null) {
       log('''
-DocumentVerificationEnhanced Result: \t${successResult.prettyPrint}''',
-          level: _infoLevel);
+DocumentVerificationEnhanced Result: \t${successResult.prettyPrint}''', level: _infoLevel);
     } else if (errorResult != null) {
-      log('DocumentVerificationEnhanced Error: $errorResult',
-          level: _warningLevel);
+      log('DocumentVerificationEnhanced Error: $errorResult', level: _warningLevel);
     }
   }
 
   @protected
   @mustCallSuper
   @override
-  void onDocumentVerificationResult(
-      DocumentCaptureResult? successResult, String? errorResult) {
+  void onDocumentVerificationResult(DocumentCaptureResult? successResult, String? errorResult) {
     if (successResult != null) {
       log('''
-DocumentVerification Result: \t${successResult.prettyPrint}''',
-          level: _infoLevel);
+DocumentVerification Result: \t${successResult.prettyPrint}''', level: _infoLevel);
     } else if (errorResult != null) {
       log('DocumentVerification Error: $errorResult', level: _warningLevel);
     }
@@ -87,8 +79,7 @@ DocumentVerification Result: \t${successResult.prettyPrint}''',
   @protected
   @mustCallSuper
   @override
-  void onSelfieCaptureResult(
-      SmartSelfieCaptureResult? successResult, String? errorResult) {
+  void onSelfieCaptureResult(SmartSelfieCaptureResult? successResult, String? errorResult) {
     if (successResult != null) {
       log('''
 SelfieCapture Result: \t${successResult.prettyPrint}''', level: _infoLevel);
@@ -100,45 +91,36 @@ SelfieCapture Result: \t${successResult.prettyPrint}''', level: _infoLevel);
   @protected
   @mustCallSuper
   @override
-  void onSmartSelfieAuthenticationEnhancedResult(
-      SmartSelfieCaptureResult? successResult, String? errorResult) {
+  void onSmartSelfieAuthenticationEnhancedResult(SmartSelfieCaptureResult? successResult, String? errorResult) {
     if (successResult != null) {
       log('''
-SmartSelfieAuthenticationEnhanced Result: \t${successResult.prettyPrint}''',
-          level: _infoLevel);
+SmartSelfieAuthenticationEnhanced Result: \t${successResult.prettyPrint}''', level: _infoLevel);
     } else if (errorResult != null) {
-      log('SmartSelfieAuthenticationEnhanced Error: $errorResult',
-          level: _warningLevel);
+      log('SmartSelfieAuthenticationEnhanced Error: $errorResult', level: _warningLevel);
     }
   }
 
   @protected
   @mustCallSuper
   @override
-  void onSmartSelfieAuthenticationResult(
-      SmartSelfieCaptureResult? successResult, String? errorResult) {
+  void onSmartSelfieAuthenticationResult(SmartSelfieCaptureResult? successResult, String? errorResult) {
     if (successResult != null) {
       log('''
-SmartSelfieAuthentication Result: \t${successResult.prettyPrint}''',
-          level: _infoLevel);
+SmartSelfieAuthentication Result: \t${successResult.prettyPrint}''', level: _infoLevel);
     } else if (errorResult != null) {
-      log('SmartSelfieAuthentication Error: $errorResult',
-          level: _warningLevel);
+      log('SmartSelfieAuthentication Error: $errorResult', level: _warningLevel);
     }
   }
 
   @protected
   @mustCallSuper
   @override
-  void onSmartSelfieEnrollmentEnhancedResult(
-      SmartSelfieCaptureResult? successResult, String? errorResult) {
+  void onSmartSelfieEnrollmentEnhancedResult(SmartSelfieCaptureResult? successResult, String? errorResult) {
     if (successResult != null) {
       log('''
-SmartSelfieEnrollmentEnhanced Result: \t${successResult.prettyPrint}''',
-          level: _infoLevel);
+SmartSelfieEnrollmentEnhanced Result: \t${successResult.prettyPrint}''', level: _infoLevel);
     } else if (errorResult != null) {
-      log('SmartSelfieEnrollmentEnhanced Error: $errorResult',
-          level: _warningLevel);
+      log('SmartSelfieEnrollmentEnhanced Error: $errorResult', level: _warningLevel);
     }
   }
 
@@ -147,7 +129,7 @@ SmartSelfieEnrollmentEnhanced Result: \t${successResult.prettyPrint}''',
   }
 }
 
-extension on DocumentCaptureResult {
+extension DocumentCaptureResultPrintExtension on DocumentCaptureResult {
   String get prettyPrint => '''
   DocumentCaptureResult(
     selfie: $selfieFile,
@@ -159,7 +141,7 @@ extension on DocumentCaptureResult {
   )''';
 }
 
-extension on SmartSelfieCaptureResult {
+extension SelfieCaptureResultPrintExtension on SmartSelfieCaptureResult {
   String get prettyPrint => '''
   SmartSelfieCaptureResult(
     selfie: $selfieFile,

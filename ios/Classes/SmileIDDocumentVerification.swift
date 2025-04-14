@@ -15,7 +15,7 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerif
         frame: CGRect,
         viewIdentifier viewId: Int64,
         arguments args: [String: Any?],
-        api: SmileIDProductsResultApi,
+        api: SmileIDProductsResultApi
     ) {
         _api = api
         _view = UIView()
