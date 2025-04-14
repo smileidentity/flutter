@@ -1,5 +1,7 @@
 package com.smileidentity.flutter
 
+import DocumentCaptureResult
+import SmileIDProductsResultApi
 import android.content.Context
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -17,8 +19,6 @@ import com.smileidentity.compose.document.DocumentCaptureScreen
 import com.smileidentity.compose.document.DocumentCaptureSide
 import com.smileidentity.compose.theme.colorScheme
 import com.smileidentity.compose.theme.typography
-import com.smileidentity.flutter.results.DocumentCaptureResult
-import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
 import com.smileidentity.models.v2.Metadata
 import com.smileidentity.util.randomJobId
 import io.flutter.plugin.common.BinaryMessenger
@@ -32,6 +32,7 @@ internal class SmileIDDocumentCaptureView private constructor(
     viewId: Int,
     messenger: BinaryMessenger,
     args: Map<String, Any?>,
+    private val api: SmileIDProductsResultApi,
 ) : SmileComposablePlatformView(context, VIEW_TYPE_ID, viewId, messenger, args) {
     companion object {
         const val VIEW_TYPE_ID = "SmileIDDocumentCaptureView"
@@ -117,38 +118,28 @@ internal class SmileIDDocumentCaptureView private constructor(
             captureTitleText = stringResource(captureTitleText),
             knownIdAspectRatio = idAspectRatio,
             onConfirm = { file -> handleConfirmation(isDocumentFrontSide, file) },
-            onError = { throwable -> onError(throwable) },
+            onError = { throwable ->
+                api.onDocumentCaptureResult(
+                    successResultArg = null,
+                    errorResultArg = throwable.message ?: "Unknown error with Document Capture",
+                ) {}
+            },
             onSkip = { },
         )
     }
 
     private fun handleConfirmation(isDocumentFrontSide: Boolean, file: File) {
-        val moshi =
-            SmileID.moshi
-                .newBuilder()
-                .add(DocumentCaptureResultAdapter.FACTORY)
-                .build()
         val result =
             DocumentCaptureResult(
-                documentFrontFile = if (isDocumentFrontSide) file else null,
-                documentBackFile = if (!isDocumentFrontSide) file else null,
+                documentFrontFile = if (isDocumentFrontSide) file.absolutePath else null,
+                documentBackFile = if (!isDocumentFrontSide) file.absolutePath else null,
             )
-        val json =
-            try {
-                moshi
-                    .adapter(DocumentCaptureResult::class.java)
-                    .toJson(result)
-            } catch (e: Exception) {
-                onError(e)
-                return
-            }
-        json?.let {
-            onSuccessJson(it)
-        }
+        api.onDocumentCaptureResult(successResultArg = result, errorResultArg = null) {}
     }
 
     class Factory(
         private val messenger: BinaryMessenger,
+        private val api: SmileIDProductsResultApi,
     ) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
         override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
             @Suppress("UNCHECKED_CAST")
@@ -157,6 +148,7 @@ internal class SmileIDDocumentCaptureView private constructor(
                 viewId,
                 messenger,
                 args as Map<String, Any?>,
+                api,
             )
         }
     }

@@ -106,21 +106,21 @@ class SmileIDProductsPluginApi :
                 return false
             }
 
-            SmileIDSelfieCaptureActivity.REQUEST_CODE -> {
-                smartSelfieResult?.let { resultCallback ->
-                    handleSelfieResult(
-                        resultCode,
-                        data,
-                        SmileIDSelfieCaptureActivity.REQUEST_CODE.toString(),
-                        resultCallback,
-                    )
-
-                    smartSelfieResult = null
-                    return true
-                }
-
-                return false
-            }
+//            SmileIDSelfieCaptureActivity.REQUEST_CODE -> {
+//                smartSelfieResult?.let { resultCallback ->
+//                    handleSelfieResult(
+//                        resultCode,
+//                        data,
+//                        SmileIDSelfieCaptureActivity.REQUEST_CODE.toString(),
+//                        resultCallback,
+//                    )
+//
+//                    smartSelfieResult = null
+//                    return true
+//                }
+//
+//                return false
+//            }
 
             SmileIDDocumentVerificationActivity.REQUEST_CODE -> {
                 documentCaptureResult?.let { resultCallback ->
@@ -154,21 +154,21 @@ class SmileIDProductsPluginApi :
                 return false
             }
 
-            SmileIDDocumentCaptureActivity.REQUEST_CODE -> {
-                documentCaptureResult?.let { resultCallback ->
-                    handleDocumentResult(
-                        resultCode,
-                        data,
-                        SmileIDDocumentCaptureActivity.REQUEST_CODE.toString(),
-                        resultCallback,
-                    )
-
-                    documentCaptureResult = null
-                    return true
-                }
-
-                return false
-            }
+//            SmileIDDocumentCaptureActivity.REQUEST_CODE -> {
+//                documentCaptureResult?.let { resultCallback ->
+//                    handleDocumentResult(
+//                        resultCode,
+//                        data,
+//                        SmileIDDocumentCaptureActivity.REQUEST_CODE.toString(),
+//                        resultCallback,
+//                    )
+//
+//                    documentCaptureResult = null
+//                    return true
+//                }
+//
+//                return false
+//            }
 
             SmileIDBiometricKYCActivity.REQUEST_CODE -> {
                 biometricKycResult?.let { resultCallback ->
@@ -466,52 +466,52 @@ class SmileIDProductsPluginApi :
         creationParams: SelfieCaptureViewCreationParams,
         callback: (Result<SmartSelfieCaptureResult>) -> Unit,
     ) {
-        val intent = Intent(activity, SmileIDSelfieCaptureActivity::class.java)
-        intent.putExtra("showConfirmationDialog", creationParams.showConfirmationDialog)
-        intent.putExtra("showInstructions", creationParams.showInstructions)
-        intent.putExtra("showAttribution", creationParams.showAttribution)
-        intent.putExtra("allowAgentMode", creationParams.allowAgentMode)
-
-        if (activity != null) {
-            smartSelfieResult = callback
-            activity!!.startActivityForResult(intent, SmileIDSelfieCaptureActivity.REQUEST_CODE)
-        } else {
-            callback(
-                Result.failure(
-                    SmileFlutterError(
-                        SmileIDSelfieCaptureActivity.REQUEST_CODE.toString(),
-                        "Failed to start selfie capture",
-                    ),
-                ),
-            )
-        }
+//        val intent = Intent(activity, SmileIDSelfieCaptureActivity::class.java)
+//        intent.putExtra("showConfirmationDialog", creationParams.showConfirmationDialog)
+//        intent.putExtra("showInstructions", creationParams.showInstructions)
+//        intent.putExtra("showAttribution", creationParams.showAttribution)
+//        intent.putExtra("allowAgentMode", creationParams.allowAgentMode)
+//
+//        if (activity != null) {
+//            smartSelfieResult = callback
+//            activity!!.startActivityForResult(intent, SmileIDSelfieCaptureActivity.REQUEST_CODE)
+//        } else {
+//            callback(
+//                Result.failure(
+//                    SmileFlutterError(
+//                        SmileIDSelfieCaptureActivity.REQUEST_CODE.toString(),
+//                        "Failed to start selfie capture",
+//                    ),
+//                ),
+//            )
+//        }
     }
 
     override fun documentCapture(
         creationParams: DocumentCaptureCreationParams,
         callback: (Result<DocumentCaptureResult>) -> Unit,
     ) {
-        val intent = Intent(activity, SmileIDDocumentCaptureActivity::class.java)
-        intent.putExtra("isDocumentFrontSide", creationParams.isDocumentFrontSide)
-        intent.putExtra("showInstructions", creationParams.showInstructions)
-        intent.putExtra("showAttribution", creationParams.showAttribution)
-        intent.putExtra("allowGalleryUpload", creationParams.allowGalleryUpload)
-        intent.putExtra("showConfirmationDialog", creationParams.showConfirmationDialog)
-        intent.putExtra("idAspectRatio", creationParams.idAspectRatio)
-
-        if (activity != null) {
-            documentCaptureResult = callback
-            activity!!.startActivityForResult(intent, SmileIDDocumentCaptureActivity.REQUEST_CODE)
-        } else {
-            callback(
-                Result.failure(
-                    SmileFlutterError(
-                        SmileIDDocumentCaptureActivity.REQUEST_CODE.toString(),
-                        "Failed to start document capture",
-                    ),
-                ),
-            )
-        }
+//        val intent = Intent(activity, SmileIDDocumentCaptureActivity::class.java)
+//        intent.putExtra("isDocumentFrontSide", creationParams.isDocumentFrontSide)
+//        intent.putExtra("showInstructions", creationParams.showInstructions)
+//        intent.putExtra("showAttribution", creationParams.showAttribution)
+//        intent.putExtra("allowGalleryUpload", creationParams.allowGalleryUpload)
+//        intent.putExtra("showConfirmationDialog", creationParams.showConfirmationDialog)
+//        intent.putExtra("idAspectRatio", creationParams.idAspectRatio)
+//
+//        if (activity != null) {
+//            documentCaptureResult = callback
+//            activity!!.startActivityForResult(intent, SmileIDDocumentCaptureActivity.REQUEST_CODE)
+//        } else {
+//            callback(
+//                Result.failure(
+//                    SmileFlutterError(
+//                        SmileIDDocumentCaptureActivity.REQUEST_CODE.toString(),
+//                        "Failed to start document capture",
+//                    ),
+//                ),
+//            )
+//        }
     }
 }
 

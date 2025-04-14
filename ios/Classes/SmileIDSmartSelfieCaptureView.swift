@@ -7,7 +7,7 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView, SmileIDFileU
     var fileManager: FileManager = Foundation.FileManager.default
     private let _childViewController: UIHostingController<AnyView>
     private let _viewModel: SelfieViewModel
-    private let _channel: FlutterMethodChannel
+    private var _api: SmileIDProductsResultApi
 
     static let VIEW_TYPE_ID = "SmileIDSmartSelfieCaptureView"
 
@@ -15,7 +15,7 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView, SmileIDFileU
         frame: CGRect,
         viewIdentifier viewId: Int64,
         arguments args: [String: Any?],
-        binaryMessenger messenger: FlutterBinaryMessenger
+        api: SmileIDProductsResultApi
     ) {
         let showInstructions = args["showInstructions"] as? Bool ?? true
         let showAttribution = args["showAttribution"] as? Bool ?? true
@@ -32,10 +32,7 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView, SmileIDFileU
             localMetadata: LocalMetadata()
         )
 
-        _channel = FlutterMethodChannel(
-            name: "\(SmileIDSmartSelfieCaptureView.VIEW_TYPE_ID)_\(viewId)",
-            binaryMessenger: messenger
-        )
+        _api = api
 
         let rootView = SmileIDRootView(
             viewModel: _viewModel,
@@ -43,7 +40,7 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView, SmileIDFileU
             allowAgentMode: allowAgentMode,
             showAttribution: showAttribution,
             useStrictMode: useStrictMode,
-            channel: _channel
+            api: _api
         )
         _childViewController = UIHostingController(rootView: AnyView(rootView))
 
@@ -69,7 +66,7 @@ struct SmileIDRootView: View {
     let allowAgentMode: Bool
     let showAttribution: Bool
     let useStrictMode: Bool
-    let channel: FlutterMethodChannel
+    let api: SmileIDProductsResultApi
     static let shared = FileManager()
     private let fileManager = Foundation.FileManager.default
 
@@ -109,47 +106,22 @@ struct SmileIDRootView: View {
         guard let jsonData = try? encoder.encode(value) else { return nil }
         return String(data: jsonData, encoding: .utf8)
     }
-
-    private func sendSuccessMessage(with arguments: [String: Any]) {
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: arguments, options: [])
-            if let jsonString = String(data: jsonData, encoding: .utf8) {
-                channel.invokeMethod("onSuccess", arguments: jsonString)
-            }
-        } catch {
-            channel.invokeMethod("onError", arguments: error.localizedDescription)
-        }
-    }
 }
 
 extension SmileIDRootView: SmartSelfieResultDelegate {
     func didSucceed(selfieImage: URL, livenessImages: [URL], apiResponse: SmartSelfieResponse?) {
         //        self.childViewController.removeFromParent()
-        var arguments: [String: Any] = [
-            "selfieFile": getFilePath(fileName: selfieImage.absoluteString),
-            "livenessFiles": livenessImages.map { getFilePath(fileName: $0.absoluteString) },
-        ]
-        if let apiResponse = apiResponse {
-            let encoder = JSONEncoder()
-            encoder.outputFormatting = .prettyPrinted
-            if let jsonData = try? encoder.encode(apiResponse),
-               let jsonString = String(data: jsonData, encoding: .utf8)
-            {
-                arguments["apiResponse"] = jsonString
-            }
-        }
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: arguments, options: [])
-            if let jsonString = String(data: jsonData, encoding: .utf8) {
-                channel.invokeMethod("onSuccess", arguments: jsonString)
-            }
-        } catch {
-            didError(error: error)
-        }
+        let result = SmartSelfieCaptureResult(
+            selfieFile: getFilePath(fileName: selfieImage.absoluteString),
+            livenessFiles: livenessImages.map { getFilePath(fileName: $0.absoluteString) ?? ""
+            },
+            apiResponse: apiResponse?.buildResponse()
+        )
+        api.onSelfieCaptureResult(successResult: result, errorResult: nil) {_ in}
     }
 
     func didError(error: Error) {
-        channel.invokeMethod("onError", arguments: error.localizedDescription)
+        api.onSelfieCaptureResult(successResult: nil, errorResult: error.localizedDescription){_ in}
     }
 
     func getSmileIDDirectory() -> String? {
@@ -193,10 +165,10 @@ extension SmileIDRootView: SmartSelfieResultDelegate {
 
 extension SmileIDSmartSelfieCaptureView {
     class Factory: NSObject, FlutterPlatformViewFactory {
-        private let messenger: FlutterBinaryMessenger
+        private let api: SmileIDProductsResultApi
 
-        init(messenger: FlutterBinaryMessenger) {
-            self.messenger = messenger
+        init(api: SmileIDProductsResultApi) {
+            self.api = api
             super.init()
         }
 
@@ -205,7 +177,7 @@ extension SmileIDSmartSelfieCaptureView {
                 frame: frame,
                 viewIdentifier: viewId,
                 arguments: args as? [String: Any?] ?? [:],
-                binaryMessenger: messenger
+                api: api
             )
         }
 

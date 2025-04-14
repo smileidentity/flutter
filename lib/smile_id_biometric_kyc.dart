@@ -3,23 +3,23 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:smile_id/product_result_adapters.dart';
+import 'package:smile_id/result_clients_interfaces.dart';
+import 'package:smile_id/smile_id_product_views_api.dart';
+import 'package:smile_id/smile_id_sdk_result.dart';
+import 'package:smile_id/smileid_messages.g.dart';
 
-@Deprecated(
-  'Due to the expensive nature of platform views, migrate to the more efficient biometricKYC function in the SmileID sdk. This widget will be removed in future versions',
-)
-class SmileIDBiometricKYC extends StatelessWidget {
+class SmileIDBiometricKYC extends StatefulWidget {
   static const String viewType = "SmileIDBiometricKYC";
   final Map<String, dynamic> creationParams;
 
-  /// Called when the user successfully completes the biometric kyc flow. The result is a
-  /// JSON string.
-  final Function(String) onSuccess;
-  final Function(String) onError;
+  /// Called when the user successfully completes the smart selfie enrollment flow. The result is sealed class
+  /// that is either a SmileIDSdkResultSuccess<BiometricKYCCaptureResult> or a SmileIDSdkResultError
+  final Function(SmileIDSdkResult<BiometricKYCCaptureResult>) onResult;
 
   const SmileIDBiometricKYC._({
     required this.creationParams,
-    required this.onSuccess,
-    required this.onError,
+    required this.onResult,
   });
 
   factory SmileIDBiometricKYC({
@@ -47,12 +47,10 @@ class SmileIDBiometricKYC extends StatelessWidget {
     bool showInstructions = true,
     bool useStrictMode = false,
     Map<String, String>? extraPartnerParams,
-    required Function(String resultJson) onSuccess,
-    required Function(String errorMessage) onError,
+    required Function(SmileIDSdkResult<BiometricKYCCaptureResult>) onResult,
   }) {
     return SmileIDBiometricKYC._(
-      onSuccess: onSuccess,
-      onError: onError,
+      onResult: onResult,
       creationParams: {
         "country": country,
         "idType": idType,
@@ -80,62 +78,67 @@ class SmileIDBiometricKYC extends StatelessWidget {
   }
 
   @override
+  State<SmileIDBiometricKYC> createState() => _SmileIDBiometricKYCState();
+}
+
+class _SmileIDBiometricKYCState extends State<SmileIDBiometricKYC> implements BiometricKYCCaptureResultClient {
+  late SmileIDProductViewsResultApi api;
+
+  @override
+  void initState() {
+    super.initState();
+    api = BiometricKycProductToBiometricKYCCaptureResultAdapter(this);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    api.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return PlatformViewLink(
-          viewType: viewType,
+          viewType: SmileIDBiometricKYC.viewType,
           surfaceFactory: (context, controller) {
             return AndroidViewSurface(
               controller: controller as AndroidViewController,
               hitTestBehavior: PlatformViewHitTestBehavior.opaque,
               gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{
-                Factory<OneSequenceGestureRecognizer>(
-                    EagerGestureRecognizer.new)
+                Factory<OneSequenceGestureRecognizer>(EagerGestureRecognizer.new)
               },
             );
           },
           onCreatePlatformView: (params) {
             return PlatformViewsService.initExpensiveAndroidView(
               id: params.id,
-              viewType: viewType,
+              viewType: SmileIDBiometricKYC.viewType,
               layoutDirection: Directionality.of(context),
-              creationParams: creationParams,
+              creationParams: widget.creationParams,
               creationParamsCodec: const StandardMessageCodec(),
               onFocus: () {
                 params.onFocusChanged(true);
               },
             )
               ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
-              ..addOnPlatformViewCreatedListener(_onPlatformViewCreated)
               ..create();
           },
         );
       case TargetPlatform.iOS:
         return UiKitView(
-          viewType: viewType,
-          creationParams: creationParams,
+          viewType: SmileIDBiometricKYC.viewType,
+          creationParams: widget.creationParams,
           creationParamsCodec: const StandardMessageCodec(),
-          onPlatformViewCreated: _onPlatformViewCreated,
         );
       default:
         throw UnsupportedError("Unsupported platform");
     }
   }
 
-  void _onPlatformViewCreated(int id) {
-    final channel = MethodChannel("${viewType}_$id");
-    channel.setMethodCallHandler(_handleMethodCall);
-  }
-
-  Future<dynamic> _handleMethodCall(MethodCall call) async {
-    switch (call.method) {
-      case "onSuccess":
-        onSuccess(call.arguments);
-      case "onError":
-        onError(call.arguments);
-      default:
-        throw MissingPluginException();
-    }
+  @override
+  void onResult(SmileIDSdkResult<BiometricKYCCaptureResult> result) {
+    widget.onResult(result);
   }
 }

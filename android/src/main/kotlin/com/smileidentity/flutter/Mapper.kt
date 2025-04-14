@@ -622,3 +622,13 @@ fun List<File>.pathList(): ArrayList<String> = ArrayList<String>().let {
     }
     return it
 }
+
+fun SmartSelfieResponse.toMap() = mapOf(
+    "code" to code,
+    "created_at" to createdAt,
+    "job_id" to jobId,
+    "job_type" to jobType.name,
+    "message" to message,
+    "partner_id" to partnerId,
+    "partner_params" to partnerParams
+)

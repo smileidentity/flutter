@@ -1,11 +1,11 @@
 package com.smileidentity.flutter
 
+import DocumentCaptureResult
+import SmileIDProductsResultApi
 import android.content.Context
 import androidx.compose.runtime.Composable
 import com.smileidentity.SmileID
 import com.smileidentity.compose.DocumentVerification
-import com.smileidentity.flutter.results.DocumentCaptureResult
-import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
@@ -21,6 +21,7 @@ internal class SmileIDDocumentVerification private constructor(
     viewId: Int,
     messenger: BinaryMessenger,
     args: Map<String, Any?>,
+    private val api: SmileIDProductsResultApi,
 ) : SmileComposablePlatformView(context, VIEW_TYPE_ID, viewId, messenger, args) {
     companion object {
         const val VIEW_TYPE_ID = "SmileIDDocumentVerification"
@@ -52,37 +53,32 @@ internal class SmileIDDocumentVerification private constructor(
                 is SmileIDResult.Success -> {
                     val result =
                         DocumentCaptureResult(
-                            selfieFile = it.data.selfieFile,
-                            documentFrontFile = it.data.documentFrontFile,
-                            livenessFiles = it.data.livenessFiles,
-                            documentBackFile = it.data.documentBackFile,
+                            selfieFile = it.data.selfieFile.absolutePath,
+                            documentFrontFile = it.data.documentFrontFile.absolutePath,
+                            livenessFiles = it.data.livenessFiles?.pathList(),
+                            documentBackFile = it.data.documentBackFile?.absolutePath,
                             didSubmitDocumentVerificationJob =
                             it.data.didSubmitDocumentVerificationJob,
                         )
-                    val moshi =
-                        SmileID.moshi
-                            .newBuilder()
-                            .add(DocumentCaptureResultAdapter.FACTORY)
-                            .build()
-                    val json =
-                        try {
-                            moshi.adapter(DocumentCaptureResult::class.java).toJson(result)
-                        } catch (e: Exception) {
-                            onError(e)
-                            return@DocumentVerification
-                        }
-                    json?.let { js ->
-                        onSuccessJson(js)
-                    }
+                    api.onDocumentVerificationResult(
+                        successResultArg = result,
+                        errorResultArg = null,
+                    ) {}
                 }
 
-                is SmileIDResult.Error -> onError(it.throwable)
+                is SmileIDResult.Error -> api.onDocumentVerificationResult(
+                    successResultArg = null,
+                    errorResultArg = it.throwable.message
+                        ?: "Unknown error with Document Verification",
+                ) {}
+
             }
         }
     }
 
     class Factory(
         private val messenger: BinaryMessenger,
+        private val api: SmileIDProductsResultApi,
     ) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
         override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
             @Suppress("UNCHECKED_CAST")
@@ -91,6 +87,7 @@ internal class SmileIDDocumentVerification private constructor(
                 viewId,
                 messenger,
                 args as Map<String, Any?>,
+                api,
             )
         }
     }

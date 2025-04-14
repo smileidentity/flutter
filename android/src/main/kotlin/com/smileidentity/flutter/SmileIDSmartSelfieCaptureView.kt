@@ -1,5 +1,7 @@
 package com.smileidentity.flutter
 
+import SmartSelfieCaptureResult
+import SmileIDProductsResultApi
 import android.content.Context
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -15,6 +17,8 @@ import com.smileidentity.compose.components.LocalMetadata
 import com.smileidentity.compose.theme.colorScheme
 import com.smileidentity.compose.theme.typography
 import com.smileidentity.models.v2.Metadata
+import com.smileidentity.results.SmartSelfieResult
+import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
 import io.flutter.plugin.common.BinaryMessenger
@@ -27,6 +31,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
     viewId: Int,
     messenger: BinaryMessenger,
     args: Map<String, Any?>,
+    private val api: SmileIDProductsResultApi,
 ) : SmileSelfieComposablePlatformView(context, VIEW_TYPE_ID, viewId, messenger, args) {
     companion object {
         const val VIEW_TYPE_ID = "SmileIDSmartSelfieCaptureView"
@@ -53,7 +58,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                                 showAttribution = showAttribution,
                                 showInstructions = showInstructions,
                                 skipApiSubmission = true,
-                                onResult = { res -> handleResult(res) },
+                                onResult = { res -> handleApiResult(res) },
                             )
                         } else {
                             SmileID.SmartSelfieEnrollment(
@@ -63,7 +68,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                                 showAttribution = showAttribution,
                                 showInstructions = showInstructions,
                                 skipApiSubmission = true,
-                                onResult = { res -> handleResult(res) },
+                                onResult = { res -> handleApiResult(res) },
                             )
                         }
                     },
@@ -72,8 +77,29 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
         }
     }
 
+    private fun handleApiResult(res: SmileIDResult<SmartSelfieResult>) {
+        when (res) {
+            is SmileIDResult.Error -> api.onSelfieCaptureResult(
+                successResultArg = null,
+                errorResultArg = res.throwable.message ?: "Unknown error with Selfie Capture",
+            ) {}
+
+            is SmileIDResult.Success -> {
+                val result = SmartSelfieCaptureResult(
+                    selfieFile = res.data.selfieFile.absolutePath,
+                    livenessFiles = res.data.livenessFiles.pathList(),
+                    apiResponse = res.data.apiResponse?.toMap(),
+                )
+
+                api.onSelfieCaptureResult(successResultArg = result, errorResultArg = null) {}
+            }
+        }
+    }
+
+
     class Factory(
         private val messenger: BinaryMessenger,
+        private val api: SmileIDProductsResultApi,
     ) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
         override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
             @Suppress("UNCHECKED_CAST")
@@ -82,6 +108,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                 viewId,
                 messenger,
                 args as Map<String, Any?>,
+                api,
             )
         }
     }

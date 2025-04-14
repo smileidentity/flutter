@@ -1,9 +1,12 @@
 package com.smileidentity.flutter
 
+import SmartSelfieCaptureResult
+import SmileIDProductsResultApi
 import android.content.Context
 import androidx.compose.runtime.Composable
 import com.smileidentity.SmileID
 import com.smileidentity.compose.SmartSelfieAuthentication
+import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomUserId
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.StandardMessageCodec
@@ -16,6 +19,7 @@ internal class SmileIDSmartSelfieAuthentication private constructor(
     viewId: Int,
     messenger: BinaryMessenger,
     args: Map<String, Any?>,
+    private val api: SmileIDProductsResultApi,
 ) : SmileSelfieComposablePlatformView(context, VIEW_TYPE_ID, viewId, messenger, args) {
     companion object {
         const val VIEW_TYPE_ID = "SmileIDSmartSelfieAuthentication"
@@ -32,12 +36,34 @@ internal class SmileIDSmartSelfieAuthentication private constructor(
             showInstructions = args["showInstructions"] as? Boolean ?: true,
             skipApiSubmission = args["skipApiSubmission"] as? Boolean ?: false,
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
-            onResult = { res -> handleResult(res) },
-        )
+        ) {
+
+            when (it) {
+                is SmileIDResult.Error -> api.onSmartSelfieAuthenticationResult(
+                    successResultArg = null,
+                    errorResultArg = it.throwable.message
+                        ?: "Unknown error with Smart Selfie Authentication",
+                ) {}
+
+                is SmileIDResult.Success -> {
+                    val result = SmartSelfieCaptureResult(
+                        selfieFile = it.data.selfieFile.absolutePath,
+                        livenessFiles = it.data.livenessFiles.pathList(),
+                        apiResponse = it.data.apiResponse?.toMap(),
+                    )
+
+                    api.onSmartSelfieAuthenticationResult(
+                        successResultArg = result,
+                        errorResultArg = null,
+                    ) {}
+                }
+            }
+        }
     }
 
     class Factory(
         private val messenger: BinaryMessenger,
+        private val api: SmileIDProductsResultApi,
     ) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
         override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
             @Suppress("UNCHECKED_CAST")
@@ -46,6 +72,7 @@ internal class SmileIDSmartSelfieAuthentication private constructor(
                 viewId,
                 messenger,
                 args as Map<String, Any?>,
+                api,
             )
         }
     }

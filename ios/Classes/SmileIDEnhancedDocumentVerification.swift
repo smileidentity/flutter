@@ -4,9 +4,9 @@ import SmileID
 import SwiftUI
 
 class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, EnhancedDocumentVerificationResultDelegate, SmileIDFileUtilsProtocol {
+    private var _api: SmileIDProductsResultApi
     var fileManager: FileManager = Foundation.FileManager.default
     private var _view: UIView
-    private var _channel: FlutterMethodChannel
     private var _childViewController: UIViewController?
     
     static let VIEW_TYPE_ID = "SmileIDEnhancedDocumentVerification"
@@ -15,13 +15,10 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
         frame: CGRect,
         viewIdentifier viewId: Int64,
         arguments args: [String: Any?],
-        binaryMessenger messenger: FlutterBinaryMessenger
+        api: SmileIDProductsResultApi
     ) {
+        _api = api
         _view = UIView()
-        _channel = FlutterMethodChannel(
-            name: "\(SmileIDEnhancedDocumentVerification.VIEW_TYPE_ID)_\(viewId)",
-            binaryMessenger: messenger
-        )
         _childViewController = nil
         super.init()
         let bypassSelfieCaptureWithFile = (args["bypassSelfieCaptureWithFile"] as? String)
@@ -60,30 +57,19 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
     
     func didSucceed(selfie: URL, documentFrontImage: URL, documentBackImage: URL?, didSubmitEnhancedDocVJob: Bool) {
         _childViewController?.removeFromParent()
-        let arguments: [String: Any] = [
-            "selfieFile": getFilePath(fileName: selfie.absoluteString),
-            "documentFrontFile": getFilePath(fileName: documentFrontImage.absoluteString),
-            "didSubmitEnhancedDocVJob": didSubmitEnhancedDocVJob
-        ]
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: arguments, options: [])
-            if let jsonString = String(data: jsonData, encoding: .utf8) {
-                _channel.invokeMethod("onSuccess", arguments: jsonString)
-            }
-        } catch {
-            didError(error: error)
-        }
+        let result = DocumentCaptureResult(selfieFile: getFilePath(fileName: selfie.absoluteString), documentFrontFile: getFilePath(fileName: documentFrontImage.absoluteString), didSubmitEnhancedDocVJob: didSubmitEnhancedDocVJob)
+        _api.onDocumentVerificationEnhancedResult(successResult: result, errorResult: nil) {_ in}
     }
     
     func didError(error: Error) {
         print("[Smile ID] An error occurred - \(error.localizedDescription)")
-        _channel.invokeMethod("onError", arguments: error.localizedDescription)
+        _api.onDocumentVerificationEnhancedResult(successResult: nil, errorResult: error.localizedDescription) {_ in}
     }
     
     class Factory : NSObject, FlutterPlatformViewFactory {
-        private var messenger: FlutterBinaryMessenger
-        init(messenger: FlutterBinaryMessenger) {
-            self.messenger = messenger
+        private var api: SmileIDProductsResultApi
+        init(api: SmileIDProductsResultApi) {
+            self.api = api
             super.init()
         }
         
@@ -96,7 +82,7 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
                 frame: frame,
                 viewIdentifier: viewId,
                 arguments: args as! [String: Any?],
-                binaryMessenger: messenger
+                api: api
             )
         }
         

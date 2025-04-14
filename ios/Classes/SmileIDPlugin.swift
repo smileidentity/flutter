@@ -13,7 +13,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         let smileIDProductsResultApi = SmileIDProductsResultApi(binaryMessenger: messenger)
         
         let documentVerificationFactory = SmileIDDocumentVerification.Factory(
-            messenger: registrar.messenger()
+            api: smileIDProductsResultApi
         )
         registrar.register(
             documentVerificationFactory,
@@ -21,7 +21,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         )
         
         let enhancedDocumentVerificationFactory = SmileIDEnhancedDocumentVerification.Factory(
-            messenger: registrar.messenger()
+           api: smileIDProductsResultApi
         )
         registrar.register(
             enhancedDocumentVerificationFactory,
@@ -37,7 +37,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         )
         
         let smartSelfieAuthenticationFactory = SmileIDSmartSelfieAuthentication.Factory(
-            messenger: registrar.messenger()
+            api: smileIDProductsResultApi
         )
         registrar.register(
             smartSelfieAuthenticationFactory,
@@ -45,7 +45,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         )
         
         let smartSelfieEnrollmentEnhancedFactory = SmileIDSmartSelfieEnrollmentEnhanced.Factory(
-            messenger: registrar.messenger()
+            api: smileIDProductsResultApi
         )
         registrar.register(
             smartSelfieEnrollmentEnhancedFactory,
@@ -53,7 +53,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         )
         
         let smartSelfieAuthenticationEnhancedFactory = SmileIDSmartSelfieAuthenticationEnhanced.Factory(
-            messenger: registrar.messenger()
+            api: smileIDProductsResultApi
         )
         registrar.register(
             smartSelfieAuthenticationEnhancedFactory,
@@ -61,7 +61,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         )
         
         let biometricKYCFactory = SmileIDBiometricKYC.Factory(
-            messenger: registrar.messenger()
+            api: smileIDProductsResultApi
         )
         registrar.register(
             biometricKYCFactory,
@@ -69,7 +69,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         )
         
         let selfieCaptureFactory = SmileIDSmartSelfieCaptureView.Factory(
-            messenger: registrar.messenger()
+            api: smileIDProductsResultApi
         )
         registrar.register(
             selfieCaptureFactory,
@@ -77,7 +77,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         )
         
         let documentCaptureFactory = SmileIDDocumentCaptureView.Factory(
-            messenger: registrar.messenger()
+            api: smileIDProductsResultApi
         )
         registrar.register(
             documentCaptureFactory,

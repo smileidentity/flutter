@@ -1,11 +1,11 @@
 package com.smileidentity.flutter
 
+import BiometricKYCCaptureResult
+import SmileIDProductsResultApi
 import android.content.Context
 import androidx.compose.runtime.Composable
 import com.smileidentity.SmileID
 import com.smileidentity.compose.BiometricKYC
-import com.smileidentity.flutter.results.SmartSelfieCaptureResult
-import com.smileidentity.flutter.utils.SelfieCaptureResultAdapter
 import com.smileidentity.flutter.utils.getCurrentIsoTimestamp
 import com.smileidentity.models.ConsentInformation
 import com.smileidentity.models.IdInfo
@@ -23,6 +23,7 @@ internal class SmileIDBiometricKYC private constructor(
     viewId: Int,
     messenger: BinaryMessenger,
     args: Map<String, Any?>,
+    private val api: SmileIDProductsResultApi,
 ) : SmileComposablePlatformView(context, VIEW_TYPE_ID, viewId, messenger, args) {
     companion object {
         const val VIEW_TYPE_ID = "SmileIDBiometricKYC"
@@ -68,38 +69,26 @@ internal class SmileIDBiometricKYC private constructor(
         ) {
             when (it) {
                 is SmileIDResult.Success -> {
-                    val result =
-                        SmartSelfieCaptureResult(
-                            selfieFile = it.data.selfieFile,
-                            livenessFiles = it.data.livenessFiles,
-                            didSubmitBiometricKycJob = it.data.didSubmitBiometricKycJob,
-                        )
-                    val moshi =
-                        SmileID.moshi
-                            .newBuilder()
-                            .add(SelfieCaptureResultAdapter.FACTORY)
-                            .build()
-                    val json =
-                        try {
-                            moshi
-                                .adapter(SmartSelfieCaptureResult::class.java)
-                                .toJson(result)
-                        } catch (e: Exception) {
-                            onError(e)
-                            return@BiometricKYC
-                        }
-                    json?.let { js ->
-                        onSuccessJson(js)
-                    }
+                    val result = BiometricKYCCaptureResult(
+                        selfieFile = it.data.selfieFile.absolutePath,
+                        livenessFiles = it.data.livenessFiles.pathList(),
+                        didSubmitBiometricKycJob = it.data.didSubmitBiometricKycJob,
+                    )
+
+                    api.onBiometricKYCResult(successResultArg = result, errorResultArg = null) {}
                 }
 
-                is SmileIDResult.Error -> onError(it.throwable)
+                is SmileIDResult.Error -> api.onBiometricKYCResult(
+                    successResultArg = null,
+                    errorResultArg = it.throwable.message ?: "Unknown error with Biometric KYC",
+                ) {}
             }
         }
     }
 
     class Factory(
         private val messenger: BinaryMessenger,
+        private val api: SmileIDProductsResultApi,
     ) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
         override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
             @Suppress("UNCHECKED_CAST")
@@ -108,6 +97,7 @@ internal class SmileIDBiometricKYC private constructor(
                 viewId,
                 messenger,
                 args as Map<String, Any?>,
+                api,
             )
         }
     }

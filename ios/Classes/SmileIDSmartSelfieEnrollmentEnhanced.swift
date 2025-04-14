@@ -4,9 +4,9 @@ import SmileID
 import SwiftUI
 
 class SmileIDSmartSelfieEnrollmentEnhanced: NSObject, FlutterPlatformView, SmartSelfieResultDelegate, SmileIDFileUtilsProtocol {
+    private var _api: SmileIDProductsResultApi
     var fileManager: FileManager = Foundation.FileManager.default
     private var _view: UIView
-    private var _channel: FlutterMethodChannel
     private var _childViewController: UIViewController?
 
     static let VIEW_TYPE_ID = "SmileIDSmartSelfieEnrollmentEnhanced"
@@ -15,13 +15,10 @@ class SmileIDSmartSelfieEnrollmentEnhanced: NSObject, FlutterPlatformView, Smart
         frame: CGRect,
         viewIdentifier viewId: Int64,
         arguments args: [String: Any?],
-        binaryMessenger messenger: FlutterBinaryMessenger
+        api: SmileIDProductsResultApi,
     ) {
         _view = UIView()
-        _channel = FlutterMethodChannel(
-            name: "\(SmileIDSmartSelfieEnrollmentEnhanced.VIEW_TYPE_ID)_\(viewId)",
-            binaryMessenger: messenger
-        )
+        _api = api
         _childViewController = nil
         super.init()
         let screen = EnhancedSelfieEnrollmentRootView.init(
@@ -42,29 +39,25 @@ class SmileIDSmartSelfieEnrollmentEnhanced: NSObject, FlutterPlatformView, Smart
 
     func didSucceed(selfieImage: URL, livenessImages: [URL], apiResponse: SmartSelfieResponse?) {
         _childViewController?.removeFromParent()
-        let successData = SmartSelfieSuccessData(
-            selfieFile: getFilePath(fileName: selfieImage.absoluteString),
-            livenessFiles: livenessImages.map {
-                getFilePath(fileName: $0.absoluteString)
-            },
-            apiResponse: apiResponse
+        let result = SmartSelfieCaptureResult(selfieFile: getFilePath(fileName: selfieImage.absoluteString), livenessFiles: livenessImages.map{
+            getFilePath(fileName: $0.absoluteString)
+        }, apiResponse: apiResponse?.buildResponse()
         )
-
-        if let jsonString = successData.toJSONString() {
-            _channel.invokeMethod("onSuccess", arguments: jsonString)
-        }
+        
+        _api.onSmartSelfieEnrollmentEnhancedResult(successResult: result, errorResult: nil) {_ in}
     }
 
     func didError(error: Error) {
         print("[Smile ID] An error occurred - \(error.localizedDescription)")
-        _channel.invokeMethod("onError", arguments: error.localizedDescription)
+        
+        _api.onSmartSelfieEnrollmentEnhancedResult(successResult: nil, errorResult: error.localizedDescription){_ in}
     }
 
     class Factory: NSObject, FlutterPlatformViewFactory {
-        private var messenger: FlutterBinaryMessenger
+        private var api: SmileIDProductsResultApi
 
-        init(messenger: FlutterBinaryMessenger) {
-            self.messenger = messenger
+        init(api: SmileIDProductsResultApi) {
+            self.api = api
             super.init()
         }
 
@@ -77,7 +70,7 @@ class SmileIDSmartSelfieEnrollmentEnhanced: NSObject, FlutterPlatformView, Smart
                 frame: frame,
                 viewIdentifier: viewId,
                 arguments: args as! [String: Any?],
-                binaryMessenger: messenger
+                api:api
             )
         }
 

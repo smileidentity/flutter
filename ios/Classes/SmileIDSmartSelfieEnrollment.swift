@@ -4,7 +4,7 @@ import SmileID
 import SwiftUI
 
 class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieResultDelegate, SmileIDFileUtilsProtocol {
-    private var api: SmileIDProductsResultApi
+    private var _api: SmileIDProductsResultApi
     var fileManager: FileManager = Foundation.FileManager.default
     private var _view: UIView
     private var _childViewController: UIViewController?
@@ -17,7 +17,7 @@ class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieR
         arguments args: [String: Any?],
         api: SmileIDProductsResultApi
     ) {
-        self.api = api
+        _api = api
         _view = UIView()
         super.init()
         let screen = SmileID.smartSelfieEnrollmentScreen(
@@ -47,12 +47,12 @@ class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieR
             apiResponse: apiResponse?.buildResponse()
         )
         
-        api.onSmartSelfieEnrollmentResult(successResult: result, errorResult: nil) {_ in}
+        _api.onSmartSelfieEnrollmentResult(successResult: result, errorResult: nil) {_ in}
     }
 
     func didError(error: Error) {
         print("[Smile ID] An error occurred - \(error.localizedDescription)")
-        api
+        _api
             .onSmartSelfieEnrollmentResult(
                 successResult: nil,
                 errorResult: error.localizedDescription
