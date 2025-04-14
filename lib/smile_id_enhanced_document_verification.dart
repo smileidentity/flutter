@@ -86,8 +86,7 @@ class _SmileIDEnhancedDocumentVerificationState
   @override
   void initState() {
     super.initState();
-    api =
-        EnhancedDocumentVerificationProductToDocumentCaptureResultAdapter(this);
+    api = EnhancedDocumentVerificationAdapter(this);
   }
 
   @override

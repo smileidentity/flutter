@@ -58,7 +58,7 @@ class _SmileIDDocumentCaptureViewState extends State<SmileIDDocumentCaptureView>
   @override
   void initState() {
     super.initState();
-    api = DocumentCaptureProductToDocumentCaptureResultAdapter(this);
+    api = DocumentCaptureAdapter(this);
   }
 
   @override

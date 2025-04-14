@@ -3,11 +3,10 @@ import 'smile_id_product_views_api.dart';
 import 'smile_id_sdk_result.dart';
 import 'smileid_messages.g.dart';
 
-class DocumentVerificationProductToDocumentCaptureResultAdapter
-    extends SmileIDProductViewsResultApi {
+class DocumentVerificationAdapter extends SmileIDProductViewsResultApi {
   final DocumentCaptureResultClient client;
 
-  DocumentVerificationProductToDocumentCaptureResultAdapter(this.client) {
+  DocumentVerificationAdapter(this.client) {
     SmileIDProductsResultApi.setUp(this);
   }
 
@@ -23,12 +22,10 @@ class DocumentVerificationProductToDocumentCaptureResultAdapter
   }
 }
 
-class EnhancedDocumentVerificationProductToDocumentCaptureResultAdapter
-    extends SmileIDProductViewsResultApi {
+class EnhancedDocumentVerificationAdapter extends SmileIDProductViewsResultApi {
   final DocumentCaptureResultClient client;
 
-  EnhancedDocumentVerificationProductToDocumentCaptureResultAdapter(
-      this.client) {
+  EnhancedDocumentVerificationAdapter(this.client) {
     SmileIDProductsResultApi.setUp(this);
   }
 
@@ -44,11 +41,10 @@ class EnhancedDocumentVerificationProductToDocumentCaptureResultAdapter
   }
 }
 
-class SmartSelfieEnrollmentProductToSelfieCaptureResultAdapter
-    extends SmileIDProductViewsResultApi {
+class SmartSelfieEnrollmentAdapter extends SmileIDProductViewsResultApi {
   final SmartSelfieCaptureResultClient client;
 
-  SmartSelfieEnrollmentProductToSelfieCaptureResultAdapter(this.client) {
+  SmartSelfieEnrollmentAdapter(this.client) {
     SmileIDProductsResultApi.setUp(this);
   }
 
@@ -64,11 +60,10 @@ class SmartSelfieEnrollmentProductToSelfieCaptureResultAdapter
   }
 }
 
-class SmartSelfieAuthenticationProductToSelfieCaptureResultAdapter
-    extends SmileIDProductViewsResultApi {
+class SmartSelfieAuthenticationAdapter extends SmileIDProductViewsResultApi {
   final SmartSelfieCaptureResultClient client;
 
-  SmartSelfieAuthenticationProductToSelfieCaptureResultAdapter(this.client) {
+  SmartSelfieAuthenticationAdapter(this.client) {
     SmileIDProductsResultApi.setUp(this);
   }
 
@@ -84,12 +79,11 @@ class SmartSelfieAuthenticationProductToSelfieCaptureResultAdapter
   }
 }
 
-class SmartSelfieEnrollmentEnhancedProductToSelfieCaptureResultAdapter
+class SmartSelfieEnrollmentEnhancedAdapter
     extends SmileIDProductViewsResultApi {
   final SmartSelfieCaptureResultClient client;
 
-  SmartSelfieEnrollmentEnhancedProductToSelfieCaptureResultAdapter(
-      this.client) {
+  SmartSelfieEnrollmentEnhancedAdapter(this.client) {
     SmileIDProductsResultApi.setUp(this);
   }
 
@@ -105,12 +99,11 @@ class SmartSelfieEnrollmentEnhancedProductToSelfieCaptureResultAdapter
   }
 }
 
-class SmartSelfieAuthenticationEnhancedProductToSelfieCaptureResultAdapter
+class SmartSelfieAuthenticationEnhancedAdapter
     extends SmileIDProductViewsResultApi {
   final SmartSelfieCaptureResultClient client;
 
-  SmartSelfieAuthenticationEnhancedProductToSelfieCaptureResultAdapter(
-      this.client) {
+  SmartSelfieAuthenticationEnhancedAdapter(this.client) {
     SmileIDProductsResultApi.setUp(this);
   }
 
@@ -126,11 +119,10 @@ class SmartSelfieAuthenticationEnhancedProductToSelfieCaptureResultAdapter
   }
 }
 
-class BiometricKycProductToBiometricKYCCaptureResultAdapter
-    extends SmileIDProductViewsResultApi {
+class BiometricKycAdapter extends SmileIDProductViewsResultApi {
   final BiometricKYCCaptureResultClient client;
 
-  BiometricKycProductToBiometricKYCCaptureResultAdapter(this.client) {
+  BiometricKycAdapter(this.client) {
     SmileIDProductsResultApi.setUp(this);
   }
 
@@ -146,11 +138,10 @@ class BiometricKycProductToBiometricKYCCaptureResultAdapter
   }
 }
 
-class SmartSelfieCaptureProductToSelfieCaptureResultAdapter
-    extends SmileIDProductViewsResultApi {
+class SmartSelfieCaptureAdapter extends SmileIDProductViewsResultApi {
   final SmartSelfieCaptureResultClient client;
 
-  SmartSelfieCaptureProductToSelfieCaptureResultAdapter(this.client) {
+  SmartSelfieCaptureAdapter(this.client) {
     SmileIDProductsResultApi.setUp(this);
   }
 
@@ -166,11 +157,10 @@ class SmartSelfieCaptureProductToSelfieCaptureResultAdapter
   }
 }
 
-class DocumentCaptureProductToDocumentCaptureResultAdapter
-    extends SmileIDProductViewsResultApi {
+class DocumentCaptureAdapter extends SmileIDProductViewsResultApi {
   final DocumentCaptureResultClient client;
 
-  DocumentCaptureProductToDocumentCaptureResultAdapter(this.client) {
+  DocumentCaptureAdapter(this.client) {
     SmileIDProductsResultApi.setUp(this);
   }
 

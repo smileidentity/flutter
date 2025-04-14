@@ -79,7 +79,7 @@ class _SmileIDDocumentVerificationState
   @override
   void initState() {
     super.initState();
-    api = DocumentVerificationProductToDocumentCaptureResultAdapter(this);
+    api = DocumentVerificationAdapter(this);
   }
 
   @override

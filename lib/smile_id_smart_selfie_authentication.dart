@@ -63,7 +63,7 @@ class _SmileIDSmartSelfieAuthenticationState
   @override
   void initState() {
     super.initState();
-    api = SmartSelfieAuthenticationProductToSelfieCaptureResultAdapter(this);
+    api = SmartSelfieAuthenticationAdapter(this);
   }
 
   @override

@@ -88,7 +88,7 @@ class _SmileIDBiometricKYCState extends State<SmileIDBiometricKYC>
   @override
   void initState() {
     super.initState();
-    api = BiometricKycProductToBiometricKYCCaptureResultAdapter(this);
+    api = BiometricKycAdapter(this);
   }
 
   @override

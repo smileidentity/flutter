@@ -115,21 +115,22 @@ class MainContent extends StatelessWidget {
               ))
               .then(
                   (authResponse) => {
-                        SmileID.api.doEnhancedKycAsync(FlutterEnhancedKycRequest(
-                            country: "GH",
-                            idType: "DRIVERS_LICENSE",
-                            idNumber: "B0000000",
-                            callbackUrl: "https://somedummyurl.com/demo",
-                            partnerParams: FlutterPartnerParams(
-                                jobType: FlutterJobType.enhancedKyc,
-                                jobId: userId,
-                                userId: userId,
-                                extras: {
-                                  "name": "Dummy Name",
-                                  "work": "SmileID",
-                                }),
-                            timestamp: authResponse!.timestamp,
-                            signature: authResponse.signature))
+                        SmileID.api.doEnhancedKycAsync(
+                            FlutterEnhancedKycRequest(
+                                country: "GH",
+                                idType: "DRIVERS_LICENSE",
+                                idNumber: "B0000000",
+                                callbackUrl: "https://somedummyurl.com/demo",
+                                partnerParams: FlutterPartnerParams(
+                                    jobType: FlutterJobType.enhancedKyc,
+                                    jobId: userId,
+                                    userId: userId,
+                                    extras: {
+                                      "name": "Dummy Name",
+                                      "work": "SmileID",
+                                    }),
+                                timestamp: authResponse!.timestamp,
+                                signature: authResponse.signature))
                       },
                   onError: (error) => {print("error: $error")});
         });
@@ -147,10 +148,15 @@ class MainContent extends StatelessWidget {
                 documentType: "DRIVERS_LICENSE",
                 onResult: (result) {
                   switch (result) {
-                    case SmileIDSdkResultSuccess<DocumentCaptureResult>(:final data):
-                      final snackBar = SnackBar(content: Text("Success: ${data.prettyPrint}"));
+                    case SmileIDSdkResultSuccess<DocumentCaptureResult>(
+                        :final data
+                      ):
+                      final snackBar = SnackBar(
+                          content: Text("Success: ${data.prettyPrint}"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    case SmileIDSdkResultError<DocumentCaptureResult>(:final error):
+                    case SmileIDSdkResultError<DocumentCaptureResult>(
+                        :final error
+                      ):
                       final snackBar = SnackBar(content: Text("Error: $error"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
@@ -176,10 +182,15 @@ class MainContent extends StatelessWidget {
                 documentType: "DRIVERS_LICENSE",
                 onResult: (result) {
                   switch (result) {
-                    case SmileIDSdkResultSuccess<DocumentCaptureResult>(:final data):
-                      final snackBar = SnackBar(content: Text("Success: ${data.prettyPrint}"));
+                    case SmileIDSdkResultSuccess<DocumentCaptureResult>(
+                        :final data
+                      ):
+                      final snackBar = SnackBar(
+                          content: Text("Success: ${data.prettyPrint}"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    case SmileIDSdkResultError<DocumentCaptureResult>(:final error):
+                    case SmileIDSdkResultError<DocumentCaptureResult>(
+                        :final error
+                      ):
                       final snackBar = SnackBar(content: Text("Error: $error"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
@@ -203,10 +214,15 @@ class MainContent extends StatelessWidget {
               body: SmileIDSmartSelfieEnrollment(
                 onResult: (result) {
                   switch (result) {
-                    case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(:final data):
-                      final snackBar = SnackBar(content: Text("Success: ${data.prettyPrint}"));
+                    case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(
+                        :final data
+                      ):
+                      final snackBar = SnackBar(
+                          content: Text("Success: ${data.prettyPrint}"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    case SmileIDSdkResultError<SmartSelfieCaptureResult>(:final error):
+                    case SmileIDSdkResultError<SmartSelfieCaptureResult>(
+                        :final error
+                      ):
                       final snackBar = SnackBar(content: Text("Error: $error"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
@@ -230,10 +246,15 @@ class MainContent extends StatelessWidget {
               body: SmileIDSmartSelfieAuthentication(
                 onResult: (result) {
                   switch (result) {
-                    case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(:final data):
-                      final snackBar = SnackBar(content: Text("Success: ${data.prettyPrint}"));
+                    case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(
+                        :final data
+                      ):
+                      final snackBar = SnackBar(
+                          content: Text("Success: ${data.prettyPrint}"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    case SmileIDSdkResultError<SmartSelfieCaptureResult>(:final error):
+                    case SmileIDSdkResultError<SmartSelfieCaptureResult>(
+                        :final error
+                      ):
                       final snackBar = SnackBar(content: Text("Error: $error"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
@@ -257,10 +278,15 @@ class MainContent extends StatelessWidget {
               body: SmileIDSmartSelfieEnrollmentEnhanced(
                 onResult: (result) {
                   switch (result) {
-                    case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(:final data):
-                      final snackBar = SnackBar(content: Text("Success: ${data.prettyPrint}"));
+                    case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(
+                        :final data
+                      ):
+                      final snackBar = SnackBar(
+                          content: Text("Success: ${data.prettyPrint}"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    case SmileIDSdkResultError<SmartSelfieCaptureResult>(:final error):
+                    case SmileIDSdkResultError<SmartSelfieCaptureResult>(
+                        :final error
+                      ):
                       final snackBar = SnackBar(content: Text("Error: $error"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
@@ -284,10 +310,15 @@ class MainContent extends StatelessWidget {
               body: SmileIDSmartSelfieAuthenticationEnhanced(
                 onResult: (result) {
                   switch (result) {
-                    case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(:final data):
-                      final snackBar = SnackBar(content: Text("Success: ${data.prettyPrint}"));
+                    case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(
+                        :final data
+                      ):
+                      final snackBar = SnackBar(
+                          content: Text("Success: ${data.prettyPrint}"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    case SmileIDSdkResultError<SmartSelfieCaptureResult>(:final error):
+                    case SmileIDSdkResultError<SmartSelfieCaptureResult>(
+                        :final error
+                      ):
                       final snackBar = SnackBar(content: Text("Error: $error"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
@@ -314,10 +345,15 @@ class MainContent extends StatelessWidget {
                 idNumber: "12345678",
                 onResult: (result) {
                   switch (result) {
-                    case SmileIDSdkResultSuccess<BiometricKYCCaptureResult>(:final data):
-                      final snackBar = SnackBar(content: Text("Success: ${data.prettyPrint}"));
+                    case SmileIDSdkResultSuccess<BiometricKYCCaptureResult>(
+                        :final data
+                      ):
+                      final snackBar = SnackBar(
+                          content: Text("Success: ${data.prettyPrint}"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    case SmileIDSdkResultError<BiometricKYCCaptureResult>(:final error):
+                    case SmileIDSdkResultError<BiometricKYCCaptureResult>(
+                        :final error
+                      ):
                       final snackBar = SnackBar(content: Text("Error: $error"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
@@ -346,10 +382,15 @@ class MainContent extends StatelessWidget {
                 useStrictMode: true,
                 onResult: (result) {
                   switch (result) {
-                    case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(:final data):
-                      final snackBar = SnackBar(content: Text("Success: ${data.prettyPrint}"));
+                    case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(
+                        :final data
+                      ):
+                      final snackBar = SnackBar(
+                          content: Text("Success: ${data.prettyPrint}"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    case SmileIDSdkResultError<SmartSelfieCaptureResult>(:final error):
+                    case SmileIDSdkResultError<SmartSelfieCaptureResult>(
+                        :final error
+                      ):
                       final snackBar = SnackBar(content: Text("Error: $error"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
@@ -378,12 +419,19 @@ class MainContent extends StatelessWidget {
                 allowGalleryUpload: false,
                 onResult: (result) {
                   switch (result) {
-                    case SmileIDSdkResultSuccess<DocumentCaptureResult>(:final data):
-                      final formattedResult = jsonEncode(
-                          {'documentFrontFile': data.documentFrontFile, 'documentBackFile': data.documentBackFile});
-                      final snackBar = SnackBar(content: Text("Success: $formattedResult"));
+                    case SmileIDSdkResultSuccess<DocumentCaptureResult>(
+                        :final data
+                      ):
+                      final formattedResult = jsonEncode({
+                        'documentFrontFile': data.documentFrontFile,
+                        'documentBackFile': data.documentBackFile
+                      });
+                      final snackBar =
+                          SnackBar(content: Text("Success: $formattedResult"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    case SmileIDSdkResultError<DocumentCaptureResult>(:final error):
+                    case SmileIDSdkResultError<DocumentCaptureResult>(
+                        :final error
+                      ):
                       final snackBar = SnackBar(content: Text("Error: $error"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
