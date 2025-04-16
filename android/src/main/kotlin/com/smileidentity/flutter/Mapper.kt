@@ -624,11 +624,11 @@ fun List<File>.pathList(): ArrayList<String> = ArrayList<String>().let {
 }
 
 fun SmartSelfieResponse.toMap() = mapOf(
-    this.code to code,
-    this.createdAt to createdAt,
-    this.jobId to jobId,
-    this.jobType to jobType.name,
-    this.message to message,
-    this.partnerId to partnerId,
-    this.partnerParams to partnerParams,
+    "code" to code,
+    "created_at" to createdAt,
+    "job_id" to jobId,
+    "job_type" to jobType.name,
+    "message" to message,
+    "partner_id" to partnerId,
+    "partner_params" to partnerParams,
 )
