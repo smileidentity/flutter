@@ -25,8 +25,18 @@ import android.app.Activity
 import android.content.Context
 import com.smileidentity.SmileID
 import com.smileidentity.SmileIDOptIn
-import com.smileidentity.flutter.enhanced.SmileIDSmartSelfieAuthenticationEnhanced
-import com.smileidentity.flutter.enhanced.SmileIDSmartSelfieEnrollmentEnhanced
+import com.smileidentity.flutter.mapper.convertNullableMapToNonNull
+import com.smileidentity.flutter.mapper.toRequest
+import com.smileidentity.flutter.mapper.toResponse
+import com.smileidentity.flutter.products.biometric.SmileIDBiometricKYC
+import com.smileidentity.flutter.products.capture.SmileIDDocumentCaptureView
+import com.smileidentity.flutter.products.capture.SmileIDSmartSelfieCaptureView
+import com.smileidentity.flutter.products.document.SmileIDDocumentVerification
+import com.smileidentity.flutter.products.enhanceddocv.SmileIDEnhancedDocumentVerification
+import com.smileidentity.flutter.products.enhancedselfie.SmileIDSmartSelfieAuthenticationEnhanced
+import com.smileidentity.flutter.products.enhancedselfie.SmileIDSmartSelfieEnrollmentEnhanced
+import com.smileidentity.flutter.products.selfie.SmileIDSmartSelfieAuthentication
+import com.smileidentity.flutter.products.selfie.SmileIDSmartSelfieEnrollment
 import com.smileidentity.networking.asFormDataPart
 import com.smileidentity.networking.pollBiometricKycJobStatus
 import com.smileidentity.networking.pollDocumentVerificationJobStatus
@@ -107,7 +117,10 @@ class SmileIDPlugin :
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDBiometricKYC.VIEW_TYPE_ID,
-            SmileIDBiometricKYC.Factory(flutterPluginBinding.binaryMessenger, smileIDResultApi),
+            SmileIDBiometricKYC.createFactory(
+                flutterPluginBinding.binaryMessenger,
+                smileIDResultApi,
+            ),
         )
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(

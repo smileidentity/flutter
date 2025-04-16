@@ -15,8 +15,13 @@ import SmileIDProductsApi
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import com.smileidentity.flutter.enhanced.SmileIDSmartSelfieAuthenticationEnhancedActivity
-import com.smileidentity.flutter.enhanced.SmileIDSmartSelfieEnrollmentEnhancedActivity
+import com.smileidentity.flutter.products.biometric.SmileIDBiometricKYCActivity
+import com.smileidentity.flutter.products.document.SmileIDDocumentVerificationActivity
+import com.smileidentity.flutter.products.enhanceddocv.SmileIDEnhancedDocumentVerificationActivity
+import com.smileidentity.flutter.products.enhancedselfie.SmileIDSmartSelfieAuthenticationEnhancedActivity
+import com.smileidentity.flutter.products.enhancedselfie.SmileIDSmartSelfieEnrollmentEnhancedActivity
+import com.smileidentity.flutter.products.selfie.SmileIDSmartSelfieAuthenticationActivity
+import com.smileidentity.flutter.products.selfie.SmileIDSmartSelfieEnrollmentActivity
 import io.flutter.embedding.engine.plugins.FlutterPlugin.FlutterPluginBinding
 import io.flutter.plugin.common.PluginRegistry.ActivityResultListener
 

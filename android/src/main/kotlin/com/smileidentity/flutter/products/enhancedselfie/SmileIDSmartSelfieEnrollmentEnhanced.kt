@@ -1,14 +1,14 @@
-package com.smileidentity.flutter.enhanced
+package com.smileidentity.flutter.products.enhancedselfie
 
 import SmartSelfieCaptureResult
 import SmileIDProductsResultApi
 import android.content.Context
 import androidx.compose.runtime.Composable
 import com.smileidentity.SmileID
-import com.smileidentity.compose.SmartSelfieAuthenticationEnhanced
-import com.smileidentity.flutter.SmileComposablePlatformView
-import com.smileidentity.flutter.pathList
-import com.smileidentity.flutter.toMap
+import com.smileidentity.compose.SmartSelfieEnrollmentEnhanced
+import com.smileidentity.flutter.mapper.pathList
+import com.smileidentity.flutter.mapper.toMap
+import com.smileidentity.flutter.views.SmileComposablePlatformView
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomUserId
 import io.flutter.plugin.common.BinaryMessenger
@@ -17,7 +17,7 @@ import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 import kotlinx.collections.immutable.toImmutableMap
 
-internal class SmileIDSmartSelfieAuthenticationEnhanced private constructor(
+internal class SmileIDSmartSelfieEnrollmentEnhanced private constructor(
     context: Context,
     viewId: Int,
     messenger: BinaryMessenger,
@@ -25,13 +25,13 @@ internal class SmileIDSmartSelfieAuthenticationEnhanced private constructor(
     private val api: SmileIDProductsResultApi,
 ) : SmileComposablePlatformView(context, VIEW_TYPE_ID, viewId, messenger, args) {
     companion object {
-        const val VIEW_TYPE_ID = "SmileIDSmartSelfieAuthenticationEnhanced"
+        const val VIEW_TYPE_ID = "SmileIDSmartSelfieEnrollmentEnhanced"
     }
 
     @Composable
     override fun Content(args: Map<String, Any?>) {
         val extraPartnerParams = args["extraPartnerParams"] as? Map<String, String> ?: emptyMap()
-        SmileID.SmartSelfieAuthenticationEnhanced(
+        SmileID.SmartSelfieEnrollmentEnhanced(
             userId = args["userId"] as? String ?: randomUserId(),
             allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
             showAttribution = args["showAttribution"] as? Boolean ?: true,
@@ -41,23 +41,21 @@ internal class SmileIDSmartSelfieAuthenticationEnhanced private constructor(
         ) {
             when (it) {
                 is SmileIDResult.Success -> {
-                    val result =
-                        SmartSelfieCaptureResult(
-                            selfieFile = it.data.selfieFile.absolutePath,
-                            livenessFiles = it.data.livenessFiles.pathList(),
-                            apiResponse = it.data.apiResponse?.toMap(),
-                        )
-
-                    api.onSmartSelfieAuthenticationEnhancedResult(
+                    val result = SmartSelfieCaptureResult(
+                        selfieFile = it.data.selfieFile.absolutePath,
+                        livenessFiles = it.data.livenessFiles.pathList(),
+                        apiResponse = it.data.apiResponse?.toMap(),
+                    )
+                    api.onSmartSelfieEnrollmentEnhancedResult(
                         successResultArg = result,
                         errorResultArg = null,
                     ) {}
                 }
 
-                is SmileIDResult.Error -> api.onSmartSelfieAuthenticationEnhancedResult(
+                is SmileIDResult.Error -> api.onSmartSelfieEnrollmentEnhancedResult(
                     successResultArg = null,
                     errorResultArg = it.throwable.message
-                        ?: "Unknown error with Smart Selfie Authentication Enhanced",
+                        ?: "Unknown error with Smart Enrollment Enhanced",
                 ) {}
             }
         }
@@ -69,7 +67,7 @@ internal class SmileIDSmartSelfieAuthenticationEnhanced private constructor(
     ) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
         override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
             @Suppress("UNCHECKED_CAST")
-            return SmileIDSmartSelfieAuthenticationEnhanced(
+            return SmileIDSmartSelfieEnrollmentEnhanced(
                 context,
                 viewId,
                 messenger,

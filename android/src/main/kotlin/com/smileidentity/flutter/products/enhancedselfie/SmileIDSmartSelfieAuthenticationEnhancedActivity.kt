@@ -1,20 +1,21 @@
-package com.smileidentity.flutter.enhanced
+package com.smileidentity.flutter.products.enhancedselfie
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.smileidentity.SmileID
-import com.smileidentity.compose.SmartSelfieEnrollmentEnhanced
-import com.smileidentity.flutter.buildBundle
-import com.smileidentity.flutter.pathList
+import com.smileidentity.compose.SmartSelfieAuthenticationEnhanced
+import com.smileidentity.flutter.mapper.buildBundle
+import com.smileidentity.flutter.mapper.pathList
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomUserId
 import kotlinx.collections.immutable.toImmutableMap
 
-class SmileIDSmartSelfieEnrollmentEnhancedActivity : ComponentActivity() {
+class SmileIDSmartSelfieAuthenticationEnhancedActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val userId = intent.getStringExtra("userId") ?: randomUserId()
         val allowNewEnroll = intent.getBooleanExtra("allowNewEnroll", false)
         val showAttribution = intent.getBooleanExtra("showAttribution", true)
@@ -26,7 +27,7 @@ class SmileIDSmartSelfieEnrollmentEnhancedActivity : ComponentActivity() {
             } as? Map<String, String> ?: emptyMap()
 
         setContent {
-            SmileID.SmartSelfieEnrollmentEnhanced(
+            SmileID.SmartSelfieAuthenticationEnhanced(
                 userId = userId,
                 allowNewEnroll = allowNewEnroll,
                 showAttribution = showAttribution,
@@ -58,6 +59,6 @@ class SmileIDSmartSelfieEnrollmentEnhancedActivity : ComponentActivity() {
     }
 
     companion object {
-        const val REQUEST_CODE = 14
+        const val REQUEST_CODE = 15
     }
 }
