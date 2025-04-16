@@ -1,5 +1,7 @@
-package com.smileidentity.flutter
+package com.smileidentity.flutter.products.capture
 
+import DocumentCaptureResult
+import SmileIDProductsResultApi
 import android.content.Context
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -16,26 +18,35 @@ import com.smileidentity.compose.theme.typography
 import com.smileidentity.flutter.results.DocumentCaptureResult
 import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
 import com.smileidentity.metadata.LocalMetadataProvider
+import com.smileidentity.flutter.views.SmileIDPlatformView
+import com.smileidentity.flutter.views.SmileIDViewFactory
+import com.smileidentity.models.v2.Metadata
 import com.smileidentity.util.randomJobId
-import io.flutter.plugin.common.BinaryMessenger
-import io.flutter.plugin.common.StandardMessageCodec
-import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 import java.io.File
 
+// todo - did not touch this yet
 internal class SmileIDDocumentCaptureView private constructor(
     context: Context,
-    viewId: Int,
-    messenger: BinaryMessenger,
     args: Map<String, Any?>,
-) : SmileComposablePlatformView(context, VIEW_TYPE_ID, viewId, messenger, args) {
+    api: SmileIDProductsResultApi,
+) : SmileIDPlatformView(context, args, api) {
     companion object {
         const val VIEW_TYPE_ID = "SmileIDDocumentCaptureView"
+
+        fun createFactory(api: SmileIDProductsResultApi): PlatformViewFactory =
+            SmileIDViewFactory(api) { context, args, resultApi ->
+                SmileIDDocumentCaptureView(context, args, resultApi)
+            }
     }
 
     @Composable
     override fun Content(args: Map<String, Any?>) {
-        LocalMetadataProvider.MetadataProvider {
+        CompositionLocalProvider(
+            LocalMetadata provides remember {
+                Metadata.Companion.default().items.toMutableStateList()
+            },
+        ) {
             MaterialTheme(
                 colorScheme = SmileID.colorScheme,
                 typography = SmileID.typography,
@@ -111,46 +122,22 @@ internal class SmileIDDocumentCaptureView private constructor(
             captureTitleText = stringResource(captureTitleText),
             knownIdAspectRatio = idAspectRatio,
             onConfirm = { file -> handleConfirmation(isDocumentFrontSide, file) },
-            onError = { throwable -> onError(throwable) },
+            onError = { throwable ->
+                api.onDocumentCaptureResult(
+                    successResultArg = null,
+                    errorResultArg = throwable.message ?: "Unknown error with Document Capture",
+                ) {}
+            },
             onSkip = { },
         )
     }
 
     private fun handleConfirmation(isDocumentFrontSide: Boolean, file: File) {
-        val moshi =
-            SmileID.moshi
-                .newBuilder()
-                .add(DocumentCaptureResultAdapter.FACTORY)
-                .build()
         val result =
             DocumentCaptureResult(
-                documentFrontFile = if (isDocumentFrontSide) file else null,
-                documentBackFile = if (!isDocumentFrontSide) file else null,
+                documentFrontFile = if (isDocumentFrontSide) file.absolutePath else null,
+                documentBackFile = if (!isDocumentFrontSide) file.absolutePath else null,
             )
-        val json =
-            try {
-                moshi
-                    .adapter(DocumentCaptureResult::class.java)
-                    .toJson(result)
-            } catch (e: Exception) {
-                onError(e)
-                return
-            }
-        json?.let {
-            onSuccessJson(it)
-        }
-    }
-
-    class Factory(private val messenger: BinaryMessenger) :
-        PlatformViewFactory(StandardMessageCodec.INSTANCE) {
-        override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
-            @Suppress("UNCHECKED_CAST")
-            return SmileIDDocumentCaptureView(
-                context,
-                viewId,
-                messenger,
-                args as Map<String, Any?>,
-            )
-        }
+        api.onDocumentCaptureResult(successResultArg = result, errorResultArg = null) {}
     }
 }

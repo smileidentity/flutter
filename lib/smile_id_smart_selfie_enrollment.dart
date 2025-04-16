@@ -14,8 +14,8 @@ class SmileIDSmartSelfieEnrollment extends StatefulWidget {
   static const String viewType = "SmileIDSmartSelfieEnrollment";
   final Map<String, dynamic> creationParams;
 
-  /// Called when the user successfully completes the smart selfie enrollment flow. The result is a
-  /// JSON string.
+  /// Called when the user successfully completes the smart selfie enrollment flow. The result is sealed class
+  /// that is either a SmileIDSdkResultSuccess<SmartSelfieCaptureResult> or a SmileIDSdkResultError
   final Function(SmileIDSdkResult<SmartSelfieCaptureResult>) onResult;
 
   const SmileIDSmartSelfieEnrollment._({
@@ -63,7 +63,7 @@ class _SmileIDSmartSelfieEnrollmentState
   @override
   void initState() {
     super.initState();
-    api = SelfieEnrollmentProductToSelfieCaptureResultAdapter(this);
+    api = SmartSelfieEnrollmentAdapter(this);
   }
 
   @override
@@ -118,7 +118,6 @@ class _SmileIDSmartSelfieEnrollmentState
 
   @override
   void onResult(SmileIDSdkResult<SmartSelfieCaptureResult> result) {
-    if (!mounted) return;
     widget.onResult(result);
   }
 }

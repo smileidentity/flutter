@@ -1,25 +1,24 @@
-package com.smileidentity.flutter
+package com.smileidentity.flutter.products.enhancedselfie
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.smileidentity.SmileID
-import com.smileidentity.compose.SmartSelfieAuthentication
+import com.smileidentity.compose.SmartSelfieEnrollmentEnhanced
+import com.smileidentity.flutter.mapper.buildBundle
+import com.smileidentity.flutter.mapper.pathList
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomUserId
 import kotlinx.collections.immutable.toImmutableMap
 
-class SmileIDSmartSelfieAuthenticationActivity : ComponentActivity() {
+class SmileIDSmartSelfieEnrollmentEnhancedActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val userId = intent.getStringExtra("userId") ?: randomUserId()
         val allowNewEnroll = intent.getBooleanExtra("allowNewEnroll", false)
-        val allowAgentMode = intent.getBooleanExtra("allowAgentMode", false)
         val showAttribution = intent.getBooleanExtra("showAttribution", true)
         val showInstructions = intent.getBooleanExtra("showInstructions", true)
-        val skipApiSubmission = intent.getBooleanExtra("skipApiSubmission", false)
         val extraPartnerParamsBundle = intent.getBundleExtra("extraPartnerParams")
         val extraPartnerParams =
             extraPartnerParamsBundle?.keySet()?.associateWith {
@@ -27,13 +26,11 @@ class SmileIDSmartSelfieAuthenticationActivity : ComponentActivity() {
             } as? Map<String, String> ?: emptyMap()
 
         setContent {
-            SmileID.SmartSelfieAuthentication(
+            SmileID.SmartSelfieEnrollmentEnhanced(
                 userId = userId,
                 allowNewEnroll = allowNewEnroll,
-                allowAgentMode = allowAgentMode,
                 showAttribution = showAttribution,
                 showInstructions = showInstructions,
-                skipApiSubmission = skipApiSubmission,
                 extraPartnerParams = extraPartnerParams.toImmutableMap(),
             ) {
                 val intent = Intent()
@@ -44,11 +41,7 @@ class SmileIDSmartSelfieAuthenticationActivity : ComponentActivity() {
                             "livenessFiles",
                             it.data.livenessFiles.pathList(),
                         )
-
-                        intent.putExtra(
-                            "apiResponse",
-                            it.data.apiResponse?.buildBundle(),
-                        )
+                        intent.putExtra("apiResponse", it.data.apiResponse?.buildBundle())
 
                         setResult(RESULT_OK, intent)
                         finish()
@@ -65,6 +58,6 @@ class SmileIDSmartSelfieAuthenticationActivity : ComponentActivity() {
     }
 
     companion object {
-        const val REQUEST_CODE = 13
+        const val REQUEST_CODE = 14
     }
 }

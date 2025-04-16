@@ -2,8 +2,17 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:smile_id/smile_id_biometric_kyc.dart';
+import 'package:smile_id/smile_id_document_capture_view.dart';
+import 'package:smile_id/smile_id_document_verification.dart';
+import 'package:smile_id/smile_id_enhanced_document_verification.dart';
+import 'package:smile_id/smile_id_product_views_api.dart';
 import 'package:smile_id/smile_id_sdk_result.dart';
+import 'package:smile_id/smile_id_smart_selfie_authentication.dart';
+import 'package:smile_id/smile_id_smart_selfie_authentication_enhanced.dart';
+import 'package:smile_id/smile_id_smart_selfie_capture_view.dart';
 import 'package:smile_id/smile_id_smart_selfie_enrollment.dart';
+import 'package:smile_id/smile_id_smart_selfie_enrollment_enhanced.dart';
 import 'package:smile_id/smileid_messages.g.dart';
 import 'package:smile_id/smile_id.dart';
 
@@ -131,30 +140,32 @@ class MainContent extends StatelessWidget {
     return ElevatedButton(
       child: const Text("Document Verification"),
       onPressed: () async {
-        final result = await SmileID().documentVerification(
-          creationParams: DocumentVerificationCreationParams(
-              countryCode: "GH",
-              documentType: "DRIVERS_LICENSE",
-              captureBothSides: true,
-              allowNewEnroll: false,
-              showAttribution: true,
-              allowGalleryUpload: false,
-              allowAgentMode: false,
-              showInstructions: true,
-              skipApiSubmission: false),
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => MyScaffold(
+              body: SmileIDDocumentVerification(
+                countryCode: 'GH',
+                documentType: "DRIVERS_LICENSE",
+                onResult: (result) {
+                  switch (result) {
+                    case SmileIDSdkResultSuccess<DocumentCaptureResult>(
+                        :final data
+                      ):
+                      final snackBar = SnackBar(
+                          content: Text("Success: ${data.prettyPrint}"));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    case SmileIDSdkResultError<DocumentCaptureResult>(
+                        :final error
+                      ):
+                      final snackBar = SnackBar(content: Text("Error: $error"));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+          ),
         );
-
-        switch (result) {
-          case SmileIDSdkResultSuccess<DocumentCaptureResult>(:final data):
-            print('verification selfie: ${data.selfieFile}');
-            print('verification liveness: ${data.livenessFiles}');
-            print('verification backFile: ${data.documentBackFile}');
-            print('verification frontFile: ${data.documentFrontFile}');
-            print(
-                'verification didSubmitVerificationJob: ${data.didSubmitDocumentVerificationJob}');
-          case SmileIDSdkResultError<DocumentCaptureResult>(:final error):
-            print('error occurred with document verification: $error');
-        }
       },
     );
   }
@@ -163,30 +174,32 @@ class MainContent extends StatelessWidget {
     return ElevatedButton(
       child: const Text("Enhanced Document Verification"),
       onPressed: () async {
-        final result = await SmileID().documentVerificationEnhanced(
-          creationParams: DocumentVerificationEnhancedCreationParams(
-              countryCode: "GH",
-              documentType: "DRIVERS_LICENSE",
-              captureBothSides: true,
-              allowNewEnroll: false,
-              showAttribution: true,
-              allowAgentMode: false,
-              allowGalleryUpload: false,
-              showInstructions: true,
-              skipApiSubmission: false),
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => MyScaffold(
+              body: SmileIDEnhancedDocumentVerification(
+                countryCode: 'GH',
+                documentType: "DRIVERS_LICENSE",
+                onResult: (result) {
+                  switch (result) {
+                    case SmileIDSdkResultSuccess<DocumentCaptureResult>(
+                        :final data
+                      ):
+                      final snackBar = SnackBar(
+                          content: Text("Success: ${data.prettyPrint}"));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    case SmileIDSdkResultError<DocumentCaptureResult>(
+                        :final error
+                      ):
+                      final snackBar = SnackBar(content: Text("Error: $error"));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+          ),
         );
-
-        switch (result) {
-          case SmileIDSdkResultSuccess<DocumentCaptureResult>(:final data):
-            print('verification selfie: ${data.selfieFile}');
-            print('verification liveness: ${data.livenessFiles}');
-            print('verification backFile: ${data.documentBackFile}');
-            print('verification frontFile: ${data.documentFrontFile}');
-            print(
-                'verification didSubmitEnhancedDocVJob: ${data.didSubmitEnhancedDocVJob}');
-          case SmileIDSdkResultError<DocumentCaptureResult>(:final error):
-            print('error occurred with document verification enhanced: $error');
-        }
       },
     );
   }
@@ -204,22 +217,16 @@ class MainContent extends StatelessWidget {
                     case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(
                         :final data
                       ):
-                      final formattedResult = jsonEncode({
-                        'selfie': data.selfieFile,
-                        'liveness': data.livenessFiles,
-                        'apiResponse': data.apiResponse
-                      });
-                      final snackBar =
-                          SnackBar(content: Text("Success: $formattedResult"));
+                      final snackBar = SnackBar(
+                          content: Text("Success: ${data.prettyPrint}"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      Navigator.of(context).pop();
                     case SmileIDSdkResultError<SmartSelfieCaptureResult>(
                         :final error
                       ):
                       final snackBar = SnackBar(content: Text("Error: $error"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      Navigator.of(context).pop();
                   }
+                  Navigator.of(context).pop();
                 },
               ),
             ),
@@ -233,23 +240,30 @@ class MainContent extends StatelessWidget {
     return ElevatedButton(
       child: const Text("SmartSelfie Authentication"),
       onPressed: () async {
-        final result = await SmileID().smartSelfieAuthentication(
-          creationParams: SmartSelfieCreationParams(
-              allowNewEnroll: false,
-              allowAgentMode: false,
-              showAttribution: true,
-              showInstructions: true,
-              skipApiSubmission: true),
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => MyScaffold(
+              body: SmileIDSmartSelfieAuthentication(
+                onResult: (result) {
+                  switch (result) {
+                    case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(
+                        :final data
+                      ):
+                      final snackBar = SnackBar(
+                          content: Text("Success: ${data.prettyPrint}"));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    case SmileIDSdkResultError<SmartSelfieCaptureResult>(
+                        :final error
+                      ):
+                      final snackBar = SnackBar(content: Text("Error: $error"));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+          ),
         );
-
-        switch (result) {
-          case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(:final data):
-            print('enrollment selfie: ${data.selfieFile}');
-            print('enrollment liveness: ${data.livenessFiles}');
-            print('enrollment apiResponse: ${data.apiResponse}');
-          case SmileIDSdkResultError<SmartSelfieCaptureResult>(:final error):
-            print('error occurred with smart selfie authentication: $error');
-        }
       },
     );
   }
@@ -258,23 +272,30 @@ class MainContent extends StatelessWidget {
     return ElevatedButton(
       child: const Text("SmartSelfie Enrollment (Enhanced)"),
       onPressed: () async {
-        final result = await SmileID().smartSelfieEnrollmentEnhanced(
-            creationParams: SmartSelfieEnhancedCreationParams(
-          allowNewEnroll: false,
-          showAttribution: true,
-          showInstructions: true,
-          skipApiSubmission: false,
-        ));
-
-        switch (result) {
-          case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(:final data):
-            print('enrollment selfie: ${data.selfieFile}');
-            print('enrollment liveness: ${data.livenessFiles}');
-            print('enrollment apiResponse: ${data.apiResponse}');
-          case SmileIDSdkResultError<SmartSelfieCaptureResult>(:final error):
-            print(
-                'error occurred with smart selfie enrollment enhanced: $error');
-        }
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => MyScaffold(
+              body: SmileIDSmartSelfieEnrollmentEnhanced(
+                onResult: (result) {
+                  switch (result) {
+                    case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(
+                        :final data
+                      ):
+                      final snackBar = SnackBar(
+                          content: Text("Success: ${data.prettyPrint}"));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    case SmileIDSdkResultError<SmartSelfieCaptureResult>(
+                        :final error
+                      ):
+                      final snackBar = SnackBar(content: Text("Error: $error"));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+          ),
+        );
       },
     );
   }
@@ -283,24 +304,30 @@ class MainContent extends StatelessWidget {
     return ElevatedButton(
       child: const Text("SmartSelfie Authentication (Enhanced)"),
       onPressed: () async {
-        final result = await SmileID().smartSelfieAuthenticationEnhanced(
-          creationParams: SmartSelfieEnhancedCreationParams(
-            allowNewEnroll: false,
-            showAttribution: true,
-            showInstructions: true,
-            skipApiSubmission: false,
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => MyScaffold(
+              body: SmileIDSmartSelfieAuthenticationEnhanced(
+                onResult: (result) {
+                  switch (result) {
+                    case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(
+                        :final data
+                      ):
+                      final snackBar = SnackBar(
+                          content: Text("Success: ${data.prettyPrint}"));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    case SmileIDSdkResultError<SmartSelfieCaptureResult>(
+                        :final error
+                      ):
+                      final snackBar = SnackBar(content: Text("Error: $error"));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
           ),
         );
-
-        switch (result) {
-          case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(:final data):
-            print('enrollment selfie: ${data.selfieFile}');
-            print('enrollment liveness: ${data.livenessFiles}');
-            print('enrollment apiResponse: ${data.apiResponse}');
-          case SmileIDSdkResultError<SmartSelfieCaptureResult>(:final error):
-            print(
-                'error occurred with smart selfie authentication enhanced: $error');
-        }
       },
     );
   }
@@ -309,23 +336,33 @@ class MainContent extends StatelessWidget {
     return ElevatedButton(
       child: const Text("Biometric KYC"),
       onPressed: () async {
-        final result = await SmileID().biometricKYC(
-          creationParams: BiometricKYCCreationParams(
-              allowNewEnroll: false,
-              allowAgentMode: false,
-              showAttribution: true,
-              showInstructions: true),
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => MyScaffold(
+              body: SmileIDBiometricKYC(
+                country: "KE",
+                idType: "NATIONAL_ID",
+                idNumber: "12345678",
+                onResult: (result) {
+                  switch (result) {
+                    case SmileIDSdkResultSuccess<BiometricKYCCaptureResult>(
+                        :final data
+                      ):
+                      final snackBar = SnackBar(
+                          content: Text("Success: ${data.prettyPrint}"));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    case SmileIDSdkResultError<BiometricKYCCaptureResult>(
+                        :final error
+                      ):
+                      final snackBar = SnackBar(content: Text("Error: $error"));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+          ),
         );
-
-        switch (result) {
-          case SmileIDSdkResultSuccess<BiometricKYCCaptureResult>(:final data):
-            print('biometric kyc selfie: ${data.selfieFile}');
-            print('biometric kyc liveness: ${data.livenessFiles}');
-            print(
-                'biometric kyc didSubmitKycJob: ${data.didSubmitBiometricKycJob}');
-          case SmileIDSdkResultError<BiometricKYCCaptureResult>(:final error):
-            print('error occurred with biometric kyc: $error');
-        }
       },
     );
   }
@@ -334,22 +371,35 @@ class MainContent extends StatelessWidget {
     return ElevatedButton(
       child: const Text("Selfie Capture"),
       onPressed: () async {
-        final result = await SmileID().selfieCapture(
-          creationParams: SelfieCaptureViewCreationParams(
-              showConfirmationDialog: false,
-              showInstructions: true,
-              showAttribution: false,
-              allowAgentMode: false),
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => MyScaffold(
+              body: SmileIDSmartSelfieCaptureView(
+                showConfirmationDialog: false,
+                showInstructions: true,
+                showAttribution: false,
+                allowAgentMode: false,
+                useStrictMode: true,
+                onResult: (result) {
+                  switch (result) {
+                    case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(
+                        :final data
+                      ):
+                      final snackBar = SnackBar(
+                          content: Text("Success: ${data.prettyPrint}"));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    case SmileIDSdkResultError<SmartSelfieCaptureResult>(
+                        :final error
+                      ):
+                      final snackBar = SnackBar(content: Text("Error: $error"));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+          ),
         );
-
-        switch (result) {
-          case SmileIDSdkResultSuccess<SmartSelfieCaptureResult>(:final data):
-            print('capture selfie: ${data.selfieFile}');
-            print('capture liveness: ${data.livenessFiles}');
-            print('capture apiResponse: ${data.apiResponse}');
-          case SmileIDSdkResultError<SmartSelfieCaptureResult>(:final error):
-            print('error occurred with selfie capture: $error');
-        }
       },
     );
   }
@@ -358,23 +408,49 @@ class MainContent extends StatelessWidget {
     return ElevatedButton(
       child: const Text("Document Capture"),
       onPressed: () async {
-        final result = await SmileID().documentCapture(
-          creationParams: DocumentCaptureCreationParams(
-              isDocumentFrontSide: false,
-              showInstructions: true,
-              showAttribution: false,
-              allowGalleryUpload: false,
-              showConfirmationDialog: true),
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => MyScaffold(
+              body: SmileIDDocumentCaptureView(
+                isDocumentFrontSide: false,
+                showConfirmationDialog: true,
+                showInstructions: true,
+                showAttribution: false,
+                allowGalleryUpload: false,
+                onResult: (result) {
+                  switch (result) {
+                    case SmileIDSdkResultSuccess<DocumentCaptureResult>(
+                        :final data
+                      ):
+                      final formattedResult = jsonEncode({
+                        'documentFrontFile': data.documentFrontFile,
+                        'documentBackFile': data.documentBackFile
+                      });
+                      final snackBar =
+                          SnackBar(content: Text("Success: $formattedResult"));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    case SmileIDSdkResultError<DocumentCaptureResult>(
+                        :final error
+                      ):
+                      final snackBar = SnackBar(content: Text("Error: $error"));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+          ),
         );
-
-        switch (result) {
-          case SmileIDSdkResultSuccess<DocumentCaptureResult>(:final data):
-            print('document capture front file: ${data.documentFrontFile}');
-            print('document capture back file: ${data.documentBackFile}');
-          case SmileIDSdkResultError<DocumentCaptureResult>(:final error):
-            print("error occurred with document capture: $error");
-        }
       },
     );
   }
+}
+
+extension on BiometricKYCCaptureResult {
+  String get prettyPrint => '''
+  BiometricKYCCaptureResult(
+    selfie: $selfieFile,
+    liveness: $livenessFiles,
+    didSubmitBiometricKycJob: $didSubmitBiometricKycJob
+  )''';
 }

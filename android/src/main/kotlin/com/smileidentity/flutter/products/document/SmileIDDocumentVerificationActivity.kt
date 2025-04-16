@@ -1,18 +1,19 @@
-package com.smileidentity.flutter
+package com.smileidentity.flutter.products.document
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.smileidentity.SmileID
-import com.smileidentity.compose.EnhancedDocumentVerificationScreen
+import com.smileidentity.compose.DocumentVerification
+import com.smileidentity.flutter.mapper.pathList
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
 import java.io.File
 import kotlinx.collections.immutable.toImmutableMap
 
-class SmileIDEnhancedDocumentVerificationActivity : ComponentActivity() {
+class SmileIDDocumentVerificationActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -43,7 +44,7 @@ class SmileIDEnhancedDocumentVerificationActivity : ComponentActivity() {
             } as? Map<String, String> ?: emptyMap()
 
         setContent {
-            SmileID.EnhancedDocumentVerificationScreen(
+            SmileID.DocumentVerification(
                 countryCode = countryCode,
                 documentType = documentType,
                 idAspectRatio = idAspectRatio,
@@ -70,8 +71,8 @@ class SmileIDEnhancedDocumentVerificationActivity : ComponentActivity() {
                         )
                         intent.putExtra("documentBackFile", it.data.documentBackFile?.absolutePath)
                         intent.putExtra(
-                            "didSubmitEnhancedDocVJob",
-                            it.data.didSubmitEnhancedDocVJob,
+                            "didSubmitDocumentVerificationJob",
+                            it.data.didSubmitDocumentVerificationJob,
                         )
 
                         setResult(RESULT_OK, intent)
@@ -89,6 +90,6 @@ class SmileIDEnhancedDocumentVerificationActivity : ComponentActivity() {
     }
 
     companion object {
-        const val REQUEST_CODE = 18
+        const val REQUEST_CODE = 17
     }
 }

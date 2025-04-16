@@ -1216,6 +1216,30 @@ abstract class SmileIDApi {
 
 @FlutterApi()
 abstract class SmileIDProductsResultApi {
+  void onDocumentVerificationResult(
+      DocumentCaptureResult? successResult, String? errorResult);
+
+  void onDocumentVerificationEnhancedResult(
+      DocumentCaptureResult? successResult, String? errorResult);
+
   void onSmartSelfieEnrollmentResult(
       SmartSelfieCaptureResult? successResult, String? errorResult);
+
+  void onSmartSelfieAuthenticationResult(
+      SmartSelfieCaptureResult? successResult, String? errorResult);
+
+  void onSmartSelfieEnrollmentEnhancedResult(
+      SmartSelfieCaptureResult? successResult, String? errorResult);
+
+  void onSmartSelfieAuthenticationEnhancedResult(
+      SmartSelfieCaptureResult? successResult, String? errorResult);
+
+  void onBiometricKYCResult(
+      BiometricKYCCaptureResult? successResult, String? errorResult);
+
+  void onSelfieCaptureResult(
+      SmartSelfieCaptureResult? successResult, String? errorResult);
+
+  void onDocumentCaptureResult(
+      DocumentCaptureResult? successResult, String? errorResult);
 }

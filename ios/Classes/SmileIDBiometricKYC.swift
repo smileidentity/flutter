@@ -6,22 +6,19 @@ import SwiftUI
 class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDelegate, SmileIDFileUtilsProtocol {
     var fileManager: FileManager = Foundation.FileManager.default
     private var _view: UIView
-    private var _channel: FlutterMethodChannel
+    private var _api: SmileIDProductsResultApi
     private var _childViewController: UIViewController?
-    
+
     static let VIEW_TYPE_ID = "SmileIDBiometricKYC"
-    
+
     init(
         frame: CGRect,
         viewIdentifier viewId: Int64,
         arguments args: [String: Any?],
-        binaryMessenger messenger: FlutterBinaryMessenger
+        api: SmileIDProductsResultApi
     ) {
         _view = UIView()
-        _channel = FlutterMethodChannel(
-            name: "\(SmileIDBiometricKYC.VIEW_TYPE_ID)_\(viewId)",
-            binaryMessenger: messenger
-        )
+        _api = api
         _childViewController = nil
         super.init()
         let screen = SmileID.biometricKycScreen(
@@ -56,42 +53,31 @@ class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDel
         let navView = NavigationView{screen}
         _childViewController = embedView(navView, in: _view, frame: frame)
     }
-    
+
     func view() -> UIView {
         return _view
     }
-    
+
     func didSucceed(selfieImage: URL, livenessImages: [URL], didSubmitBiometricJob: Bool) {
         _childViewController?.removeFromParent()
-        let arguments: [String: Any] = [
-            "selfieFile": getFilePath(fileName: selfieImage.absoluteString),
-            "livenessFiles": livenessImages.map {
-                getFilePath(fileName: $0.absoluteString)
-            },
-            "didSubmitBiometricKycJob": didSubmitBiometricJob,
-        ]
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: arguments, options: [])
-            if let jsonString = String(data: jsonData, encoding: .utf8) {
-                _channel.invokeMethod("onSuccess", arguments: jsonString)
-            }
-        } catch {
-            didError(error: error)
-        }
+        let result = BiometricKYCCaptureResult(selfieFile: getFilePath(fileName: selfieImage.absoluteString), livenessFiles: livenessImages.map{
+            getFilePath(fileName: $0.absoluteString)
+        }, didSubmitBiometricKycJob: didSubmitBiometricJob)
+        _api.onBiometricKYCResult(successResult: result, errorResult: nil) {_ in }
     }
-    
+
     func didError(error: Error) {
         print("[Smile ID] An error occurred - \(error.localizedDescription)")
-        _channel.invokeMethod("onError", arguments: error.localizedDescription)
+        _api.onBiometricKYCResult(successResult: nil, errorResult: error.localizedDescription) {_ in }
     }
-    
+
     class Factory : NSObject, FlutterPlatformViewFactory {
-        private var messenger: FlutterBinaryMessenger
-        init(messenger: FlutterBinaryMessenger) {
-            self.messenger = messenger
+        private var api: SmileIDProductsResultApi
+        init(api: SmileIDProductsResultApi) {
+            self.api = api
             super.init()
         }
-        
+
         func create(
             withFrame frame: CGRect,
             viewIdentifier viewId: Int64,
@@ -101,10 +87,10 @@ class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDel
                 frame: frame,
                 viewIdentifier: viewId,
                 arguments: args as! [String: Any?],
-                binaryMessenger: messenger
+                api: api
             )
         }
-        
+
         public func createArgsCodec() -> FlutterMessageCodec & NSObjectProtocol {
             return FlutterStandardMessageCodec.sharedInstance()
         }
