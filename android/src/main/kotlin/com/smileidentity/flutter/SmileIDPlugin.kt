@@ -78,7 +78,6 @@ class SmileIDPlugin :
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDSmartSelfieAuthentication.VIEW_TYPE_ID,
             SmileIDSmartSelfieAuthentication.createFactory(
-                flutterPluginBinding.binaryMessenger,
                 smileIDResultApi,
             ),
         )
@@ -86,7 +85,6 @@ class SmileIDPlugin :
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDSmartSelfieEnrollment.VIEW_TYPE_ID,
             SmileIDSmartSelfieEnrollment.createFactory(
-                flutterPluginBinding.binaryMessenger,
                 smileIDResultApi,
             ),
         )
@@ -94,7 +92,6 @@ class SmileIDPlugin :
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDSmartSelfieAuthenticationEnhanced.VIEW_TYPE_ID,
             SmileIDSmartSelfieAuthenticationEnhanced.createFactory(
-                flutterPluginBinding.binaryMessenger,
                 smileIDResultApi,
             ),
         )
@@ -102,7 +99,6 @@ class SmileIDPlugin :
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDSmartSelfieEnrollmentEnhanced.VIEW_TYPE_ID,
             SmileIDSmartSelfieEnrollmentEnhanced.createFactory(
-                flutterPluginBinding.binaryMessenger,
                 smileIDResultApi,
             ),
         )
@@ -110,7 +106,6 @@ class SmileIDPlugin :
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDBiometricKYC.VIEW_TYPE_ID,
             SmileIDBiometricKYC.createFactory(
-                flutterPluginBinding.binaryMessenger,
                 smileIDResultApi,
             ),
         )
@@ -118,7 +113,6 @@ class SmileIDPlugin :
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDDocumentVerification.VIEW_TYPE_ID,
             SmileIDDocumentVerification.createFactory(
-                flutterPluginBinding.binaryMessenger,
                 smileIDResultApi,
             ),
         )
@@ -126,23 +120,20 @@ class SmileIDPlugin :
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDEnhancedDocumentVerification.VIEW_TYPE_ID,
             SmileIDEnhancedDocumentVerification.createFactory(
-                flutterPluginBinding.binaryMessenger,
                 smileIDResultApi,
             ),
         )
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDSmartSelfieCaptureView.VIEW_TYPE_ID,
-            SmileIDSmartSelfieCaptureView.Factory(
-                flutterPluginBinding.binaryMessenger,
+            SmileIDSmartSelfieCaptureView.createFactory(
                 smileIDResultApi,
             ),
         )
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDDocumentCaptureView.VIEW_TYPE_ID,
-            SmileIDDocumentCaptureView.Factory(
-                flutterPluginBinding.binaryMessenger,
+            SmileIDDocumentCaptureView.createFactory(
                 smileIDResultApi,
             ),
         )

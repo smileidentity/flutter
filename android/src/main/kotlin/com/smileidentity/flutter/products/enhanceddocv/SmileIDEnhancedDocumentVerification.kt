@@ -12,28 +12,21 @@ import com.smileidentity.flutter.views.SmileIDPlatformView
 import com.smileidentity.flutter.views.SmileIDViewFactory
 import com.smileidentity.models.ConsentInformation
 import com.smileidentity.results.SmileIDResult
-import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.platform.PlatformViewFactory
 import kotlinx.collections.immutable.toImmutableMap
 
 internal class SmileIDEnhancedDocumentVerification private constructor(
     context: Context,
-    viewId: Int,
-    messenger: BinaryMessenger,
     args: Map<String, Any?>,
     api: SmileIDProductsResultApi,
-) : SmileIDPlatformView(context, VIEW_TYPE_ID, viewId, messenger, args, api) {
+) : SmileIDPlatformView(context, args, api) {
     companion object {
         const val VIEW_TYPE_ID = "SmileIDEnhancedDocumentVerification"
 
-        fun createFactory(
-            messenger: BinaryMessenger,
-            api: SmileIDProductsResultApi,
-        ): PlatformViewFactory {
-            return SmileIDViewFactory(messenger, api) { context, viewId, msgr, args, resultApi ->
-                SmileIDEnhancedDocumentVerification(context, viewId, msgr, args, resultApi)
+        fun createFactory(api: SmileIDProductsResultApi): PlatformViewFactory =
+            SmileIDViewFactory(api) { context, args, resultApi ->
+                SmileIDEnhancedDocumentVerification(context, args, resultApi)
             }
-        }
     }
 
     @Composable

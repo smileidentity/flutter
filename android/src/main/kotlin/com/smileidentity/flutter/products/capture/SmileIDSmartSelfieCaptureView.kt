@@ -18,27 +18,28 @@ import com.smileidentity.compose.theme.colorScheme
 import com.smileidentity.compose.theme.typography
 import com.smileidentity.flutter.mapper.pathList
 import com.smileidentity.flutter.mapper.toMap
-import com.smileidentity.flutter.views.SmileSelfieComposablePlatformView
+import com.smileidentity.flutter.views.SmileIDPlatformView
+import com.smileidentity.flutter.views.SmileIDViewFactory
 import com.smileidentity.models.v2.Metadata
 import com.smileidentity.results.SmartSelfieResult
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
-import io.flutter.plugin.common.BinaryMessenger
-import io.flutter.plugin.common.StandardMessageCodec
-import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 
 // todo - did not touch this yet
 internal class SmileIDSmartSelfieCaptureView private constructor(
     context: Context,
-    viewId: Int,
-    messenger: BinaryMessenger,
     args: Map<String, Any?>,
-    private val api: SmileIDProductsResultApi,
-) : SmileSelfieComposablePlatformView(context, VIEW_TYPE_ID, viewId, messenger, args) {
+    api: SmileIDProductsResultApi,
+) : SmileIDPlatformView(context, args, api) {
     companion object {
         const val VIEW_TYPE_ID = "SmileIDSmartSelfieCaptureView"
+
+        fun createFactory(api: SmileIDProductsResultApi): PlatformViewFactory =
+            SmileIDViewFactory(api) { context, args, resultApi ->
+                SmileIDSmartSelfieCaptureView(context, args, resultApi)
+            }
     }
 
     @OptIn(SmileIDOptIn::class)
@@ -99,22 +100,6 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
 
                 api.onSelfieCaptureResult(successResultArg = result, errorResultArg = null) {}
             }
-        }
-    }
-
-    class Factory(
-        private val messenger: BinaryMessenger,
-        private val api: SmileIDProductsResultApi,
-    ) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
-        override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
-            @Suppress("UNCHECKED_CAST")
-            return SmileIDSmartSelfieCaptureView(
-                context,
-                viewId,
-                messenger,
-                args as Map<String, Any?>,
-                api,
-            )
         }
     }
 }
