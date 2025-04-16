@@ -8,12 +8,10 @@ import com.smileidentity.SmileID
 import com.smileidentity.compose.SmartSelfieEnrollmentEnhanced
 import com.smileidentity.flutter.mapper.pathList
 import com.smileidentity.flutter.mapper.toMap
-import com.smileidentity.flutter.views.SmileComposablePlatformView
+import com.smileidentity.flutter.views.SmileIDPlatformView
+import com.smileidentity.flutter.views.SmileIDViewFactory
 import com.smileidentity.results.SmileIDResult
-import com.smileidentity.util.randomUserId
 import io.flutter.plugin.common.BinaryMessenger
-import io.flutter.plugin.common.StandardMessageCodec
-import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 import kotlinx.collections.immutable.toImmutableMap
 
@@ -22,22 +20,30 @@ internal class SmileIDSmartSelfieEnrollmentEnhanced private constructor(
     viewId: Int,
     messenger: BinaryMessenger,
     args: Map<String, Any?>,
-    private val api: SmileIDProductsResultApi,
-) : SmileComposablePlatformView(context, VIEW_TYPE_ID, viewId, messenger, args) {
+    api: SmileIDProductsResultApi,
+) : SmileIDPlatformView(context, VIEW_TYPE_ID, viewId, messenger, args, api) {
     companion object {
         const val VIEW_TYPE_ID = "SmileIDSmartSelfieEnrollmentEnhanced"
+
+        fun createFactory(
+            messenger: BinaryMessenger,
+            api: SmileIDProductsResultApi,
+        ): PlatformViewFactory {
+            return SmileIDViewFactory(messenger, api) { context, viewId, msgr, args, resultApi ->
+                SmileIDSmartSelfieEnrollmentEnhanced(context, viewId, msgr, args, resultApi)
+            }
+        }
     }
 
     @Composable
     override fun Content(args: Map<String, Any?>) {
-        val extraPartnerParams = args["extraPartnerParams"] as? Map<String, String> ?: emptyMap()
         SmileID.SmartSelfieEnrollmentEnhanced(
-            userId = args["userId"] as? String ?: randomUserId(),
-            allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
-            showAttribution = args["showAttribution"] as? Boolean ?: true,
-            showInstructions = args["showInstructions"] as? Boolean ?: true,
-            skipApiSubmission = args["skipApiSubmission"] as? Boolean ?: false,
-            extraPartnerParams = extraPartnerParams.toImmutableMap(),
+            userId = getUserId(args),
+            allowNewEnroll = getBoolean(args, "allowNewEnroll", false),
+            showAttribution = getBoolean(args, "showAttribution", true),
+            showInstructions = getBoolean(args, "showInstructions", true),
+            skipApiSubmission = getBoolean(args, "skipApiSubmission", false),
+            extraPartnerParams = getExtraPartnerParams(args).toImmutableMap(),
         ) {
             when (it) {
                 is SmileIDResult.Success -> {
@@ -58,22 +64,6 @@ internal class SmileIDSmartSelfieEnrollmentEnhanced private constructor(
                         ?: "Unknown error with Smart Enrollment Enhanced",
                 ) {}
             }
-        }
-    }
-
-    class Factory(
-        private val messenger: BinaryMessenger,
-        private val api: SmileIDProductsResultApi,
-    ) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
-        override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
-            @Suppress("UNCHECKED_CAST")
-            return SmileIDSmartSelfieEnrollmentEnhanced(
-                context,
-                viewId,
-                messenger,
-                args as Map<String, Any?>,
-                api,
-            )
         }
     }
 }

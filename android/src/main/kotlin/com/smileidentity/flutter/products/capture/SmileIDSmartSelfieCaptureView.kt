@@ -29,6 +29,7 @@ import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 
+// todo - did not touch this yet
 internal class SmileIDSmartSelfieCaptureView private constructor(
     context: Context,
     viewId: Int,

@@ -28,6 +28,7 @@ import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 import java.io.File
 
+// todo - did not touch this yet
 internal class SmileIDDocumentCaptureView private constructor(
     context: Context,
     viewId: Int,
