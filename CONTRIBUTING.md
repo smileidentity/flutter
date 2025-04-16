@@ -37,7 +37,7 @@ Open the `sample` folder, then open the `ios` folder. Run the following commands
 
 # Testing unreleased Native SDKs
 
-> ⚠️ **CAUTION:** We should never have unreleased SDKs in the main branch. This is only for testing unreleased SDKs. all PRs to main branch should be released SDKs.
+> ⚠️ **CAUTION:** We should never have unreleased SDKs in the main branch. This is only for testing unreleased SDKs. All PRs to main branch should be released SDKs.
 
 ## Android
 * Uncomment  `maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }` in `android/build.gradle`
