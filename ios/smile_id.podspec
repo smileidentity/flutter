@@ -1,21 +1,21 @@
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
 # Run `pod lib lint smileid.podspec` to validate before publishing.
 #
+package = YAML.load_file('../pubspec.yaml')
 Pod::Spec.new do |s|
   s.name = 'smile_id'
-  # NB! Keep this version in sync with the Native iOS SDK version
-  s.version = '10.5.1'
+  s.version = package["version"]
   s.summary = 'Official Smile ID SDK for Flutter'
-  s.description = <<-DESC
-A new Flutter project.
-  DESC
-  s.homepage = 'http://usesmileid.com'
+  s.description = package["description"]
+  s.homepage = package["homepage"]
   s.author = { 'Smile ID' => 'support@usesmileid.com' }
   s.source = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  # NB! Update the s.version above when changing this version
   s.dependency 'SmileID', '10.5.1'
+  # for development alongside example/ios/Podfile uncomment the version and specify
+  # tag or branch in example/ios/Podfile
+  # s.dependency "SmileID"
   s.platform = :ios, '13.0'
 
   # Flutter.framework does not contain a i386 slice.

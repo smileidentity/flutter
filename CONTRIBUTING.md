@@ -37,19 +37,25 @@ Open the `sample` folder, then open the `ios` folder. Run the following commands
 
 # Testing unreleased Native SDKs
 
+> ⚠️ **CAUTION:** We should never have unreleased SDKs in the main branch. This is only for testing unreleased SDKs. all PRs to main branch should be released SDKs.
+
 ## Android
 * Uncomment  `maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }` in `android/build.gradle`
-* Specify snapshot version in `android/gradle.properties` file: which must have been prebuilt from any of the PRs in the [Android](https://github.com/smileidentity/android) repo
+* Specify snapshot version in `android/build.gradle` file: which must have been prebuilt from any of the PRs in the [Android](https://github.com/smileidentity/android) repo
 
 ## iOS
 * Comment out the version in the SmileID version for the native dependency in the  podspec file in `./ios/smile-id.podspec` file:
 ```ruby
 #  s.dependency "SmileID" # => Mind the version removal
 ```
-* Specify the path SmileID [iOS](https://github.com/smileidentity/ios) in the example/ios/Podfile repo and pick a tag or branch podspec file in the Podfile:
+* Specify the repo SmileID [iOS](https://github.com/smileidentity/ios) repo and pick a tag or branch podspec file in the Podfile example/ios/Podfile file:
 ```ruby
   pod 'SmileID', git: 'https://github.com/smileidentity/ios.git', branch: 'main'
 ```
 * Run `pod install` in the `example/ios` folder
+* If you have pod install issues run
+```bash
+  pod deintegrate && pod install
+```
 
 Happy testing!

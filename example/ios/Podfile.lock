@@ -7,13 +7,13 @@ PODS:
   - Flutter (1.0.0)
   - integration_test (0.0.1):
     - Flutter
-  - lottie-ios (4.5.1)
-  - smile_id (10.5.1):
+  - lottie-ios (4.4.3)
+  - smile_id (10.4.1):
     - Flutter
-    - SmileID (= 10.5.1)
-  - SmileID (10.5.1):
+    - SmileID
+  - SmileID (10.2.16):
     - FingerprintJS
-    - lottie-ios (~> 4.5.0)
+    - lottie-ios (~> 4.4.2)
     - ZIPFoundation (~> 0.9)
   - ZIPFoundation (0.9.19)
 
@@ -21,12 +21,12 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - smile_id (from `.symlinks/plugins/smile_id/ios`)
+  - SmileID (from `https://github.com/smileidentity/ios.git`, branch `selfie-viewmodel-tests`)
 
 SPEC REPOS:
   trunk:
     - FingerprintJS
     - lottie-ios
-    - SmileID
     - ZIPFoundation
 
 EXTERNAL SOURCES:
@@ -36,16 +36,24 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
   smile_id:
     :path: ".symlinks/plugins/smile_id/ios"
+  SmileID:
+    :branch: selfie-viewmodel-tests
+    :git: https://github.com/smileidentity/ios.git
+
+CHECKOUT OPTIONS:
+  SmileID:
+    :commit: 58eb79003597066c2b7bad6471d835a50eed8620
+    :git: https://github.com/smileidentity/ios.git
 
 SPEC CHECKSUMS:
   FingerprintJS: 96410117a394cca04d0f1e2374944c8697f2cceb
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  integration_test: ce0a3ffa1de96d1a89ca0ac26fca7ea18a749ef4
-  lottie-ios: 248b380fa1b97d18e792c37d90da7ab2aa0d6562
-  smile_id: fee9749a68178e65f541553d23d0270e6187fcfa
-  SmileID: 7f9c9db916d4c3997fcafb8b811afec30e88c751
+  integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
+  lottie-ios: fcb5e73e17ba4c983140b7d21095c834b3087418
+  smile_id: 14cb6a3450b17fc82c31f2638cad6c66cd8bd010
+  SmileID: 93184d185549dec6858a3cc567bd9423de79abbb
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
-PODFILE CHECKSUM: 929954fb8941cef06249e96bd1516fd2a22ed7a5
+PODFILE CHECKSUM: 458a0966b8a1d8dbc673023d168064012683d0a5
 
 COCOAPODS: 1.16.2
