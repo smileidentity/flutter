@@ -44,7 +44,7 @@ Open the `sample` folder, then open the `ios` folder. Run the following commands
 * Specify snapshot version in `android/build.gradle` file: which must have been prebuilt from any of the PRs in the [Android](https://github.com/smileidentity/android) repo
 
 ## iOS
-* Comment out the version in the SmileID version for the native dependency in the  podspec file in `./ios/smile-id.podspec` file:
+* Comment out the version for the native SmileID dependency in the podspec file in `./ios/smile-id.podspec` file:
 ```ruby
 #  s.dependency "SmileID" # => Mind the version removal
 ```
