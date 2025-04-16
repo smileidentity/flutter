@@ -1,15 +1,19 @@
 import Flutter
+import SwiftUI
 import SmileID
 import UIKit
 
 public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
+    
     public static func register(with registrar: FlutterPluginRegistrar) {
         let messenger: FlutterBinaryMessenger = registrar.messenger()
         let api: SmileIDApi & NSObjectProtocol = SmileIDPlugin()
         SmileIDApiSetup.setUp(binaryMessenger: messenger, api: api)
+        SmileIDProductsPluginApi.setUp(binaryMessenger: messenger)
+        let smileIDProductsResultApi = SmileIDProductsResultApi(binaryMessenger: messenger)
         
         let documentVerificationFactory = SmileIDDocumentVerification.Factory(
-            messenger: registrar.messenger()
+            api: smileIDProductsResultApi
         )
         registrar.register(
             documentVerificationFactory,
@@ -17,7 +21,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         )
         
         let enhancedDocumentVerificationFactory = SmileIDEnhancedDocumentVerification.Factory(
-            messenger: registrar.messenger()
+           api: smileIDProductsResultApi
         )
         registrar.register(
             enhancedDocumentVerificationFactory,
@@ -25,7 +29,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         )
         
         let smartSelfieEnrollmentFactory = SmileIDSmartSelfieEnrollment.Factory(
-            messenger: registrar.messenger()
+            api: smileIDProductsResultApi
         )
         registrar.register(
             smartSelfieEnrollmentFactory,
@@ -33,31 +37,31 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         )
         
         let smartSelfieAuthenticationFactory = SmileIDSmartSelfieAuthentication.Factory(
-            messenger: registrar.messenger()
+            api: smileIDProductsResultApi
         )
         registrar.register(
             smartSelfieAuthenticationFactory,
             withId: SmileIDSmartSelfieAuthentication.VIEW_TYPE_ID
         )
-
-         let smartSelfieEnrollmentEnhancedFactory = SmileIDSmartSelfieEnrollmentEnhanced.Factory(
-             messenger: registrar.messenger()
-         )
-         registrar.register(
-             smartSelfieEnrollmentEnhancedFactory,
-             withId: SmileIDSmartSelfieEnrollmentEnhanced.VIEW_TYPE_ID
-         )
-
-         let smartSelfieAuthenticationEnhancedFactory = SmileIDSmartSelfieAuthenticationEnhanced.Factory(
-             messenger: registrar.messenger()
-         )
-         registrar.register(
-             smartSelfieAuthenticationEnhancedFactory,
-             withId: SmileIDSmartSelfieAuthenticationEnhanced.VIEW_TYPE_ID
-         )
+        
+        let smartSelfieEnrollmentEnhancedFactory = SmileIDSmartSelfieEnrollmentEnhanced.Factory(
+            api: smileIDProductsResultApi
+        )
+        registrar.register(
+            smartSelfieEnrollmentEnhancedFactory,
+            withId: SmileIDSmartSelfieEnrollmentEnhanced.VIEW_TYPE_ID
+        )
+        
+        let smartSelfieAuthenticationEnhancedFactory = SmileIDSmartSelfieAuthenticationEnhanced.Factory(
+            api: smileIDProductsResultApi
+        )
+        registrar.register(
+            smartSelfieAuthenticationEnhancedFactory,
+            withId: SmileIDSmartSelfieAuthenticationEnhanced.VIEW_TYPE_ID
+        )
         
         let biometricKYCFactory = SmileIDBiometricKYC.Factory(
-            messenger: registrar.messenger()
+            api: smileIDProductsResultApi
         )
         registrar.register(
             biometricKYCFactory,
@@ -65,7 +69,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         )
         
         let selfieCaptureFactory = SmileIDSmartSelfieCaptureView.Factory(
-            messenger: registrar.messenger()
+            api: smileIDProductsResultApi
         )
         registrar.register(
             selfieCaptureFactory,
@@ -73,7 +77,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         )
         
         let documentCaptureFactory = SmileIDDocumentCaptureView.Factory(
-            messenger: registrar.messenger()
+            api: smileIDProductsResultApi
         )
         registrar.register(
             documentCaptureFactory,
