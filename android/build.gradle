@@ -1,6 +1,6 @@
-def kotlinVersion = findProperty('kotlinVersion') ?: '2.1.0'
+def kotlinVersion = findProperty('kotlinVersion') ?: '2.1.20' // Ensure using Kotlin 2.1.20
 def smileVersion = findProperty('smileVersion') ?: '10.6.0'
-def kotlinCompilerExtension = findProperty('kotlinCompilerExtensionVersion') ?: '1.5.14'
+def kotlinCompilerExtension = findProperty('kotlinCompilerExtensionVersion') ?: '2.0.0' // Update to match Kotlin version
 
 ext {
     project.ext.kotlinVersion = kotlinVersion
@@ -9,7 +9,7 @@ ext {
 }
 
 buildscript {
-    def kotlinVersion = rootProject.findProperty('kotlinVersion') ?: '2.1.0'
+    def kotlinVersion = rootProject.findProperty('kotlinVersion') ?: '2.1.20'
 
     repositories {
         google()
