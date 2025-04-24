@@ -1,9 +1,22 @@
 # Release Notes
 
+## 10.4.2
+
+### Changed
+* Require selfie recapture when retrying failed submission for Enhanced Smart Selfie Capture.
+* Bump iOS to 10.5.2 (https://github.com/smileidentity/ios/releases/tag/v10.5.2)
+
+### Fixed
+* iOS delegate callback order after submission for Biometric KYC and Document Verification jobs.
+
+
 ## 10.4.1
 
 ### Changed
 * Bump iOS to 10.5.1 (https://github.com/smileidentity/ios/releases/tag/v10.5.1)
+
+### Fixed
+* Selfie submission error returned in success delegate callback.
 
 ## 10.4.0
 * Changes the `allow_new_enroll` flag to be a real boolean instead of a string for prepUpload
