@@ -9,7 +9,6 @@
 ### Fixed
 * iOS delegate callback order after submission for Biometric KYC and Document Verification jobs.
 
-
 ## 10.4.1
 
 ### Changed
