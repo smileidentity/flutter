@@ -50,20 +50,18 @@ internal class SmileIDBiometricKYC private constructor(
                     consented = ConsentedInformation(
                         consentGrantedDate = args["consentGrantedDate"] as? String
                             ?: getCurrentIsoTimestamp(),
-                        personalDetails = args["personalDetailsConsentGranted"] as? Boolean
-                            ?: false,
-                        contactInformation = args["contactInfoConsentGranted"] as? Boolean ?: false,
-                        documentInformation = args["documentInfoConsentGranted"] as? Boolean
-                            ?: false,
+                        personalDetails = args["personalDetailsConsentGranted"] as? Boolean == true,
+                        contactInformation = args["contactInfoConsentGranted"] as? Boolean == true,
+                        documentInformation = args["documentInfoConsentGranted"] as? Boolean == true,
                     ),
                 ),
             userId = args["userId"] as? String ?: randomUserId(),
             jobId = args["jobId"] as? String ?: randomJobId(),
-            allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
-            allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
-            showAttribution = args["showAttribution"] as? Boolean ?: true,
-            showInstructions = args["showInstructions"] as? Boolean ?: true,
-            useStrictMode = args["useStrictMode"] as? Boolean ?: true,
+            allowNewEnroll = args["allowNewEnroll"] as? Boolean == true,
+            allowAgentMode = args["allowAgentMode"] as? Boolean == true,
+            showAttribution = args["showAttribution"] as? Boolean != false,
+            showInstructions = args["showInstructions"] as? Boolean != false,
+            useStrictMode = args["useStrictMode"] as? Boolean != false,
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {
             when (it) {
