@@ -8,6 +8,7 @@ import com.smileidentity.flutter.results.DocumentCaptureResult
 import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
 import com.smileidentity.flutter.utils.getCurrentIsoTimestamp
 import com.smileidentity.models.ConsentInformation
+import com.smileidentity.models.ConsentedInformation
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
@@ -44,18 +45,14 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
             showInstructions = args["showInstructions"] as? Boolean ?: true,
             useStrictMode = args["useStrictMode"] as? Boolean ?: false,
             consentInformation =
-            ConsentInformation(
-                consentGrantedDate =
-                args["consentGrantedDate"] as? String ?: getCurrentIsoTimestamp(),
-                personalDetailsConsentGranted =
-                args["personalDetailsConsentGranted"] as? Boolean
-                    ?: false,
-                contactInfoConsentGranted =
-                args["contactInfoConsentGranted"] as? Boolean ?: false,
-                documentInfoConsentGranted =
-                args["documentInfoConsentGranted"] as? Boolean
-                    ?: false,
-            ),
+                ConsentInformation(
+                    consented = ConsentedInformation(
+                        consentGrantedDate = args["consentGrantedDate"] as? String ?: getCurrentIsoTimestamp(),
+                        personalDetails = args["personalDetailsConsentGranted"] as? Boolean ?: false,
+                        contactInformation = args["contactInfoConsentGranted"] as? Boolean ?: false,
+                        documentInformation = args["documentInfoConsentGranted"] as? Boolean ?: false
+                    )
+                ),
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {
             when (it) {
