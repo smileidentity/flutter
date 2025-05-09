@@ -190,12 +190,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
 
     @Composable
     private fun HandleProcessingState(viewModel: SelfieViewModel) {
-        viewModel.onFinished { res ->
-            when (res) {
-                is SmileIDResult.Success -> handleResult(res)
-                is SmileIDResult.Error -> onError(res.throwable)
-            }
-        }
+        viewModel.onFinished { res -> handleResult(res) }
     }
 
     class Factory(
