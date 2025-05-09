@@ -44,9 +44,9 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
             extraPartnerParams: args["extraPartnerParams"] as? [String: String] ?? [:],
             consentInformation: ConsentInformation(
                 consentGrantedDate: args["consentGrantedDate"] as? String ?? getCurrentIsoTimestamp(),
-                personalDetailsConsentGranted: args["personalDetailsConsentGranted"] as? Bool ?? false,
-                contactInformationConsentGranted: args["contactInfoConsentGranted"] as? Bool ?? false,
-                documentInformationConsentGranted: args["documentInfoConsentGranted"] as? Bool ?? false
+                personalDetails: args["personalDetailsConsentGranted"] as? Bool ?? false,
+                contactInformation: args["contactInfoConsentGranted"] as? Bool ?? false,
+                documentInformation: args["documentInfoConsentGranted"] as? Bool ?? false
             ),
             delegate: self
         )

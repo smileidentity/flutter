@@ -8,6 +8,7 @@ import com.smileidentity.flutter.results.DocumentCaptureResult
 import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
 import com.smileidentity.flutter.utils.getCurrentIsoTimestamp
 import com.smileidentity.models.ConsentInformation
+import com.smileidentity.models.ConsentedInformation
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
@@ -34,28 +35,25 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
             countryCode = args["countryCode"] as String,
             documentType = args["documentType"] as? String,
             idAspectRatio = (args["idAspectRatio"] as Double?)?.toFloat(),
-            captureBothSides = args["captureBothSides"] as? Boolean ?: true,
+            captureBothSides = args["captureBothSides"] as? Boolean != false,
             userId = args["userId"] as? String ?: randomUserId(),
             jobId = args["jobId"] as? String ?: randomJobId(),
-            allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
-            showAttribution = args["showAttribution"] as? Boolean ?: true,
-            allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
-            allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false,
-            showInstructions = args["showInstructions"] as? Boolean ?: true,
-            useStrictMode = args["useStrictMode"] as? Boolean ?: false,
+            allowNewEnroll = args["allowNewEnroll"] as? Boolean == true,
+            showAttribution = args["showAttribution"] as? Boolean != false,
+            allowAgentMode = args["allowAgentMode"] as? Boolean == true,
+            allowGalleryUpload = args["allowGalleryUpload"] as? Boolean == true,
+            showInstructions = args["showInstructions"] as? Boolean != false,
+            useStrictMode = args["useStrictMode"] as? Boolean == true,
             consentInformation =
-            ConsentInformation(
-                consentGrantedDate =
-                args["consentGrantedDate"] as? String ?: getCurrentIsoTimestamp(),
-                personalDetailsConsentGranted =
-                args["personalDetailsConsentGranted"] as? Boolean
-                    ?: false,
-                contactInfoConsentGranted =
-                args["contactInfoConsentGranted"] as? Boolean ?: false,
-                documentInfoConsentGranted =
-                args["documentInfoConsentGranted"] as? Boolean
-                    ?: false,
-            ),
+                ConsentInformation(
+                    consented = ConsentedInformation(
+                        consentGrantedDate = args["consentGrantedDate"] as? String
+                            ?: getCurrentIsoTimestamp(),
+                        personalDetails = args["personalDetailsConsentGranted"] as? Boolean == true,
+                        contactInformation = args["contactInfoConsentGranted"] as? Boolean == true,
+                        documentInformation = args["documentInfoConsentGranted"] as? Boolean == true,
+                    ),
+                ),
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {
             when (it) {

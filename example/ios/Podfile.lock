@@ -21,12 +21,12 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - smile_id (from `.symlinks/plugins/smile_id/ios`)
+  - SmileID (from `https://github.com/smileidentity/ios.git`, branch `feature/consentmapping`)
 
 SPEC REPOS:
   trunk:
     - FingerprintJS
     - lottie-ios
-    - SmileID
     - ZIPFoundation
 
 EXTERNAL SOURCES:
@@ -36,16 +36,24 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
   smile_id:
     :path: ".symlinks/plugins/smile_id/ios"
+  SmileID:
+    :branch: feature/consentmapping
+    :git: https://github.com/smileidentity/ios.git
+
+CHECKOUT OPTIONS:
+  SmileID:
+    :commit: c13907fc654b04a3aeeaebb7e83047fc8aa6c383
+    :git: https://github.com/smileidentity/ios.git
 
 SPEC CHECKSUMS:
   FingerprintJS: 96410117a394cca04d0f1e2374944c8697f2cceb
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  integration_test: ce0a3ffa1de96d1a89ca0ac26fca7ea18a749ef4
+  integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
   lottie-ios: 248b380fa1b97d18e792c37d90da7ab2aa0d6562
   smile_id: ed4fa05e8545025b2110dd4988f2f5e3b7f1aadf
   SmileID: 15bf2e69c158b9bcdd3a2e1531dd75e0fc9601e5
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
-PODFILE CHECKSUM: 81be4fc09878044dc75c762493ad56e861d5bf57
+PODFILE CHECKSUM: 25361a651e9d1c2c668be642ba7e04fd325642b6
 
 COCOAPODS: 1.16.2

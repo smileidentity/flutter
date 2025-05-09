@@ -253,9 +253,9 @@ extension FlutterConsentInformation {
     func toRequest() -> ConsentInformation {
         ConsentInformation(
             consentGrantedDate: consentGrantedDate,
-            personalDetailsConsentGranted: personalDetailsConsentGranted,
-            contactInformationConsentGranted: contactInfoConsentGranted,
-            documentInformationConsentGranted: documentInfoConsentGranted
+            personalDetails: personalDetailsConsentGranted,
+            contactInformation: contactInfoConsentGranted,
+            documentInformation: documentInfoConsentGranted
         )
     }
 }
@@ -269,9 +269,9 @@ extension FlutterEnhancedKycRequest {
             consentInformation: consentInformation?
                 .toRequest() ?? ConsentInformation(
                     consentGrantedDate: getCurrentIsoTimestamp(),
-                    personalDetailsConsentGranted: false,
-                    contactInformationConsentGranted: false,
-                    documentInformationConsentGranted: false
+                    personalDetails: false,
+                    contactInformation: false,
+                    documentInformation: false
                 ),
             firstName: firstName,
             middleName: middleName,

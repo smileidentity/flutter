@@ -8,6 +8,7 @@ import com.smileidentity.flutter.results.SmartSelfieCaptureResult
 import com.smileidentity.flutter.utils.SelfieCaptureResultAdapter
 import com.smileidentity.flutter.utils.getCurrentIsoTimestamp
 import com.smileidentity.models.ConsentInformation
+import com.smileidentity.models.ConsentedInformation
 import com.smileidentity.models.IdInfo
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
@@ -33,37 +34,34 @@ internal class SmileIDBiometricKYC private constructor(
         val extraPartnerParams = args["extraPartnerParams"] as? Map<String, String> ?: emptyMap()
         SmileID.BiometricKYC(
             idInfo =
-            IdInfo(
-                country = args["country"] as? String ?: "",
-                idType = args["idType"] as? String?,
-                idNumber = args["idNumber"] as? String?,
-                firstName = args["firstName"] as? String?,
-                middleName = args["middleName"] as? String?,
-                lastName = args["lastName"] as? String?,
-                dob = args["dob"] as? String?,
-                bankCode = args["bankCode"] as? String?,
-                entered = args["entered"] as? Boolean?,
-            ),
+                IdInfo(
+                    country = args["country"] as? String ?: "",
+                    idType = args["idType"] as? String?,
+                    idNumber = args["idNumber"] as? String?,
+                    firstName = args["firstName"] as? String?,
+                    middleName = args["middleName"] as? String?,
+                    lastName = args["lastName"] as? String?,
+                    dob = args["dob"] as? String?,
+                    bankCode = args["bankCode"] as? String?,
+                    entered = args["entered"] as? Boolean?,
+                ),
             consentInformation =
-            ConsentInformation(
-                consentGrantedDate =
-                args["consentGrantedDate"] as? String ?: getCurrentIsoTimestamp(),
-                personalDetailsConsentGranted =
-                args["personalDetailsConsentGranted"] as? Boolean
-                    ?: false,
-                contactInfoConsentGranted =
-                args["contactInfoConsentGranted"] as? Boolean ?: false,
-                documentInfoConsentGranted =
-                args["documentInfoConsentGranted"] as? Boolean
-                    ?: false,
-            ),
+                ConsentInformation(
+                    consented = ConsentedInformation(
+                        consentGrantedDate = args["consentGrantedDate"] as? String
+                            ?: getCurrentIsoTimestamp(),
+                        personalDetails = args["personalDetailsConsentGranted"] as? Boolean == true,
+                        contactInformation = args["contactInfoConsentGranted"] as? Boolean == true,
+                        documentInformation = args["documentInfoConsentGranted"] as? Boolean == true,
+                    ),
+                ),
             userId = args["userId"] as? String ?: randomUserId(),
             jobId = args["jobId"] as? String ?: randomJobId(),
-            allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
-            allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
-            showAttribution = args["showAttribution"] as? Boolean ?: true,
-            showInstructions = args["showInstructions"] as? Boolean ?: true,
-            useStrictMode = args["useStrictMode"] as? Boolean ?: true,
+            allowNewEnroll = args["allowNewEnroll"] as? Boolean == true,
+            allowAgentMode = args["allowAgentMode"] as? Boolean == true,
+            showAttribution = args["showAttribution"] as? Boolean != false,
+            showInstructions = args["showInstructions"] as? Boolean != false,
+            useStrictMode = args["useStrictMode"] as? Boolean != false,
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {
             when (it) {

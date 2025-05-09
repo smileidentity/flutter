@@ -58,6 +58,7 @@ import com.smileidentity.models.BiometricKycJobStatusResponse
 import com.smileidentity.models.Config
 import com.smileidentity.models.ConsentInfo
 import com.smileidentity.models.ConsentInformation
+import com.smileidentity.models.ConsentedInformation
 import com.smileidentity.models.Country
 import com.smileidentity.models.CountryInfo
 import com.smileidentity.models.DocumentVerificationJobResult
@@ -232,10 +233,12 @@ fun FlutterIdInfo.toRequest() = IdInfo(
 )
 
 fun FlutterConsentInformation.toRequest() = ConsentInformation(
-    consentGrantedDate = consentGrantedDate,
-    personalDetailsConsentGranted = personalDetailsConsentGranted,
-    contactInfoConsentGranted = contactInfoConsentGranted,
-    documentInfoConsentGranted = documentInfoConsentGranted,
+    consented = ConsentedInformation(
+        consentGrantedDate = consentGrantedDate,
+        personalDetails = personalDetailsConsentGranted,
+        contactInformation = contactInfoConsentGranted,
+        documentInformation = documentInfoConsentGranted,
+    ),
 )
 
 fun FlutterEnhancedKycRequest.toRequest() = EnhancedKycRequest(
@@ -254,12 +257,14 @@ fun FlutterEnhancedKycRequest.toRequest() = EnhancedKycRequest(
     timestamp = timestamp,
     signature = signature,
     consentInformation =
-    consentInformation?.toRequest() ?: ConsentInformation(
-        consentGrantedDate = getCurrentIsoTimestamp(),
-        personalDetailsConsentGranted = false,
-        contactInfoConsentGranted = false,
-        documentInfoConsentGranted = false,
-    ),
+        consentInformation?.toRequest() ?: ConsentInformation(
+            consented = ConsentedInformation(
+                consentGrantedDate = getCurrentIsoTimestamp(),
+                personalDetails = false,
+                contactInformation = false,
+                documentInformation = false,
+            ),
+        ),
 )
 
 fun EnhancedKycResponse.toResponse() = FlutterEnhancedKycResponse(
@@ -553,25 +558,25 @@ fun BankCode.toResponse() = FlutterBankCode(
 fun HostedWeb.toResponse() = FlutterHostedWeb(
     basicKyc = basicKyc.groupBy { it.countryCode }.mapValues { it.value.first().toResponse() },
     biometricKyc =
-    biometricKyc
-        .groupBy { it.countryCode }
-        .mapValues { it.value.first().toResponse() },
+        biometricKyc
+            .groupBy { it.countryCode }
+            .mapValues { it.value.first().toResponse() },
     enhancedKyc =
-    enhancedKyc
-        .groupBy { it.countryCode }
-        .mapValues { it.value.first().toResponse() },
+        enhancedKyc
+            .groupBy { it.countryCode }
+            .mapValues { it.value.first().toResponse() },
     documentVerification =
-    docVerification
-        .groupBy { it.countryCode }
-        .mapValues { it.value.first().toResponse() },
+        docVerification
+            .groupBy { it.countryCode }
+            .mapValues { it.value.first().toResponse() },
     enhancedKycSmartSelfie =
-    enhancedKycSmartSelfie
-        .groupBy { it.countryCode }
-        .mapValues { it.value.first().toResponse() },
+        enhancedKycSmartSelfie
+            .groupBy { it.countryCode }
+            .mapValues { it.value.first().toResponse() },
     enhancedDocumentVerification =
-    enhancedDocumentVerification
-        .groupBy { it.countryCode }
-        .mapValues { it.value.first().toResponse() },
+        enhancedDocumentVerification
+            .groupBy { it.countryCode }
+            .mapValues { it.value.first().toResponse() },
 )
 
 fun CountryInfo.toResponse() = FlutterCountryInfo(
