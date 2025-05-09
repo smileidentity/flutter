@@ -69,7 +69,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
         var acknowledgedInstructions by rememberSaveable { mutableStateOf(false) }
         val userId = randomUserId()
         val jobId = randomJobId()
-        
+
         CompositionLocalProvider(
             LocalMetadata provides remember { Metadata.default().items.toMutableStateList() },
         ) {
@@ -100,9 +100,9 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                                     )
                                 },
                             )
-                            
+
                             val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
-                            
+
                             when {
                                 showInstructions && !acknowledgedInstructions ->
                                     SmartSelfieInstructionsScreen(
@@ -111,13 +111,18 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                                         acknowledgedInstructions = true
                                     }
                                 uiState.processingState != null -> HandleProcessingState(viewModel)
-                                uiState.selfieToConfirm != null -> 
+                                uiState.selfieToConfirm != null ->
                                     HandleSelfieConfirmation(
                                         showConfirmationDialog,
                                         uiState,
                                         viewModel,
                                     )
-                                else -> RenderSelfieCaptureScreen(userId, jobId, allowAgentMode, viewModel)
+                                else -> RenderSelfieCaptureScreen(
+                                    userId,
+                                    jobId,
+                                    allowAgentMode,
+                                    viewModel,
+                                )
                             }
                         }
                     },
@@ -125,7 +130,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
             }
         }
     }
-    
+
     @Composable
     private fun RenderSelfieCaptureScreen(
         userId: String,
@@ -160,15 +165,21 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
         if (showConfirmation) {
             ImageCaptureConfirmationDialog(
                 titleText = stringResource(R.string.si_smart_selfie_confirmation_dialog_title),
-                subtitleText = stringResource(R.string.si_smart_selfie_confirmation_dialog_subtitle),
+                subtitleText = stringResource(
+                    R.string.si_smart_selfie_confirmation_dialog_subtitle,
+                ),
                 painter = BitmapPainter(
                     BitmapFactory
                         .decodeFile(uiState.selfieToConfirm!!.absolutePath)
-                        .asImageBitmap()
+                        .asImageBitmap(),
                 ),
-                confirmButtonText = stringResource(R.string.si_smart_selfie_confirmation_dialog_confirm_button),
+                confirmButtonText = stringResource(
+                    R.string.si_smart_selfie_confirmation_dialog_confirm_button,
+                ),
                 onConfirm = { viewModel.submitJob() },
-                retakeButtonText = stringResource(R.string.si_smart_selfie_confirmation_dialog_retake_button),
+                retakeButtonText = stringResource(
+                    R.string.si_smart_selfie_confirmation_dialog_retake_button,
+                ),
                 onRetake = viewModel::onSelfieRejected,
                 scaleFactor = 1.25f,
             )
