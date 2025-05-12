@@ -35,15 +35,15 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
             countryCode = args["countryCode"] as String,
             documentType = args["documentType"] as? String,
             idAspectRatio = (args["idAspectRatio"] as Double?)?.toFloat(),
-            captureBothSides = args["captureBothSides"] as? Boolean != false,
+            captureBothSides = args["captureBothSides"] as? Boolean ?: true,
             userId = args["userId"] as? String ?: randomUserId(),
             jobId = args["jobId"] as? String ?: randomJobId(),
-            allowNewEnroll = args["allowNewEnroll"] as? Boolean == true,
-            showAttribution = args["showAttribution"] as? Boolean != false,
-            allowAgentMode = args["allowAgentMode"] as? Boolean == true,
-            allowGalleryUpload = args["allowGalleryUpload"] as? Boolean == true,
-            showInstructions = args["showInstructions"] as? Boolean != false,
-            useStrictMode = args["useStrictMode"] as? Boolean == true,
+            allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
+            showAttribution = args["showAttribution"] as? Boolean ?: true,
+            allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
+            allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false,
+            showInstructions = args["showInstructions"] as? Boolean ?: true,
+            useStrictMode = args["useStrictMode"] as? Boolean ?: false,
             consentInformation =
             ConsentInformation(
                 consented = ConsentedInformation(

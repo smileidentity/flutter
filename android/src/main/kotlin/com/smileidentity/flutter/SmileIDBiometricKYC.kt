@@ -57,11 +57,11 @@ internal class SmileIDBiometricKYC private constructor(
             ),
             userId = args["userId"] as? String ?: randomUserId(),
             jobId = args["jobId"] as? String ?: randomJobId(),
-            allowNewEnroll = args["allowNewEnroll"] as? Boolean == true,
-            allowAgentMode = args["allowAgentMode"] as? Boolean == true,
-            showAttribution = args["showAttribution"] as? Boolean != false,
-            showInstructions = args["showInstructions"] as? Boolean != false,
-            useStrictMode = args["useStrictMode"] as? Boolean != false,
+            allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
+            allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
+            showAttribution = args["showAttribution"] as? Boolean ?: true,
+            showInstructions = args["showInstructions"] as? Boolean ?: true,
+            useStrictMode = args["useStrictMode"] as? Boolean ?: true,
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {
             when (it) {
@@ -96,8 +96,9 @@ internal class SmileIDBiometricKYC private constructor(
         }
     }
 
-    class Factory(private val messenger: BinaryMessenger) :
-        PlatformViewFactory(StandardMessageCodec.INSTANCE) {
+    class Factory(
+        private val messenger: BinaryMessenger,
+    ) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
         override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
             @Suppress("UNCHECKED_CAST")
             return SmileIDBiometricKYC(

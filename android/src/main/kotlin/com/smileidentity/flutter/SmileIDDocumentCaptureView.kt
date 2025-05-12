@@ -147,8 +147,9 @@ internal class SmileIDDocumentCaptureView private constructor(
         }
     }
 
-    class Factory(private val messenger: BinaryMessenger) :
-        PlatformViewFactory(StandardMessageCodec.INSTANCE) {
+    class Factory(
+        private val messenger: BinaryMessenger,
+    ) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
         override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
             @Suppress("UNCHECKED_CAST")
             return SmileIDDocumentCaptureView(
