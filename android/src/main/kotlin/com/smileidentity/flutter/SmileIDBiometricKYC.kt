@@ -34,27 +34,27 @@ internal class SmileIDBiometricKYC private constructor(
         val extraPartnerParams = args["extraPartnerParams"] as? Map<String, String> ?: emptyMap()
         SmileID.BiometricKYC(
             idInfo =
-                IdInfo(
-                    country = args["country"] as? String ?: "",
-                    idType = args["idType"] as? String?,
-                    idNumber = args["idNumber"] as? String?,
-                    firstName = args["firstName"] as? String?,
-                    middleName = args["middleName"] as? String?,
-                    lastName = args["lastName"] as? String?,
-                    dob = args["dob"] as? String?,
-                    bankCode = args["bankCode"] as? String?,
-                    entered = args["entered"] as? Boolean?,
-                ),
+            IdInfo(
+                country = args["country"] as? String ?: "",
+                idType = args["idType"] as? String?,
+                idNumber = args["idNumber"] as? String?,
+                firstName = args["firstName"] as? String?,
+                middleName = args["middleName"] as? String?,
+                lastName = args["lastName"] as? String?,
+                dob = args["dob"] as? String?,
+                bankCode = args["bankCode"] as? String?,
+                entered = args["entered"] as? Boolean?,
+            ),
             consentInformation =
-                ConsentInformation(
-                    consented = ConsentedInformation(
-                        consentGrantedDate = args["consentGrantedDate"] as? String
-                            ?: getCurrentIsoTimestamp(),
-                        personalDetails = args["personalDetailsConsentGranted"] as? Boolean == true,
-                        contactInformation = args["contactInfoConsentGranted"] as? Boolean == true,
-                        documentInformation = args["documentInfoConsentGranted"] as? Boolean == true,
-                    ),
+            ConsentInformation(
+                consented = ConsentedInformation(
+                    consentGrantedDate = args["consentGrantedDate"] as? String
+                        ?: getCurrentIsoTimestamp(),
+                    personalDetails = args["personalDetailsConsentGranted"] as? Boolean == true,
+                    contactInformation = args["contactInfoConsentGranted"] as? Boolean == true,
+                    documentInformation = args["documentInfoConsentGranted"] as? Boolean == true,
                 ),
+            ),
             userId = args["userId"] as? String ?: randomUserId(),
             jobId = args["jobId"] as? String ?: randomJobId(),
             allowNewEnroll = args["allowNewEnroll"] as? Boolean == true,
@@ -96,9 +96,8 @@ internal class SmileIDBiometricKYC private constructor(
         }
     }
 
-    class Factory(
-        private val messenger: BinaryMessenger,
-    ) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
+    class Factory(private val messenger: BinaryMessenger) :
+        PlatformViewFactory(StandardMessageCodec.INSTANCE) {
         override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
             @Suppress("UNCHECKED_CAST")
             return SmileIDBiometricKYC(

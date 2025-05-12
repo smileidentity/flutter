@@ -45,15 +45,15 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
             showInstructions = args["showInstructions"] as? Boolean != false,
             useStrictMode = args["useStrictMode"] as? Boolean == true,
             consentInformation =
-                ConsentInformation(
-                    consented = ConsentedInformation(
-                        consentGrantedDate = args["consentGrantedDate"] as? String
-                            ?: getCurrentIsoTimestamp(),
-                        personalDetails = args["personalDetailsConsentGranted"] as? Boolean == true,
-                        contactInformation = args["contactInfoConsentGranted"] as? Boolean == true,
-                        documentInformation = args["documentInfoConsentGranted"] as? Boolean == true,
-                    ),
+            ConsentInformation(
+                consented = ConsentedInformation(
+                    consentGrantedDate = args["consentGrantedDate"] as? String
+                        ?: getCurrentIsoTimestamp(),
+                    personalDetails = args["personalDetailsConsentGranted"] as? Boolean == true,
+                    contactInformation = args["contactInfoConsentGranted"] as? Boolean == true,
+                    documentInformation = args["documentInfoConsentGranted"] as? Boolean == true,
                 ),
+            ),
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {
             when (it) {
@@ -90,9 +90,8 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
         }
     }
 
-    class Factory(
-        private val messenger: BinaryMessenger,
-    ) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
+    class Factory(private val messenger: BinaryMessenger) :
+        PlatformViewFactory(StandardMessageCodec.INSTANCE) {
         override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
             @Suppress("UNCHECKED_CAST")
             return SmileIDEnhancedDocumentVerification(
