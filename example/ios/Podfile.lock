@@ -21,7 +21,7 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - smile_id (from `.symlinks/plugins/smile_id/ios`)
-  - SmileID (from `https://github.com/smileidentity/ios.git`, branch `feature/consentmapping`)
+  - SmileID (from `https://github.com/smileidentity/ios.git`, branch `main`)
 
 SPEC REPOS:
   trunk:
@@ -37,12 +37,12 @@ EXTERNAL SOURCES:
   smile_id:
     :path: ".symlinks/plugins/smile_id/ios"
   SmileID:
-    :branch: feature/consentmapping
+    :branch: main
     :git: https://github.com/smileidentity/ios.git
 
 CHECKOUT OPTIONS:
   SmileID:
-    :commit: c13907fc654b04a3aeeaebb7e83047fc8aa6c383
+    :commit: 0f703955c9f4694f189e5e8c8736e35c8658cddc
     :git: https://github.com/smileidentity/ios.git
 
 SPEC CHECKSUMS:
@@ -54,6 +54,6 @@ SPEC CHECKSUMS:
   SmileID: 15bf2e69c158b9bcdd3a2e1531dd75e0fc9601e5
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
-PODFILE CHECKSUM: 25361a651e9d1c2c668be642ba7e04fd325642b6
+PODFILE CHECKSUM: 72c24f4cf75eb9250de26ce793633f5dbb16d096
 
 COCOAPODS: 1.16.2
