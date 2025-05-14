@@ -7,6 +7,9 @@
 * Bump iOS to 10.5.3 (https://github.com/smileidentity/ios/releases/tag/v10.5.3)
 * Bump android to 10.6.2 (https://github.com/smileidentity/android/releases/tag/v10.6.2)
 
+### Fixed
+* Underlying implementation for `showConfirmationDialog` flag for `SmileIDSmartSelfieCaptureView` on iOS and Android
+
 ## 10.4.2
 
 ### Changed

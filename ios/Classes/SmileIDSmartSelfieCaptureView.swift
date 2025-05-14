@@ -17,6 +17,7 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView, SmileIDFileU
         arguments args: [String: Any?],
         binaryMessenger messenger: FlutterBinaryMessenger
     ) {
+        let showConfirmationDialog = args["showConfirmationDialog"] as? Bool ?? true
         let showInstructions = args["showInstructions"] as? Bool ?? true
         let showAttribution = args["showAttribution"] as? Bool ?? true
         let allowAgentMode = args["allowAgentMode"] as? Bool ?? true
@@ -39,6 +40,7 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView, SmileIDFileU
 
         let rootView = SmileIDRootView(
             viewModel: _viewModel,
+            showConfirmationDialog: showConfirmationDialog,
             showInstructions: showInstructions,
             allowAgentMode: allowAgentMode,
             showAttribution: showAttribution,
@@ -65,6 +67,7 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView, SmileIDFileU
 struct SmileIDRootView: View {
     @ObservedObject var viewModel: SelfieViewModel
     @State private var acknowledgedInstructions = false
+    let showConfirmationDialog: Bool
     let showInstructions: Bool
     let allowAgentMode: Bool
     let showAttribution: Bool
@@ -81,7 +84,7 @@ struct SmileIDRootView: View {
     }
 
     private var selfieCaptureScreen: some View {
-        Group {
+        ZStack {
             if useStrictMode {
                 SmileID.smartSelfieEnrollmentScreenEnhanced(
                     userId: generateUserId(),
@@ -91,14 +94,44 @@ struct SmileIDRootView: View {
                     delegate: self
                 )
             } else {
-                SmileID.smartSelfieEnrollmentScreen(
-                    userId: generateUserId(),
-                    allowAgentMode: allowAgentMode,
-                    showAttribution: showAttribution,
-                    showInstructions: showInstructions,
-                    skipApiSubmission: true,
-                    delegate: self
-                )
+                legacySelfieCaptureScreen
+            }
+        }
+    }
+
+    private var legacySelfieCaptureScreen: some View {
+        ZStack {
+            if showInstructions, !acknowledgedInstructions {
+                SmartSelfieInstructionsScreen(showAttribution: showAttribution) {
+                    acknowledgedInstructions = true
+                }
+                .padding()
+            } else if viewModel.processingState != nil {
+                Color.clear.onAppear {
+                    self.viewModel.onFinished(callback: self)
+                }
+            } else if let selfieToConfirm = viewModel.selfieToConfirm {
+                if (showConfirmationDialog) {
+                    ImageCaptureConfirmationDialog(
+                        title: SmileIDResourcesHelper.localizedString(for: "Confirmation.GoodSelfie"),
+                        subtitle: SmileIDResourcesHelper.localizedString(for: "Confirmation.FaceClear"),
+                        image: UIImage(data: selfieToConfirm)!,
+                        confirmationButtonText: SmileIDResourcesHelper.localizedString(for: "Confirmation.YesUse"),
+                        onConfirm: viewModel.submitJob,
+                        retakeButtonText: SmileIDResourcesHelper.localizedString(for: "Confirmation.Retake"),
+                        onRetake: viewModel.onSelfieRejected,
+                        scaleFactor: 1.25
+                    )
+                    .preferredColorScheme(.light)
+                } else {
+                    Color.clear.onAppear {
+                        self.viewModel.submitJob()
+                    }
+                }
+            } else {
+                SelfieCaptureScreen(
+                    viewModel: viewModel, allowAgentMode: allowAgentMode
+                ).preferredColorScheme(.light)
             }
         }
     }
