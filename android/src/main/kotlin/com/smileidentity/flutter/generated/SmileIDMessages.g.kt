@@ -2508,9 +2508,7 @@ interface SmileIDApi {
                             if (it is Int) it.toLong() else it as Long?
                         }
                         val allowNewEnrollArg = args[8] as Boolean?
-                        api.doSmartSelfieEnrollment(signatureArg, timestampArg, selfieImageArg, livenessImagesArg, userIdArg, partnerParamsArg, callbackUrlArg, sandboxResultArg, allowNewEnrollArg) {
-                                result: Result<FlutterSmartSelfieResponse>,
-                            ->
+                        api.doSmartSelfieEnrollment(signatureArg, timestampArg, selfieImageArg, livenessImagesArg, userIdArg, partnerParamsArg, callbackUrlArg, sandboxResultArg, allowNewEnrollArg) { result: Result<FlutterSmartSelfieResponse> ->
                             val error = result.exceptionOrNull()
                             if (error != null) {
                                 reply.reply(wrapError(error))
