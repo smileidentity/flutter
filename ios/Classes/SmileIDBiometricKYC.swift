@@ -8,9 +8,9 @@ class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDel
     private var _view: UIView
     private var _channel: FlutterMethodChannel
     private var _childViewController: UIViewController?
-
+    
     static let VIEW_TYPE_ID = "SmileIDBiometricKYC"
-
+    
     init(
         frame: CGRect,
         viewIdentifier viewId: Int64,
@@ -44,28 +44,29 @@ class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDel
             showInstructions: args["showInstructions"] as? Bool ?? true,
             useStrictMode: args["useStrictMode"] as? Bool ?? false,
             extraPartnerParams: args["extraPartnerParams"] as? [String: String] ?? [:],
-            consentInformation: ConsentInformation(
+            consentInformation: ConsentInformation( consented: ConsentedInformation(
                 consentGrantedDate: args["consentGrantedDate"] as? String ?? getCurrentIsoTimestamp(),
                 personalDetails: args["personalDetailsConsentGranted"] as? Bool ?? false,
                 contactInformation: args["contactInfoConsentGranted"] as? Bool ?? false,
                 documentInformation: args["documentInfoConsentGranted"] as? Bool ?? false
+            )
             ),
             delegate: self
         )
         let navView = NavigationView{screen}
         _childViewController = embedView(navView, in: _view, frame: frame)
     }
-
+    
     func view() -> UIView {
         return _view
     }
-
+    
     func didSucceed(selfieImage: URL, livenessImages: [URL], didSubmitBiometricJob: Bool) {
         _childViewController?.removeFromParent()
         let arguments: [String: Any] = [
             "selfieFile": getFilePath(fileName: selfieImage.absoluteString),
             "livenessFiles": livenessImages.map {
-              getFilePath(fileName: $0.absoluteString)
+                getFilePath(fileName: $0.absoluteString)
             },
             "didSubmitBiometricKycJob": didSubmitBiometricJob,
         ]
@@ -78,19 +79,19 @@ class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDel
             didError(error: error)
         }
     }
-
+    
     func didError(error: Error) {
         print("[Smile ID] An error occurred - \(error.localizedDescription)")
         _channel.invokeMethod("onError", arguments: error.localizedDescription)
     }
-
+    
     class Factory : NSObject, FlutterPlatformViewFactory {
         private var messenger: FlutterBinaryMessenger
         init(messenger: FlutterBinaryMessenger) {
             self.messenger = messenger
             super.init()
         }
-
+        
         func create(
             withFrame frame: CGRect,
             viewIdentifier viewId: Int64,
@@ -103,9 +104,9 @@ class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDel
                 binaryMessenger: messenger
             )
         }
-
+        
         public func createArgsCodec() -> FlutterMessageCodec & NSObjectProtocol {
-              return FlutterStandardMessageCodec.sharedInstance()
+            return FlutterStandardMessageCodec.sharedInstance()
         }
     }
 }
