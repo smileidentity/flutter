@@ -16,9 +16,10 @@ buildscript {
         google()
         mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
-        maven {
-            url 'https://central.sonatype.com/repository/maven-snapshots/'
-        }
+//      uncomment for development to test snapshots
+//      maven {
+//          url = 'https://central.sonatype.com/repository/maven-snapshots/'
+//      }
     }
 
     dependencies {
@@ -36,9 +37,10 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        maven {
-            url 'https://central.sonatype.com/repository/maven-snapshots/'
-        }
+//      uncomment for development to test snapshots
+//      maven {
+//          url = 'https://central.sonatype.com/repository/maven-snapshots/'
+//      }
     }
 }
 
