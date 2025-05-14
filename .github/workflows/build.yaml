@@ -45,7 +45,7 @@ jobs:
       - name: Lint Android
         uses: musichin/ktlint-check@v3
         with:
-          ktlint-version: "1.2.1"
+          ktlint-version: "1.5.0"
           patterns: |
             **/**.kt
             !**/generated/**
