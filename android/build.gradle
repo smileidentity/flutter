@@ -1,6 +1,5 @@
 def kotlinVersion = findProperty('kotlinVersion') ?: '2.1.0'
-//def smileVersion = findProperty('smileVersion') ?: '10.6.1-SNAPSHOT' // Uncomment this line to use the latest snapshot version also uncomment the snapshot repository
-def smileVersion = findProperty('smileVersion') ?: '10.6.0'
+def smileVersion = findProperty('smileVersion') ?: '10.99.99-20250515.083057-6'
 def kotlinCompilerExtension = findProperty('kotlinCompilerExtensionVersion') ?: '1.5.14'
 
 ext {
@@ -16,10 +15,6 @@ buildscript {
         google()
         mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
-//     uncomment for development to test snapshots
-//     maven {
-//        url 'https://oss.sonatype.org/content/repositories/snapshots/'
-//     }
     }
 
     dependencies {
@@ -29,7 +24,7 @@ buildscript {
         } else {
             classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         }
-        classpath "org.jlleitschuh.gradle:ktlint-gradle:12.1.2"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:12.2.0"
     }
 }
 
@@ -37,7 +32,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/com/smileidentity/android-sdk/" }
     }
 }
 
