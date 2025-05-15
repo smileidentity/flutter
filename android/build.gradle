@@ -73,6 +73,10 @@ android {
         test.java.srcDirs += 'src/test/kotlin'
     }
 
+    lint {
+        disable "NullSafeMutableLiveData"
+    }
+
     testOptions {
         unitTests.all {
             useJUnitPlatform()
