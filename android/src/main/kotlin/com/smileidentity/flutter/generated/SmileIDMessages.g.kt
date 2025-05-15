@@ -39,9 +39,7 @@ class SmileFlutterError(
     val details: Any? = null,
 ) : Throwable()
 
-enum class FlutterJobType(
-    val raw: Int,
-) {
+enum class FlutterJobType(val raw: Int) {
     ENHANCEDKYC(0),
     DOCUMENTVERIFICATION(1),
     BIOMETRICKYC(2),
@@ -55,9 +53,7 @@ enum class FlutterJobType(
     }
 }
 
-enum class FlutterJobTypeV2(
-    val raw: Int,
-) {
+enum class FlutterJobTypeV2(val raw: Int) {
     SMARTSELFIEAUTHENTICATION(0),
     SMARTSELFIEENROLLMENT(1),
     ;
@@ -67,9 +63,7 @@ enum class FlutterJobTypeV2(
     }
 }
 
-enum class FlutterImageType(
-    val raw: Int,
-) {
+enum class FlutterImageType(val raw: Int) {
     SELFIEJPGFILE(0),
     IDCARDJPGFILE(1),
     SELFIEJPGBASE64(2),
@@ -85,9 +79,7 @@ enum class FlutterImageType(
     }
 }
 
-enum class FlutterActionResult(
-    val raw: Int,
-) {
+enum class FlutterActionResult(val raw: Int) {
     PASSED(0),
     COMPLETED(1),
     APPROVED(2),
@@ -113,9 +105,7 @@ enum class FlutterActionResult(
     }
 }
 
-enum class FlutterSmartSelfieStatus(
-    val raw: Int,
-) {
+enum class FlutterSmartSelfieStatus(val raw: Int) {
     APPROVED(0),
     PENDING(1),
     REJECTED(2),
@@ -133,6 +123,7 @@ data class FlutterConsentInformation(
     val personalDetailsConsentGranted: Boolean,
     val contactInfoConsentGranted: Boolean,
     val documentInfoConsentGranted: Boolean,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -149,14 +140,12 @@ data class FlutterConsentInformation(
             )
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            consentGrantedDate,
-            personalDetailsConsentGranted,
-            contactInfoConsentGranted,
-            documentInfoConsentGranted,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        consentGrantedDate,
+        personalDetailsConsentGranted,
+        contactInfoConsentGranted,
+        documentInfoConsentGranted,
+    )
 }
 
 /**
@@ -169,28 +158,26 @@ data class FlutterPartnerParams(
     val jobId: String,
     val userId: String,
     val extras: Map<String?, String?>? = null,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
         fun fromList(list: List<Any?>): FlutterPartnerParams {
-            val jobType: FlutterJobType? =
-                (list[0] as Int?)?.let {
-                    FlutterJobType.ofRaw(it)
-                }
+            val jobType: FlutterJobType? = (list[0] as Int?)?.let {
+                FlutterJobType.ofRaw(it)
+            }
             val jobId = list[1] as String
             val userId = list[2] as String
             val extras = list[3] as Map<String?, String?>?
             return FlutterPartnerParams(jobType, jobId, userId, extras)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            jobType?.raw,
-            jobId,
-            userId,
-            extras,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        jobType?.raw,
+        jobId,
+        userId,
+        extras,
+    )
 }
 
 /**
@@ -221,6 +208,7 @@ data class FlutterAuthenticationRequest(
     val updateEnrolledImage: Boolean? = null,
     val jobId: String? = null,
     val userId: String? = null,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -241,16 +229,14 @@ data class FlutterAuthenticationRequest(
             )
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            jobType.raw,
-            country,
-            idType,
-            updateEnrolledImage,
-            jobId,
-            userId,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        jobType.raw,
+        country,
+        idType,
+        updateEnrolledImage,
+        jobId,
+        userId,
+    )
 }
 
 /**
@@ -270,6 +256,7 @@ data class FlutterAuthenticationResponse(
     val partnerParams: FlutterPartnerParams,
     val callbackUrl: String? = null,
     val consentInfo: FlutterConsentInfo? = null,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -279,10 +266,9 @@ data class FlutterAuthenticationResponse(
             val timestamp = list[2] as String
             val partnerParams = FlutterPartnerParams.fromList(list[3] as List<Any?>)
             val callbackUrl = list[4] as String?
-            val consentInfo: FlutterConsentInfo? =
-                (list[5] as List<Any?>?)?.let {
-                    FlutterConsentInfo.fromList(it)
-                }
+            val consentInfo: FlutterConsentInfo? = (list[5] as List<Any?>?)?.let {
+                FlutterConsentInfo.fromList(it)
+            }
             return FlutterAuthenticationResponse(
                 success,
                 signature,
@@ -293,16 +279,14 @@ data class FlutterAuthenticationResponse(
             )
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            success,
-            signature,
-            timestamp,
-            partnerParams.toList(),
-            callbackUrl,
-            consentInfo?.toList(),
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        success,
+        signature,
+        timestamp,
+        partnerParams.toList(),
+        callbackUrl,
+        consentInfo?.toList(),
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
@@ -313,6 +297,7 @@ data class FlutterPrepUploadRequest(
     val partnerId: String,
     val timestamp: String,
     val signature: String,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -333,16 +318,14 @@ data class FlutterPrepUploadRequest(
             )
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            partnerParams.toList(),
-            callbackUrl,
-            allowNewEnroll,
-            partnerId,
-            timestamp,
-            signature,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        partnerParams.toList(),
+        callbackUrl,
+        allowNewEnroll,
+        partnerId,
+        timestamp,
+        signature,
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
@@ -351,6 +334,7 @@ data class FlutterPrepUploadResponse(
     val refId: String,
     val uploadUrl: String,
     val smileJobId: String,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -362,45 +346,38 @@ data class FlutterPrepUploadResponse(
             return FlutterPrepUploadResponse(code, refId, uploadUrl, smileJobId)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            code,
-            refId,
-            uploadUrl,
-            smileJobId,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        code,
+        refId,
+        uploadUrl,
+        smileJobId,
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
 data class FlutterUploadRequest(
     val images: List<FlutterUploadImageInfo?>,
     val idInfo: FlutterIdInfo? = null,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
         fun fromList(list: List<Any?>): FlutterUploadRequest {
             val images = list[0] as List<FlutterUploadImageInfo?>
-            val idInfo: FlutterIdInfo? =
-                (list[1] as List<Any?>?)?.let {
-                    FlutterIdInfo.fromList(it)
-                }
+            val idInfo: FlutterIdInfo? = (list[1] as List<Any?>?)?.let {
+                FlutterIdInfo.fromList(it)
+            }
             return FlutterUploadRequest(images, idInfo)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            images,
-            idInfo?.toList(),
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        images,
+        idInfo?.toList(),
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
-data class FlutterUploadImageInfo(
-    val imageTypeId: FlutterImageType,
-    val imageName: String,
-) {
+data class FlutterUploadImageInfo(val imageTypeId: FlutterImageType, val imageName: String) {
     companion object {
         @Suppress("UNCHECKED_CAST")
         fun fromList(list: List<Any?>): FlutterUploadImageInfo {
@@ -409,12 +386,10 @@ data class FlutterUploadImageInfo(
             return FlutterUploadImageInfo(imageTypeId, imageName)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            imageTypeId.raw,
-            imageName,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        imageTypeId.raw,
+        imageName,
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
@@ -428,6 +403,7 @@ data class FlutterIdInfo(
     val dob: String? = null,
     val bankCode: String? = null,
     val entered: Boolean? = null,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -441,32 +417,20 @@ data class FlutterIdInfo(
             val dob = list[6] as String?
             val bankCode = list[7] as String?
             val entered = list[8] as Boolean?
-            return FlutterIdInfo(
-                country,
-                idType,
-                idNumber,
-                firstName,
-                middleName,
-                lastName,
-                dob,
-                bankCode,
-                entered,
-            )
+            return FlutterIdInfo(country, idType, idNumber, firstName, middleName, lastName, dob, bankCode, entered)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            country,
-            idType,
-            idNumber,
-            firstName,
-            middleName,
-            lastName,
-            dob,
-            bankCode,
-            entered,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        country,
+        idType,
+        idNumber,
+        firstName,
+        middleName,
+        lastName,
+        dob,
+        bankCode,
+        entered,
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
@@ -483,6 +447,7 @@ data class FlutterEnhancedKycResponse(
     val expirationDate: String? = null,
     val dob: String? = null,
     val base64Photo: String? = null,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -499,38 +464,23 @@ data class FlutterEnhancedKycResponse(
             val expirationDate = list[9] as String?
             val dob = list[10] as String?
             val base64Photo = list[11] as String?
-            return FlutterEnhancedKycResponse(
-                smileJobId,
-                partnerParams,
-                resultText,
-                resultCode,
-                actions,
-                country,
-                idType,
-                idNumber,
-                fullName,
-                expirationDate,
-                dob,
-                base64Photo,
-            )
+            return FlutterEnhancedKycResponse(smileJobId, partnerParams, resultText, resultCode, actions, country, idType, idNumber, fullName, expirationDate, dob, base64Photo)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            smileJobId,
-            partnerParams.toList(),
-            resultText,
-            resultCode,
-            actions.toList(),
-            country,
-            idType,
-            idNumber,
-            fullName,
-            expirationDate,
-            dob,
-            base64Photo,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        smileJobId,
+        partnerParams.toList(),
+        resultText,
+        resultCode,
+        actions.toList(),
+        country,
+        idType,
+        idNumber,
+        fullName,
+        expirationDate,
+        dob,
+        base64Photo,
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
@@ -552,6 +502,7 @@ data class FlutterActions(
     val updateRegisteredSelfieOnFile: FlutterActionResult,
     val verifyDocument: FlutterActionResult,
     val verifyIdNumber: FlutterActionResult,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -573,48 +524,28 @@ data class FlutterActions(
             val updateRegisteredSelfieOnFile = FlutterActionResult.ofRaw(list[14] as Int)!!
             val verifyDocument = FlutterActionResult.ofRaw(list[15] as Int)!!
             val verifyIdNumber = FlutterActionResult.ofRaw(list[16] as Int)!!
-            return FlutterActions(
-                documentCheck,
-                humanReviewCompare,
-                humanReviewDocumentCheck,
-                humanReviewLivenessCheck,
-                humanReviewSelfieCheck,
-                humanReviewUpdateSelfie,
-                livenessCheck,
-                registerSelfie,
-                returnPersonalInfo,
-                selfieCheck,
-                selfieProvided,
-                selfieToIdAuthorityCompare,
-                selfieToIdCardCompare,
-                selfieToRegisteredSelfieCompare,
-                updateRegisteredSelfieOnFile,
-                verifyDocument,
-                verifyIdNumber,
-            )
+            return FlutterActions(documentCheck, humanReviewCompare, humanReviewDocumentCheck, humanReviewLivenessCheck, humanReviewSelfieCheck, humanReviewUpdateSelfie, livenessCheck, registerSelfie, returnPersonalInfo, selfieCheck, selfieProvided, selfieToIdAuthorityCompare, selfieToIdCardCompare, selfieToRegisteredSelfieCompare, updateRegisteredSelfieOnFile, verifyDocument, verifyIdNumber)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            documentCheck.raw,
-            humanReviewCompare.raw,
-            humanReviewDocumentCheck.raw,
-            humanReviewLivenessCheck.raw,
-            humanReviewSelfieCheck.raw,
-            humanReviewUpdateSelfie.raw,
-            livenessCheck.raw,
-            registerSelfie.raw,
-            returnPersonalInfo.raw,
-            selfieCheck.raw,
-            selfieProvided.raw,
-            selfieToIdAuthorityCompare.raw,
-            selfieToIdCardCompare.raw,
-            selfieToRegisteredSelfieCompare.raw,
-            updateRegisteredSelfieOnFile.raw,
-            verifyDocument.raw,
-            verifyIdNumber.raw,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        documentCheck.raw,
+        humanReviewCompare.raw,
+        humanReviewDocumentCheck.raw,
+        humanReviewLivenessCheck.raw,
+        humanReviewSelfieCheck.raw,
+        humanReviewUpdateSelfie.raw,
+        livenessCheck.raw,
+        registerSelfie.raw,
+        returnPersonalInfo.raw,
+        selfieCheck.raw,
+        selfieProvided.raw,
+        selfieToIdAuthorityCompare.raw,
+        selfieToIdCardCompare.raw,
+        selfieToRegisteredSelfieCompare.raw,
+        updateRegisteredSelfieOnFile.raw,
+        verifyDocument.raw,
+        verifyIdNumber.raw,
+    )
 }
 
 /**
@@ -623,10 +554,7 @@ data class FlutterActions(
  *
  * Generated class from Pigeon that represents data sent in messages.
  */
-data class FlutterConsentInfo(
-    val canAccess: Boolean,
-    val consentRequired: Boolean,
-) {
+data class FlutterConsentInfo(val canAccess: Boolean, val consentRequired: Boolean) {
     companion object {
         @Suppress("UNCHECKED_CAST")
         fun fromList(list: List<Any?>): FlutterConsentInfo {
@@ -635,12 +563,10 @@ data class FlutterConsentInfo(
             return FlutterConsentInfo(canAccess, consentRequired)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            canAccess,
-            consentRequired,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        canAccess,
+        consentRequired,
+    )
 }
 
 /**
@@ -664,6 +590,7 @@ data class FlutterEnhancedKycRequest(
     val timestamp: String,
     val signature: String,
     val consentInformation: FlutterConsentInformation? = null,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -681,52 +608,32 @@ data class FlutterEnhancedKycRequest(
             val partnerParams = FlutterPartnerParams.fromList(list[10] as List<Any?>)
             val timestamp = list[11] as String
             val signature = list[12] as String
-            val consentInformation: FlutterConsentInformation? =
-                (list[13] as List<Any?>?)?.let {
-                    FlutterConsentInformation.fromList(it)
-                }
-            return FlutterEnhancedKycRequest(
-                country,
-                idType,
-                idNumber,
-                firstName,
-                middleName,
-                lastName,
-                dob,
-                phoneNumber,
-                bankCode,
-                callbackUrl,
-                partnerParams,
-                timestamp,
-                signature,
-                consentInformation,
-            )
+            val consentInformation: FlutterConsentInformation? = (list[13] as List<Any?>?)?.let {
+                FlutterConsentInformation.fromList(it)
+            }
+            return FlutterEnhancedKycRequest(country, idType, idNumber, firstName, middleName, lastName, dob, phoneNumber, bankCode, callbackUrl, partnerParams, timestamp, signature, consentInformation)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            country,
-            idType,
-            idNumber,
-            firstName,
-            middleName,
-            lastName,
-            dob,
-            phoneNumber,
-            bankCode,
-            callbackUrl,
-            partnerParams.toList(),
-            timestamp,
-            signature,
-            consentInformation?.toList(),
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        country,
+        idType,
+        idNumber,
+        firstName,
+        middleName,
+        lastName,
+        dob,
+        phoneNumber,
+        bankCode,
+        callbackUrl,
+        partnerParams.toList(),
+        timestamp,
+        signature,
+        consentInformation?.toList(),
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
-data class FlutterEnhancedKycAsyncResponse(
-    val success: Boolean,
-) {
+data class FlutterEnhancedKycAsyncResponse(val success: Boolean) {
     companion object {
         @Suppress("UNCHECKED_CAST")
         fun fromList(list: List<Any?>): FlutterEnhancedKycAsyncResponse {
@@ -734,18 +641,13 @@ data class FlutterEnhancedKycAsyncResponse(
             return FlutterEnhancedKycAsyncResponse(success)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            success,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        success,
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
-data class FlutterImageLinks(
-    val selfieImageUrl: String? = null,
-    val error: String? = null,
-) {
+data class FlutterImageLinks(val selfieImageUrl: String? = null, val error: String? = null) {
     companion object {
         @Suppress("UNCHECKED_CAST")
         fun fromList(list: List<Any?>): FlutterImageLinks {
@@ -754,18 +656,14 @@ data class FlutterImageLinks(
             return FlutterImageLinks(selfieImageUrl, error)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            selfieImageUrl,
-            error,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        selfieImageUrl,
+        error,
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
-data class FlutterAntifraud(
-    val suspectUsers: List<FlutterSuspectUser?>,
-) {
+data class FlutterAntifraud(val suspectUsers: List<FlutterSuspectUser?>) {
     companion object {
         @Suppress("UNCHECKED_CAST")
         fun fromList(list: List<Any?>): FlutterAntifraud {
@@ -773,18 +671,13 @@ data class FlutterAntifraud(
             return FlutterAntifraud(suspectUsers)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            suspectUsers,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        suspectUsers,
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
-data class FlutterSuspectUser(
-    val reason: String,
-    val userId: String,
-) {
+data class FlutterSuspectUser(val reason: String, val userId: String) {
     companion object {
         @Suppress("UNCHECKED_CAST")
         fun fromList(list: List<Any?>): FlutterSuspectUser {
@@ -793,12 +686,10 @@ data class FlutterSuspectUser(
             return FlutterSuspectUser(reason, userId)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            reason,
-            userId,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        reason,
+        userId,
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
@@ -810,6 +701,7 @@ data class FlutterJobStatusRequest(
     val partnerId: String,
     val timestamp: String,
     val signature: String,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -832,17 +724,15 @@ data class FlutterJobStatusRequest(
             )
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            userId,
-            jobId,
-            includeImageLinks,
-            includeHistory,
-            partnerId,
-            timestamp,
-            signature,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        userId,
+        jobId,
+        includeImageLinks,
+        includeHistory,
+        partnerId,
+        timestamp,
+        signature,
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
@@ -853,6 +743,7 @@ data class FlutterSmartSelfieJobResult(
     val smileJobId: String,
     val partnerParams: FlutterPartnerParams,
     val confidence: Double? = null,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -873,16 +764,14 @@ data class FlutterSmartSelfieJobResult(
             )
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            actions.toList(),
-            resultCode,
-            resultText,
-            smileJobId,
-            partnerParams.toList(),
-            confidence,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        actions.toList(),
+        resultCode,
+        resultText,
+        smileJobId,
+        partnerParams.toList(),
+        confidence,
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
@@ -895,6 +784,7 @@ data class FlutterSmartSelfieJobStatusResponse(
     val resultString: String? = null,
     val history: List<FlutterSmartSelfieJobResult?>? = null,
     val imageLinks: FlutterImageLinks? = null,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -903,16 +793,14 @@ data class FlutterSmartSelfieJobStatusResponse(
             val jobComplete = list[1] as Boolean
             val jobSuccess = list[2] as Boolean
             val code = list[3] as String
-            val result: FlutterSmartSelfieJobResult? =
-                (list[4] as List<Any?>?)?.let {
-                    FlutterSmartSelfieJobResult.fromList(it)
-                }
+            val result: FlutterSmartSelfieJobResult? = (list[4] as List<Any?>?)?.let {
+                FlutterSmartSelfieJobResult.fromList(it)
+            }
             val resultString = list[5] as String?
             val history = list[6] as List<FlutterSmartSelfieJobResult?>?
-            val imageLinks: FlutterImageLinks? =
-                (list[7] as List<Any?>?)?.let {
-                    FlutterImageLinks.fromList(it)
-                }
+            val imageLinks: FlutterImageLinks? = (list[7] as List<Any?>?)?.let {
+                FlutterImageLinks.fromList(it)
+            }
             return FlutterSmartSelfieJobStatusResponse(
                 timestamp,
                 jobComplete,
@@ -925,18 +813,16 @@ data class FlutterSmartSelfieJobStatusResponse(
             )
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            timestamp,
-            jobComplete,
-            jobSuccess,
-            code,
-            result?.toList(),
-            resultString,
-            history,
-            imageLinks?.toList(),
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        timestamp,
+        jobComplete,
+        jobSuccess,
+        code,
+        result?.toList(),
+        resultString,
+        history,
+        imageLinks?.toList(),
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
@@ -951,6 +837,7 @@ data class FlutterSmartSelfieResponse(
     val status: FlutterSmartSelfieStatus,
     val updatedAt: String,
     val userId: String,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -965,34 +852,21 @@ data class FlutterSmartSelfieResponse(
             val status = FlutterSmartSelfieStatus.ofRaw(list[7] as Int)!!
             val updatedAt = list[8] as String
             val userId = list[9] as String
-            return FlutterSmartSelfieResponse(
-                code,
-                createdAt,
-                jobId,
-                jobType,
-                message,
-                partnerId,
-                partnerParams,
-                status,
-                updatedAt,
-                userId,
-            )
+            return FlutterSmartSelfieResponse(code, createdAt, jobId, jobType, message, partnerId, partnerParams, status, updatedAt, userId)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            code,
-            createdAt,
-            jobId,
-            jobType.raw,
-            message,
-            partnerId,
-            partnerParams,
-            status.raw,
-            updatedAt,
-            userId,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        code,
+        createdAt,
+        jobId,
+        jobType.raw,
+        message,
+        partnerId,
+        partnerParams,
+        status.raw,
+        updatedAt,
+        userId,
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
@@ -1013,6 +887,7 @@ data class FlutterDocumentVerificationJobResult(
     val phoneNumber: String? = null,
     val phoneNumber2: String? = null,
     val address: String? = null,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -1033,46 +908,27 @@ data class FlutterDocumentVerificationJobResult(
             val phoneNumber = list[13] as String?
             val phoneNumber2 = list[14] as String?
             val address = list[15] as String?
-            return FlutterDocumentVerificationJobResult(
-                actions,
-                resultCode,
-                resultText,
-                smileJobId,
-                partnerParams,
-                country,
-                idType,
-                idNumber,
-                fullName,
-                dob,
-                gender,
-                expirationDate,
-                documentImageBase64,
-                phoneNumber,
-                phoneNumber2,
-                address,
-            )
+            return FlutterDocumentVerificationJobResult(actions, resultCode, resultText, smileJobId, partnerParams, country, idType, idNumber, fullName, dob, gender, expirationDate, documentImageBase64, phoneNumber, phoneNumber2, address)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            actions.toList(),
-            resultCode,
-            resultText,
-            smileJobId,
-            partnerParams.toList(),
-            country,
-            idType,
-            idNumber,
-            fullName,
-            dob,
-            gender,
-            expirationDate,
-            documentImageBase64,
-            phoneNumber,
-            phoneNumber2,
-            address,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        actions.toList(),
+        resultCode,
+        resultText,
+        smileJobId,
+        partnerParams.toList(),
+        country,
+        idType,
+        idNumber,
+        fullName,
+        dob,
+        gender,
+        expirationDate,
+        documentImageBase64,
+        phoneNumber,
+        phoneNumber2,
+        address,
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
@@ -1085,6 +941,7 @@ data class FlutterDocumentVerificationJobStatusResponse(
     val resultString: String? = null,
     val history: List<FlutterDocumentVerificationJobResult?>? = null,
     val imageLinks: FlutterImageLinks? = null,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -1093,16 +950,14 @@ data class FlutterDocumentVerificationJobStatusResponse(
             val jobComplete = list[1] as Boolean
             val jobSuccess = list[2] as Boolean
             val code = list[3] as String
-            val result: FlutterDocumentVerificationJobResult? =
-                (list[4] as List<Any?>?)?.let {
-                    FlutterDocumentVerificationJobResult.fromList(it)
-                }
+            val result: FlutterDocumentVerificationJobResult? = (list[4] as List<Any?>?)?.let {
+                FlutterDocumentVerificationJobResult.fromList(it)
+            }
             val resultString = list[5] as String?
             val history = list[6] as List<FlutterDocumentVerificationJobResult?>?
-            val imageLinks: FlutterImageLinks? =
-                (list[7] as List<Any?>?)?.let {
-                    FlutterImageLinks.fromList(it)
-                }
+            val imageLinks: FlutterImageLinks? = (list[7] as List<Any?>?)?.let {
+                FlutterImageLinks.fromList(it)
+            }
             return FlutterDocumentVerificationJobStatusResponse(
                 timestamp,
                 jobComplete,
@@ -1115,18 +970,16 @@ data class FlutterDocumentVerificationJobStatusResponse(
             )
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            timestamp,
-            jobComplete,
-            jobSuccess,
-            code,
-            result?.toList(),
-            resultString,
-            history,
-            imageLinks?.toList(),
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        timestamp,
+        jobComplete,
+        jobSuccess,
+        code,
+        result?.toList(),
+        resultString,
+        history,
+        imageLinks?.toList(),
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
@@ -1154,6 +1007,7 @@ data class FlutterBiometricKycJobResult(
     val secondaryIdNumber: String? = null,
     val idNumberPreviouslyRegistered: Boolean? = null,
     val previousRegistrantsUserIds: List<String?>? = null,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -1164,10 +1018,9 @@ data class FlutterBiometricKycJobResult(
             val resultType = list[3] as String
             val smileJobId = list[4] as String
             val partnerParams = FlutterPartnerParams.fromList(list[5] as List<Any?>)
-            val antifraud: FlutterAntifraud? =
-                (list[6] as List<Any?>?)?.let {
-                    FlutterAntifraud.fromList(it)
-                }
+            val antifraud: FlutterAntifraud? = (list[6] as List<Any?>?)?.let {
+                FlutterAntifraud.fromList(it)
+            }
             val dob = list[7] as String?
             val photoBase64 = list[8] as String?
             val gender = list[9] as String?
@@ -1184,60 +1037,34 @@ data class FlutterBiometricKycJobResult(
             val secondaryIdNumber = list[20] as String?
             val idNumberPreviouslyRegistered = list[21] as Boolean?
             val previousRegistrantsUserIds = list[22] as List<String?>?
-            return FlutterBiometricKycJobResult(
-                actions,
-                resultCode,
-                resultText,
-                resultType,
-                smileJobId,
-                partnerParams,
-                antifraud,
-                dob,
-                photoBase64,
-                gender,
-                idType,
-                address,
-                country,
-                documentImageBase64,
-                fullData,
-                fullName,
-                idNumber,
-                phoneNumber,
-                phoneNumber2,
-                expirationDate,
-                secondaryIdNumber,
-                idNumberPreviouslyRegistered,
-                previousRegistrantsUserIds,
-            )
+            return FlutterBiometricKycJobResult(actions, resultCode, resultText, resultType, smileJobId, partnerParams, antifraud, dob, photoBase64, gender, idType, address, country, documentImageBase64, fullData, fullName, idNumber, phoneNumber, phoneNumber2, expirationDate, secondaryIdNumber, idNumberPreviouslyRegistered, previousRegistrantsUserIds)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            actions.toList(),
-            resultCode,
-            resultText,
-            resultType,
-            smileJobId,
-            partnerParams.toList(),
-            antifraud?.toList(),
-            dob,
-            photoBase64,
-            gender,
-            idType,
-            address,
-            country,
-            documentImageBase64,
-            fullData,
-            fullName,
-            idNumber,
-            phoneNumber,
-            phoneNumber2,
-            expirationDate,
-            secondaryIdNumber,
-            idNumberPreviouslyRegistered,
-            previousRegistrantsUserIds,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        actions.toList(),
+        resultCode,
+        resultText,
+        resultType,
+        smileJobId,
+        partnerParams.toList(),
+        antifraud?.toList(),
+        dob,
+        photoBase64,
+        gender,
+        idType,
+        address,
+        country,
+        documentImageBase64,
+        fullData,
+        fullName,
+        idNumber,
+        phoneNumber,
+        phoneNumber2,
+        expirationDate,
+        secondaryIdNumber,
+        idNumberPreviouslyRegistered,
+        previousRegistrantsUserIds,
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
@@ -1250,6 +1077,7 @@ data class FlutterBiometricKycJobStatusResponse(
     val resultString: String? = null,
     val history: List<FlutterBiometricKycJobResult?>? = null,
     val imageLinks: FlutterImageLinks? = null,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -1258,16 +1086,14 @@ data class FlutterBiometricKycJobStatusResponse(
             val jobComplete = list[1] as Boolean
             val jobSuccess = list[2] as Boolean
             val code = list[3] as String
-            val result: FlutterBiometricKycJobResult? =
-                (list[4] as List<Any?>?)?.let {
-                    FlutterBiometricKycJobResult.fromList(it)
-                }
+            val result: FlutterBiometricKycJobResult? = (list[4] as List<Any?>?)?.let {
+                FlutterBiometricKycJobResult.fromList(it)
+            }
             val resultString = list[5] as String?
             val history = list[6] as List<FlutterBiometricKycJobResult?>?
-            val imageLinks: FlutterImageLinks? =
-                (list[7] as List<Any?>?)?.let {
-                    FlutterImageLinks.fromList(it)
-                }
+            val imageLinks: FlutterImageLinks? = (list[7] as List<Any?>?)?.let {
+                FlutterImageLinks.fromList(it)
+            }
             return FlutterBiometricKycJobStatusResponse(
                 timestamp,
                 jobComplete,
@@ -1280,18 +1106,16 @@ data class FlutterBiometricKycJobStatusResponse(
             )
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            timestamp,
-            jobComplete,
-            jobSuccess,
-            code,
-            result?.toList(),
-            resultString,
-            history,
-            imageLinks?.toList(),
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        timestamp,
+        jobComplete,
+        jobSuccess,
+        code,
+        result?.toList(),
+        resultString,
+        history,
+        imageLinks?.toList(),
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
@@ -1319,6 +1143,7 @@ data class FlutterEnhancedDocumentVerificationJobResult(
     val secondaryIdNumber: String? = null,
     val idNumberPreviouslyRegistered: Boolean? = null,
     val previousRegistrantsUserIds: List<String?>? = null,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -1329,10 +1154,9 @@ data class FlutterEnhancedDocumentVerificationJobResult(
             val resultType = list[3] as String
             val smileJobId = list[4] as String
             val partnerParams = FlutterPartnerParams.fromList(list[5] as List<Any?>)
-            val antifraud: FlutterAntifraud? =
-                (list[6] as List<Any?>?)?.let {
-                    FlutterAntifraud.fromList(it)
-                }
+            val antifraud: FlutterAntifraud? = (list[6] as List<Any?>?)?.let {
+                FlutterAntifraud.fromList(it)
+            }
             val dob = list[7] as String?
             val photoBase64 = list[8] as String?
             val gender = list[9] as String?
@@ -1349,60 +1173,34 @@ data class FlutterEnhancedDocumentVerificationJobResult(
             val secondaryIdNumber = list[20] as String?
             val idNumberPreviouslyRegistered = list[21] as Boolean?
             val previousRegistrantsUserIds = list[22] as List<String?>?
-            return FlutterEnhancedDocumentVerificationJobResult(
-                actions,
-                resultCode,
-                resultText,
-                resultType,
-                smileJobId,
-                partnerParams,
-                antifraud,
-                dob,
-                photoBase64,
-                gender,
-                idType,
-                address,
-                country,
-                documentImageBase64,
-                fullData,
-                fullName,
-                idNumber,
-                phoneNumber,
-                phoneNumber2,
-                expirationDate,
-                secondaryIdNumber,
-                idNumberPreviouslyRegistered,
-                previousRegistrantsUserIds,
-            )
+            return FlutterEnhancedDocumentVerificationJobResult(actions, resultCode, resultText, resultType, smileJobId, partnerParams, antifraud, dob, photoBase64, gender, idType, address, country, documentImageBase64, fullData, fullName, idNumber, phoneNumber, phoneNumber2, expirationDate, secondaryIdNumber, idNumberPreviouslyRegistered, previousRegistrantsUserIds)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            actions.toList(),
-            resultCode,
-            resultText,
-            resultType,
-            smileJobId,
-            partnerParams.toList(),
-            antifraud?.toList(),
-            dob,
-            photoBase64,
-            gender,
-            idType,
-            address,
-            country,
-            documentImageBase64,
-            fullData,
-            fullName,
-            idNumber,
-            phoneNumber,
-            phoneNumber2,
-            expirationDate,
-            secondaryIdNumber,
-            idNumberPreviouslyRegistered,
-            previousRegistrantsUserIds,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        actions.toList(),
+        resultCode,
+        resultText,
+        resultType,
+        smileJobId,
+        partnerParams.toList(),
+        antifraud?.toList(),
+        dob,
+        photoBase64,
+        gender,
+        idType,
+        address,
+        country,
+        documentImageBase64,
+        fullData,
+        fullName,
+        idNumber,
+        phoneNumber,
+        phoneNumber2,
+        expirationDate,
+        secondaryIdNumber,
+        idNumberPreviouslyRegistered,
+        previousRegistrantsUserIds,
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
@@ -1415,6 +1213,7 @@ data class FlutterEnhancedDocumentVerificationJobStatusResponse(
     val resultString: String? = null,
     val history: List<FlutterEnhancedDocumentVerificationJobResult?>? = null,
     val imageLinks: FlutterImageLinks? = null,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -1423,16 +1222,14 @@ data class FlutterEnhancedDocumentVerificationJobStatusResponse(
             val jobComplete = list[1] as Boolean
             val jobSuccess = list[2] as Boolean
             val code = list[3] as String
-            val result: FlutterEnhancedDocumentVerificationJobResult? =
-                (list[4] as List<Any?>?)?.let {
-                    FlutterEnhancedDocumentVerificationJobResult.fromList(it)
-                }
+            val result: FlutterEnhancedDocumentVerificationJobResult? = (list[4] as List<Any?>?)?.let {
+                FlutterEnhancedDocumentVerificationJobResult.fromList(it)
+            }
             val resultString = list[5] as String?
             val history = list[6] as List<FlutterEnhancedDocumentVerificationJobResult?>?
-            val imageLinks: FlutterImageLinks? =
-                (list[7] as List<Any?>?)?.let {
-                    FlutterImageLinks.fromList(it)
-                }
+            val imageLinks: FlutterImageLinks? = (list[7] as List<Any?>?)?.let {
+                FlutterImageLinks.fromList(it)
+            }
             return FlutterEnhancedDocumentVerificationJobStatusResponse(
                 timestamp,
                 jobComplete,
@@ -1445,18 +1242,16 @@ data class FlutterEnhancedDocumentVerificationJobStatusResponse(
             )
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            timestamp,
-            jobComplete,
-            jobSuccess,
-            code,
-            result?.toList(),
-            resultString,
-            history,
-            imageLinks?.toList(),
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        timestamp,
+        jobComplete,
+        jobSuccess,
+        code,
+        result?.toList(),
+        resultString,
+        history,
+        imageLinks?.toList(),
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
@@ -1464,6 +1259,7 @@ data class FlutterProductsConfigRequest(
     val partnerId: String,
     val timestamp: String,
     val signature: String,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -1474,19 +1270,18 @@ data class FlutterProductsConfigRequest(
             return FlutterProductsConfigRequest(partnerId, timestamp, signature)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            partnerId,
-            timestamp,
-            signature,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        partnerId,
+        timestamp,
+        signature,
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
 data class FlutterProductsConfigResponse(
     val consentRequired: Map<String?, List<String?>?>,
     val idSelection: FlutterIdSelection,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -1496,12 +1291,10 @@ data class FlutterProductsConfigResponse(
             return FlutterProductsConfigResponse(consentRequired, idSelection)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            consentRequired,
-            idSelection.toList(),
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        consentRequired,
+        idSelection.toList(),
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
@@ -1510,6 +1303,7 @@ data class FlutterIdSelection(
     val biometricKyc: Map<String?, List<String?>?>,
     val enhancedKyc: Map<String?, List<String?>?>,
     val documentVerification: Map<String?, List<String?>?>,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -1521,20 +1315,16 @@ data class FlutterIdSelection(
             return FlutterIdSelection(basicKyc, biometricKyc, enhancedKyc, documentVerification)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            basicKyc,
-            biometricKyc,
-            enhancedKyc,
-            documentVerification,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        basicKyc,
+        biometricKyc,
+        enhancedKyc,
+        documentVerification,
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
-data class FlutterValidDocumentsResponse(
-    val validDocuments: List<FlutterValidDocument?>,
-) {
+data class FlutterValidDocumentsResponse(val validDocuments: List<FlutterValidDocument?>) {
     companion object {
         @Suppress("UNCHECKED_CAST")
         fun fromList(list: List<Any?>): FlutterValidDocumentsResponse {
@@ -1542,18 +1332,13 @@ data class FlutterValidDocumentsResponse(
             return FlutterValidDocumentsResponse(validDocuments)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            validDocuments,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        validDocuments,
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
-data class FlutterValidDocument(
-    val country: FlutterCountry,
-    val idTypes: List<FlutterIdType?>,
-) {
+data class FlutterValidDocument(val country: FlutterCountry, val idTypes: List<FlutterIdType?>) {
     companion object {
         @Suppress("UNCHECKED_CAST")
         fun fromList(list: List<Any?>): FlutterValidDocument {
@@ -1562,20 +1347,14 @@ data class FlutterValidDocument(
             return FlutterValidDocument(country, idTypes)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            country.toList(),
-            idTypes,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        country.toList(),
+        idTypes,
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
-data class FlutterCountry(
-    val code: String,
-    val continent: String,
-    val name: String,
-) {
+data class FlutterCountry(val code: String, val continent: String, val name: String) {
     companion object {
         @Suppress("UNCHECKED_CAST")
         fun fromList(list: List<Any?>): FlutterCountry {
@@ -1585,13 +1364,11 @@ data class FlutterCountry(
             return FlutterCountry(code, continent, name)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            code,
-            continent,
-            name,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        code,
+        continent,
+        name,
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
@@ -1600,6 +1377,7 @@ data class FlutterIdType(
     val example: List<String?>,
     val hasBack: Boolean,
     val name: String,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -1611,20 +1389,19 @@ data class FlutterIdType(
             return FlutterIdType(code, example, hasBack, name)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            code,
-            example,
-            hasBack,
-            name,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        code,
+        example,
+        hasBack,
+        name,
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
 data class FlutterServicesResponse(
     val bankCodes: List<FlutterBankCode?>,
     val hostedWeb: FlutterHostedWeb,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -1634,19 +1411,14 @@ data class FlutterServicesResponse(
             return FlutterServicesResponse(bankCodes, hostedWeb)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            bankCodes,
-            hostedWeb.toList(),
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        bankCodes,
+        hostedWeb.toList(),
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
-data class FlutterBankCode(
-    val name: String,
-    val code: String,
-) {
+data class FlutterBankCode(val name: String, val code: String) {
     companion object {
         @Suppress("UNCHECKED_CAST")
         fun fromList(list: List<Any?>): FlutterBankCode {
@@ -1655,12 +1427,10 @@ data class FlutterBankCode(
             return FlutterBankCode(name, code)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            name,
-            code,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        name,
+        code,
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
@@ -1671,6 +1441,7 @@ data class FlutterHostedWeb(
     val documentVerification: Map<String?, FlutterCountryInfo?>,
     val enhancedKycSmartSelfie: Map<String?, FlutterCountryInfo?>,
     val enhancedDocumentVerification: Map<String?, FlutterCountryInfo?>,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -1691,16 +1462,14 @@ data class FlutterHostedWeb(
             )
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            basicKyc,
-            biometricKyc,
-            enhancedKyc,
-            documentVerification,
-            enhancedKycSmartSelfie,
-            enhancedDocumentVerification,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        basicKyc,
+        biometricKyc,
+        enhancedKyc,
+        documentVerification,
+        enhancedKycSmartSelfie,
+        enhancedDocumentVerification,
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
@@ -1708,6 +1477,7 @@ data class FlutterCountryInfo(
     val countryCode: String,
     val name: String,
     val availableIdTypes: List<FlutterAvailableIdType?>,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -1718,13 +1488,11 @@ data class FlutterCountryInfo(
             return FlutterCountryInfo(countryCode, name, availableIdTypes)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            countryCode,
-            name,
-            availableIdTypes,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        countryCode,
+        name,
+        availableIdTypes,
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
@@ -1734,6 +1502,7 @@ data class FlutterAvailableIdType(
     val requiredFields: List<String?>,
     val testData: String? = null,
     val idNumberRegex: String? = null,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -1746,15 +1515,13 @@ data class FlutterAvailableIdType(
             return FlutterAvailableIdType(idTypeKey, label, requiredFields, testData, idNumberRegex)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            idTypeKey,
-            label,
-            requiredFields,
-            testData,
-            idNumberRegex,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        idTypeKey,
+        label,
+        requiredFields,
+        testData,
+        idNumberRegex,
+    )
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
@@ -1763,6 +1530,7 @@ data class FlutterConfig(
     val authToken: String,
     val prodBaseUrl: String,
     val sandboxBaseUrl: String,
+
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -1774,22 +1542,17 @@ data class FlutterConfig(
             return FlutterConfig(partnerId, authToken, prodBaseUrl, sandboxBaseUrl)
         }
     }
-
-    fun toList(): List<Any?> =
-        listOf<Any?>(
-            partnerId,
-            authToken,
-            prodBaseUrl,
-            sandboxBaseUrl,
-        )
+    fun toList(): List<Any?> = listOf<Any?>(
+        partnerId,
+        authToken,
+        prodBaseUrl,
+        sandboxBaseUrl,
+    )
 }
 
 @Suppress("UNCHECKED_CAST")
 private object SmileIDApiCodec : StandardMessageCodec() {
-    override fun readValueOfType(
-        type: Byte,
-        buffer: ByteBuffer,
-    ): Any? {
+    override fun readValueOfType(type: Byte, buffer: ByteBuffer): Any? {
         return when (type) {
             128.toByte() -> {
                 return (readValue(buffer) as? List<Any?>)?.let {
@@ -2014,11 +1777,7 @@ private object SmileIDApiCodec : StandardMessageCodec() {
             else -> super.readValueOfType(type, buffer)
         }
     }
-
-    override fun writeValue(
-        stream: ByteArrayOutputStream,
-        value: Any?,
-    ) {
+    override fun writeValue(stream: ByteArrayOutputStream, value: Any?) {
         when (value) {
             is FlutterActions -> {
                 stream.write(128)
@@ -2209,63 +1968,40 @@ interface SmileIDApi {
         useSandbox: Boolean,
         enableCrashReporting: Boolean,
     )
-
     fun initializeWithConfig(
         config: FlutterConfig,
         useSandbox: Boolean,
         enableCrashReporting: Boolean,
     )
-
     fun initialize(useSandbox: Boolean)
-
     fun setCallbackUrl(callbackUrl: String)
-
     fun setAllowOfflineMode(allowOfflineMode: Boolean)
-
     fun getSubmittedJobs(): List<String>
-
     fun getUnsubmittedJobs(): List<String>
-
     fun cleanup(jobId: String)
-
     fun cleanupJobs(jobIds: List<String>)
-
-    fun submitJob(
-        jobId: String,
-        deleteFilesOnSuccess: Boolean,
-    )
-
+    fun submitJob(jobId: String, deleteFilesOnSuccess: Boolean)
     fun authenticate(
         request: FlutterAuthenticationRequest,
         callback: (Result<FlutterAuthenticationResponse>) -> Unit,
     )
-
     fun prepUpload(
         request: FlutterPrepUploadRequest,
         callback: (Result<FlutterPrepUploadResponse>) -> Unit,
     )
-
-    fun upload(
-        url: String,
-        request: FlutterUploadRequest,
-        callback: (Result<Unit>) -> Unit,
-    )
-
+    fun upload(url: String, request: FlutterUploadRequest, callback: (Result<Unit>) -> Unit)
     fun doEnhancedKyc(
         request: FlutterEnhancedKycRequest,
         callback: (Result<FlutterEnhancedKycResponse>) -> Unit,
     )
-
     fun doEnhancedKycAsync(
         request: FlutterEnhancedKycRequest,
         callback: (Result<FlutterEnhancedKycAsyncResponse>) -> Unit,
     )
-
     fun getSmartSelfieJobStatus(
         request: FlutterJobStatusRequest,
         callback: (Result<FlutterSmartSelfieJobStatusResponse>) -> Unit,
     )
-
     fun doSmartSelfieEnrollment(
         signature: String,
         timestamp: String,
@@ -2278,7 +2014,6 @@ interface SmileIDApi {
         allowNewEnroll: Boolean?,
         callback: (Result<FlutterSmartSelfieResponse>) -> Unit,
     )
-
     fun doSmartSelfieAuthentication(
         signature: String,
         timestamp: String,
@@ -2290,55 +2025,45 @@ interface SmileIDApi {
         sandboxResult: Long?,
         callback: (Result<FlutterSmartSelfieResponse>) -> Unit,
     )
-
     fun getDocumentVerificationJobStatus(
         request: FlutterJobStatusRequest,
         callback: (Result<FlutterDocumentVerificationJobStatusResponse>) -> Unit,
     )
-
     fun getBiometricKycJobStatus(
         request: FlutterJobStatusRequest,
         callback: (Result<FlutterBiometricKycJobStatusResponse>) -> Unit,
     )
-
     fun getEnhancedDocumentVerificationJobStatus(
         request: FlutterJobStatusRequest,
         callback: (Result<FlutterEnhancedDocumentVerificationJobStatusResponse>) -> Unit,
     )
-
     fun getProductsConfig(
         request: FlutterProductsConfigRequest,
         callback: (Result<FlutterProductsConfigResponse>) -> Unit,
     )
-
     fun getValidDocuments(
         request: FlutterProductsConfigRequest,
         callback: (Result<FlutterValidDocumentsResponse>) -> Unit,
     )
-
     fun getServices(callback: (Result<FlutterServicesResponse>) -> Unit)
-
     fun pollSmartSelfieJobStatus(
         request: FlutterJobStatusRequest,
         interval: Long,
         numAttempts: Long,
         callback: (Result<FlutterSmartSelfieJobStatusResponse>) -> Unit,
     )
-
     fun pollDocumentVerificationJobStatus(
         request: FlutterJobStatusRequest,
         interval: Long,
         numAttempts: Long,
         callback: (Result<FlutterDocumentVerificationJobStatusResponse>) -> Unit,
     )
-
     fun pollBiometricKycJobStatus(
         request: FlutterJobStatusRequest,
         interval: Long,
         numAttempts: Long,
         callback: (Result<FlutterBiometricKycJobStatusResponse>) -> Unit,
     )
-
     fun pollEnhancedDocumentVerificationJobStatus(
         request: FlutterJobStatusRequest,
         interval: Long,
@@ -2354,10 +2079,7 @@ interface SmileIDApi {
 
         /** Sets up an instance of `SmileIDApi` to handle messages through the `binaryMessenger`. */
         @Suppress("UNCHECKED_CAST")
-        fun setUp(
-            binaryMessenger: BinaryMessenger,
-            api: SmileIDApi?,
-        ) {
+        fun setUp(binaryMessenger: BinaryMessenger, api: SmileIDApi?) {
             run {
                 val channel =
                     BasicMessageChannel<Any?>(
@@ -2782,22 +2504,11 @@ interface SmileIDApi {
                         val userIdArg = args[4] as String
                         val partnerParamsArg = args[5] as Map<String?, String?>?
                         val callbackUrlArg = args[6] as String?
-                        val sandboxResultArg =
-                            args[7].let {
-                                if (it is Int) it.toLong() else it as Long?
-                            }
+                        val sandboxResultArg = args[7].let {
+                            if (it is Int) it.toLong() else it as Long?
+                        }
                         val allowNewEnrollArg = args[8] as Boolean?
-                        api.doSmartSelfieEnrollment(
-                            signatureArg,
-                            timestampArg,
-                            selfieImageArg,
-                            livenessImagesArg,
-                            userIdArg,
-                            partnerParamsArg,
-                            callbackUrlArg,
-                            sandboxResultArg,
-                            allowNewEnrollArg,
-                        ) { result: Result<FlutterSmartSelfieResponse> ->
+                        api.doSmartSelfieEnrollment(signatureArg, timestampArg, selfieImageArg, livenessImagesArg, userIdArg, partnerParamsArg, callbackUrlArg, sandboxResultArg, allowNewEnrollArg) { result: Result<FlutterSmartSelfieResponse> ->
                             val error = result.exceptionOrNull()
                             if (error != null) {
                                 reply.reply(wrapError(error))
@@ -2828,10 +2539,9 @@ interface SmileIDApi {
                         val userIdArg = args[4] as String
                         val partnerParamsArg = args[5] as Map<String?, String?>?
                         val callbackUrlArg = args[6] as String?
-                        val sandboxResultArg =
-                            args[7].let {
-                                if (it is Int) it.toLong() else it as Long?
-                            }
+                        val sandboxResultArg = args[7].let {
+                            if (it is Int) it.toLong() else it as Long?
+                        }
                         api.doSmartSelfieAuthentication(
                             signatureArg,
                             timestampArg,
@@ -2920,9 +2630,10 @@ interface SmileIDApi {
                     channel.setMessageHandler { message, reply ->
                         val args = message as List<Any?>
                         val requestArg = args[0] as FlutterJobStatusRequest
-                        api.getEnhancedDocumentVerificationJobStatus(
-                            requestArg,
-                        ) { result: Result<FlutterEnhancedDocumentVerificationJobStatusResponse> ->
+                        api.getEnhancedDocumentVerificationJobStatus(requestArg) {
+                                result:
+                                Result<FlutterEnhancedDocumentVerificationJobStatusResponse>,
+                            ->
                             val error = result.exceptionOrNull()
                             if (error != null) {
                                 reply.reply(wrapError(error))
@@ -3025,10 +2736,9 @@ interface SmileIDApi {
                         val args = message as List<Any?>
                         val requestArg = args[0] as FlutterJobStatusRequest
                         val intervalArg = args[1].let { if (it is Int) it.toLong() else it as Long }
-                        val numAttemptsArg =
-                            args[2].let {
-                                if (it is Int) it.toLong() else it as Long
-                            }
+                        val numAttemptsArg = args[2].let {
+                            if (it is Int) it.toLong() else it as Long
+                        }
                         api.pollSmartSelfieJobStatus(
                             requestArg,
                             intervalArg,
@@ -3059,10 +2769,9 @@ interface SmileIDApi {
                         val args = message as List<Any?>
                         val requestArg = args[0] as FlutterJobStatusRequest
                         val intervalArg = args[1].let { if (it is Int) it.toLong() else it as Long }
-                        val numAttemptsArg =
-                            args[2].let {
-                                if (it is Int) it.toLong() else it as Long
-                            }
+                        val numAttemptsArg = args[2].let {
+                            if (it is Int) it.toLong() else it as Long
+                        }
                         api.pollDocumentVerificationJobStatus(
                             requestArg,
                             intervalArg,
@@ -3093,10 +2802,9 @@ interface SmileIDApi {
                         val args = message as List<Any?>
                         val requestArg = args[0] as FlutterJobStatusRequest
                         val intervalArg = args[1].let { if (it is Int) it.toLong() else it as Long }
-                        val numAttemptsArg =
-                            args[2].let {
-                                if (it is Int) it.toLong() else it as Long
-                            }
+                        val numAttemptsArg = args[2].let {
+                            if (it is Int) it.toLong() else it as Long
+                        }
                         api.pollBiometricKycJobStatus(
                             requestArg,
                             intervalArg,
@@ -3127,15 +2835,17 @@ interface SmileIDApi {
                         val args = message as List<Any?>
                         val requestArg = args[0] as FlutterJobStatusRequest
                         val intervalArg = args[1].let { if (it is Int) it.toLong() else it as Long }
-                        val numAttemptsArg =
-                            args[2].let {
-                                if (it is Int) it.toLong() else it as Long
-                            }
+                        val numAttemptsArg = args[2].let {
+                            if (it is Int) it.toLong() else it as Long
+                        }
                         api.pollEnhancedDocumentVerificationJobStatus(
                             requestArg,
                             intervalArg,
                             numAttemptsArg,
-                        ) { result: Result<FlutterEnhancedDocumentVerificationJobStatusResponse> ->
+                        ) {
+                                result:
+                                Result<FlutterEnhancedDocumentVerificationJobStatusResponse>,
+                            ->
                             val error = result.exceptionOrNull()
                             if (error != null) {
                                 reply.reply(wrapError(error))

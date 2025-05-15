@@ -58,6 +58,7 @@ import com.smileidentity.models.BiometricKycJobStatusResponse
 import com.smileidentity.models.Config
 import com.smileidentity.models.ConsentInfo
 import com.smileidentity.models.ConsentInformation
+import com.smileidentity.models.ConsentedInformation
 import com.smileidentity.models.Country
 import com.smileidentity.models.CountryInfo
 import com.smileidentity.models.DocumentVerificationJobResult
@@ -232,10 +233,12 @@ fun FlutterIdInfo.toRequest() = IdInfo(
 )
 
 fun FlutterConsentInformation.toRequest() = ConsentInformation(
-    consentGrantedDate = consentGrantedDate,
-    personalDetailsConsentGranted = personalDetailsConsentGranted,
-    contactInfoConsentGranted = contactInfoConsentGranted,
-    documentInfoConsentGranted = documentInfoConsentGranted,
+    consented = ConsentedInformation(
+        consentGrantedDate = consentGrantedDate,
+        personalDetails = personalDetailsConsentGranted,
+        contactInformation = contactInfoConsentGranted,
+        documentInformation = documentInfoConsentGranted,
+    ),
 )
 
 fun FlutterEnhancedKycRequest.toRequest() = EnhancedKycRequest(
@@ -255,10 +258,12 @@ fun FlutterEnhancedKycRequest.toRequest() = EnhancedKycRequest(
     signature = signature,
     consentInformation =
     consentInformation?.toRequest() ?: ConsentInformation(
-        consentGrantedDate = getCurrentIsoTimestamp(),
-        personalDetailsConsentGranted = false,
-        contactInfoConsentGranted = false,
-        documentInfoConsentGranted = false,
+        consented = ConsentedInformation(
+            consentGrantedDate = getCurrentIsoTimestamp(),
+            personalDetails = false,
+            contactInformation = false,
+            documentInformation = false,
+        ),
     ),
 )
 

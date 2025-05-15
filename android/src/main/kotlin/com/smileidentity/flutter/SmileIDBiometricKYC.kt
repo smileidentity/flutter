@@ -8,6 +8,7 @@ import com.smileidentity.flutter.results.SmartSelfieCaptureResult
 import com.smileidentity.flutter.utils.SelfieCaptureResultAdapter
 import com.smileidentity.flutter.utils.getCurrentIsoTimestamp
 import com.smileidentity.models.ConsentInformation
+import com.smileidentity.models.ConsentedInformation
 import com.smileidentity.models.IdInfo
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
@@ -46,16 +47,13 @@ internal class SmileIDBiometricKYC private constructor(
             ),
             consentInformation =
             ConsentInformation(
-                consentGrantedDate =
-                args["consentGrantedDate"] as? String ?: getCurrentIsoTimestamp(),
-                personalDetailsConsentGranted =
-                args["personalDetailsConsentGranted"] as? Boolean
-                    ?: false,
-                contactInfoConsentGranted =
-                args["contactInfoConsentGranted"] as? Boolean ?: false,
-                documentInfoConsentGranted =
-                args["documentInfoConsentGranted"] as? Boolean
-                    ?: false,
+                consented = ConsentedInformation(
+                    consentGrantedDate = args["consentGrantedDate"] as? String
+                        ?: getCurrentIsoTimestamp(),
+                    personalDetails = args["personalDetailsConsentGranted"] as? Boolean == true,
+                    contactInformation = args["contactInfoConsentGranted"] as? Boolean == true,
+                    documentInformation = args["documentInfoConsentGranted"] as? Boolean == true,
+                ),
             ),
             userId = args["userId"] as? String ?: randomUserId(),
             jobId = args["jobId"] as? String ?: randomJobId(),
@@ -98,9 +96,8 @@ internal class SmileIDBiometricKYC private constructor(
         }
     }
 
-    class Factory(
-        private val messenger: BinaryMessenger,
-    ) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
+    class Factory(private val messenger: BinaryMessenger) :
+        PlatformViewFactory(StandardMessageCodec.INSTANCE) {
         override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
             @Suppress("UNCHECKED_CAST")
             return SmileIDBiometricKYC(

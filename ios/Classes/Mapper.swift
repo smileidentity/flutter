@@ -19,14 +19,14 @@ func convertFlexibleDictionaryToOptionalStringDictionary(
     guard let flexDict = flexDict else {
         return nil
     }
-
+    
     guard let data = try? JSONEncoder().encode(flexDict),
           let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []),
           let dictionary = jsonObject as? [String: Any]
     else {
         return nil
     }
-
+    
     let convertedDict = dictionary.mapValues { value -> String? in
         if let stringValue = value as? String {
             return stringValue
@@ -36,7 +36,7 @@ func convertFlexibleDictionaryToOptionalStringDictionary(
             return nil
         }
     }
-
+    
     return convertedDict.isEmpty ? nil : convertedDict
 }
 
@@ -61,15 +61,15 @@ func getFile(atPath path: String) -> Data? {
 extension FlutterPartnerParams {
     func toRequest() -> PartnerParams {
         let mappedExtras = (extras?
-        .compactMapValues {
-            $0
-        }
-        .filter {
-            $0.key != nil && !$0.key!.isEmpty && !$0.value.isEmpty
-        }
-        .reduce(into: [String: String]()) { dict, pair in
-            dict[pair.key!] = pair.value
-        }) ?? [:]
+            .compactMapValues {
+                $0
+            }
+            .filter {
+                $0.key != nil && !$0.key!.isEmpty && !$0.value.isEmpty
+            }
+            .reduce(into: [String: String]()) { dict, pair in
+                dict[pair.key!] = pair.value
+            }) ?? [:]
         return PartnerParams(
             jobId: jobId,
             userId: userId,
@@ -251,11 +251,12 @@ extension FlutterIdInfo {
 
 extension FlutterConsentInformation {
     func toRequest() -> ConsentInformation {
-        ConsentInformation(
+        ConsentInformation( consented: ConsentedInformation(
             consentGrantedDate: consentGrantedDate,
-            personalDetailsConsentGranted: personalDetailsConsentGranted,
-            contactInformationConsentGranted: contactInfoConsentGranted,
-            documentInformationConsentGranted: documentInfoConsentGranted
+            personalDetails: personalDetailsConsentGranted,
+            contactInformation: contactInfoConsentGranted,
+            documentInformation: documentInfoConsentGranted
+        )
         )
     }
 }
@@ -268,10 +269,12 @@ extension FlutterEnhancedKycRequest {
             idNumber: idNumber,
             consentInformation: consentInformation?
                 .toRequest() ?? ConsentInformation(
-                    consentGrantedDate: getCurrentIsoTimestamp(),
-                    personalDetailsConsentGranted: false,
-                    contactInformationConsentGranted: false,
-                    documentInformationConsentGranted: false
+                    consented: ConsentedInformation(
+                        consentGrantedDate: getCurrentIsoTimestamp(),
+                        personalDetails: false,
+                        contactInformation: false,
+                        documentInformation: false
+                    )
                 ),
             firstName: firstName,
             middleName: middleName,
