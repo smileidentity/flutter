@@ -30,7 +30,7 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 flutter_ios_podfile_setup
 # for development alongside ../../ios/smile_id.podspec uncomment the version and specify
 # tag or branch in here DO NOT MERGE THIS TO main branch
-# pod 'SmileID', git: 'https://github.com/smileidentity/ios.git', branch: 'main'
+pod 'SmileID', git: 'https://github.com/smileidentity/ios.git', branch: 'feat/integrate-smile-security-module'
 target 'Runner' do
   use_frameworks!
   use_modular_headers!
