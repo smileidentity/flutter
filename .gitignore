@@ -32,3 +32,5 @@ build/
 
 .fvm/
 smile_config.json
+
+example/android/app/.cxx

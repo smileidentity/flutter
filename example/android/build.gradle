@@ -8,10 +8,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-//      uncomment for development to test snapshots
-//      maven {
-//          url = 'https://central.sonatype.com/repository/maven-snapshots/'
-//      }
+        maven { url "https://central.sonatype.com/repository/maven-snapshots/" }
     }
 }
 
