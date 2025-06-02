@@ -26,6 +26,7 @@ import com.smileidentity.SmileID
 import com.smileidentity.SmileIDOptIn
 import com.smileidentity.flutter.enhanced.SmileIDSmartSelfieAuthenticationEnhanced
 import com.smileidentity.flutter.enhanced.SmileIDSmartSelfieEnrollmentEnhanced
+import com.smileidentity.metadata.models.WrapperSdkName
 import com.smileidentity.networking.asFormDataPart
 import com.smileidentity.networking.pollBiometricKycJobStatus
 import com.smileidentity.networking.pollDocumentVerificationJobStatus
@@ -58,6 +59,15 @@ class SmileIDPlugin :
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         SmileIDApi.setUp(flutterPluginBinding.binaryMessenger, this)
         appContext = flutterPluginBinding.applicationContext
+
+        // Set wrapper info for Flutter SDK
+        try {
+            val version = com.smileidentity.flutter.BuildConfig.SMILE_ID_VERSION
+            SmileID.setWrapperInfo(WrapperSdkName.Flutter, version)
+        } catch (e: Exception) {
+            // Fallback to default version if BuildConfig is not available
+            SmileID.setWrapperInfo(WrapperSdkName.Flutter, "11.0.0")
+        }
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDDocumentVerification.VIEW_TYPE_ID,

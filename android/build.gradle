@@ -57,6 +57,17 @@ android {
 
     defaultConfig {
         minSdk 21
+        
+        // Read version from pubspec.yaml for setWrapperInfo
+        def pubspecYaml = new File("../pubspec.yaml")
+        def pubspecText = pubspecYaml.text
+        def versionLine = pubspecText.find(/version:\s*(.+)/)
+        def version = versionLine ? pubspecText.split(/version:\s*/)[1].split(/\n/)[0].trim() : "11.0.0"
+        buildConfigField "String", "SMILE_ID_VERSION", "\"${version}\""
+    }
+    
+    buildFeatures {
+        buildConfig true
     }
 
     compileOptions {
