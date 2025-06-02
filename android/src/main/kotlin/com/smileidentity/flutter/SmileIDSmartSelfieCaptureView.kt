@@ -12,13 +12,10 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
@@ -31,12 +28,10 @@ import com.smileidentity.SmileID
 import com.smileidentity.SmileIDOptIn
 import com.smileidentity.compose.SmartSelfieEnrollmentEnhanced
 import com.smileidentity.compose.components.ImageCaptureConfirmationDialog
-import com.smileidentity.compose.components.LocalMetadata
 import com.smileidentity.compose.selfie.SelfieCaptureScreen
 import com.smileidentity.compose.selfie.SmartSelfieInstructionsScreen
 import com.smileidentity.compose.theme.colorScheme
 import com.smileidentity.compose.theme.typography
-import com.smileidentity.models.v2.Metadata
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
 import com.smileidentity.viewmodel.SelfieUiState
@@ -69,64 +64,59 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
         val userId = randomUserId()
         val jobId = randomJobId()
 
-        CompositionLocalProvider(
-            LocalMetadata provides remember { Metadata.default().items.toMutableStateList() },
-        ) {
-            MaterialTheme(colorScheme = SmileID.colorScheme, typography = SmileID.typography) {
-                Surface(
-                    content = {
-                        if (useStrictMode) {
-                            // Enhanced mode doesn't support confirmation dialog
-                            SmileID.SmartSelfieEnrollmentEnhanced(
-                                userId = userId,
-                                showAttribution = showAttribution,
-                                showInstructions = showInstructions,
-                                skipApiSubmission = true,
-                                onResult = { res -> handleResult(res) },
-                            )
-                        } else {
-                            // Custom implementation for regular mode with confirmation dialog support
-                            val metadata = LocalMetadata.current
-                            val viewModel: SelfieViewModel = viewModel(
-                                factory = viewModelFactory {
-                                    SelfieViewModel(
-                                        isEnroll = true,
-                                        userId = userId,
-                                        jobId = jobId,
-                                        allowNewEnroll = true,
-                                        skipApiSubmission = true,
-                                        metadata = metadata,
-                                    )
-                                },
-                            )
+        MaterialTheme(colorScheme = SmileID.colorScheme, typography = SmileID.typography) {
+            Surface(
+                content = {
+                    if (useStrictMode) {
+                        // Enhanced mode doesn't support confirmation dialog
+                        SmileID.SmartSelfieEnrollmentEnhanced(
+                            userId = userId,
+                            showAttribution = showAttribution,
+                            showInstructions = showInstructions,
+                            skipApiSubmission = true,
+                            onResult = { res -> handleResult(res) },
+                        )
+                    } else {
+                        // Custom implementation for regular mode with confirmation dialog support
+                        val viewModel: SelfieViewModel = viewModel(
+                            factory = viewModelFactory {
+                                SelfieViewModel(
+                                    isEnroll = true,
+                                    userId = userId,
+                                    jobId = jobId,
+                                    allowNewEnroll = true,
+                                    skipApiSubmission = true,
+                                    metadata = mutableListOf(),
+                                )
+                            },
+                        )
 
-                            val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
+                        val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
 
-                            when {
-                                showInstructions && !acknowledgedInstructions ->
-                                    SmartSelfieInstructionsScreen(
-                                        showAttribution = showAttribution,
-                                    ) {
-                                        acknowledgedInstructions = true
-                                    }
-                                uiState.processingState != null -> HandleProcessingState(viewModel)
-                                uiState.selfieToConfirm != null ->
-                                    HandleSelfieConfirmation(
-                                        showConfirmationDialog,
-                                        uiState,
-                                        viewModel,
-                                    )
-                                else -> RenderSelfieCaptureScreen(
-                                    userId,
-                                    jobId,
-                                    allowAgentMode,
+                        when {
+                            showInstructions && !acknowledgedInstructions ->
+                                SmartSelfieInstructionsScreen(
+                                    showAttribution = showAttribution,
+                                ) {
+                                    acknowledgedInstructions = true
+                                }
+                            uiState.processingState != null -> HandleProcessingState(viewModel)
+                            uiState.selfieToConfirm != null ->
+                                HandleSelfieConfirmation(
+                                    showConfirmationDialog,
+                                    uiState,
                                     viewModel,
                                 )
-                            }
+                            else -> RenderSelfieCaptureScreen(
+                                userId,
+                                jobId,
+                                allowAgentMode,
+                                viewModel,
+                            )
                         }
-                    },
-                )
-            }
+                    }
+                },
+            )
         }
     }
 
