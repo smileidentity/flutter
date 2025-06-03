@@ -29,8 +29,7 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView, SmileIDFileU
             jobId: generateJobId(),
             allowNewEnroll: false,
             skipApiSubmission: true,
-            extraPartnerParams: [:],
-            localMetadata: LocalMetadata()
+            extraPartnerParams: [:]
         )
 
         _channel = FlutterMethodChannel(
@@ -111,7 +110,7 @@ struct SmileIDRootView: View {
                     self.viewModel.onFinished(callback: self)
                 }
             } else if let selfieToConfirm = viewModel.selfieToConfirm {
-                if (showConfirmationDialog) {
+                if showConfirmationDialog {
                     ImageCaptureConfirmationDialog(
                         title: SmileIDResourcesHelper.localizedString(for: "Confirmation.GoodSelfie"),
                         subtitle: SmileIDResourcesHelper.localizedString(for: "Confirmation.FaceClear"),

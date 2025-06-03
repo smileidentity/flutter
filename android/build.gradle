@@ -1,6 +1,6 @@
 def kotlinVersion = findProperty('kotlinVersion') ?: '2.1.0'
-//def smileVersion = findProperty('smileVersion') ?: '10.6.3-SNAPSHOT' // Uncomment this line to use the latest snapshot version also uncomment the snapshot repository'
-def smileVersion = findProperty('smileVersion') ?: '10.6.3'
+//def smileVersion = findProperty('smileVersion') ?: '11.0.1-SNAPSHOT' // Uncomment this line to use the latest snapshot version also uncomment the snapshot repository'
+def smileVersion = findProperty('smileVersion') ?: '11.0.1'
 def kotlinCompilerExtension = findProperty('kotlinCompilerExtensionVersion') ?: '1.5.14'
 
 ext {
@@ -29,7 +29,7 @@ buildscript {
         } else {
             classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         }
-        classpath "org.jlleitschuh.gradle:ktlint-gradle:12.1.2"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:12.2.0"
     }
 }
 
@@ -57,6 +57,17 @@ android {
 
     defaultConfig {
         minSdk 21
+        
+        // Read version from pubspec.yaml for setWrapperInfo
+        def pubspecYaml = new File("../pubspec.yaml")
+        def pubspecText = pubspecYaml.text
+        def versionLine = pubspecText.find(/version:\s*(.+)/)
+        def version = versionLine ? pubspecText.split(/version:\s*/)[1].split(/\n/)[0].trim() : "11.0.0"
+        buildConfigField "String", "SMILE_ID_VERSION", "\"${version}\""
+    }
+    
+    buildFeatures {
+        buildConfig true
     }
 
     compileOptions {
