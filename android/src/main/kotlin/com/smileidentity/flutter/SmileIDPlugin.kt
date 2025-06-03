@@ -61,13 +61,7 @@ class SmileIDPlugin :
         appContext = flutterPluginBinding.applicationContext
 
         // Set wrapper info for Flutter SDK
-        try {
-            val version = com.smileidentity.flutter.BuildConfig.SMILE_ID_VERSION
-            SmileID.setWrapperInfo(WrapperSdkName.Flutter, version)
-        } catch (e: Exception) {
-            // Fallback to default version if BuildConfig is not available
-            SmileID.setWrapperInfo(WrapperSdkName.Flutter, "11.0.0")
-        }
+        SmileID.setWrapperInfo(WrapperSdkName.Flutter, "11.0.0")
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDDocumentVerification.VIEW_TYPE_ID,
