@@ -1,5 +1,5 @@
 def kotlinVersion = findProperty('kotlinVersion') ?: '2.1.0'
-//def smileVersion = findProperty('smileVersion') ?: '10.6.3-SNAPSHOT' // Uncomment this line to use the latest snapshot version also uncomment the snapshot repository'
+//def smileVersion = findProperty('smileVersion') ?: '11.0.0-SNAPSHOT' // Uncomment this line to use the latest snapshot version also uncomment the snapshot repository'
 def smileVersion = findProperty('smileVersion') ?: '11.0.0'
 def kotlinCompilerExtension = findProperty('kotlinCompilerExtensionVersion') ?: '1.5.14'
 
@@ -29,7 +29,7 @@ buildscript {
         } else {
             classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         }
-        classpath "org.jlleitschuh.gradle:ktlint-gradle:12.1.2"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:12.2.0"
     }
 }
 
