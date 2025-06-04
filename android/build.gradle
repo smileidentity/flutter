@@ -1,6 +1,6 @@
 def kotlinVersion = findProperty('kotlinVersion') ?: '2.1.0'
 //def smileVersion = findProperty('smileVersion') ?: '11.0.3-SNAPSHOT' // Uncomment this line to use the latest snapshot version also uncomment the snapshot repository'
-def smileVersion = findProperty('smileVersion') ?: '11.0.3-20250604.202429-1'
+def smileVersion = findProperty('smileVersion') ?: '11.0.3'
 def kotlinCompilerExtension = findProperty('kotlinCompilerExtensionVersion') ?: '1.5.14'
 
 ext {
