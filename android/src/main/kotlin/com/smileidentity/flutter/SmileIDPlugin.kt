@@ -61,7 +61,7 @@ class SmileIDPlugin :
         appContext = flutterPluginBinding.applicationContext
 
         // Set wrapper info for Flutter SDK
-        SmileID.setWrapperInfo(WrapperSdkName.Flutter, "11.0.0")
+        SmileID.setWrapperInfo(WrapperSdkName.Flutter, "11.0.1")
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDDocumentVerification.VIEW_TYPE_ID,

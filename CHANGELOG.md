@@ -1,5 +1,10 @@
 # Release Notes
 
+## 11.0.1
+
+### Fixed
+* Metadata collection for Document Capture Screen and Selfie Capture Screen on Android
+
 ## 11.0.0
 
 ### Changed
