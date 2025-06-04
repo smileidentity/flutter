@@ -360,7 +360,7 @@ class MainContent extends StatelessWidget {
               showInstructions: true,
               showAttribution: false,
               allowAgentMode: false,
-              useStrictMode: true,
+              useStrictMode: false,
               onSuccess: (String? result) {
                 // Your success handling logic
                 Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
