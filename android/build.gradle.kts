@@ -29,7 +29,6 @@ buildscript {
         } else {
             classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersionBuildScript")
         }
-        classpath("org.jlleitschuh.gradle:ktlint-gradle:12.2.0")
     }
 }
 
@@ -45,9 +44,9 @@ allprojects {
 }
 
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    id("org.jlleitschuh.gradle.ktlint")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ktlint)
 }
 
 // Apply compose plugin conditionally for Kotlin 2.x
