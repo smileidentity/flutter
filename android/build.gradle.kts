@@ -23,7 +23,6 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:8.7.3")
         if (kotlinVersionBuildScript.startsWith("2")) {
             classpath("org.jetbrains.kotlin:compose-compiler-gradle-plugin:$kotlinVersionBuildScript")
         } else {

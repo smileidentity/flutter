@@ -17,15 +17,15 @@ pluginManagement {
 }
 
 dependencyResolutionManagement {
-    repositories {
-        google()
-        mavenCentral()
-        gradlePluginPortal()
-    }
     versionCatalogs {
         create("libs") {
             from(files("../../android/gradle/libs.versions.toml"))
         }
+    }
+     repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
     }
 }
 include(":app")

@@ -1,8 +1,8 @@
 plugins {
-    id("com.android.application")
-    id("kotlin-android")
-    id("org.jlleitschuh.gradle.ktlint")
-    id("dev.flutter.flutter-gradle-plugin")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ktlint)
+    alias(libs.plugins.ktlint)
 }
 
 android {
