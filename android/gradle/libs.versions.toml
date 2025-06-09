@@ -3,11 +3,10 @@ android-gradle-plugin = "8.7.3"
 flutter-plugin-loader = "1.0.0"
 kotlin = "2.1.0"
 kotlin-immutable-collections = "0.4.0"
-ktlint-plugin = "12.1.3"
+ktlint-plugin = "12.1.2"
 mockk = "1.13.13"
 mlkit = "17.0.2"
-smile-id = "11.0.1"
-smile-id-snapshot = "11.0.1-SNAPSHOT"
+smile-id = "11.0.3-20250609.065709-4"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx" }
@@ -15,18 +14,18 @@ androidx-compose-ui = { module = "androidx.compose.ui:ui" }
 androidx-compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
 androidx-fragment = { module = "androidx.fragment:fragment-ktx" }
-koltin-coroutines = { module ="org.jetbrains.kotlinx:kotlinx-coroutines-core" }
+kotlin-coroutines = { module ="org.jetbrains.kotlinx:kotlinx-coroutines-core" }
 kotlin-immutable-collections = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlin-immutable-collections" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test" }
+mlkit = { module = "com.google.mlkit:object-detection" , version.ref="mlkit" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 smile-id = { module = "com.smileidentity:smile-id", version.ref = "smile-id" }
-smile-id-snapshot = { module = "com.smileidentity:smile-id", version.ref = "smile-id-snapshot" }
-
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
 android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 flutter-plugin-loader = { id = "dev.flutter.flutter-plugin-loader", version.ref = "flutter-plugin-loader" }
+flutter-gradle-plugin = { id = "dev.flutter.flutter-gradle-plugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-plugin" }
