@@ -1,8 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.ktlint)
-    alias(libs.plugins.ktlint)
+    alias(libs.plugins.flutter.gradle.plugin)
 }
 
 android {
@@ -16,7 +15,7 @@ android {
     defaultConfig {
         applicationId = "com.smileidentity.flutter.sample"
         minSdk = 21
-        targetSdk = flutter.targetSdkVersion
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0.0"
     }
@@ -31,5 +30,19 @@ android {
     kotlinOptions {
         jvmTarget = "17"
         freeCompilerArgs += listOf("-Xskip-metadata-version-check")
+    }
+
+    val checkSmileConfigFileTaskName = "checkSmileConfigFile"
+    tasks.register(checkSmileConfigFileTaskName) {
+        doLast {
+            val configFile = file("src/main/assets/smile_config.json")
+            if (configFile.readText().isBlank()) {
+                throw IllegalArgumentException("Empty smile_config.json file in src/main/assets!")
+            }
+        }
+    }
+
+    tasks.named("assemble") {
+        dependsOn(checkSmileConfigFileTaskName)
     }
 }
