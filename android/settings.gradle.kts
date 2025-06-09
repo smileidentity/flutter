@@ -17,5 +17,3 @@ dependencyResolutionManagement {
       }
     }
 }
-
-include(":lib")
