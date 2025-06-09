@@ -1,12 +1,11 @@
 [versions]
 android-gradle-plugin = "8.7.3"
-flutter-plugin-loader = "1.0.0"
-kotlin = "2.1.0"
+kotlin = "2.1.21"
 kotlin-immutable-collections = "0.4.0"
-ktlint-plugin = "12.1.2"
-mockk = "1.13.13"
+ktlint-plugin = "12.3.0"
+mockk = "1.14.2"
 mlkit = "17.0.2"
-smile-id = "11.0.3-20250609.065709-4"
+smileid = "11.0.3"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx" }
@@ -19,13 +18,11 @@ kotlin-immutable-collections = { module = "org.jetbrains.kotlinx:kotlinx-collect
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test" }
 mlkit = { module = "com.google.mlkit:object-detection" , version.ref="mlkit" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
-smile-id = { module = "com.smileidentity:smile-id", version.ref = "smile-id" }
+smileid = { module = "com.smileidentity:android-sdk", version.ref = "smileid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
-android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-flutter-plugin-loader = { id = "dev.flutter.flutter-plugin-loader", version.ref = "flutter-plugin-loader" }
 flutter-gradle-plugin = { id = "dev.flutter.flutter-gradle-plugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-plugin" }
