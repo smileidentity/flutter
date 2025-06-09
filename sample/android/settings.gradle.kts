@@ -20,6 +20,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url = uri("https://central.sonatype.com/repository/maven-snapshots/") }
     }
 
     versionCatalogs {
@@ -27,6 +28,12 @@ dependencyResolutionManagement {
             from(files("../../android/gradle/libs.versions.toml"))
         }
     }
+}
+
+plugins {
+    id("com.android.application") version "8.7.3" apply false
+    id("org.jetbrains.kotlin.android") version "2.1.21" apply false
+    id("dev.flutter.flutter-plugin-loader") version "1.0.0"
 }
 
 include(":app")
