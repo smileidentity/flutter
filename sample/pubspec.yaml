@@ -14,7 +14,7 @@ dependencies:
   smile_id:
     # When depending on this package from a real application you should use:
     #   smile_id: ^x.y.z
-    # The example app is bundled with the plugin so we use a path dependency on
+    # The sample app is bundled with the plugin so we use a path dependency on
     # the parent directory to use the current plugin's version.
     path: ../
 

@@ -1,5 +1,15 @@
 # Release Notes
 
+## 11.0.2
+
+### Changed
+* Renamed **example** folder to **sample** and replaced all usages of example in the project.
+* Migrate all gradle files in the sample and SDK folders from Groovy to Kotlin.
+* Add a `libs.versions.toml` file to share dependencies between the sample project and the Android SDK.
+* Cleanup and minor code improvements on the gradlew files.
+* Update Android Gradle Plugin and Kotlin version to the latest.
+* Fail the `assemble` gradle task when `smile_config.json` file is not added in the assets folder.
+
 ## 11.0.1
 
 ### Fixed
