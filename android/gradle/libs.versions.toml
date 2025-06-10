@@ -1,6 +1,6 @@
 [versions]
-android-gradle-plugin = "8.10.1"
-kotlin = "2.1.21"
+android-gradle-plugin = "8.7.3"
+kotlin = "2.1.0"
 kotlin-immutable-collections = "0.4.0"
 ktlint-plugin = "12.3.0"
 mockk = "1.14.2"
