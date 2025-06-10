@@ -31,18 +31,16 @@ android {
         jvmTarget = "17"
         freeCompilerArgs += listOf("-Xskip-metadata-version-check")
     }
-
-    val checkSmileConfigFileTaskName = "checkSmileConfigFile"
-    tasks.register(checkSmileConfigFileTaskName) {
-        doLast {
-            val configFile = file("src/main/assets/smile_config.json")
-            if (configFile.readText().isBlank()) {
-                throw IllegalArgumentException("Empty smile_config.json file in src/main/assets!")
-            }
+}
+val checkSmileConfigFileTask = tasks.register("checkSmileConfigFile") {
+    doLast {
+        val configFile = file("src/main/assets/smile_config.json")
+        if (configFile.readText().isBlank()) {
+            throw IllegalArgumentException("Empty smile_config.json file in src/main/assets!")
         }
     }
+}
 
-    tasks.named("assemble") {
-        dependsOn(checkSmileConfigFileTaskName)
-    }
+tasks.named("assemble") {
+    dependsOn(checkSmileConfigFileTask)
 }
