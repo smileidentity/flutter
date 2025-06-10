@@ -1,4 +1,4 @@
-val kotlinVersion = findProperty("kotlinVersion") as String? ?: "2.1.0"
+val kotlinVersion = findProperty("kotlinVersion") as String? ?: "2.1.21"
 val kotlinCompilerExtension = findProperty("kotlinCompilerExtensionVersion") as String? ?: "1.5.14"
 
 extra.apply {
@@ -7,7 +7,7 @@ extra.apply {
 }
 
 buildscript {
-    val kotlinVersion = rootProject.findProperty("kotlinVersion") as String? ?: "2.1.0"
+    val kotlinVersion = rootProject.findProperty("kotlinVersion") as String? ?: "2.1.21"
 
     dependencies {
         if (kotlinVersion.startsWith("2")) {
