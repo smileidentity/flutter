@@ -1,15 +1,39 @@
-plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+val kotlinVersion = findProperty("kotlinVersion") as String? ?: "2.1.0"
+val kotlinCompilerExtension = findProperty("kotlinCompilerExtensionVersion") as String? ?: "1.5.14"
 
-    alias(libs.plugins.ktlint)
-    alias(libs.plugins.compose.compiler)
+extra.apply {
+    set("kotlinVersion", kotlinVersion)
+    set("kotlinCompilerExtension", kotlinCompilerExtension)
+}
+
+buildscript {
+    val kotlinVersion = rootProject.findProperty("kotlinVersion") as String? ?: "2.1.0"
+
+    dependencies {
+        if (kotlinVersion.startsWith("2")) {
+            classpath("org.jetbrains.kotlin:compose-compiler-gradle-plugin:$kotlinVersion")
+        } else {
+            classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+        }
+    }
 }
 
 allprojects {
     repositories {
-        maven { url = uri("https://central.sonatype.com/repository/maven-snapshots/") }
+        maven {
+            url = uri("https://central.sonatype.com/repository/maven-snapshots/")
+        }
     }
+}
+
+plugins {
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.ktlint)
+}
+
+if (kotlinVersion.startsWith("2")) {
+    apply(plugin = "org.jetbrains.kotlin.plugin.compose")
 }
 
 android {
@@ -22,18 +46,13 @@ android {
         // Read version from pubspec.yaml for setWrapperInfo
         val pubspecYaml = File("../pubspec.yaml")
         val pubspecText = pubspecYaml.readText()
-        val versionRegex = Regex("""version:\s*(.+)""")
-        val versionMatch = versionRegex.find(pubspecText)
-        val version = if (versionMatch != null) {
+        val versionLine = Regex("""version:\s*(.+)""").find(pubspecText)
+        val version = if (versionLine != null) {
             pubspecText.split(Regex("""version:\s*"""))[1].split("\n")[0].trim()
         } else {
             "11.0.0"
         }
         buildConfigField("String", "SMILE_ID_VERSION", "\"$version\"")
-    }
-
-    buildFeatures {
-        buildConfig = true
     }
 
     compileOptions {
@@ -47,15 +66,23 @@ android {
     }
 
     sourceSets {
-        getByName("main").java.srcDirs("src/main/kotlin")
-        getByName("test").java.srcDirs("src/test/kotlin")
+        sourceSets["main"].java.srcDirs("src/main/kotlin")
+        sourceSets["test"].java.srcDirs("src/test/kotlin")
     }
 
     lint {
         disable.add("NullSafeMutableLiveData")
     }
 
-    buildFeatures.compose = true
+    buildFeatures {
+        buildConfig = true
+        compose = true
+    }
+    if (!kotlinVersion.startsWith("2")) {
+        composeOptions {
+            kotlinCompilerExtensionVersion = kotlinCompilerExtension
+        }
+    }
 }
 
 dependencies {
