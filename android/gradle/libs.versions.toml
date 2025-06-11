@@ -1,6 +1,4 @@
 [versions]
-android-gradle-plugin = "8.10.1"
-kotlin = "2.1.21"
 kotlin-immutable-collections = "0.4.0"
 ktlint-plugin = "12.3.0"
 mockk = "1.14.2"
@@ -21,7 +19,4 @@ mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 smileid = { module = "com.smileidentity:android-sdk", version.ref = "smileid" }
 
 [plugins]
-android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
-flutter-gradle-plugin = { id = "dev.flutter.flutter-gradle-plugin" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-plugin" }

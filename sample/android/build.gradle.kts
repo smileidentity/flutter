@@ -1,3 +1,7 @@
+// Uncomment to configure Kotlin/Compose versions manually for Kotlin < 2..0.0
+//extra.set("kotlinVersion", "1.9.25")
+//extra.set("kotlinCompilerExtensionVersion", "1.5.15")
+
 allprojects {
     repositories {
         google()
