@@ -1,6 +1,6 @@
 # Release Notes
 
-## 11.0.2
+## 11.0.2 (Unreleased)
 
 ### Changed
 * Renamed **example** folder to **sample** and replaced all usages of example in the project.
@@ -9,6 +9,10 @@
 * Cleanup and minor code improvements on the gradlew files.
 * Update Android Gradle Plugin and Kotlin version to the latest.
 * Fail the `assemble` gradle task when `smile_config.json` file is not added in the assets folder.
+* Wrapped the Android platform view implementation in a `SafeArea` widget to ensure proper handling of 
+ system UI boundaries including status bars, navigation bars, and notches. This change only affects 
+ the Android platform implementation while maintaining existing gesture recognition and view creation 
+ behavior, ensuring the platform view content is not obscured by system UI elements.
 
 ## 11.0.1
 

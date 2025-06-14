@@ -80,7 +80,8 @@ class SmileIDBiometricKYC extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return PlatformViewLink(
+        return SafeArea(
+          child: PlatformViewLink(
           viewType: viewType,
           surfaceFactory: (context, controller) {
             return AndroidViewSurface(
@@ -105,7 +106,8 @@ class SmileIDBiometricKYC extends StatelessWidget {
               ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
               ..addOnPlatformViewCreatedListener(_onPlatformViewCreated)
               ..create();
-          },
+            },
+          ),
         );
       case TargetPlatform.iOS:
         return UiKitView(
