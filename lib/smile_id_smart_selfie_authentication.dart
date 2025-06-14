@@ -52,7 +52,8 @@ class SmileIDSmartSelfieAuthentication extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return PlatformViewLink(
+        return SafeArea(
+          child: PlatformViewLink(
           viewType: viewType,
           surfaceFactory: (context, controller) {
             return AndroidViewSurface(
@@ -78,6 +79,7 @@ class SmileIDSmartSelfieAuthentication extends StatelessWidget {
               ..addOnPlatformViewCreatedListener(_onPlatformViewCreated)
               ..create();
           },
+          ),
         );
       case TargetPlatform.iOS:
         return UiKitView(
