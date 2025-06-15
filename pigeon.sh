@@ -1,4 +1,4 @@
-dart run pigeon --input pigeon/messages.dart
+flutter pub run pigeon --input pigeon/messages.dart
 
 # Before use it, in the first time, you must guarantee some running permissions:
 # chmod +x pigeon.sh

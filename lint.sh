@@ -1,0 +1,1 @@
+dart format . && cd sample/android && ./gradlew ktlintFormat && cd ../.. && cd android && ./gradlew ktlintFormat
