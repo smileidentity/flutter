@@ -3,20 +3,24 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:smile_id/product_result_adapters.dart';
+import 'package:smile_id/result_clients_interfaces.dart';
 
-class SmileIDEnhancedDocumentVerification extends StatelessWidget {
+import 'smile_id_product_views_api.dart';
+import 'smile_id_sdk_result.dart';
+import 'smileid_messages.g.dart';
+
+class SmileIDEnhancedDocumentVerification extends StatefulWidget {
   static const String viewType = "SmileIDEnhancedDocumentVerification";
   final Map<String, dynamic> creationParams;
 
-  /// Called when the user successfully completes the document verification flow. The result is a
-  /// JSON string.
-  final Function(String) onSuccess;
-  final Function(String) onError;
+  /// Called when the user successfully completes the smart selfie enrollment flow. The result is sealed class
+  /// that is either a SmileIDSdkResultSuccess<DocumentCaptureResult> or a SmileIDSdkResultError
+  final Function(SmileIDSdkResult<DocumentCaptureResult>) onResult;
 
   const SmileIDEnhancedDocumentVerification._({
     required this.creationParams,
-    required this.onSuccess,
-    required this.onError,
+    required this.onResult,
   });
 
   factory SmileIDEnhancedDocumentVerification({
@@ -42,12 +46,10 @@ class SmileIDEnhancedDocumentVerification extends StatelessWidget {
     bool contactInformationConsentGranted = false,
     bool documentInformationConsentGranted = false,
     Map<String, String>? extraPartnerParams,
-    required Function(String resultJson) onSuccess,
-    required Function(String errorMessage) onError,
+    required Function(SmileIDSdkResult<DocumentCaptureResult>) onResult,
   }) {
     return SmileIDEnhancedDocumentVerification._(
-      onSuccess: onSuccess,
-      onError: onError,
+      onResult: onResult,
       creationParams: {
         "countryCode": countryCode,
         "documentType": documentType,
@@ -64,11 +66,33 @@ class SmileIDEnhancedDocumentVerification extends StatelessWidget {
         "allowAgentMode": allowAgentMode,
         "allowGalleryUpload": allowGalleryUpload,
         "showInstructions": showInstructions,
-        "skipApiSubmission" : skipApiSubmission,
-        "useStrictMode" : useStrictMode,
-        "extraPartnerParams" : extraPartnerParams,
+        "skipApiSubmission": skipApiSubmission,
+        "useStrictMode": useStrictMode,
+        "extraPartnerParams": extraPartnerParams,
       },
     );
+  }
+
+  @override
+  State<SmileIDEnhancedDocumentVerification> createState() =>
+      _SmileIDEnhancedDocumentVerificationState();
+}
+
+class _SmileIDEnhancedDocumentVerificationState
+    extends State<SmileIDEnhancedDocumentVerification>
+    implements DocumentCaptureResultClient {
+  late SmileIDProductViewsResultApi api;
+
+  @override
+  void initState() {
+    super.initState();
+    api = EnhancedDocumentVerificationAdapter(this);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    api.dispose();
   }
 
   @override
@@ -77,58 +101,47 @@ class SmileIDEnhancedDocumentVerification extends StatelessWidget {
       case TargetPlatform.android:
         return SafeArea(
           child: PlatformViewLink(
-          viewType: viewType,
-          surfaceFactory: (context, controller) {
-            return AndroidViewSurface(
-              controller: controller as AndroidViewController,
-              hitTestBehavior: PlatformViewHitTestBehavior.opaque,
-              gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{
-                Factory<OneSequenceGestureRecognizer>(EagerGestureRecognizer.new)
-              },
-            );
-          },
-          onCreatePlatformView: (params) {
-            return PlatformViewsService.initExpensiveAndroidView(
-              id: params.id,
-              viewType: viewType,
-              layoutDirection: Directionality.of(context),
-              creationParams: creationParams,
-              creationParamsCodec: const StandardMessageCodec(),
-              onFocus: () {
-                params.onFocusChanged(true);
-              },
-            )
-              ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
-              ..addOnPlatformViewCreatedListener(_onPlatformViewCreated)
-              ..create();
-          },
+            viewType: SmileIDEnhancedDocumentVerification.viewType,
+            surfaceFactory: (context, controller) {
+              return AndroidViewSurface(
+                controller: controller as AndroidViewController,
+                hitTestBehavior: PlatformViewHitTestBehavior.opaque,
+                gestureRecognizers: const <Factory<
+                    OneSequenceGestureRecognizer>>{
+                  Factory<OneSequenceGestureRecognizer>(
+                      EagerGestureRecognizer.new)
+                },
+              );
+            },
+            onCreatePlatformView: (params) {
+              return PlatformViewsService.initExpensiveAndroidView(
+                id: params.id,
+                viewType: SmileIDEnhancedDocumentVerification.viewType,
+                layoutDirection: Directionality.of(context),
+                creationParams: widget.creationParams,
+                creationParamsCodec: const StandardMessageCodec(),
+                onFocus: () {
+                  params.onFocusChanged(true);
+                },
+              )
+                ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
+                ..create();
+            },
           ),
         );
       case TargetPlatform.iOS:
         return UiKitView(
-          viewType: viewType,
-          creationParams: creationParams,
+          viewType: SmileIDEnhancedDocumentVerification.viewType,
+          creationParams: widget.creationParams,
           creationParamsCodec: const StandardMessageCodec(),
-          onPlatformViewCreated: _onPlatformViewCreated,
         );
       default:
         throw UnsupportedError("Unsupported platform");
     }
   }
 
-  void _onPlatformViewCreated(int id) {
-    final channel = MethodChannel("${viewType}_$id");
-    channel.setMethodCallHandler(_handleMethodCall);
-  }
-
-  Future<dynamic> _handleMethodCall(MethodCall call) async {
-    switch (call.method) {
-      case "onSuccess":
-        onSuccess(call.arguments);
-      case "onError":
-        onError(call.arguments);
-      default:
-        throw MissingPluginException();
-    }
+  @override
+  void onResult(SmileIDSdkResult<DocumentCaptureResult> result) {
+    widget.onResult(result);
   }
 }
