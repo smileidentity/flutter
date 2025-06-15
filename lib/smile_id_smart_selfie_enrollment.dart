@@ -3,12 +3,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:smile_id/smile_id_sdk_result.dart';
+import 'package:smile_id/product_result_adapters.dart';
+import 'package:smile_id/result_clients_interfaces.dart';
+import 'package:smile_id/smile_id_product_views_api.dart';
 import 'package:smile_id/smileid_messages.g.dart';
 
-import 'product_result_adapters.dart';
-import 'result_clients_interfaces.dart';
-import 'smile_id_product_views_api.dart';
+import 'smile_id_sdk_result.dart';
 
 class SmileIDSmartSelfieEnrollment extends StatefulWidget {
   static const String viewType = "SmileIDSmartSelfieEnrollment";
@@ -95,7 +95,7 @@ class _SmileIDSmartSelfieEnrollmentState
                 id: params.id,
                 viewType: SmileIDSmartSelfieEnrollment.viewType,
                 layoutDirection: Directionality.of(context),
-                creationParams: creationParams,
+                creationParams: widget.creationParams,
                 creationParamsCodec: const StandardMessageCodec(),
                 onFocus: () {
                   params.onFocusChanged(true);
