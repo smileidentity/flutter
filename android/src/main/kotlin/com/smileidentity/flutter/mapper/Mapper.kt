@@ -59,6 +59,7 @@ import com.smileidentity.models.BiometricKycJobStatusResponse
 import com.smileidentity.models.Config
 import com.smileidentity.models.ConsentInfo
 import com.smileidentity.models.ConsentInformation
+import com.smileidentity.models.ConsentedInformation
 import com.smileidentity.models.Country
 import com.smileidentity.models.CountryInfo
 import com.smileidentity.models.DocumentVerificationJobResult

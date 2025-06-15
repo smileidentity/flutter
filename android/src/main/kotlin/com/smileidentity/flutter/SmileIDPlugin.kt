@@ -25,8 +25,6 @@ import android.app.Activity
 import android.content.Context
 import com.smileidentity.SmileID
 import com.smileidentity.SmileIDOptIn
-import com.smileidentity.flutter.enhanced.SmileIDSmartSelfieAuthenticationEnhanced
-import com.smileidentity.flutter.enhanced.SmileIDSmartSelfieEnrollmentEnhanced
 import com.smileidentity.flutter.mapper.convertNullableMapToNonNull
 import com.smileidentity.flutter.mapper.toRequest
 import com.smileidentity.flutter.mapper.toResponse
