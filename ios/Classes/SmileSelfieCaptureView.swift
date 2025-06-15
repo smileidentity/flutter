@@ -18,7 +18,6 @@ struct SmileSelfieCaptureView: View, SmileIDFileUtilsProtocol, SmartSelfieResult
         allowNewEnroll: false,
         skipApiSubmission: true,
         extraPartnerParams: [:],
-        localMetadata: LocalMetadata()
     )
     
     var body: some View {

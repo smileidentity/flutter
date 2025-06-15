@@ -239,13 +239,11 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
                     timestamp: timestamp,
                     selfieImage: MultipartBody(
                         withImage: getFile(atPath: selfieImage)!,
-                        forKey: URL(fileURLWithPath: selfieImage).lastPathComponent,
                         forName: URL(fileURLWithPath: selfieImage).lastPathComponent
                     )!,
                     livenessImages: livenessImages.map {
                         MultipartBody(
                             withImage: getFile(atPath: $0)!,
-                            forKey: URL(fileURLWithPath: $0).lastPathComponent,
                             forName: URL(fileURLWithPath: $0).lastPathComponent
                         )!
                     },

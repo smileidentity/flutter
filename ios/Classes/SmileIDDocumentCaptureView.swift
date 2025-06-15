@@ -62,7 +62,6 @@ struct SmileIDDocumentRootView: View {
     let idAspectRatio: Double?
     let allowGalleryUpload: Bool
     let api: SmileIDProductsResultApi
-    @State private var localMetadata = LocalMetadata()
     
     var body: some View {
         NavigationView {

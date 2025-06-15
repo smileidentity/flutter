@@ -5,8 +5,6 @@ struct SmileDocumentCaptureView: View , SmileIDFileUtilsProtocol {
     var fileManager: FileManager = Foundation.FileManager.default
     private let jobId = generateJobId()
     
-    @State private var localMetadata = LocalMetadata()
-    
     let creationParams: DocumentCaptureCreationParams
     let completion: ((Result<DocumentCaptureResult, any Error>) -> Void)?
     weak var uiViewController: UINavigationController?
@@ -40,8 +38,7 @@ struct SmileDocumentCaptureView: View , SmileIDFileUtilsProtocol {
                     onSkip: onSkip
                 ).preferredColorScheme(.light)
             }
-            .frame(maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
-            .environmentObject(localMetadata).padding()
+            .frame(maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/).padding()
         }
     }
     
