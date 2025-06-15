@@ -78,32 +78,33 @@ class _SmileIDSmartSelfieEnrollmentState
       case TargetPlatform.android:
         return SafeArea(
           child: PlatformViewLink(
-          viewType: SmileIDSmartSelfieEnrollment.viewType,
-          surfaceFactory: (context, controller) {
-            return AndroidViewSurface(
-              controller: controller as AndroidViewController,
-              hitTestBehavior: PlatformViewHitTestBehavior.opaque,
-              gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{
-                Factory<OneSequenceGestureRecognizer>(
-                    EagerGestureRecognizer.new)
-              },
-            );
-          },
-          onCreatePlatformView: (params) {
-            return PlatformViewsService.initExpensiveAndroidView(
-              id: params.id,
-              viewType: SmileIDSmartSelfieEnrollment.viewType,
-              layoutDirection: Directionality.of(context),
-              creationParams: creationParams,
-              creationParamsCodec: const StandardMessageCodec(),
-              onFocus: () {
-                params.onFocusChanged(true);
-              },
-            )
-              ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
-              ..create();
-          },
-            ),
+            viewType: SmileIDSmartSelfieEnrollment.viewType,
+            surfaceFactory: (context, controller) {
+              return AndroidViewSurface(
+                controller: controller as AndroidViewController,
+                hitTestBehavior: PlatformViewHitTestBehavior.opaque,
+                gestureRecognizers: const <Factory<
+                    OneSequenceGestureRecognizer>>{
+                  Factory<OneSequenceGestureRecognizer>(
+                      EagerGestureRecognizer.new)
+                },
+              );
+            },
+            onCreatePlatformView: (params) {
+              return PlatformViewsService.initExpensiveAndroidView(
+                id: params.id,
+                viewType: SmileIDSmartSelfieEnrollment.viewType,
+                layoutDirection: Directionality.of(context),
+                creationParams: creationParams,
+                creationParamsCodec: const StandardMessageCodec(),
+                onFocus: () {
+                  params.onFocusChanged(true);
+                },
+              )
+                ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
+                ..create();
+            },
+          ),
         );
       case TargetPlatform.iOS:
         return UiKitView(

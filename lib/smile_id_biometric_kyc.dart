@@ -103,30 +103,31 @@ class _SmileIDBiometricKYCState extends State<SmileIDBiometricKYC>
       case TargetPlatform.android:
         return SafeArea(
           child: PlatformViewLink(
-          viewType: SmileIDBiometricKYC.viewType,
-          surfaceFactory: (context, controller) {
-            return AndroidViewSurface(
-              controller: controller as AndroidViewController,
-              hitTestBehavior: PlatformViewHitTestBehavior.opaque,
-              gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{
-                Factory<OneSequenceGestureRecognizer>(
-                    EagerGestureRecognizer.new)
-              },
-            );
-          },
-          onCreatePlatformView: (params) {
-            return PlatformViewsService.initExpensiveAndroidView(
-              id: params.id,
-              viewType: SmileIDBiometricKYC.viewType,
-              layoutDirection: Directionality.of(context),
-              creationParams: widget.creationParams,
-              creationParamsCodec: const StandardMessageCodec(),
-              onFocus: () {
-                params.onFocusChanged(true);
-              },
-            )
-              ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
-              ..create();
+            viewType: SmileIDBiometricKYC.viewType,
+            surfaceFactory: (context, controller) {
+              return AndroidViewSurface(
+                controller: controller as AndroidViewController,
+                hitTestBehavior: PlatformViewHitTestBehavior.opaque,
+                gestureRecognizers: const <Factory<
+                    OneSequenceGestureRecognizer>>{
+                  Factory<OneSequenceGestureRecognizer>(
+                      EagerGestureRecognizer.new)
+                },
+              );
+            },
+            onCreatePlatformView: (params) {
+              return PlatformViewsService.initExpensiveAndroidView(
+                id: params.id,
+                viewType: SmileIDBiometricKYC.viewType,
+                layoutDirection: Directionality.of(context),
+                creationParams: widget.creationParams,
+                creationParamsCodec: const StandardMessageCodec(),
+                onFocus: () {
+                  params.onFocusChanged(true);
+                },
+              )
+                ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
+                ..create();
             },
           ),
         );

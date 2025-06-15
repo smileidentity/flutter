@@ -16,8 +16,6 @@ import com.smileidentity.compose.document.DocumentCaptureSide
 import com.smileidentity.compose.theme.colorScheme
 import com.smileidentity.compose.theme.typography
 import com.smileidentity.flutter.results.DocumentCaptureResult
-import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
-import com.smileidentity.metadata.LocalMetadataProvider
 import com.smileidentity.flutter.views.SmileIDPlatformView
 import com.smileidentity.flutter.views.SmileIDViewFactory
 import com.smileidentity.models.v2.Metadata

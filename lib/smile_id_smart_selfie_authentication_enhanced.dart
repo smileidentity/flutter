@@ -76,30 +76,31 @@ class _SmileIDSmartSelfieAuthenticationEnhancedState
       case TargetPlatform.android:
         return SafeArea(
           child: PlatformViewLink(
-          viewType: SmileIDSmartSelfieAuthenticationEnhanced.viewType,
-          surfaceFactory: (context, controller) {
-            return AndroidViewSurface(
-              controller: controller as AndroidViewController,
-              hitTestBehavior: PlatformViewHitTestBehavior.opaque,
-              gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{
-                Factory<OneSequenceGestureRecognizer>(
-                    EagerGestureRecognizer.new)
-              },
-            );
-          },
-          onCreatePlatformView: (params) {
-            return PlatformViewsService.initExpensiveAndroidView(
-              id: params.id,
-              viewType: SmileIDSmartSelfieAuthenticationEnhanced.viewType,
-              layoutDirection: Directionality.of(context),
-              creationParams: widget.creationParams,
-              creationParamsCodec: const StandardMessageCodec(),
-              onFocus: () {
-                params.onFocusChanged(true);
-              },
-            )
-              ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
-              ..create();
+            viewType: SmileIDSmartSelfieAuthenticationEnhanced.viewType,
+            surfaceFactory: (context, controller) {
+              return AndroidViewSurface(
+                controller: controller as AndroidViewController,
+                hitTestBehavior: PlatformViewHitTestBehavior.opaque,
+                gestureRecognizers: const <Factory<
+                    OneSequenceGestureRecognizer>>{
+                  Factory<OneSequenceGestureRecognizer>(
+                      EagerGestureRecognizer.new)
+                },
+              );
+            },
+            onCreatePlatformView: (params) {
+              return PlatformViewsService.initExpensiveAndroidView(
+                id: params.id,
+                viewType: SmileIDSmartSelfieAuthenticationEnhanced.viewType,
+                layoutDirection: Directionality.of(context),
+                creationParams: widget.creationParams,
+                creationParamsCodec: const StandardMessageCodec(),
+                onFocus: () {
+                  params.onFocusChanged(true);
+                },
+              )
+                ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
+                ..create();
             },
           ),
         );

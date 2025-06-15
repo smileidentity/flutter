@@ -25,6 +25,8 @@ import android.app.Activity
 import android.content.Context
 import com.smileidentity.SmileID
 import com.smileidentity.SmileIDOptIn
+import com.smileidentity.flutter.enhanced.SmileIDSmartSelfieAuthenticationEnhanced
+import com.smileidentity.flutter.enhanced.SmileIDSmartSelfieEnrollmentEnhanced
 import com.smileidentity.flutter.mapper.convertNullableMapToNonNull
 import com.smileidentity.flutter.mapper.toRequest
 import com.smileidentity.flutter.mapper.toResponse
@@ -37,8 +39,6 @@ import com.smileidentity.flutter.products.enhancedselfie.SmileIDSmartSelfieAuthe
 import com.smileidentity.flutter.products.enhancedselfie.SmileIDSmartSelfieEnrollmentEnhanced
 import com.smileidentity.flutter.products.selfie.SmileIDSmartSelfieAuthentication
 import com.smileidentity.flutter.products.selfie.SmileIDSmartSelfieEnrollment
-import com.smileidentity.flutter.enhanced.SmileIDSmartSelfieAuthenticationEnhanced
-import com.smileidentity.flutter.enhanced.SmileIDSmartSelfieEnrollmentEnhanced
 import com.smileidentity.metadata.models.WrapperSdkName
 import com.smileidentity.networking.asFormDataPart
 import com.smileidentity.networking.pollBiometricKycJobStatus
