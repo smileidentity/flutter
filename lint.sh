@@ -1,3 +1,1 @@
-dart format .
-
-ktlint --format
+dart format . && ktlint --format
