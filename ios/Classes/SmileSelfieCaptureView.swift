@@ -17,7 +17,7 @@ struct SmileSelfieCaptureView: View, SmileIDFileUtilsProtocol, SmartSelfieResult
         jobId: generateJobId(),
         allowNewEnroll: false,
         skipApiSubmission: true,
-        extraPartnerParams: [:],
+        extraPartnerParams: [:]
     )
     
     var body: some View {
