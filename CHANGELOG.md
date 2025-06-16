@@ -2,6 +2,11 @@
 
 ## 11.0.2 (Unreleased)
 
+### Fixed  
+* Refactored iOS platform view implementations to use consistent `embedView` pattern with standardized
+ view controller lifecycle management for `SmileIDSmartSelfieCaptureView` and `SmileIDDocumentCaptureView`,
+ fixing dark mode issues with these views.
+
 ### Changed
 * Renamed **example** folder to **sample** and replaced all usages of example in the project.
 * Migrate all gradle files in the sample and SDK folders from Groovy to Kotlin.
