@@ -3,7 +3,7 @@ kotlin-immutable-collections = "0.4.0"
 ktlint-plugin = "12.3.0"
 mockk = "1.14.2"
 mlkit = "17.0.2"
-smileid = "11.0.3"
+smileid = "11.0.4"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx" }
