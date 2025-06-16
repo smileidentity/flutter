@@ -816,118 +816,6 @@ class FlutterConfig {
   });
 }
 
-@HostApi()
-abstract class SmileIDApi {
-  void initializeWithApiKey(String apiKey, FlutterConfig config,
-      bool useSandbox, bool enableCrashReporting);
-
-  void initializeWithConfig(
-      FlutterConfig config, bool useSandbox, bool enableCrashReporting);
-
-  void initialize(bool useSandbox);
-
-  void setCallbackUrl(String callbackUrl);
-
-  void setAllowOfflineMode(bool allowOfflineMode);
-
-  List<String> getSubmittedJobs();
-
-  List<String> getUnsubmittedJobs();
-
-  void cleanup(String jobId);
-
-  void cleanupJobs(List<String> jobIds);
-
-  void submitJob(String jobId, bool deleteFilesOnSuccess);
-
-  @async
-  FlutterAuthenticationResponse authenticate(
-      FlutterAuthenticationRequest request);
-
-  @async
-  FlutterPrepUploadResponse prepUpload(FlutterPrepUploadRequest request);
-
-  @async
-  void upload(String url, FlutterUploadRequest request);
-
-  @async
-  FlutterEnhancedKycResponse doEnhancedKyc(FlutterEnhancedKycRequest request);
-
-  @async
-  FlutterEnhancedKycAsyncResponse doEnhancedKycAsync(
-      FlutterEnhancedKycRequest request);
-
-  @async
-  FlutterSmartSelfieJobStatusResponse getSmartSelfieJobStatus(
-      FlutterJobStatusRequest request);
-
-  @async
-  FlutterSmartSelfieResponse doSmartSelfieEnrollment(
-    String signature,
-    String timestamp,
-    String selfieImage,
-    List<String> livenessImages,
-    String userId,
-    Map<String?, String?>? partnerParams,
-    String? callbackUrl,
-    int? sandboxResult,
-    bool? allowNewEnroll,
-  );
-
-  @async
-  FlutterSmartSelfieResponse doSmartSelfieAuthentication(
-    String signature,
-    String timestamp,
-    String selfieImage,
-    List<String> livenessImages,
-    String userId,
-    Map<String?, String?>? partnerParams,
-    String? callbackUrl,
-    int? sandboxResult,
-  );
-
-  @async
-  FlutterDocumentVerificationJobStatusResponse getDocumentVerificationJobStatus(
-      FlutterJobStatusRequest request);
-
-  @async
-  FlutterBiometricKycJobStatusResponse getBiometricKycJobStatus(
-      FlutterJobStatusRequest request);
-
-  @async
-  FlutterEnhancedDocumentVerificationJobStatusResponse
-      getEnhancedDocumentVerificationJobStatus(FlutterJobStatusRequest request);
-
-  @async
-  FlutterProductsConfigResponse getProductsConfig(
-      FlutterProductsConfigRequest request);
-
-  @async
-  FlutterValidDocumentsResponse getValidDocuments(
-      FlutterProductsConfigRequest request);
-
-  @async
-  FlutterServicesResponse getServices();
-
-  @async
-  FlutterSmartSelfieJobStatusResponse pollSmartSelfieJobStatus(
-      FlutterJobStatusRequest request, int interval, int numAttempts);
-
-  @async
-  FlutterDocumentVerificationJobStatusResponse
-      pollDocumentVerificationJobStatus(
-          FlutterJobStatusRequest request, int interval, int numAttempts);
-
-  @async
-  FlutterBiometricKycJobStatusResponse pollBiometricKycJobStatus(
-      FlutterJobStatusRequest request, int interval, int numAttempts);
-
-  @async
-  FlutterEnhancedDocumentVerificationJobStatusResponse
-      pollEnhancedDocumentVerificationJobStatus(
-          FlutterJobStatusRequest request, int interval, int numAttempts);
-}
-
 class SmartSelfieCreationParams {
   final String? userId;
   final bool allowNewEnroll;
@@ -1174,6 +1062,118 @@ abstract class SmileIDProductsResultApi {
 
   void onDocumentCaptureResult(
       DocumentCaptureResult? successResult, String? errorResult);
+}
+
+@HostApi()
+abstract class SmileIDApi {
+  void initializeWithApiKey(String apiKey, FlutterConfig config,
+      bool useSandbox, bool enableCrashReporting);
+
+  void initializeWithConfig(
+      FlutterConfig config, bool useSandbox, bool enableCrashReporting);
+
+  void initialize(bool useSandbox);
+
+  void setCallbackUrl(String callbackUrl);
+
+  void setAllowOfflineMode(bool allowOfflineMode);
+
+  List<String> getSubmittedJobs();
+
+  List<String> getUnsubmittedJobs();
+
+  void cleanup(String jobId);
+
+  void cleanupJobs(List<String> jobIds);
+
+  void submitJob(String jobId, bool deleteFilesOnSuccess);
+
+  @async
+  FlutterAuthenticationResponse authenticate(
+      FlutterAuthenticationRequest request);
+
+  @async
+  FlutterPrepUploadResponse prepUpload(FlutterPrepUploadRequest request);
+
+  @async
+  void upload(String url, FlutterUploadRequest request);
+
+  @async
+  FlutterEnhancedKycResponse doEnhancedKyc(FlutterEnhancedKycRequest request);
+
+  @async
+  FlutterEnhancedKycAsyncResponse doEnhancedKycAsync(
+      FlutterEnhancedKycRequest request);
+
+  @async
+  FlutterSmartSelfieJobStatusResponse getSmartSelfieJobStatus(
+      FlutterJobStatusRequest request);
+
+  @async
+  FlutterSmartSelfieResponse doSmartSelfieEnrollment(
+      String signature,
+      String timestamp,
+      String selfieImage,
+      List<String> livenessImages,
+      String userId,
+      Map<String?, String?>? partnerParams,
+      String? callbackUrl,
+      int? sandboxResult,
+      bool? allowNewEnroll,
+      );
+
+  @async
+  FlutterSmartSelfieResponse doSmartSelfieAuthentication(
+      String signature,
+      String timestamp,
+      String selfieImage,
+      List<String> livenessImages,
+      String userId,
+      Map<String?, String?>? partnerParams,
+      String? callbackUrl,
+      int? sandboxResult,
+      );
+
+  @async
+  FlutterDocumentVerificationJobStatusResponse getDocumentVerificationJobStatus(
+      FlutterJobStatusRequest request);
+
+  @async
+  FlutterBiometricKycJobStatusResponse getBiometricKycJobStatus(
+      FlutterJobStatusRequest request);
+
+  @async
+  FlutterEnhancedDocumentVerificationJobStatusResponse
+  getEnhancedDocumentVerificationJobStatus(FlutterJobStatusRequest request);
+
+  @async
+  FlutterProductsConfigResponse getProductsConfig(
+      FlutterProductsConfigRequest request);
+
+  @async
+  FlutterValidDocumentsResponse getValidDocuments(
+      FlutterProductsConfigRequest request);
+
+  @async
+  FlutterServicesResponse getServices();
+
+  @async
+  FlutterSmartSelfieJobStatusResponse pollSmartSelfieJobStatus(
+      FlutterJobStatusRequest request, int interval, int numAttempts);
+
+  @async
+  FlutterDocumentVerificationJobStatusResponse
+  pollDocumentVerificationJobStatus(
+      FlutterJobStatusRequest request, int interval, int numAttempts);
+
+  @async
+  FlutterBiometricKycJobStatusResponse pollBiometricKycJobStatus(
+      FlutterJobStatusRequest request, int interval, int numAttempts);
+
+  @async
+  FlutterEnhancedDocumentVerificationJobStatusResponse
+  pollEnhancedDocumentVerificationJobStatus(
+      FlutterJobStatusRequest request, int interval, int numAttempts);
 }
 
 @HostApi()
