@@ -5,17 +5,18 @@ import SwiftUI
 
 class SmileIDDocumentCaptureView: NSObject, FlutterPlatformView, SmileIDFileUtilsProtocol {
     var fileManager: FileManager = Foundation.FileManager.default
+    private var _api: SmileIDProductsResultApi
     private var _view: UIView
     private var _childViewController: UIViewController?
     private let _channel: FlutterMethodChannel
 
     static let VIEW_TYPE_ID = "SmileIDDocumentCaptureView"
-
+    
     init(
         frame: CGRect,
         viewIdentifier viewId: Int64,
         arguments args: [String: Any?],
-        binaryMessenger messenger: FlutterBinaryMessenger
+        api: SmileIDProductsResultApi
     ) {
         let jobId = generateJobId()
         let isDocumentFrontSide = args["isDocumentFrontSide"] as? Bool ?? true
@@ -25,6 +26,7 @@ class SmileIDDocumentCaptureView: NSObject, FlutterPlatformView, SmileIDFileUtil
         let idAspectRatio = args["idAspectRatio"] as? Double
         let showConfirmationDialog = args["showConfirmationDialog"] as? Bool ?? true
 
+        self._api = api
         _view = UIView()
         _channel = FlutterMethodChannel(
             name: "\(SmileIDDocumentCaptureView.VIEW_TYPE_ID)_\(viewId)",
@@ -42,7 +44,7 @@ class SmileIDDocumentCaptureView: NSObject, FlutterPlatformView, SmileIDFileUtil
             jobId: jobId,
             idAspectRatio: idAspectRatio,
             allowGalleryUpload: allowGalleryUpload,
-            channel: _channel
+            api: _api
         )
         _childViewController = embedView(rootView, in: _view, frame: frame)
     }
@@ -60,8 +62,8 @@ struct SmileIDDocumentRootView: View {
     let jobId: String
     let idAspectRatio: Double?
     let allowGalleryUpload: Bool
-    let channel: FlutterMethodChannel
-
+    let api: SmileIDProductsResultApi
+    
     var body: some View {
         NavigationView {
             DocumentCaptureScreen(
@@ -95,20 +97,14 @@ struct SmileIDDocumentRootView: View {
                 fileType: isDocumentFrontSide ? FileType.documentFront : FileType.documentBack,
                 document: data
             )
-
+            
             let documentKey = isDocumentFrontSide ? "documentFrontImage" : "documentBackImage"
-            let arguments: [String: Any] = [
-                documentKey: url.absoluteString,
-            ]
-            do {
-                let jsonData = try JSONSerialization.data(withJSONObject: arguments, options: [])
-                if let jsonString = String(data: jsonData, encoding: .utf8) {
-                    channel.invokeMethod("onSuccess", arguments: jsonString)
-                }
-            } catch {
-                didError(error: error)
-            }
+            let result = DocumentCaptureResult(
+                documentFrontFile: isDocumentFrontSide ? url.absoluteString : nil,
+                documentBackFile: isDocumentFrontSide ? nil : url.absoluteString
+            )
 
+            api.onDocumentCaptureResult(successResult: result, errorResult: nil){_ in }
         } catch {
             didError(error: error)
         }
@@ -117,7 +113,7 @@ struct SmileIDDocumentRootView: View {
     func onSkip() {}
 
     func didError(error: Error) {
-        channel.invokeMethod("onError", arguments: error.localizedDescription)
+        api.onDocumentCaptureResult(successResult: nil, errorResult: error.localizedDescription){_ in}
     }
 
     private func encodeToJSONString<T: Encodable>(_ value: T) -> String? {
@@ -126,27 +122,16 @@ struct SmileIDDocumentRootView: View {
         guard let jsonData = try? encoder.encode(value) else { return nil }
         return String(data: jsonData, encoding: .utf8)
     }
-
-    private func sendSuccessMessage(with arguments: [String: Any]) {
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: arguments, options: [])
-            if let jsonString = String(data: jsonData, encoding: .utf8) {
-                channel.invokeMethod("onSuccess", arguments: jsonString)
-            }
-        } catch {
-            channel.invokeMethod("onError", arguments: error.localizedDescription)
-        }
-    }
 }
 
 // MARK: - Factory
 
 extension SmileIDDocumentCaptureView {
     class Factory: NSObject, FlutterPlatformViewFactory {
-        private let messenger: FlutterBinaryMessenger
+        private var api: SmileIDProductsResultApi
 
-        init(messenger: FlutterBinaryMessenger) {
-            self.messenger = messenger
+        init(api: SmileIDProductsResultApi) {
+            self.api = api
             super.init()
         }
 
@@ -155,7 +140,7 @@ extension SmileIDDocumentCaptureView {
                 frame: frame,
                 viewIdentifier: viewId,
                 arguments: args as? [String: Any?] ?? [:],
-                binaryMessenger: messenger
+                api: api
             )
         }
 

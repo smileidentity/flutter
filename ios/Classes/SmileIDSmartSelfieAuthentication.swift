@@ -4,9 +4,9 @@ import SmileID
 import SwiftUI
 
 class SmileIDSmartSelfieAuthentication : NSObject, FlutterPlatformView, SmartSelfieResultDelegate, SmileIDFileUtilsProtocol {
+    private var _api: SmileIDProductsResultApi
     var fileManager: FileManager = Foundation.FileManager.default
     private var _view: UIView
-    private var _channel: FlutterMethodChannel
     private var _childViewController: UIViewController?
 
     static let VIEW_TYPE_ID = "SmileIDSmartSelfieAuthentication"
@@ -15,13 +15,10 @@ class SmileIDSmartSelfieAuthentication : NSObject, FlutterPlatformView, SmartSel
         frame: CGRect,
         viewIdentifier viewId: Int64,
         arguments args: [String: Any?],
-        binaryMessenger messenger: FlutterBinaryMessenger
+        api: SmileIDProductsResultApi
     ) {
         _view = UIView()
-        _channel = FlutterMethodChannel(
-            name: "\(SmileIDSmartSelfieAuthentication.VIEW_TYPE_ID)_\(viewId)",
-            binaryMessenger: messenger
-        )
+        _api = api
         _childViewController = nil
         super.init()
         let screen = SmileID.smartSelfieAuthenticationScreen(
@@ -43,29 +40,21 @@ class SmileIDSmartSelfieAuthentication : NSObject, FlutterPlatformView, SmartSel
 
     func didSucceed(selfieImage: URL, livenessImages: [URL], apiResponse: SmartSelfieResponse?) {
         _childViewController?.removeFromParent()
-        let successData = SmartSelfieSuccessData(
-            selfieFile: getFilePath(fileName: selfieImage.absoluteString),
-            livenessFiles: livenessImages.map {
-                getFilePath(fileName: $0.absoluteString)
-            },
-            apiResponse: apiResponse
-        )
+        let result = SmartSelfieCaptureResult(selfieFile: getFilePath(fileName: selfieImage.absoluteString), livenessFiles: livenessImages.map{ getFilePath(fileName: $0.absoluteString)}, apiResponse: apiResponse?.buildResponse())
+        _api.onSmartSelfieAuthenticationResult(successResult: result, errorResult: nil){_ in}
 
-        if let jsonString = successData.toJSONString() {
-            _channel.invokeMethod("onSuccess", arguments: jsonString)
-        }
     }
 
     func didError(error: Error) {
         print("[Smile ID] An error occurred - \(error.localizedDescription)")
-        _channel.invokeMethod("onError", arguments: error.localizedDescription)
+        _api.onSmartSelfieAuthenticationResult(successResult: nil, errorResult: error.localizedDescription){_ in }
     }
 
 
     class Factory : NSObject, FlutterPlatformViewFactory {
-        private var messenger: FlutterBinaryMessenger
-        init(messenger: FlutterBinaryMessenger) {
-            self.messenger = messenger
+        private var api: SmileIDProductsResultApi
+        init(api: SmileIDProductsResultApi) {
+            self.api = api
             super.init()
         }
 
@@ -78,7 +67,7 @@ class SmileIDSmartSelfieAuthentication : NSObject, FlutterPlatformView, SmartSel
                 frame: frame,
                 viewIdentifier: viewId,
                 arguments: args as! [String: Any?],
-                binaryMessenger: messenger
+               api: api
             )
         }
 
