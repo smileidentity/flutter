@@ -5,9 +5,11 @@ import SwiftUI
 
 class SmileIDDocumentCaptureView: NSObject, FlutterPlatformView, SmileIDFileUtilsProtocol {
     var fileManager: FileManager = Foundation.FileManager.default
-    private let _childViewController: UIHostingController<AnyView>
     private var _api: SmileIDProductsResultApi
-    
+    private var _view: UIView
+    private var _childViewController: UIViewController?
+    private let _channel: FlutterMethodChannel
+
     static let VIEW_TYPE_ID = "SmileIDDocumentCaptureView"
     
     init(
@@ -25,7 +27,15 @@ class SmileIDDocumentCaptureView: NSObject, FlutterPlatformView, SmileIDFileUtil
         let showConfirmationDialog = args["showConfirmationDialog"] as? Bool ?? true
 
         self._api = api
-        
+        _view = UIView()
+        _channel = FlutterMethodChannel(
+            name: "\(SmileIDDocumentCaptureView.VIEW_TYPE_ID)_\(viewId)",
+            binaryMessenger: messenger
+        )
+        _childViewController = nil
+
+        super.init()
+
         let rootView = SmileIDDocumentRootView(
             showConfirmationDialog: showConfirmationDialog,
             isDocumentFrontSide: isDocumentFrontSide,
@@ -36,20 +46,11 @@ class SmileIDDocumentCaptureView: NSObject, FlutterPlatformView, SmileIDFileUtil
             allowGalleryUpload: allowGalleryUpload,
             api: _api
         )
-        _childViewController = UIHostingController(rootView: AnyView(rootView))
-
-        super.init()
-
-        setupHostingController(frame: frame)
-    }
-
-    private func setupHostingController(frame: CGRect) {
-        _childViewController.view.frame = frame
-        _childViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        _childViewController = embedView(rootView, in: _view, frame: frame)
     }
 
     func view() -> UIView {
-        return _childViewController.view
+        return _view
     }
 }
 

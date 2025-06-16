@@ -1,5 +1,12 @@
 # Release Notes
 
+## [Unreleased]
+
+### Fixed  
+* Refactored iOS platform view implementations to use consistent `embedView` pattern with standardized
+ view controller lifecycle management for `SmileIDSmartSelfieCaptureView` and `SmileIDDocumentCaptureView`,
+ fixing dark mode issues with these views.
+
 ## 11.0.2 - June 16, 2025
 
 ### Changed
