@@ -1,6 +1,6 @@
 # Release Notes
 
-## 11.0.2 (Unreleased)
+## 11.0.2 - June 16, 2025
 
 ### Changed
 * Renamed **example** folder to **sample** and replaced all usages of example in the project.
