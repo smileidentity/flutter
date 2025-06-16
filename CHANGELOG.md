@@ -13,6 +13,7 @@
  system UI boundaries including status bars, navigation bars, and notches. This change only affects 
  the Android platform implementation while maintaining existing gesture recognition and view creation 
  behavior, ensuring the platform view content is not obscured by system UI elements.
+* Bump android to 11.0.4 (https://github.com/smileidentity/android/releases/tag/v11.0.4)
 
 ## 11.0.1
 
