@@ -5,7 +5,8 @@ import SwiftUI
 
 class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView, SmileIDFileUtilsProtocol {
     var fileManager: FileManager = Foundation.FileManager.default
-    private let _childViewController: UIHostingController<AnyView>
+    private var _view: UIView
+    private var _childViewController: UIViewController?
     private let _viewModel: SelfieViewModel
     private let _channel: FlutterMethodChannel
 
@@ -32,11 +33,15 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView, SmileIDFileU
             extraPartnerParams: [:]
         )
 
+        _view = UIView()
         _channel = FlutterMethodChannel(
             name: "\(SmileIDSmartSelfieCaptureView.VIEW_TYPE_ID)_\(viewId)",
             binaryMessenger: messenger
         )
-
+        _childViewController = nil
+        
+        super.init()
+        
         let rootView = SmileIDRootView(
             viewModel: _viewModel,
             showConfirmationDialog: showConfirmationDialog,
@@ -46,20 +51,11 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView, SmileIDFileU
             useStrictMode: useStrictMode,
             channel: _channel
         )
-        _childViewController = UIHostingController(rootView: AnyView(rootView))
-
-        super.init()
-
-        setupHostingController(frame: frame)
-    }
-
-    private func setupHostingController(frame: CGRect) {
-        _childViewController.view.frame = frame
-        _childViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        _childViewController = embedView(rootView, in: _view, frame: frame)
     }
 
     func view() -> UIView {
-        return _childViewController.view
+        return _view
     }
 }
 
@@ -156,7 +152,6 @@ struct SmileIDRootView: View {
 
 extension SmileIDRootView: SmartSelfieResultDelegate {
     func didSucceed(selfieImage: URL, livenessImages: [URL], apiResponse: SmartSelfieResponse?) {
-        //        self.childViewController.removeFromParent()
         var arguments: [String: Any] = [
             "selfieFile": getFilePath(fileName: selfieImage.absoluteString),
             "livenessFiles": livenessImages.map { getFilePath(fileName: $0.absoluteString) },
