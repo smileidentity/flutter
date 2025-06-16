@@ -1111,28 +1111,28 @@ abstract class SmileIDApi {
 
   @async
   FlutterSmartSelfieResponse doSmartSelfieEnrollment(
-      String signature,
-      String timestamp,
-      String selfieImage,
-      List<String> livenessImages,
-      String userId,
-      Map<String?, String?>? partnerParams,
-      String? callbackUrl,
-      int? sandboxResult,
-      bool? allowNewEnroll,
-      );
+    String signature,
+    String timestamp,
+    String selfieImage,
+    List<String> livenessImages,
+    String userId,
+    Map<String?, String?>? partnerParams,
+    String? callbackUrl,
+    int? sandboxResult,
+    bool? allowNewEnroll,
+  );
 
   @async
   FlutterSmartSelfieResponse doSmartSelfieAuthentication(
-      String signature,
-      String timestamp,
-      String selfieImage,
-      List<String> livenessImages,
-      String userId,
-      Map<String?, String?>? partnerParams,
-      String? callbackUrl,
-      int? sandboxResult,
-      );
+    String signature,
+    String timestamp,
+    String selfieImage,
+    List<String> livenessImages,
+    String userId,
+    Map<String?, String?>? partnerParams,
+    String? callbackUrl,
+    int? sandboxResult,
+  );
 
   @async
   FlutterDocumentVerificationJobStatusResponse getDocumentVerificationJobStatus(
@@ -1144,7 +1144,7 @@ abstract class SmileIDApi {
 
   @async
   FlutterEnhancedDocumentVerificationJobStatusResponse
-  getEnhancedDocumentVerificationJobStatus(FlutterJobStatusRequest request);
+      getEnhancedDocumentVerificationJobStatus(FlutterJobStatusRequest request);
 
   @async
   FlutterProductsConfigResponse getProductsConfig(
@@ -1163,8 +1163,8 @@ abstract class SmileIDApi {
 
   @async
   FlutterDocumentVerificationJobStatusResponse
-  pollDocumentVerificationJobStatus(
-      FlutterJobStatusRequest request, int interval, int numAttempts);
+      pollDocumentVerificationJobStatus(
+          FlutterJobStatusRequest request, int interval, int numAttempts);
 
   @async
   FlutterBiometricKycJobStatusResponse pollBiometricKycJobStatus(
@@ -1172,8 +1172,8 @@ abstract class SmileIDApi {
 
   @async
   FlutterEnhancedDocumentVerificationJobStatusResponse
-  pollEnhancedDocumentVerificationJobStatus(
-      FlutterJobStatusRequest request, int interval, int numAttempts);
+      pollEnhancedDocumentVerificationJobStatus(
+          FlutterJobStatusRequest request, int interval, int numAttempts);
 }
 
 @HostApi()
