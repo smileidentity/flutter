@@ -6,6 +6,7 @@ import com.smileidentity.SmileID
 import com.smileidentity.compose.DocumentVerification
 import com.smileidentity.flutter.results.DocumentCaptureResult
 import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
+import com.smileidentity.flutter.views.SmileComposablePlatformView
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
@@ -13,8 +14,8 @@ import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
-import java.io.File
 import kotlinx.collections.immutable.toImmutableMap
+import java.io.File
 
 internal class SmileIDDocumentVerification private constructor(
     context: Context,
@@ -35,9 +36,9 @@ internal class SmileIDDocumentVerification private constructor(
             idAspectRatio = (args["idAspectRatio"] as Double?)?.toFloat(),
             captureBothSides = args["captureBothSides"] as? Boolean ?: true,
             bypassSelfieCaptureWithFile =
-            (args["bypassSelfieCaptureWithFile"] as? String)?.let {
-                File(it)
-            },
+                (args["bypassSelfieCaptureWithFile"] as? String)?.let {
+                    File(it)
+                },
             userId = args["userId"] as? String ?: randomUserId(),
             jobId = args["jobId"] as? String ?: randomJobId(),
             allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
@@ -57,7 +58,7 @@ internal class SmileIDDocumentVerification private constructor(
                             livenessFiles = it.data.livenessFiles,
                             documentBackFile = it.data.documentBackFile,
                             didSubmitDocumentVerificationJob =
-                            it.data.didSubmitDocumentVerificationJob,
+                                it.data.didSubmitDocumentVerificationJob,
                         )
                     val moshi =
                         SmileID.moshi

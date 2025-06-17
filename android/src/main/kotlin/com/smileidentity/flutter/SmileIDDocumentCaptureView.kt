@@ -15,6 +15,7 @@ import com.smileidentity.compose.theme.colorScheme
 import com.smileidentity.compose.theme.typography
 import com.smileidentity.flutter.results.DocumentCaptureResult
 import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
+import com.smileidentity.flutter.views.SmileComposablePlatformView
 import com.smileidentity.metadata.LocalMetadataProvider
 import com.smileidentity.util.randomJobId
 import io.flutter.plugin.common.BinaryMessenger

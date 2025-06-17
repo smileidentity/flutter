@@ -102,6 +102,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                                     ) {
                                         acknowledgedInstructions = true
                                     }
+
                                 uiState.processingState != null -> HandleProcessingState(viewModel)
                                 uiState.selfieToConfirm != null ->
                                     HandleSelfieConfirmation(
@@ -109,6 +110,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                                         uiState,
                                         viewModel,
                                     )
+
                                 else -> RenderSelfieCaptureScreen(
                                     userId,
                                     jobId,

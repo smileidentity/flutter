@@ -4,6 +4,7 @@ import android.content.Context
 import com.smileidentity.SmileID
 import com.smileidentity.flutter.results.SmartSelfieCaptureResult
 import com.smileidentity.flutter.utils.SelfieCaptureResultAdapter
+import com.smileidentity.flutter.views.SmileComposablePlatformView
 import com.smileidentity.results.SmartSelfieResult
 import com.smileidentity.results.SmileIDResult
 import io.flutter.plugin.common.BinaryMessenger

@@ -1,4 +1,4 @@
-package com.smileidentity.flutter
+package com.smileidentity.flutter.views
 
 import android.content.Context
 import androidx.compose.runtime.Composable
