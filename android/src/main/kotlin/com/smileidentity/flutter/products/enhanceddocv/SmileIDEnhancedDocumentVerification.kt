@@ -1,4 +1,4 @@
-package com.smileidentity.flutter
+package com.smileidentity.flutter.products.enhanceddocv
 
 import android.content.Context
 import androidx.compose.runtime.Composable

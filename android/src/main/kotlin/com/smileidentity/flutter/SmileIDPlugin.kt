@@ -25,7 +25,10 @@ import android.content.Context
 import com.smileidentity.SmileID
 import com.smileidentity.SmileIDOptIn
 import com.smileidentity.flutter.products.biometric.SmileIDBiometricKYC
+import com.smileidentity.flutter.products.capture.SmileIDDocumentCaptureView
+import com.smileidentity.flutter.products.capture.SmileIDSmartSelfieCaptureView
 import com.smileidentity.flutter.products.document.SmileIDDocumentVerification
+import com.smileidentity.flutter.products.enhanceddocv.SmileIDEnhancedDocumentVerification
 import com.smileidentity.flutter.products.enhancedselfie.SmileIDSmartSelfieAuthenticationEnhanced
 import com.smileidentity.flutter.products.enhancedselfie.SmileIDSmartSelfieEnrollmentEnhanced
 import com.smileidentity.flutter.products.selfie.SmileIDSmartSelfieAuthentication
