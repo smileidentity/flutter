@@ -1,8 +1,6 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+
+import '../../views/smile_view.dart';
 
 class SmileIDEnhancedDocumentVerification extends StatelessWidget {
   static const String viewType = "SmileIDEnhancedDocumentVerification";
@@ -64,71 +62,21 @@ class SmileIDEnhancedDocumentVerification extends StatelessWidget {
         "allowAgentMode": allowAgentMode,
         "allowGalleryUpload": allowGalleryUpload,
         "showInstructions": showInstructions,
-        "skipApiSubmission" : skipApiSubmission,
-        "useStrictMode" : useStrictMode,
-        "extraPartnerParams" : extraPartnerParams,
+        "skipApiSubmission": skipApiSubmission,
+        "useStrictMode": useStrictMode,
+        "extraPartnerParams": extraPartnerParams,
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    switch (defaultTargetPlatform) {
-      case TargetPlatform.android:
-        return SafeArea(
-          child: PlatformViewLink(
-          viewType: viewType,
-          surfaceFactory: (context, controller) {
-            return AndroidViewSurface(
-              controller: controller as AndroidViewController,
-              hitTestBehavior: PlatformViewHitTestBehavior.opaque,
-              gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{
-                Factory<OneSequenceGestureRecognizer>(EagerGestureRecognizer.new)
-              },
-            );
-          },
-          onCreatePlatformView: (params) {
-            return PlatformViewsService.initExpensiveAndroidView(
-              id: params.id,
-              viewType: viewType,
-              layoutDirection: Directionality.of(context),
-              creationParams: creationParams,
-              creationParamsCodec: const StandardMessageCodec(),
-              onFocus: () {
-                params.onFocusChanged(true);
-              },
-            )
-              ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
-              ..addOnPlatformViewCreatedListener(_onPlatformViewCreated)
-              ..create();
-          },
-          ),
-        );
-      case TargetPlatform.iOS:
-        return UiKitView(
-          viewType: viewType,
-          creationParams: creationParams,
-          creationParamsCodec: const StandardMessageCodec(),
-          onPlatformViewCreated: _onPlatformViewCreated,
-        );
-      default:
-        throw UnsupportedError("Unsupported platform");
-    }
-  }
-
-  void _onPlatformViewCreated(int id) {
-    final channel = MethodChannel("${viewType}_$id");
-    channel.setMethodCallHandler(_handleMethodCall);
-  }
-
-  Future<dynamic> _handleMethodCall(MethodCall call) async {
-    switch (call.method) {
-      case "onSuccess":
-        onSuccess(call.arguments);
-      case "onError":
-        onError(call.arguments);
-      default:
-        throw MissingPluginException();
-    }
+    return buildSmileIDPlatformView(
+      context: context,
+      viewType: viewType,
+      creationParams: creationParams,
+      onSuccess: onSuccess,
+      onError: onError,
+    );
   }
 }

@@ -2,17 +2,17 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:smile_id/smile_id_document_capture_view.dart';
-import 'package:smile_id/smile_id_smart_selfie_capture_view.dart';
+import 'package:smile_id/products/capture/smile_id_document_capture_view.dart';
+import 'package:smile_id/products/capture/smile_id_smart_selfie_capture_view.dart';
 import 'package:smile_id/smileid_messages.g.dart';
 import 'package:smile_id/smile_id.dart';
-import 'package:smile_id/smile_id_biometric_kyc.dart';
-import 'package:smile_id/smile_id_document_verification.dart';
-import 'package:smile_id/smile_id_enhanced_document_verification.dart';
-import 'package:smile_id/smile_id_smart_selfie_authentication.dart';
-import 'package:smile_id/smile_id_smart_selfie_authentication_enhanced.dart';
-import 'package:smile_id/smile_id_smart_selfie_enrollment.dart';
-import 'package:smile_id/smile_id_smart_selfie_enrollment_enhanced.dart';
+import 'package:smile_id/products/biometric/smile_id_biometric_kyc.dart';
+import 'package:smile_id/products/document/smile_id_document_verification.dart';
+import 'package:smile_id/products/enhanceddocv/smile_id_enhanced_document_verification.dart';
+import 'package:smile_id/products/selfie/smile_id_smart_selfie_authentication.dart';
+import 'package:smile_id/products/enhancedselfie/smile_id_smart_selfie_authentication_enhanced.dart';
+import 'package:smile_id/products/selfie/smile_id_smart_selfie_enrollment.dart';
+import 'package:smile_id/products/enhancedselfie/smile_id_smart_selfie_enrollment_enhanced.dart';
 
 // ignore_for_file: avoid_print
 

@@ -1,7 +1,7 @@
 import 'package:pigeon/pigeon.dart';
 
 @ConfigurePigeon(PigeonOptions(
-  dartOut: 'lib/smileid_messages.g.dart',
+  dartOut: 'lib/generated/smileid_messages.g.dart',
   dartOptions: DartOptions(),
   kotlinOut:
       'android/src/main/kotlin/com/smileidentity/flutter/generated/SmileIDMessages.g.kt',
