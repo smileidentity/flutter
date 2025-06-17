@@ -42,6 +42,10 @@ import com.smileidentity.networking.pollSmartSelfieJobStatus
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
+import java.io.File
+import java.net.URL
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -50,10 +54,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.File
-import java.net.URL
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.milliseconds
 
 class SmileIDPlugin :
     FlutterPlugin,
@@ -248,17 +248,17 @@ class SmileIDPlugin :
                 .doSmartSelfieEnrollment(
                     userId = userId,
                     selfieImage =
-                        File(selfieImage).asFormDataPart(
-                            partName = "selfie_image",
-                            mediaType = "image/jpeg",
-                        ),
+                    File(selfieImage).asFormDataPart(
+                        partName = "selfie_image",
+                        mediaType = "image/jpeg",
+                    ),
                     livenessImages =
-                        livenessImages.map {
-                            File(selfieImage).asFormDataPart(
-                                partName = "liveness_images",
-                                mediaType = "image/jpeg",
-                            )
-                        },
+                    livenessImages.map {
+                        File(selfieImage).asFormDataPart(
+                            partName = "liveness_images",
+                            mediaType = "image/jpeg",
+                        )
+                    },
                     partnerParams = convertNullableMapToNonNull(partnerParams),
                     callbackUrl = callbackUrl,
                     sandboxResult = sandboxResult?.toInt(),
@@ -285,17 +285,17 @@ class SmileIDPlugin :
                 .doSmartSelfieAuthentication(
                     userId = userId,
                     selfieImage =
-                        File(selfieImage).asFormDataPart(
-                            partName = "selfie_image",
-                            mediaType = "image/jpeg",
-                        ),
+                    File(selfieImage).asFormDataPart(
+                        partName = "selfie_image",
+                        mediaType = "image/jpeg",
+                    ),
                     livenessImages =
-                        livenessImages.map {
-                            File(selfieImage).asFormDataPart(
-                                partName = "liveness_images",
-                                mediaType = "image/jpeg",
-                            )
-                        },
+                    livenessImages.map {
+                        File(selfieImage).asFormDataPart(
+                            partName = "liveness_images",
+                            mediaType = "image/jpeg",
+                        )
+                    },
                     partnerParams = convertNullableMapToNonNull(partnerParams),
                     callbackUrl = callbackUrl,
                     sandboxResult = sandboxResult?.toInt(),

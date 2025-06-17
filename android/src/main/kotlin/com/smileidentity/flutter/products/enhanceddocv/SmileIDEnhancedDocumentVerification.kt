@@ -46,15 +46,15 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
             showInstructions = args["showInstructions"] as? Boolean ?: true,
             useStrictMode = args["useStrictMode"] as? Boolean ?: false,
             consentInformation =
-                ConsentInformation(
-                    consented = ConsentedInformation(
-                        consentGrantedDate = args["consentGrantedDate"] as? String
-                            ?: getCurrentIsoTimestamp(),
-                        personalDetails = args["personalDetailsConsentGranted"] as? Boolean == true,
-                        contactInformation = args["contactInfoConsentGranted"] as? Boolean == true,
-                        documentInformation = args["documentInfoConsentGranted"] as? Boolean == true,
-                    ),
+            ConsentInformation(
+                consented = ConsentedInformation(
+                    consentGrantedDate = args["consentGrantedDate"] as? String
+                        ?: getCurrentIsoTimestamp(),
+                    personalDetails = args["personalDetailsConsentGranted"] as? Boolean == true,
+                    contactInformation = args["contactInfoConsentGranted"] as? Boolean == true,
+                    documentInformation = args["documentInfoConsentGranted"] as? Boolean == true,
                 ),
+            ),
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {
             when (it) {
