@@ -1,9 +1,0 @@
-# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
-version: 2
-updates:
-  - package-ecosystem: "pub"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      time: "10:00"
-      timezone: "America/Los_Angeles"
