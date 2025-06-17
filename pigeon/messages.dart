@@ -10,15 +10,14 @@ import 'package:pigeon/pigeon.dart';
   swiftOptions: SwiftOptions(),
   dartPackageName: 'smileid',
 ))
-
-
 class FlutterConsentInformation {
   final String consentGrantedDate;
   final bool personalDetailsConsentGranted;
   final bool contactInfoConsentGranted;
   final bool documentInfoConsentGranted;
 
-  FlutterConsentInformation(this.consentGrantedDate,{
+  FlutterConsentInformation(
+    this.consentGrantedDate, {
     this.personalDetailsConsentGranted = false,
     this.contactInfoConsentGranted = false,
     this.documentInfoConsentGranted = false,
@@ -819,22 +818,13 @@ class FlutterConfig {
 
 @HostApi()
 abstract class SmileIDApi {
-  void initializeWithApiKey(
-      String apiKey,
-      FlutterConfig config,
-      bool useSandbox,
-      bool enableCrashReporting
-  );
+  void initializeWithApiKey(String apiKey, FlutterConfig config,
+      bool useSandbox, bool enableCrashReporting);
 
   void initializeWithConfig(
-      FlutterConfig config,
-      bool useSandbox,
-      bool enableCrashReporting
-  );
+      FlutterConfig config, bool useSandbox, bool enableCrashReporting);
 
-  void initialize(
-      bool useSandbox
-  );
+  void initialize(bool useSandbox);
 
   void setCallbackUrl(String callbackUrl);
 
@@ -905,8 +895,8 @@ abstract class SmileIDApi {
       FlutterJobStatusRequest request);
 
   @async
-  FlutterEnhancedDocumentVerificationJobStatusResponse getEnhancedDocumentVerificationJobStatus(
-      FlutterJobStatusRequest request);
+  FlutterEnhancedDocumentVerificationJobStatusResponse
+      getEnhancedDocumentVerificationJobStatus(FlutterJobStatusRequest request);
 
   @async
   FlutterProductsConfigResponse getProductsConfig(
@@ -924,14 +914,16 @@ abstract class SmileIDApi {
       FlutterJobStatusRequest request, int interval, int numAttempts);
 
   @async
-  FlutterDocumentVerificationJobStatusResponse pollDocumentVerificationJobStatus(
-      FlutterJobStatusRequest request, int interval, int numAttempts);
+  FlutterDocumentVerificationJobStatusResponse
+      pollDocumentVerificationJobStatus(
+          FlutterJobStatusRequest request, int interval, int numAttempts);
 
   @async
   FlutterBiometricKycJobStatusResponse pollBiometricKycJobStatus(
       FlutterJobStatusRequest request, int interval, int numAttempts);
 
   @async
-  FlutterEnhancedDocumentVerificationJobStatusResponse pollEnhancedDocumentVerificationJobStatus(
-      FlutterJobStatusRequest request, int interval, int numAttempts);
+  FlutterEnhancedDocumentVerificationJobStatusResponse
+      pollEnhancedDocumentVerificationJobStatus(
+          FlutterJobStatusRequest request, int interval, int numAttempts);
 }

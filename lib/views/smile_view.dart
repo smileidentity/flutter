@@ -37,7 +37,8 @@ Widget buildSmileIDPlatformView({
               controller: controller as AndroidViewController,
               hitTestBehavior: PlatformViewHitTestBehavior.opaque,
               gestureRecognizers: const {
-                Factory<OneSequenceGestureRecognizer>(EagerGestureRecognizer.new)
+                Factory<OneSequenceGestureRecognizer>(
+                    EagerGestureRecognizer.new)
               },
             );
           },
