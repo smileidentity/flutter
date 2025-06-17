@@ -24,6 +24,7 @@ import android.app.Activity
 import android.content.Context
 import com.smileidentity.SmileID
 import com.smileidentity.SmileIDOptIn
+import com.smileidentity.flutter.products.document.SmileIDDocumentVerification
 import com.smileidentity.flutter.products.enhancedselfie.SmileIDSmartSelfieAuthenticationEnhanced
 import com.smileidentity.flutter.products.enhancedselfie.SmileIDSmartSelfieEnrollmentEnhanced
 import com.smileidentity.metadata.models.WrapperSdkName
@@ -53,12 +54,12 @@ class SmileIDPlugin :
     SmileIDApi,
     ActivityAware {
     private var activity: Activity? = null
-    private lateinit var appContext: Context
+    private lateinit var context: Context
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         SmileIDApi.setUp(flutterPluginBinding.binaryMessenger, this)
-        appContext = flutterPluginBinding.applicationContext
+        context = flutterPluginBinding.applicationContext
 
         // Set wrapper info for Flutter SDK
         SmileID.setWrapperInfo(WrapperSdkName.Flutter, "11.0.1")
@@ -120,7 +121,7 @@ class SmileIDPlugin :
         enableCrashReporting: Boolean,
     ) {
         SmileID.initialize(
-            context = appContext,
+            context = context,
             apiKey = apiKey,
             config = config.toRequest(),
             useSandbox = useSandbox,
@@ -134,7 +135,7 @@ class SmileIDPlugin :
         enableCrashReporting: Boolean,
     ) {
         SmileID.initialize(
-            context = appContext,
+            context = context,
             config = config.toRequest(),
             useSandbox = useSandbox,
             enableCrashReporting = false,
@@ -143,7 +144,7 @@ class SmileIDPlugin :
 
     override fun initialize(useSandbox: Boolean) {
         SmileID.initialize(
-            context = appContext,
+            context = context,
             useSandbox = useSandbox,
         )
     }
