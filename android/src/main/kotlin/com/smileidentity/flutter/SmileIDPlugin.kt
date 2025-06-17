@@ -27,6 +27,8 @@ import com.smileidentity.SmileIDOptIn
 import com.smileidentity.flutter.products.document.SmileIDDocumentVerification
 import com.smileidentity.flutter.products.enhancedselfie.SmileIDSmartSelfieAuthenticationEnhanced
 import com.smileidentity.flutter.products.enhancedselfie.SmileIDSmartSelfieEnrollmentEnhanced
+import com.smileidentity.flutter.products.selfie.SmileIDSmartSelfieAuthentication
+import com.smileidentity.flutter.products.selfie.SmileIDSmartSelfieEnrollment
 import com.smileidentity.metadata.models.WrapperSdkName
 import com.smileidentity.networking.asFormDataPart
 import com.smileidentity.networking.pollBiometricKycJobStatus
