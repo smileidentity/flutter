@@ -8,6 +8,7 @@ import com.smileidentity.flutter.results.SmartSelfieCaptureResult
 import com.smileidentity.flutter.utils.SelfieCaptureResultAdapter
 import com.smileidentity.flutter.utils.getCurrentIsoTimestamp
 import com.smileidentity.flutter.views.SmileComposablePlatformView
+import com.smileidentity.flutter.views.SmileIDViewFactory
 import com.smileidentity.models.ConsentInformation
 import com.smileidentity.models.ConsentedInformation
 import com.smileidentity.models.IdInfo
@@ -28,6 +29,29 @@ internal class SmileIDBiometricKYC private constructor(
 ) : SmileComposablePlatformView(context, VIEW_TYPE_ID, viewId, messenger, args) {
     companion object {
         const val VIEW_TYPE_ID = "SmileIDBiometricKYC"
+
+        fun createFactory(messenger: BinaryMessenger): PlatformViewFactory =
+            SmileIDViewFactory(messenger = messenger) { context, args, messenger, viewId ->
+                SmileIDBiometricKYC(
+                    context = context,
+                    viewId = viewId,
+                    messenger = messenger,
+                    args = args,
+                )
+            }
+    }
+
+    class Factory(private val messenger: BinaryMessenger) :
+        PlatformViewFactory(StandardMessageCodec.INSTANCE) {
+        override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
+            @Suppress("UNCHECKED_CAST")
+            return SmileIDBiometricKYC(
+                context,
+                viewId,
+                messenger,
+                args as Map<String, Any?>,
+            )
+        }
     }
 
     @Composable
@@ -94,19 +118,6 @@ internal class SmileIDBiometricKYC private constructor(
 
                 is SmileIDResult.Error -> onError(it.throwable)
             }
-        }
-    }
-
-    class Factory(private val messenger: BinaryMessenger) :
-        PlatformViewFactory(StandardMessageCodec.INSTANCE) {
-        override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
-            @Suppress("UNCHECKED_CAST")
-            return SmileIDBiometricKYC(
-                context,
-                viewId,
-                messenger,
-                args as Map<String, Any?>,
-            )
         }
     }
 }

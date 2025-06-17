@@ -11,7 +11,9 @@ import com.smileidentity.SmileID
 import io.flutter.Log
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodChannel
+import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
+import io.flutter.plugin.platform.PlatformViewFactory
 
 /**
  * Base class for hosting Smile ID Composables in Flutter. This class handles flutter<>android
@@ -108,5 +110,23 @@ internal abstract class SmileComposablePlatformView(
     override fun dispose() {
         // Clear references to the view to avoid memory leaks
         view = null
+    }
+}
+
+/**
+ * Generic factory for creating SmileID platform views
+ */
+internal class SmileIDViewFactory<V : PlatformView>(
+    private val messenger: BinaryMessenger,
+    private val creator: (
+        Context,
+        Map<String, Any?>,
+        BinaryMessenger,
+        Int,
+    ) -> V,
+) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
+    override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
+        @Suppress("UNCHECKED_CAST")
+        return creator(context, args as Map<String, Any?>, messenger, viewId)
     }
 }

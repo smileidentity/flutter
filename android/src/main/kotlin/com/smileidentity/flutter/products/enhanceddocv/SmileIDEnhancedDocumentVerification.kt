@@ -8,14 +8,13 @@ import com.smileidentity.flutter.results.DocumentCaptureResult
 import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
 import com.smileidentity.flutter.utils.getCurrentIsoTimestamp
 import com.smileidentity.flutter.views.SmileComposablePlatformView
+import com.smileidentity.flutter.views.SmileIDViewFactory
 import com.smileidentity.models.ConsentInformation
 import com.smileidentity.models.ConsentedInformation
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
 import io.flutter.plugin.common.BinaryMessenger
-import io.flutter.plugin.common.StandardMessageCodec
-import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 import kotlinx.collections.immutable.toImmutableMap
 
@@ -27,6 +26,16 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
 ) : SmileComposablePlatformView(context, VIEW_TYPE_ID, viewId, messenger, args) {
     companion object {
         const val VIEW_TYPE_ID = "SmileIDEnhancedDocumentVerification"
+
+        fun createFactory(messenger: BinaryMessenger): PlatformViewFactory =
+            SmileIDViewFactory(messenger = messenger) { context, args, messenger, viewId ->
+                SmileIDEnhancedDocumentVerification(
+                    context = context,
+                    viewId = viewId,
+                    messenger = messenger,
+                    args = args,
+                )
+            }
     }
 
     @Composable
@@ -88,19 +97,6 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
 
                 is SmileIDResult.Error -> onError(it.throwable)
             }
-        }
-    }
-
-    class Factory(private val messenger: BinaryMessenger) :
-        PlatformViewFactory(StandardMessageCodec.INSTANCE) {
-        override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
-            @Suppress("UNCHECKED_CAST")
-            return SmileIDEnhancedDocumentVerification(
-                context,
-                viewId,
-                messenger,
-                args as Map<String, Any?>,
-            )
         }
     }
 }
