@@ -32,6 +32,7 @@ import com.smileidentity.compose.selfie.SelfieCaptureScreen
 import com.smileidentity.compose.selfie.SmartSelfieInstructionsScreen
 import com.smileidentity.compose.theme.colorScheme
 import com.smileidentity.compose.theme.typography
+import com.smileidentity.flutter.views.SmileSelfieComposablePlatformView
 import com.smileidentity.metadata.LocalMetadataProvider
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
