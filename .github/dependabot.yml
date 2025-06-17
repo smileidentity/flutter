@@ -4,9 +4,7 @@ updates:
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
-      interval: monthly
-      time: "10:00"
-      timezone: "America/Los_Angeles"
+      interval: weekly
     groups:
       github-actions:
         patterns:
@@ -16,15 +14,11 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-      time: "10:00"
-      timezone: "America/Los_Angeles"
 
   - package-ecosystem: "gradle"
     directory: "/"
     schedule:
       interval: "weekly"
-      time: "10:00"
-      timezone: "America/Los_Angeles"
     groups:
       # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#groups
       # Group updates together, so that they are all applied in a single PR.
