@@ -1,4 +1,4 @@
-package com.smileidentity.flutter.enhanced
+package com.smileidentity.flutter.products.enhancedselfie
 
 import android.content.Context
 import androidx.compose.runtime.Composable
