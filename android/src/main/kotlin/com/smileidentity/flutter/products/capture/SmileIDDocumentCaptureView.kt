@@ -1,4 +1,4 @@
-package com.smileidentity.flutter
+package com.smileidentity.flutter.products.capture
 
 import android.content.Context
 import androidx.compose.foundation.layout.fillMaxSize
