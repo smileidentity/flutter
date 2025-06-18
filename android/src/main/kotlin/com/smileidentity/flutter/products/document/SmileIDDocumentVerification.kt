@@ -13,8 +13,8 @@ import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.platform.PlatformViewFactory
-import kotlinx.collections.immutable.toImmutableMap
 import java.io.File
+import kotlinx.collections.immutable.toImmutableMap
 
 internal class SmileIDDocumentVerification private constructor(
     context: Context,
