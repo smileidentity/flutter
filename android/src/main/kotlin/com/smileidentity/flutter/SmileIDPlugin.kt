@@ -24,8 +24,15 @@ import android.app.Activity
 import android.content.Context
 import com.smileidentity.SmileID
 import com.smileidentity.SmileIDOptIn
-import com.smileidentity.flutter.enhanced.SmileIDSmartSelfieAuthenticationEnhanced
-import com.smileidentity.flutter.enhanced.SmileIDSmartSelfieEnrollmentEnhanced
+import com.smileidentity.flutter.products.biometric.SmileIDBiometricKYC
+import com.smileidentity.flutter.products.capture.SmileIDDocumentCaptureView
+import com.smileidentity.flutter.products.capture.SmileIDSmartSelfieCaptureView
+import com.smileidentity.flutter.products.document.SmileIDDocumentVerification
+import com.smileidentity.flutter.products.enhanceddocv.SmileIDEnhancedDocumentVerification
+import com.smileidentity.flutter.products.enhancedselfie.SmileIDSmartSelfieAuthenticationEnhanced
+import com.smileidentity.flutter.products.enhancedselfie.SmileIDSmartSelfieEnrollmentEnhanced
+import com.smileidentity.flutter.products.selfie.SmileIDSmartSelfieAuthentication
+import com.smileidentity.flutter.products.selfie.SmileIDSmartSelfieEnrollment
 import com.smileidentity.metadata.models.WrapperSdkName
 import com.smileidentity.networking.asFormDataPart
 import com.smileidentity.networking.pollBiometricKycJobStatus
@@ -53,59 +60,63 @@ class SmileIDPlugin :
     SmileIDApi,
     ActivityAware {
     private var activity: Activity? = null
-    private lateinit var appContext: Context
+    private lateinit var context: Context
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         SmileIDApi.setUp(flutterPluginBinding.binaryMessenger, this)
-        appContext = flutterPluginBinding.applicationContext
+        context = flutterPluginBinding.applicationContext
 
         // Set wrapper info for Flutter SDK
         SmileID.setWrapperInfo(WrapperSdkName.Flutter, "11.0.1")
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
-            SmileIDDocumentVerification.VIEW_TYPE_ID,
-            SmileIDDocumentVerification.Factory(flutterPluginBinding.binaryMessenger),
-        )
-
-        flutterPluginBinding.platformViewRegistry.registerViewFactory(
-            SmileIDSmartSelfieEnrollment.VIEW_TYPE_ID,
-            SmileIDSmartSelfieEnrollment.Factory(flutterPluginBinding.binaryMessenger),
-        )
-
-        flutterPluginBinding.platformViewRegistry.registerViewFactory(
-            SmileIDSmartSelfieAuthentication.VIEW_TYPE_ID,
-            SmileIDSmartSelfieAuthentication.Factory(flutterPluginBinding.binaryMessenger),
-        )
-
-        flutterPluginBinding.platformViewRegistry.registerViewFactory(
-            SmileIDSmartSelfieEnrollmentEnhanced.VIEW_TYPE_ID,
-            SmileIDSmartSelfieEnrollmentEnhanced.Factory(flutterPluginBinding.binaryMessenger),
-        )
-
-        flutterPluginBinding.platformViewRegistry.registerViewFactory(
-            SmileIDSmartSelfieAuthenticationEnhanced.VIEW_TYPE_ID,
-            SmileIDSmartSelfieAuthenticationEnhanced.Factory(flutterPluginBinding.binaryMessenger),
-        )
-
-        flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDBiometricKYC.VIEW_TYPE_ID,
-            SmileIDBiometricKYC.Factory(flutterPluginBinding.binaryMessenger),
+            SmileIDBiometricKYC.createFactory(flutterPluginBinding.binaryMessenger),
+        )
+
+        flutterPluginBinding.platformViewRegistry.registerViewFactory(
+            SmileIDDocumentVerification.VIEW_TYPE_ID,
+            SmileIDDocumentVerification.createFactory(flutterPluginBinding.binaryMessenger),
         )
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDEnhancedDocumentVerification.VIEW_TYPE_ID,
-            SmileIDEnhancedDocumentVerification.Factory(flutterPluginBinding.binaryMessenger),
+            SmileIDEnhancedDocumentVerification.createFactory(flutterPluginBinding.binaryMessenger),
+        )
+
+        flutterPluginBinding.platformViewRegistry.registerViewFactory(
+            SmileIDSmartSelfieEnrollment.VIEW_TYPE_ID,
+            SmileIDSmartSelfieEnrollment.createFactory(flutterPluginBinding.binaryMessenger),
+        )
+
+        flutterPluginBinding.platformViewRegistry.registerViewFactory(
+            SmileIDSmartSelfieAuthentication.VIEW_TYPE_ID,
+            SmileIDSmartSelfieAuthentication.createFactory(flutterPluginBinding.binaryMessenger),
+        )
+
+        flutterPluginBinding.platformViewRegistry.registerViewFactory(
+            SmileIDSmartSelfieEnrollmentEnhanced.VIEW_TYPE_ID,
+            SmileIDSmartSelfieEnrollmentEnhanced.createFactory(
+                flutterPluginBinding.binaryMessenger,
+            ),
+        )
+
+        flutterPluginBinding.platformViewRegistry.registerViewFactory(
+            SmileIDSmartSelfieAuthenticationEnhanced.VIEW_TYPE_ID,
+            SmileIDSmartSelfieAuthenticationEnhanced.createFactory(
+                flutterPluginBinding.binaryMessenger,
+            ),
         )
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDSmartSelfieCaptureView.VIEW_TYPE_ID,
-            SmileIDSmartSelfieCaptureView.Factory(flutterPluginBinding.binaryMessenger),
+            SmileIDSmartSelfieCaptureView.createFactory(flutterPluginBinding.binaryMessenger),
         )
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDDocumentCaptureView.VIEW_TYPE_ID,
-            SmileIDDocumentCaptureView.Factory(flutterPluginBinding.binaryMessenger),
+            SmileIDDocumentCaptureView.createFactory(flutterPluginBinding.binaryMessenger),
         )
     }
 
@@ -120,7 +131,7 @@ class SmileIDPlugin :
         enableCrashReporting: Boolean,
     ) {
         SmileID.initialize(
-            context = appContext,
+            context = context,
             apiKey = apiKey,
             config = config.toRequest(),
             useSandbox = useSandbox,
@@ -134,7 +145,7 @@ class SmileIDPlugin :
         enableCrashReporting: Boolean,
     ) {
         SmileID.initialize(
-            context = appContext,
+            context = context,
             config = config.toRequest(),
             useSandbox = useSandbox,
             enableCrashReporting = false,
@@ -143,7 +154,7 @@ class SmileIDPlugin :
 
     override fun initialize(useSandbox: Boolean) {
         SmileID.initialize(
-            context = appContext,
+            context = context,
             useSandbox = useSandbox,
         )
     }
@@ -247,7 +258,7 @@ class SmileIDPlugin :
                     ),
                     livenessImages =
                     livenessImages.map {
-                        File(selfieImage).asFormDataPart(
+                        File(it).asFormDataPart(
                             partName = "liveness_images",
                             mediaType = "image/jpeg",
                         )
@@ -284,7 +295,7 @@ class SmileIDPlugin :
                     ),
                     livenessImages =
                     livenessImages.map {
-                        File(selfieImage).asFormDataPart(
+                        File(it).asFormDataPart(
                             partName = "liveness_images",
                             mediaType = "image/jpeg",
                         )

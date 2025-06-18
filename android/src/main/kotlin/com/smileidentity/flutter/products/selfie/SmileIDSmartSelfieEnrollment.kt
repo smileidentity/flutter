@@ -1,13 +1,13 @@
-package com.smileidentity.flutter
+package com.smileidentity.flutter.products.selfie
 
 import android.content.Context
 import androidx.compose.runtime.Composable
 import com.smileidentity.SmileID
 import com.smileidentity.compose.SmartSelfieEnrollment
+import com.smileidentity.flutter.views.SmileIDViewFactory
+import com.smileidentity.flutter.views.SmileSelfieComposablePlatformView
 import com.smileidentity.util.randomUserId
 import io.flutter.plugin.common.BinaryMessenger
-import io.flutter.plugin.common.StandardMessageCodec
-import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 import kotlinx.collections.immutable.toImmutableMap
 
@@ -19,6 +19,16 @@ internal class SmileIDSmartSelfieEnrollment private constructor(
 ) : SmileSelfieComposablePlatformView(context, VIEW_TYPE_ID, viewId, messenger, args) {
     companion object {
         const val VIEW_TYPE_ID = "SmileIDSmartSelfieEnrollment"
+
+        fun createFactory(messenger: BinaryMessenger): PlatformViewFactory =
+            SmileIDViewFactory(messenger = messenger) { context, args, messenger, viewId ->
+                SmileIDSmartSelfieEnrollment(
+                    context = context,
+                    viewId = viewId,
+                    messenger = messenger,
+                    args = args,
+                )
+            }
     }
 
     @Composable
@@ -34,18 +44,5 @@ internal class SmileIDSmartSelfieEnrollment private constructor(
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
             onResult = { res -> handleResult(res) },
         )
-    }
-
-    class Factory(private val messenger: BinaryMessenger) :
-        PlatformViewFactory(StandardMessageCodec.INSTANCE) {
-        override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
-            @Suppress("UNCHECKED_CAST")
-            return SmileIDSmartSelfieEnrollment(
-                context,
-                viewId,
-                messenger,
-                args as Map<String, Any?>,
-            )
-        }
     }
 }

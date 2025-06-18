@@ -1,4 +1,4 @@
-package com.smileidentity.flutter
+package com.smileidentity.flutter.products.capture
 
 import android.content.Context
 import android.graphics.BitmapFactory
@@ -32,6 +32,8 @@ import com.smileidentity.compose.selfie.SelfieCaptureScreen
 import com.smileidentity.compose.selfie.SmartSelfieInstructionsScreen
 import com.smileidentity.compose.theme.colorScheme
 import com.smileidentity.compose.theme.typography
+import com.smileidentity.flutter.views.SmileIDViewFactory
+import com.smileidentity.flutter.views.SmileSelfieComposablePlatformView
 import com.smileidentity.metadata.LocalMetadataProvider
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
@@ -39,8 +41,6 @@ import com.smileidentity.viewmodel.SelfieUiState
 import com.smileidentity.viewmodel.SelfieViewModel
 import com.smileidentity.viewmodel.viewModelFactory
 import io.flutter.plugin.common.BinaryMessenger
-import io.flutter.plugin.common.StandardMessageCodec
-import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 
 internal class SmileIDSmartSelfieCaptureView private constructor(
@@ -51,6 +51,16 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
 ) : SmileSelfieComposablePlatformView(context, VIEW_TYPE_ID, viewId, messenger, args) {
     companion object {
         const val VIEW_TYPE_ID = "SmileIDSmartSelfieCaptureView"
+
+        fun createFactory(messenger: BinaryMessenger): PlatformViewFactory =
+            SmileIDViewFactory(messenger = messenger) { context, args, messenger, viewId ->
+                SmileIDSmartSelfieCaptureView(
+                    context = context,
+                    viewId = viewId,
+                    messenger = messenger,
+                    args = args,
+                )
+            }
     }
 
     @OptIn(SmileIDOptIn::class)
@@ -102,6 +112,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                                     ) {
                                         acknowledgedInstructions = true
                                     }
+
                                 uiState.processingState != null -> HandleProcessingState(viewModel)
                                 uiState.selfieToConfirm != null ->
                                     HandleSelfieConfirmation(
@@ -109,6 +120,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                                         uiState,
                                         viewModel,
                                     )
+
                                 else -> RenderSelfieCaptureScreen(
                                     userId,
                                     jobId,
@@ -183,18 +195,5 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
     @Composable
     private fun HandleProcessingState(viewModel: SelfieViewModel) {
         viewModel.onFinished { res -> handleResult(res) }
-    }
-
-    class Factory(private val messenger: BinaryMessenger) :
-        PlatformViewFactory(StandardMessageCodec.INSTANCE) {
-        override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
-            @Suppress("UNCHECKED_CAST")
-            return SmileIDSmartSelfieCaptureView(
-                context,
-                viewId,
-                messenger,
-                args as Map<String, Any?>,
-            )
-        }
     }
 }

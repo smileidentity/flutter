@@ -253,13 +253,13 @@ class MockSmileIDApi extends _i1.Mock implements _i2.SmileIDApi {
 
   @override
   _i3.Future<List<String>> getUnsubmittedJobs() => (super.noSuchMethod(
-    Invocation.method(
-      #getUnsubmittedJobs,
-      [],
-    ),
-    returnValue: _i3.Future<List<String>>.value(<String>[]),
-    returnValueForMissingStub: _i3.Future<List<String>>.value(<String>[]),
-  ) as _i3.Future<List<String>>);
+        Invocation.method(
+          #getUnsubmittedJobs,
+          [],
+        ),
+        returnValue: _i3.Future<List<String>>.value(<String>[]),
+        returnValueForMissingStub: _i3.Future<List<String>>.value(<String>[]),
+      ) as _i3.Future<List<String>>);
 
   @override
   _i3.Future<void> cleanup(String? jobId) => (super.noSuchMethod(

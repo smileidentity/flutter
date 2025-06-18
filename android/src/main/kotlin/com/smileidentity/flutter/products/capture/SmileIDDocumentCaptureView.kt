@@ -1,4 +1,4 @@
-package com.smileidentity.flutter
+package com.smileidentity.flutter.products.capture
 
 import android.content.Context
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,11 +15,11 @@ import com.smileidentity.compose.theme.colorScheme
 import com.smileidentity.compose.theme.typography
 import com.smileidentity.flutter.results.DocumentCaptureResult
 import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
+import com.smileidentity.flutter.views.SmileComposablePlatformView
+import com.smileidentity.flutter.views.SmileIDViewFactory
 import com.smileidentity.metadata.LocalMetadataProvider
 import com.smileidentity.util.randomJobId
 import io.flutter.plugin.common.BinaryMessenger
-import io.flutter.plugin.common.StandardMessageCodec
-import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 import java.io.File
 
@@ -31,6 +31,16 @@ internal class SmileIDDocumentCaptureView private constructor(
 ) : SmileComposablePlatformView(context, VIEW_TYPE_ID, viewId, messenger, args) {
     companion object {
         const val VIEW_TYPE_ID = "SmileIDDocumentCaptureView"
+
+        fun createFactory(messenger: BinaryMessenger): PlatformViewFactory =
+            SmileIDViewFactory(messenger = messenger) { context, args, messenger, viewId ->
+                SmileIDDocumentCaptureView(
+                    context = context,
+                    viewId = viewId,
+                    messenger = messenger,
+                    args = args,
+                )
+            }
     }
 
     @Composable
@@ -138,19 +148,6 @@ internal class SmileIDDocumentCaptureView private constructor(
             }
         json?.let {
             onSuccessJson(it)
-        }
-    }
-
-    class Factory(private val messenger: BinaryMessenger) :
-        PlatformViewFactory(StandardMessageCodec.INSTANCE) {
-        override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
-            @Suppress("UNCHECKED_CAST")
-            return SmileIDDocumentCaptureView(
-                context,
-                viewId,
-                messenger,
-                args as Map<String, Any?>,
-            )
         }
     }
 }
