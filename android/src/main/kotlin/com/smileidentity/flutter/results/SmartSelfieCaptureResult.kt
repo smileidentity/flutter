@@ -1,4 +1,5 @@
 package com.smileidentity.flutter.results
+
 import com.smileidentity.models.v2.SmartSelfieResponse
 import java.io.File
 
