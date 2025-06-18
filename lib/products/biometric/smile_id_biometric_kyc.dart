@@ -13,8 +13,7 @@ class SmileIDBiometricKYC extends StatelessWidget {
     required this.creationParams,
     required this.onSuccess,
     required this.onError,
-    Key? key,
-  }) : super(key: key);
+  });
 
   factory SmileIDBiometricKYC({
     Key? key,
