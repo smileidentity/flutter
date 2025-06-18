@@ -41,19 +41,6 @@ internal class SmileIDBiometricKYC private constructor(
             }
     }
 
-    class Factory(private val messenger: BinaryMessenger) :
-        PlatformViewFactory(StandardMessageCodec.INSTANCE) {
-        override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
-            @Suppress("UNCHECKED_CAST")
-            return SmileIDBiometricKYC(
-                context,
-                viewId,
-                messenger,
-                args as Map<String, Any?>,
-            )
-        }
-    }
-
     @Composable
     override fun Content(args: Map<String, Any?>) {
         val extraPartnerParams = args["extraPartnerParams"] as? Map<String, String> ?: emptyMap()
