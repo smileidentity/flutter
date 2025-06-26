@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+* Update Ktlint setup and Gradle version
+
 ### Fixed  
 * Refactored iOS platform view implementations to use consistent `embedView` pattern with standardized
  view controller lifecycle management for `SmileIDSmartSelfieCaptureView` and `SmileIDDocumentCaptureView`,
