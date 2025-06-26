@@ -10,6 +10,7 @@ buildscript {
     val kotlinVersion = rootProject.findProperty("kotlinVersion") as String? ?: "2.1.21"
 
     dependencies {
+        classpath("org.jlleitschuh.gradle:ktlint-gradle:12.3.0")
         if (kotlinVersion.startsWith("2")) {
             classpath("org.jetbrains.kotlin:compose-compiler-gradle-plugin:$kotlinVersion")
         } else {
@@ -29,7 +30,7 @@ allprojects {
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    alias(libs.plugins.ktlint)
+    id("org.jlleitschuh.gradle.ktlint")
 }
 
 if (kotlinVersion.startsWith("2")) {

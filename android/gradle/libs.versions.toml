@@ -1,7 +1,6 @@
 [versions]
 kotlin-immutable-collections = "0.4.0"
-ktlint-plugin = "12.3.0"
-mockk = "1.14.2"
+mockk = "1.14.4"
 mlkit = "17.0.2"
 smileid = "11.0.4"
 
@@ -17,6 +16,3 @@ kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test" }
 mlkit = { module = "com.google.mlkit:object-detection" , version.ref="mlkit" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 smileid = { module = "com.smileidentity:android-sdk", version.ref = "smileid" }
-
-[plugins]
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-plugin" }
