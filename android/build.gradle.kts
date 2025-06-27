@@ -15,6 +15,12 @@ buildscript {
         } else {
             classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
         }
+        classpath("org.jlleitschuh.gradle:ktlint-gradle:12.3.0")
+        if (kotlinVersion.startsWith("2")) {
+            classpath("org.jetbrains.kotlin:compose-compiler-gradle-plugin:$kotlinVersion")
+        } else {
+            classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+        }
     }
 }
 
@@ -29,7 +35,7 @@ allprojects {
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    alias(libs.plugins.ktlint)
+    id("org.jlleitschuh.gradle.ktlint")
 }
 
 if (kotlinVersion.startsWith("2")) {
