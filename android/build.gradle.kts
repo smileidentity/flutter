@@ -15,12 +15,6 @@ buildscript {
         } else {
             classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
         }
-        classpath("org.jlleitschuh.gradle:ktlint-gradle:12.3.0")
-        if (kotlinVersion.startsWith("2")) {
-            classpath("org.jetbrains.kotlin:compose-compiler-gradle-plugin:$kotlinVersion")
-        } else {
-            classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
-        }
     }
 }
 
@@ -35,7 +29,7 @@ allprojects {
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("org.jlleitschuh.gradle.ktlint")
+    id("org.jlleitschuh.gradle.ktlint") version "12.3.0"
 }
 
 if (kotlinVersion.startsWith("2")) {
@@ -94,18 +88,19 @@ android {
 }
 
 dependencies {
-    implementation(libs.smileid)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.viewmodel)
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.fragment)
-    implementation(libs.kotlin.coroutines)
-    implementation(libs.kotlin.immutable.collections)
-    implementation(libs.mlkit)
+    implementation("com.smileidentity:android-sdk:11.0.4")
+    implementation("androidx.core:core-ktx:1.16.0")
+    implementation(platform("androidx.compose:compose-bom:2025.06.01"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.1")
+    implementation("androidx.fragment:fragment-ktx:1.8.8")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.4.0")
+    implementation("com.google.mlkit:object-detection:17.0.2")
 
-    testImplementation(libs.kotlin.test)
-    testImplementation(libs.mockk)
+    testImplementation("org.jetbrains.kotlin:kotlin-test:2.2.0")
+    testImplementation("io.mockk:mockk:1.14.4")
 }
 
 ktlint {
