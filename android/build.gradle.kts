@@ -99,7 +99,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.4.0")
     implementation("com.google.mlkit:object-detection:17.0.2")
 
-    testImplementation("org.jetbrains.kotlin:kotlin-test:2.2.0")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlinVersion")
     testImplementation("io.mockk:mockk:1.14.4")
 }
 
