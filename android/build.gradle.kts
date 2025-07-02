@@ -88,7 +88,7 @@ android {
 }
 
 dependencies {
-    implementation("com.smileidentity:android-sdk:11.0.4")
+    implementation("com.smileidentity:android-sdk:11.0.5")
     implementation("androidx.core:core-ktx:1.16.0")
     implementation(platform("androidx.compose:compose-bom:2025.06.01"))
     implementation("androidx.compose.ui:ui")

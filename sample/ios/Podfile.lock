@@ -5,23 +5,20 @@ PODS:
     - FingerprintJS/SystemControl
   - FingerprintJS/SystemControl (1.6.0)
   - Flutter (1.0.0)
-  - integration_test (0.0.1):
-    - Flutter
   - lottie-ios (4.5.2)
-  - smile_id (11.0.2):
+  - smile_id (11.0.4):
     - Flutter
-    - SmileID (= 11.0.0)
-  - SmileID (11.0.0):
+    - SmileID (= 11.0.1)
+  - SmileID (11.0.1):
     - FingerprintJS
     - lottie-ios (~> 4.5.0)
-    - SmileIDSecurity (~> 1.0.1)
+    - SmileIDSecurity (~> 1.0.2)
     - ZIPFoundation (~> 0.9)
-  - SmileIDSecurity (1.0.1)
+  - SmileIDSecurity (1.0.2)
   - ZIPFoundation (0.9.19)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - smile_id (from `.symlinks/plugins/smile_id/ios`)
 
 SPEC REPOS:
@@ -35,19 +32,16 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  integration_test:
-    :path: ".symlinks/plugins/integration_test/ios"
   smile_id:
     :path: ".symlinks/plugins/smile_id/ios"
 
 SPEC CHECKSUMS:
   FingerprintJS: 3a0c3e7f5035ecae199e5e5836200d9b20f1266a
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
   lottie-ios: 96784afc26ea031d3e2b6cae342a4b8915072489
-  smile_id: 684639a2ab183b7ab163e43c52462b3d412b9be0
-  SmileID: 3b44f5c41f8050f57bb77a9d44df5d5e9d3ffe22
-  SmileIDSecurity: b847101f7d7b86c1c453fb1b045146dfcbc5183d
+  smile_id: fef9b46e3949202dd426991934d5e1b997d1a69c
+  SmileID: 3096d4ca8ddb3efb72bb5d2ed0823d1979863b20
+  SmileIDSecurity: 10f866b5880413783368b434323717de4dfb4dc3
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
 PODFILE CHECKSUM: 81be4fc09878044dc75c762493ad56e861d5bf57

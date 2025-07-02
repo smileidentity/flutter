@@ -34,6 +34,7 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
             documentType: args["documentType"] as? String,
             idAspectRatio: args["idAspectRatio"] as? Double,
             bypassSelfieCaptureWithFile: bypassSelfieCaptureWithFile,
+            enableAutoCapture: args["enableAutoCapture"] as? Bool ?? true,
             captureBothSides: args["captureBothSides"] as? Bool ?? true,
             allowAgentMode: args["allowAgentMode"] as? Bool ?? false,
             allowGalleryUpload: args["allowGalleryUpload"] as? Bool ?? false,
