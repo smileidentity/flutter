@@ -29,6 +29,7 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerif
         let screen = SmileID.documentVerificationScreen(
             userId: args["userId"] as? String ?? "user-\(UUID().uuidString)",
             jobId: args["jobId"] as? String ?? "job-\(UUID().uuidString)",
+            enableAutoCapture: args["enableAutoCapture"] as? Bool ?? true,
             allowNewEnroll: args["allowNewEnroll"] as? Bool ?? false,
             countryCode: args["countryCode"] as! String,
             documentType: args["documentType"] as? String,
