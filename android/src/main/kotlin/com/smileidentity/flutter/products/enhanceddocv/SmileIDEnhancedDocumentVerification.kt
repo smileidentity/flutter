@@ -48,6 +48,7 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
             captureBothSides = args["captureBothSides"] as? Boolean ?: true,
             userId = args["userId"] as? String ?: randomUserId(),
             jobId = args["jobId"] as? String ?: randomJobId(),
+            enableAutoCapture = args["enableAutoCapture"] as? Boolean ?: true,
             allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
             showAttribution = args["showAttribution"] as? Boolean ?: true,
             allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
