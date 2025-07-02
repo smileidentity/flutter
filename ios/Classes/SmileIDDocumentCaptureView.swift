@@ -66,6 +66,7 @@ struct SmileIDDocumentRootView: View {
         NavigationView {
             DocumentCaptureScreen(
                 side: isDocumentFrontSide ? .front : .back,
+                enableAutoCapture: true,
                 showInstructions: showInstructions,
                 showAttribution: showAttribution,
                 allowGallerySelection: allowGalleryUpload,
