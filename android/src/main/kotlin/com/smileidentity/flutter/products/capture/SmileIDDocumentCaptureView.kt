@@ -53,6 +53,7 @@ internal class SmileIDDocumentCaptureView private constructor(
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                 ) {
+                    val enableAutoCapture = args["enableAutoCapture"] as? Boolean ?: true
                     val isDocumentFrontSide = args["isDocumentFrontSide"] as? Boolean ?: true
                     val showInstructions = args["showInstructions"] as? Boolean ?: true
                     val showAttribution = args["showAttribution"] as? Boolean ?: true
@@ -61,6 +62,7 @@ internal class SmileIDDocumentCaptureView private constructor(
                     val idAspectRatio = (args["idAspectRatio"] as Double?)?.toFloat()
                     RenderDocumentCaptureScreen(
                         jobId = randomJobId(),
+                        enableAutoCapture = enableAutoCapture,
                         isDocumentFrontSide = isDocumentFrontSide,
                         showInstructions = showInstructions,
                         showAttribution = showAttribution,
@@ -76,6 +78,7 @@ internal class SmileIDDocumentCaptureView private constructor(
     @Composable
     private fun RenderDocumentCaptureScreen(
         jobId: String,
+        enableAutoCapture: Boolean,
         isDocumentFrontSide: Boolean,
         showInstructions: Boolean,
         showAttribution: Boolean,
@@ -109,6 +112,7 @@ internal class SmileIDDocumentCaptureView private constructor(
             }
         DocumentCaptureScreen(
             jobId = jobId,
+            enableAutoCapture = enableAutoCapture,
             side = if (isDocumentFrontSide) DocumentCaptureSide.Front else DocumentCaptureSide.Back,
             showInstructions = showInstructions,
             showAttribution = showAttribution,

@@ -19,6 +19,7 @@ class SmileIDDocumentCaptureView extends StatelessWidget {
 
   factory SmileIDDocumentCaptureView({
     Key? key,
+    bool enableAutoCapture = true,
     bool isDocumentFrontSide = true,
     bool showInstructions = true,
     bool showAttribution = true,
@@ -32,6 +33,7 @@ class SmileIDDocumentCaptureView extends StatelessWidget {
       onSuccess: onSuccess,
       onError: onError,
       creationParams: {
+        "enableAutoCapture": enableAutoCapture,
         "isDocumentFrontSide": isDocumentFrontSide,
         "showInstructions": showInstructions,
         "showAttribution": showAttribution,
