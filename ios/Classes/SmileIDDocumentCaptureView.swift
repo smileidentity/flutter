@@ -36,6 +36,7 @@ class SmileIDDocumentCaptureView: NSObject, FlutterPlatformView, SmileIDFileUtil
         super.init()
 
         let rootView = SmileIDDocumentRootView(
+            enableAutoCapture: enableAutoCapture,
             showConfirmationDialog: showConfirmationDialog,
             isDocumentFrontSide: isDocumentFrontSide,
             showInstructions: showInstructions,
