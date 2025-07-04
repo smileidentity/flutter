@@ -1,5 +1,11 @@
 # Release Notes
 
+## 11.0.5 - July 4, 2025
+
+### Added
+
+* Added option to disable document auto capture in DocV and Enhanced DocV on document capture widget
+
 ## 11.0.4 - July 2, 2025
 
 ### Added
