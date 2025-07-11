@@ -3,8 +3,7 @@ import UIKit
 import SmileID
 import SwiftUI
 
-class SmileIDSmartSelfieAuthentication : NSObject, FlutterPlatformView, SmartSelfieResultDelegate, SmileIDFileUtilsProtocol {
-    var fileManager: FileManager = Foundation.FileManager.default
+class SmileIDSmartSelfieAuthentication : NSObject, FlutterPlatformView, SmartSelfieResultDelegate {
     private var _view: UIView
     private var _channel: FlutterMethodChannel
     private var _childViewController: UIViewController?
@@ -44,9 +43,9 @@ class SmileIDSmartSelfieAuthentication : NSObject, FlutterPlatformView, SmartSel
     func didSucceed(selfieImage: URL, livenessImages: [URL], apiResponse: SmartSelfieResponse?) {
         _childViewController?.removeFromParent()
         let successData = SmartSelfieSuccessData(
-            selfieFile: getFilePath(fileName: selfieImage.absoluteString),
+            selfieFile: selfieImage.absoluteString,
             livenessFiles: livenessImages.map {
-                getFilePath(fileName: $0.absoluteString)
+                $0.absoluteString
             },
             apiResponse: apiResponse
         )

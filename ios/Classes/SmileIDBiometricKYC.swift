@@ -3,8 +3,7 @@ import UIKit
 import SmileID
 import SwiftUI
 
-class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDelegate, SmileIDFileUtilsProtocol {
-    var fileManager: FileManager = Foundation.FileManager.default
+class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDelegate {
     private var _view: UIView
     private var _channel: FlutterMethodChannel
     private var _childViewController: UIViewController?
@@ -64,9 +63,9 @@ class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDel
     func didSucceed(selfieImage: URL, livenessImages: [URL], didSubmitBiometricJob: Bool) {
         _childViewController?.removeFromParent()
         let arguments: [String: Any] = [
-            "selfieFile": getFilePath(fileName: selfieImage.absoluteString),
+            "selfieFile": selfieImage.absoluteString,
             "livenessFiles": livenessImages.map {
-                getFilePath(fileName: $0.absoluteString)
+                $0.absoluteString
             },
             "didSubmitBiometricKycJob": didSubmitBiometricJob,
         ]
