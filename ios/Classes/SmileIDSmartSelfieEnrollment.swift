@@ -44,7 +44,7 @@ class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieR
     func didSucceed(selfieImage: URL, livenessImages: [URL], apiResponse: SmartSelfieResponse?) {
         _childViewController?.removeFromParent()
         let successData = SmartSelfieSuccessData(
-            selfieFile:  selfieImage.absoluteString,
+            selfieFile: selfieImage.absoluteString,
             livenessFiles: livenessImages.map {
                  $0.absoluteString
             },
