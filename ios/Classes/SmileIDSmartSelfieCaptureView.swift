@@ -3,7 +3,7 @@ import Flutter
 import SmileID
 import SwiftUI
 
-class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView, SmileIDFileUtilsProtocol {
+class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView {
     var fileManager: FileManager = Foundation.FileManager.default
     private var _view: UIView
     private var _childViewController: UIViewController?
@@ -153,8 +153,8 @@ struct SmileIDRootView: View {
 extension SmileIDRootView: SmartSelfieResultDelegate {
     func didSucceed(selfieImage: URL, livenessImages: [URL], apiResponse: SmartSelfieResponse?) {
         var arguments: [String: Any] = [
-            "selfieFile": getFilePath(fileName: selfieImage.absoluteString),
-            "livenessFiles": livenessImages.map { getFilePath(fileName: $0.absoluteString) },
+            "selfieFile": selfieImage.absoluteString,
+            "livenessFiles": livenessImages.map {  $0.absoluteString },
         ]
         if let apiResponse = apiResponse {
             let encoder = JSONEncoder()
@@ -177,42 +177,6 @@ extension SmileIDRootView: SmartSelfieResultDelegate {
 
     func didError(error: Error) {
         channel.invokeMethod("onError", arguments: error.localizedDescription)
-    }
-
-    func getSmileIDDirectory() -> String? {
-        guard let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
-            print("Unable to access documents directory")
-            return nil
-        }
-
-        let smileIDDirectory = documentsDirectory.appendingPathComponent("SmileID")
-        return smileIDDirectory.absoluteURL.absoluteString
-    }
-
-    func createSmileIDDirectoryIfNeeded() -> Bool {
-        guard let smileIDDirectory = getSmileIDDirectory() else {
-            return false
-        }
-
-        if !fileManager.fileExists(atPath: smileIDDirectory) {
-            do {
-                try fileManager.createDirectory(atPath: smileIDDirectory, withIntermediateDirectories: true, attributes: nil)
-                return true
-            } catch {
-                print("Error creating SmileID directory: \(error)")
-                return false
-            }
-        }
-
-        return true
-    }
-
-    func getFilePath(fileName: String) -> String? {
-        guard let smileIDDirectory = getSmileIDDirectory() else {
-            return nil
-        }
-
-        return (smileIDDirectory as NSString).appendingPathComponent(fileName)
     }
 }
 

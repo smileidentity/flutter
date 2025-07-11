@@ -3,7 +3,7 @@ import UIKit
 import SmileID
 import SwiftUI
 
-class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerificationResultDelegate, SmileIDFileUtilsProtocol {
+class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerificationResultDelegate {
     var fileManager: FileManager = Foundation.FileManager.default
     private var _view: UIView
     private var _channel: FlutterMethodChannel
@@ -56,8 +56,8 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerif
     func didSucceed(selfie: URL, documentFrontImage: URL, documentBackImage: URL?, didSubmitDocumentVerificationJob: Bool) {
         _childViewController?.removeFromParent()
         let arguments: [String: Any] = [
-            "selfieFile": getFilePath(fileName: selfie.absoluteString),
-            "documentFrontFile": getFilePath(fileName: documentFrontImage.absoluteString),
+            "selfieFile": selfie.absoluteString,
+            "documentFrontFile": documentFrontImage.absoluteString,
             "didSubmitDocumentVerificationJob": didSubmitDocumentVerificationJob
         ]
         do {
