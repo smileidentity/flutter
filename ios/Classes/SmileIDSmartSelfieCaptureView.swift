@@ -154,7 +154,7 @@ extension SmileIDRootView: SmartSelfieResultDelegate {
     func didSucceed(selfieImage: URL, livenessImages: [URL], apiResponse: SmartSelfieResponse?) {
         var arguments: [String: Any] = [
             "selfieFile": selfieImage.absoluteString,
-            "livenessFiles": livenessImages.map {  $0.absoluteString },
+            "livenessFiles": livenessImages.map { $0.absoluteString },
         ]
         if let apiResponse = apiResponse {
             let encoder = JSONEncoder()
