@@ -4,7 +4,6 @@ import SmileID
 import SwiftUI
 
 class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDelegate {
-    var fileManager: FileManager = Foundation.FileManager.default
     private var _view: UIView
     private var _channel: FlutterMethodChannel
     private var _childViewController: UIViewController?

@@ -4,7 +4,6 @@ import SmileID
 import SwiftUI
 
 class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView {
-    var fileManager: FileManager = Foundation.FileManager.default
     private var _view: UIView
     private var _childViewController: UIViewController?
     private let _viewModel: SelfieViewModel
