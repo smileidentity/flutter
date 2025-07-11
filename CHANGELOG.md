@@ -1,5 +1,14 @@
 # Release Notes
 
+## 11.0.6 - July 11, 2025
+
+### Changed
+
+* Updated SmileID iOS dependencies to the latest version, which now returns absolute file paths for 
+images and documents—bringing consistency with the Android SDK. 
+* Removed unnecessary methods that manually generated absolute file paths, as this is now handled 
+directly by the updated SDK.
+
 ## 11.0.5 - July 4, 2025
 
 ### Added
