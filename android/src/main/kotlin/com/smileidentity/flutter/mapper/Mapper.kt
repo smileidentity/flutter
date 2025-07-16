@@ -39,7 +39,6 @@ import FlutterSmartSelfieJobResult
 import FlutterSmartSelfieJobStatusResponse
 import FlutterSmartSelfieResponse
 import FlutterSmartSelfieStatus
-import FlutterSuspectUser
 import FlutterUploadImageInfo
 import FlutterUploadRequest
 import FlutterValidDocument
@@ -83,7 +82,6 @@ import com.smileidentity.models.ProductsConfigResponse
 import com.smileidentity.models.ServicesResponse
 import com.smileidentity.models.SmartSelfieJobResult
 import com.smileidentity.models.SmartSelfieJobStatusResponse
-import com.smileidentity.models.SuspectUser
 import com.smileidentity.models.UploadImageInfo
 import com.smileidentity.models.UploadRequest
 import com.smileidentity.models.ValidDocument

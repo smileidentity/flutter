@@ -938,7 +938,8 @@ class FlutterSmartSelfieJobStatusResponse {
       code: result[3]! as String,
       result: result[4] as FlutterSmartSelfieJobResult?,
       resultString: result[5] as String?,
-      history: (result[6] as List<Object?>?)?.cast<FlutterSmartSelfieJobResult?>(),
+      history:
+          (result[6] as List<Object?>?)?.cast<FlutterSmartSelfieJobResult?>(),
       imageLinks: result[7] as FlutterImageLinks?,
     );
   }
@@ -1002,7 +1003,8 @@ class FlutterSmartSelfieResponse {
       jobType: result[3]! as FlutterJobTypeV2,
       message: result[4]! as String,
       partnerId: result[5]! as String,
-      partnerParams: (result[6] as Map<Object?, Object?>?)?.cast<String?, String?>(),
+      partnerParams:
+          (result[6] as Map<Object?, Object?>?)?.cast<String?, String?>(),
       status: result[7]! as FlutterSmartSelfieStatus,
       updatedAt: result[8]! as String,
       userId: result[9]! as String,
@@ -1156,7 +1158,8 @@ class FlutterDocumentVerificationJobStatusResponse {
       code: result[3]! as String,
       result: result[4] as FlutterDocumentVerificationJobResult?,
       resultString: result[5] as String?,
-      history: (result[6] as List<Object?>?)?.cast<FlutterDocumentVerificationJobResult?>(),
+      history: (result[6] as List<Object?>?)
+          ?.cast<FlutterDocumentVerificationJobResult?>(),
       imageLinks: result[7] as FlutterImageLinks?,
     );
   }
@@ -1275,7 +1278,8 @@ class FlutterBiometricKycJobResult {
       address: result[10] as String?,
       country: result[11] as String?,
       documentImageBase64: result[12] as String?,
-      fullData: (result[13] as Map<Object?, Object?>?)?.cast<String?, String?>(),
+      fullData:
+          (result[13] as Map<Object?, Object?>?)?.cast<String?, String?>(),
       fullName: result[14] as String?,
       idNumber: result[15] as String?,
       phoneNumber: result[16] as String?,
@@ -1283,7 +1287,8 @@ class FlutterBiometricKycJobResult {
       expirationDate: result[18] as String?,
       secondaryIdNumber: result[19] as String?,
       idNumberPreviouslyRegistered: result[20] as bool?,
-      previousRegistrantsUserIds: (result[21] as List<Object?>?)?.cast<String?>(),
+      previousRegistrantsUserIds:
+          (result[21] as List<Object?>?)?.cast<String?>(),
     );
   }
 }
@@ -1338,7 +1343,8 @@ class FlutterBiometricKycJobStatusResponse {
       code: result[3]! as String,
       result: result[4] as FlutterBiometricKycJobResult?,
       resultString: result[5] as String?,
-      history: (result[6] as List<Object?>?)?.cast<FlutterBiometricKycJobResult?>(),
+      history:
+          (result[6] as List<Object?>?)?.cast<FlutterBiometricKycJobResult?>(),
       imageLinks: result[7] as FlutterImageLinks?,
     );
   }
@@ -1457,7 +1463,8 @@ class FlutterEnhancedDocumentVerificationJobResult {
       address: result[10] as String?,
       country: result[11] as String?,
       documentImageBase64: result[12] as String?,
-      fullData: (result[13] as Map<Object?, Object?>?)?.cast<String?, String?>(),
+      fullData:
+          (result[13] as Map<Object?, Object?>?)?.cast<String?, String?>(),
       fullName: result[14] as String?,
       idNumber: result[15] as String?,
       phoneNumber: result[16] as String?,
@@ -1465,7 +1472,8 @@ class FlutterEnhancedDocumentVerificationJobResult {
       expirationDate: result[18] as String?,
       secondaryIdNumber: result[19] as String?,
       idNumberPreviouslyRegistered: result[20] as bool?,
-      previousRegistrantsUserIds: (result[21] as List<Object?>?)?.cast<String?>(),
+      previousRegistrantsUserIds:
+          (result[21] as List<Object?>?)?.cast<String?>(),
     );
   }
 }
@@ -1511,7 +1519,8 @@ class FlutterEnhancedDocumentVerificationJobStatusResponse {
     ];
   }
 
-  static FlutterEnhancedDocumentVerificationJobStatusResponse decode(Object result) {
+  static FlutterEnhancedDocumentVerificationJobStatusResponse decode(
+      Object result) {
     result as List<Object?>;
     return FlutterEnhancedDocumentVerificationJobStatusResponse(
       timestamp: result[0]! as String,
@@ -1520,7 +1529,8 @@ class FlutterEnhancedDocumentVerificationJobStatusResponse {
       code: result[3]! as String,
       result: result[4] as FlutterEnhancedDocumentVerificationJobResult?,
       resultString: result[5] as String?,
-      history: (result[6] as List<Object?>?)?.cast<FlutterEnhancedDocumentVerificationJobResult?>(),
+      history: (result[6] as List<Object?>?)
+          ?.cast<FlutterEnhancedDocumentVerificationJobResult?>(),
       imageLinks: result[7] as FlutterImageLinks?,
     );
   }
@@ -1577,7 +1587,8 @@ class FlutterProductsConfigResponse {
   static FlutterProductsConfigResponse decode(Object result) {
     result as List<Object?>;
     return FlutterProductsConfigResponse(
-      consentRequired: (result[0] as Map<Object?, Object?>?)!.cast<String?, List<String?>?>(),
+      consentRequired: (result[0] as Map<Object?, Object?>?)!
+          .cast<String?, List<String?>?>(),
       idSelection: result[1]! as FlutterIdSelection,
     );
   }
@@ -1611,10 +1622,14 @@ class FlutterIdSelection {
   static FlutterIdSelection decode(Object result) {
     result as List<Object?>;
     return FlutterIdSelection(
-      basicKyc: (result[0] as Map<Object?, Object?>?)!.cast<String?, List<String?>?>(),
-      biometricKyc: (result[1] as Map<Object?, Object?>?)!.cast<String?, List<String?>?>(),
-      enhancedKyc: (result[2] as Map<Object?, Object?>?)!.cast<String?, List<String?>?>(),
-      documentVerification: (result[3] as Map<Object?, Object?>?)!.cast<String?, List<String?>?>(),
+      basicKyc: (result[0] as Map<Object?, Object?>?)!
+          .cast<String?, List<String?>?>(),
+      biometricKyc: (result[1] as Map<Object?, Object?>?)!
+          .cast<String?, List<String?>?>(),
+      enhancedKyc: (result[2] as Map<Object?, Object?>?)!
+          .cast<String?, List<String?>?>(),
+      documentVerification: (result[3] as Map<Object?, Object?>?)!
+          .cast<String?, List<String?>?>(),
     );
   }
 }
@@ -1635,7 +1650,8 @@ class FlutterValidDocumentsResponse {
   static FlutterValidDocumentsResponse decode(Object result) {
     result as List<Object?>;
     return FlutterValidDocumentsResponse(
-      validDocuments: (result[0] as List<Object?>?)!.cast<FlutterValidDocument?>(),
+      validDocuments:
+          (result[0] as List<Object?>?)!.cast<FlutterValidDocument?>(),
     );
   }
 }
@@ -1821,12 +1837,18 @@ class FlutterHostedWeb {
   static FlutterHostedWeb decode(Object result) {
     result as List<Object?>;
     return FlutterHostedWeb(
-      basicKyc: (result[0] as Map<Object?, Object?>?)!.cast<String?, FlutterCountryInfo?>(),
-      biometricKyc: (result[1] as Map<Object?, Object?>?)!.cast<String?, FlutterCountryInfo?>(),
-      enhancedKyc: (result[2] as Map<Object?, Object?>?)!.cast<String?, FlutterCountryInfo?>(),
-      documentVerification: (result[3] as Map<Object?, Object?>?)!.cast<String?, FlutterCountryInfo?>(),
-      enhancedKycSmartSelfie: (result[4] as Map<Object?, Object?>?)!.cast<String?, FlutterCountryInfo?>(),
-      enhancedDocumentVerification: (result[5] as Map<Object?, Object?>?)!.cast<String?, FlutterCountryInfo?>(),
+      basicKyc: (result[0] as Map<Object?, Object?>?)!
+          .cast<String?, FlutterCountryInfo?>(),
+      biometricKyc: (result[1] as Map<Object?, Object?>?)!
+          .cast<String?, FlutterCountryInfo?>(),
+      enhancedKyc: (result[2] as Map<Object?, Object?>?)!
+          .cast<String?, FlutterCountryInfo?>(),
+      documentVerification: (result[3] as Map<Object?, Object?>?)!
+          .cast<String?, FlutterCountryInfo?>(),
+      enhancedKycSmartSelfie: (result[4] as Map<Object?, Object?>?)!
+          .cast<String?, FlutterCountryInfo?>(),
+      enhancedDocumentVerification: (result[5] as Map<Object?, Object?>?)!
+          .cast<String?, FlutterCountryInfo?>(),
     );
   }
 }
@@ -1857,7 +1879,8 @@ class FlutterCountryInfo {
     return FlutterCountryInfo(
       countryCode: result[0]! as String,
       name: result[1]! as String,
-      availableIdTypes: (result[2] as List<Object?>?)!.cast<FlutterAvailableIdType?>(),
+      availableIdTypes:
+          (result[2] as List<Object?>?)!.cast<FlutterAvailableIdType?>(),
     );
   }
 }
@@ -1939,7 +1962,6 @@ class FlutterConfig {
   }
 }
 
-
 class _PigeonCodec extends StandardMessageCodec {
   const _PigeonCodec();
   @override
@@ -1947,133 +1969,133 @@ class _PigeonCodec extends StandardMessageCodec {
     if (value is int) {
       buffer.putUint8(4);
       buffer.putInt64(value);
-    }    else if (value is FlutterJobType) {
+    } else if (value is FlutterJobType) {
       buffer.putUint8(129);
       writeValue(buffer, value.index);
-    }    else if (value is FlutterJobTypeV2) {
+    } else if (value is FlutterJobTypeV2) {
       buffer.putUint8(130);
       writeValue(buffer, value.index);
-    }    else if (value is FlutterImageType) {
+    } else if (value is FlutterImageType) {
       buffer.putUint8(131);
       writeValue(buffer, value.index);
-    }    else if (value is FlutterActionResult) {
+    } else if (value is FlutterActionResult) {
       buffer.putUint8(132);
       writeValue(buffer, value.index);
-    }    else if (value is FlutterSmartSelfieStatus) {
+    } else if (value is FlutterSmartSelfieStatus) {
       buffer.putUint8(133);
       writeValue(buffer, value.index);
-    }    else if (value is FlutterConsentInformation) {
+    } else if (value is FlutterConsentInformation) {
       buffer.putUint8(134);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterPartnerParams) {
+    } else if (value is FlutterPartnerParams) {
       buffer.putUint8(135);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterAuthenticationRequest) {
+    } else if (value is FlutterAuthenticationRequest) {
       buffer.putUint8(136);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterAuthenticationResponse) {
+    } else if (value is FlutterAuthenticationResponse) {
       buffer.putUint8(137);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterPrepUploadRequest) {
+    } else if (value is FlutterPrepUploadRequest) {
       buffer.putUint8(138);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterPrepUploadResponse) {
+    } else if (value is FlutterPrepUploadResponse) {
       buffer.putUint8(139);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterUploadRequest) {
+    } else if (value is FlutterUploadRequest) {
       buffer.putUint8(140);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterUploadImageInfo) {
+    } else if (value is FlutterUploadImageInfo) {
       buffer.putUint8(141);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterIdInfo) {
+    } else if (value is FlutterIdInfo) {
       buffer.putUint8(142);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterEnhancedKycResponse) {
+    } else if (value is FlutterEnhancedKycResponse) {
       buffer.putUint8(143);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterActions) {
+    } else if (value is FlutterActions) {
       buffer.putUint8(144);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterConsentInfo) {
+    } else if (value is FlutterConsentInfo) {
       buffer.putUint8(145);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterEnhancedKycRequest) {
+    } else if (value is FlutterEnhancedKycRequest) {
       buffer.putUint8(146);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterEnhancedKycAsyncResponse) {
+    } else if (value is FlutterEnhancedKycAsyncResponse) {
       buffer.putUint8(147);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterImageLinks) {
+    } else if (value is FlutterImageLinks) {
       buffer.putUint8(148);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterJobStatusRequest) {
+    } else if (value is FlutterJobStatusRequest) {
       buffer.putUint8(149);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterSmartSelfieJobResult) {
+    } else if (value is FlutterSmartSelfieJobResult) {
       buffer.putUint8(150);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterSmartSelfieJobStatusResponse) {
+    } else if (value is FlutterSmartSelfieJobStatusResponse) {
       buffer.putUint8(151);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterSmartSelfieResponse) {
+    } else if (value is FlutterSmartSelfieResponse) {
       buffer.putUint8(152);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterDocumentVerificationJobResult) {
+    } else if (value is FlutterDocumentVerificationJobResult) {
       buffer.putUint8(153);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterDocumentVerificationJobStatusResponse) {
+    } else if (value is FlutterDocumentVerificationJobStatusResponse) {
       buffer.putUint8(154);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterBiometricKycJobResult) {
+    } else if (value is FlutterBiometricKycJobResult) {
       buffer.putUint8(155);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterBiometricKycJobStatusResponse) {
+    } else if (value is FlutterBiometricKycJobStatusResponse) {
       buffer.putUint8(156);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterEnhancedDocumentVerificationJobResult) {
+    } else if (value is FlutterEnhancedDocumentVerificationJobResult) {
       buffer.putUint8(157);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterEnhancedDocumentVerificationJobStatusResponse) {
+    } else if (value is FlutterEnhancedDocumentVerificationJobStatusResponse) {
       buffer.putUint8(158);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterProductsConfigRequest) {
+    } else if (value is FlutterProductsConfigRequest) {
       buffer.putUint8(159);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterProductsConfigResponse) {
+    } else if (value is FlutterProductsConfigResponse) {
       buffer.putUint8(160);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterIdSelection) {
+    } else if (value is FlutterIdSelection) {
       buffer.putUint8(161);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterValidDocumentsResponse) {
+    } else if (value is FlutterValidDocumentsResponse) {
       buffer.putUint8(162);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterValidDocument) {
+    } else if (value is FlutterValidDocument) {
       buffer.putUint8(163);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterCountry) {
+    } else if (value is FlutterCountry) {
       buffer.putUint8(164);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterIdType) {
+    } else if (value is FlutterIdType) {
       buffer.putUint8(165);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterServicesResponse) {
+    } else if (value is FlutterServicesResponse) {
       buffer.putUint8(166);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterBankCode) {
+    } else if (value is FlutterBankCode) {
       buffer.putUint8(167);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterHostedWeb) {
+    } else if (value is FlutterHostedWeb) {
       buffer.putUint8(168);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterCountryInfo) {
+    } else if (value is FlutterCountryInfo) {
       buffer.putUint8(169);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterAvailableIdType) {
+    } else if (value is FlutterAvailableIdType) {
       buffer.putUint8(170);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterConfig) {
+    } else if (value is FlutterConfig) {
       buffer.putUint8(171);
       writeValue(buffer, value.encode());
     } else {
@@ -2084,96 +2106,99 @@ class _PigeonCodec extends StandardMessageCodec {
   @override
   Object? readValueOfType(int type, ReadBuffer buffer) {
     switch (type) {
-      case 129: 
+      case 129:
         final int? value = readValue(buffer) as int?;
         return value == null ? null : FlutterJobType.values[value];
-      case 130: 
+      case 130:
         final int? value = readValue(buffer) as int?;
         return value == null ? null : FlutterJobTypeV2.values[value];
-      case 131: 
+      case 131:
         final int? value = readValue(buffer) as int?;
         return value == null ? null : FlutterImageType.values[value];
-      case 132: 
+      case 132:
         final int? value = readValue(buffer) as int?;
         return value == null ? null : FlutterActionResult.values[value];
-      case 133: 
+      case 133:
         final int? value = readValue(buffer) as int?;
         return value == null ? null : FlutterSmartSelfieStatus.values[value];
-      case 134: 
+      case 134:
         return FlutterConsentInformation.decode(readValue(buffer)!);
-      case 135: 
+      case 135:
         return FlutterPartnerParams.decode(readValue(buffer)!);
-      case 136: 
+      case 136:
         return FlutterAuthenticationRequest.decode(readValue(buffer)!);
-      case 137: 
+      case 137:
         return FlutterAuthenticationResponse.decode(readValue(buffer)!);
-      case 138: 
+      case 138:
         return FlutterPrepUploadRequest.decode(readValue(buffer)!);
-      case 139: 
+      case 139:
         return FlutterPrepUploadResponse.decode(readValue(buffer)!);
-      case 140: 
+      case 140:
         return FlutterUploadRequest.decode(readValue(buffer)!);
-      case 141: 
+      case 141:
         return FlutterUploadImageInfo.decode(readValue(buffer)!);
-      case 142: 
+      case 142:
         return FlutterIdInfo.decode(readValue(buffer)!);
-      case 143: 
+      case 143:
         return FlutterEnhancedKycResponse.decode(readValue(buffer)!);
-      case 144: 
+      case 144:
         return FlutterActions.decode(readValue(buffer)!);
-      case 145: 
+      case 145:
         return FlutterConsentInfo.decode(readValue(buffer)!);
-      case 146: 
+      case 146:
         return FlutterEnhancedKycRequest.decode(readValue(buffer)!);
-      case 147: 
+      case 147:
         return FlutterEnhancedKycAsyncResponse.decode(readValue(buffer)!);
-      case 148: 
+      case 148:
         return FlutterImageLinks.decode(readValue(buffer)!);
-      case 149: 
+      case 149:
         return FlutterJobStatusRequest.decode(readValue(buffer)!);
-      case 150: 
+      case 150:
         return FlutterSmartSelfieJobResult.decode(readValue(buffer)!);
-      case 151: 
+      case 151:
         return FlutterSmartSelfieJobStatusResponse.decode(readValue(buffer)!);
-      case 152: 
+      case 152:
         return FlutterSmartSelfieResponse.decode(readValue(buffer)!);
-      case 153: 
+      case 153:
         return FlutterDocumentVerificationJobResult.decode(readValue(buffer)!);
-      case 154: 
-        return FlutterDocumentVerificationJobStatusResponse.decode(readValue(buffer)!);
-      case 155: 
+      case 154:
+        return FlutterDocumentVerificationJobStatusResponse.decode(
+            readValue(buffer)!);
+      case 155:
         return FlutterBiometricKycJobResult.decode(readValue(buffer)!);
-      case 156: 
+      case 156:
         return FlutterBiometricKycJobStatusResponse.decode(readValue(buffer)!);
-      case 157: 
-        return FlutterEnhancedDocumentVerificationJobResult.decode(readValue(buffer)!);
-      case 158: 
-        return FlutterEnhancedDocumentVerificationJobStatusResponse.decode(readValue(buffer)!);
-      case 159: 
+      case 157:
+        return FlutterEnhancedDocumentVerificationJobResult.decode(
+            readValue(buffer)!);
+      case 158:
+        return FlutterEnhancedDocumentVerificationJobStatusResponse.decode(
+            readValue(buffer)!);
+      case 159:
         return FlutterProductsConfigRequest.decode(readValue(buffer)!);
-      case 160: 
+      case 160:
         return FlutterProductsConfigResponse.decode(readValue(buffer)!);
-      case 161: 
+      case 161:
         return FlutterIdSelection.decode(readValue(buffer)!);
-      case 162: 
+      case 162:
         return FlutterValidDocumentsResponse.decode(readValue(buffer)!);
-      case 163: 
+      case 163:
         return FlutterValidDocument.decode(readValue(buffer)!);
-      case 164: 
+      case 164:
         return FlutterCountry.decode(readValue(buffer)!);
-      case 165: 
+      case 165:
         return FlutterIdType.decode(readValue(buffer)!);
-      case 166: 
+      case 166:
         return FlutterServicesResponse.decode(readValue(buffer)!);
-      case 167: 
+      case 167:
         return FlutterBankCode.decode(readValue(buffer)!);
-      case 168: 
+      case 168:
         return FlutterHostedWeb.decode(readValue(buffer)!);
-      case 169: 
+      case 169:
         return FlutterCountryInfo.decode(readValue(buffer)!);
-      case 170: 
+      case 170:
         return FlutterAvailableIdType.decode(readValue(buffer)!);
-      case 171: 
+      case 171:
         return FlutterConfig.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);
@@ -2185,24 +2210,30 @@ class SmileIDApi {
   /// Constructor for [SmileIDApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
   /// BinaryMessenger will be used which routes to the host platform.
-  SmileIDApi({BinaryMessenger? binaryMessenger, String messageChannelSuffix = ''})
+  SmileIDApi(
+      {BinaryMessenger? binaryMessenger, String messageChannelSuffix = ''})
       : pigeonVar_binaryMessenger = binaryMessenger,
-        pigeonVar_messageChannelSuffix = messageChannelSuffix.isNotEmpty ? '.$messageChannelSuffix' : '';
+        pigeonVar_messageChannelSuffix =
+            messageChannelSuffix.isNotEmpty ? '.$messageChannelSuffix' : '';
   final BinaryMessenger? pigeonVar_binaryMessenger;
 
   static const MessageCodec<Object?> pigeonChannelCodec = _PigeonCodec();
 
   final String pigeonVar_messageChannelSuffix;
 
-  Future<void> initializeWithApiKey(String apiKey, FlutterConfig config, bool useSandbox, bool enableCrashReporting) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.initializeWithApiKey$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+  Future<void> initializeWithApiKey(String apiKey, FlutterConfig config,
+      bool useSandbox, bool enableCrashReporting) async {
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.initializeWithApiKey$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final List<Object?>? pigeonVar_replyList =
-        await pigeonVar_channel.send(<Object?>[apiKey, config, useSandbox, enableCrashReporting]) as List<Object?>?;
+    final List<Object?>? pigeonVar_replyList = await pigeonVar_channel
+            .send(<Object?>[apiKey, config, useSandbox, enableCrashReporting])
+        as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
     } else if (pigeonVar_replyList.length > 1) {
@@ -2216,15 +2247,19 @@ class SmileIDApi {
     }
   }
 
-  Future<void> initializeWithConfig(FlutterConfig config, bool useSandbox, bool enableCrashReporting) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.initializeWithConfig$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+  Future<void> initializeWithConfig(
+      FlutterConfig config, bool useSandbox, bool enableCrashReporting) async {
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.initializeWithConfig$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final List<Object?>? pigeonVar_replyList =
-        await pigeonVar_channel.send(<Object?>[config, useSandbox, enableCrashReporting]) as List<Object?>?;
+    final List<Object?>? pigeonVar_replyList = await pigeonVar_channel
+            .send(<Object?>[config, useSandbox, enableCrashReporting])
+        as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
     } else if (pigeonVar_replyList.length > 1) {
@@ -2239,8 +2274,10 @@ class SmileIDApi {
   }
 
   Future<void> initialize(bool useSandbox) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.initialize$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.initialize$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
@@ -2261,8 +2298,10 @@ class SmileIDApi {
   }
 
   Future<void> setCallbackUrl(String callbackUrl) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.setCallbackUrl$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.setCallbackUrl$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
@@ -2283,14 +2322,16 @@ class SmileIDApi {
   }
 
   Future<void> setAllowOfflineMode(bool allowOfflineMode) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.setAllowOfflineMode$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.setAllowOfflineMode$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final List<Object?>? pigeonVar_replyList =
-        await pigeonVar_channel.send(<Object?>[allowOfflineMode]) as List<Object?>?;
+    final List<Object?>? pigeonVar_replyList = await pigeonVar_channel
+        .send(<Object?>[allowOfflineMode]) as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
     } else if (pigeonVar_replyList.length > 1) {
@@ -2305,8 +2346,10 @@ class SmileIDApi {
   }
 
   Future<List<String>> getSubmittedJobs() async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.getSubmittedJobs$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.getSubmittedJobs$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
@@ -2332,8 +2375,10 @@ class SmileIDApi {
   }
 
   Future<List<String>> getUnsubmittedJobs() async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.getUnsubmittedJobs$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.getUnsubmittedJobs$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
@@ -2359,8 +2404,10 @@ class SmileIDApi {
   }
 
   Future<void> cleanup(String jobId) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.cleanup$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.cleanup$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
@@ -2381,8 +2428,10 @@ class SmileIDApi {
   }
 
   Future<void> cleanupJobs(List<String> jobIds) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.cleanupJobs$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.cleanupJobs$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
@@ -2403,14 +2452,16 @@ class SmileIDApi {
   }
 
   Future<void> submitJob(String jobId, bool deleteFilesOnSuccess) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.submitJob$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.submitJob$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final List<Object?>? pigeonVar_replyList =
-        await pigeonVar_channel.send(<Object?>[jobId, deleteFilesOnSuccess]) as List<Object?>?;
+    final List<Object?>? pigeonVar_replyList = await pigeonVar_channel
+        .send(<Object?>[jobId, deleteFilesOnSuccess]) as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
     } else if (pigeonVar_replyList.length > 1) {
@@ -2424,9 +2475,12 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterAuthenticationResponse> authenticate(FlutterAuthenticationRequest request) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.authenticate$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+  Future<FlutterAuthenticationResponse> authenticate(
+      FlutterAuthenticationRequest request) async {
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.authenticate$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
@@ -2451,9 +2505,12 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterPrepUploadResponse> prepUpload(FlutterPrepUploadRequest request) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.prepUpload$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+  Future<FlutterPrepUploadResponse> prepUpload(
+      FlutterPrepUploadRequest request) async {
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.prepUpload$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
@@ -2479,8 +2536,10 @@ class SmileIDApi {
   }
 
   Future<void> upload(String url, FlutterUploadRequest request) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.upload$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.upload$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
@@ -2500,9 +2559,12 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterEnhancedKycResponse> doEnhancedKyc(FlutterEnhancedKycRequest request) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.doEnhancedKyc$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+  Future<FlutterEnhancedKycResponse> doEnhancedKyc(
+      FlutterEnhancedKycRequest request) async {
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.doEnhancedKyc$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
@@ -2527,9 +2589,12 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterEnhancedKycAsyncResponse> doEnhancedKycAsync(FlutterEnhancedKycRequest request) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.doEnhancedKycAsync$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+  Future<FlutterEnhancedKycAsyncResponse> doEnhancedKycAsync(
+      FlutterEnhancedKycRequest request) async {
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.doEnhancedKycAsync$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
@@ -2554,9 +2619,12 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterSmartSelfieJobStatusResponse> getSmartSelfieJobStatus(FlutterJobStatusRequest request) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.getSmartSelfieJobStatus$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+  Future<FlutterSmartSelfieJobStatusResponse> getSmartSelfieJobStatus(
+      FlutterJobStatusRequest request) async {
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.getSmartSelfieJobStatus$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
@@ -2581,15 +2649,36 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterSmartSelfieResponse> doSmartSelfieEnrollment(String signature, String timestamp, String selfieImage, List<String> livenessImages, String userId, Map<String?, String?>? partnerParams, String? callbackUrl, int? sandboxResult, bool? allowNewEnroll) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.doSmartSelfieEnrollment$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+  Future<FlutterSmartSelfieResponse> doSmartSelfieEnrollment(
+      String signature,
+      String timestamp,
+      String selfieImage,
+      List<String> livenessImages,
+      String userId,
+      Map<String?, String?>? partnerParams,
+      String? callbackUrl,
+      int? sandboxResult,
+      bool? allowNewEnroll) async {
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.doSmartSelfieEnrollment$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
     final List<Object?>? pigeonVar_replyList =
-        await pigeonVar_channel.send(<Object?>[signature, timestamp, selfieImage, livenessImages, userId, partnerParams, callbackUrl, sandboxResult, allowNewEnroll]) as List<Object?>?;
+        await pigeonVar_channel.send(<Object?>[
+      signature,
+      timestamp,
+      selfieImage,
+      livenessImages,
+      userId,
+      partnerParams,
+      callbackUrl,
+      sandboxResult,
+      allowNewEnroll
+    ]) as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
     } else if (pigeonVar_replyList.length > 1) {
@@ -2608,15 +2697,34 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterSmartSelfieResponse> doSmartSelfieAuthentication(String signature, String timestamp, String selfieImage, List<String> livenessImages, String userId, Map<String?, String?>? partnerParams, String? callbackUrl, int? sandboxResult) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.doSmartSelfieAuthentication$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+  Future<FlutterSmartSelfieResponse> doSmartSelfieAuthentication(
+      String signature,
+      String timestamp,
+      String selfieImage,
+      List<String> livenessImages,
+      String userId,
+      Map<String?, String?>? partnerParams,
+      String? callbackUrl,
+      int? sandboxResult) async {
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.doSmartSelfieAuthentication$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
     final List<Object?>? pigeonVar_replyList =
-        await pigeonVar_channel.send(<Object?>[signature, timestamp, selfieImage, livenessImages, userId, partnerParams, callbackUrl, sandboxResult]) as List<Object?>?;
+        await pigeonVar_channel.send(<Object?>[
+      signature,
+      timestamp,
+      selfieImage,
+      livenessImages,
+      userId,
+      partnerParams,
+      callbackUrl,
+      sandboxResult
+    ]) as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
     } else if (pigeonVar_replyList.length > 1) {
@@ -2635,9 +2743,12 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterDocumentVerificationJobStatusResponse> getDocumentVerificationJobStatus(FlutterJobStatusRequest request) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.getDocumentVerificationJobStatus$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+  Future<FlutterDocumentVerificationJobStatusResponse>
+      getDocumentVerificationJobStatus(FlutterJobStatusRequest request) async {
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.getDocumentVerificationJobStatus$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
@@ -2658,13 +2769,17 @@ class SmileIDApi {
         message: 'Host platform returned null value for non-null return value.',
       );
     } else {
-      return (pigeonVar_replyList[0] as FlutterDocumentVerificationJobStatusResponse?)!;
+      return (pigeonVar_replyList[0]
+          as FlutterDocumentVerificationJobStatusResponse?)!;
     }
   }
 
-  Future<FlutterBiometricKycJobStatusResponse> getBiometricKycJobStatus(FlutterJobStatusRequest request) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.getBiometricKycJobStatus$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+  Future<FlutterBiometricKycJobStatusResponse> getBiometricKycJobStatus(
+      FlutterJobStatusRequest request) async {
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.getBiometricKycJobStatus$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
@@ -2689,9 +2804,13 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterEnhancedDocumentVerificationJobStatusResponse> getEnhancedDocumentVerificationJobStatus(FlutterJobStatusRequest request) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.getEnhancedDocumentVerificationJobStatus$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+  Future<FlutterEnhancedDocumentVerificationJobStatusResponse>
+      getEnhancedDocumentVerificationJobStatus(
+          FlutterJobStatusRequest request) async {
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.getEnhancedDocumentVerificationJobStatus$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
@@ -2712,13 +2831,17 @@ class SmileIDApi {
         message: 'Host platform returned null value for non-null return value.',
       );
     } else {
-      return (pigeonVar_replyList[0] as FlutterEnhancedDocumentVerificationJobStatusResponse?)!;
+      return (pigeonVar_replyList[0]
+          as FlutterEnhancedDocumentVerificationJobStatusResponse?)!;
     }
   }
 
-  Future<FlutterProductsConfigResponse> getProductsConfig(FlutterProductsConfigRequest request) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.getProductsConfig$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+  Future<FlutterProductsConfigResponse> getProductsConfig(
+      FlutterProductsConfigRequest request) async {
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.getProductsConfig$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
@@ -2743,9 +2866,12 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterValidDocumentsResponse> getValidDocuments(FlutterProductsConfigRequest request) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.getValidDocuments$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+  Future<FlutterValidDocumentsResponse> getValidDocuments(
+      FlutterProductsConfigRequest request) async {
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.getValidDocuments$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
@@ -2771,8 +2897,10 @@ class SmileIDApi {
   }
 
   Future<FlutterServicesResponse> getServices() async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.getServices$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.getServices$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
@@ -2797,15 +2925,18 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterSmartSelfieJobStatusResponse> pollSmartSelfieJobStatus(FlutterJobStatusRequest request, int interval, int numAttempts) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.pollSmartSelfieJobStatus$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+  Future<FlutterSmartSelfieJobStatusResponse> pollSmartSelfieJobStatus(
+      FlutterJobStatusRequest request, int interval, int numAttempts) async {
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.pollSmartSelfieJobStatus$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final List<Object?>? pigeonVar_replyList =
-        await pigeonVar_channel.send(<Object?>[request, interval, numAttempts]) as List<Object?>?;
+    final List<Object?>? pigeonVar_replyList = await pigeonVar_channel
+        .send(<Object?>[request, interval, numAttempts]) as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
     } else if (pigeonVar_replyList.length > 1) {
@@ -2824,15 +2955,19 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterDocumentVerificationJobStatusResponse> pollDocumentVerificationJobStatus(FlutterJobStatusRequest request, int interval, int numAttempts) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.pollDocumentVerificationJobStatus$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+  Future<FlutterDocumentVerificationJobStatusResponse>
+      pollDocumentVerificationJobStatus(FlutterJobStatusRequest request,
+          int interval, int numAttempts) async {
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.pollDocumentVerificationJobStatus$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final List<Object?>? pigeonVar_replyList =
-        await pigeonVar_channel.send(<Object?>[request, interval, numAttempts]) as List<Object?>?;
+    final List<Object?>? pigeonVar_replyList = await pigeonVar_channel
+        .send(<Object?>[request, interval, numAttempts]) as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
     } else if (pigeonVar_replyList.length > 1) {
@@ -2847,19 +2982,23 @@ class SmileIDApi {
         message: 'Host platform returned null value for non-null return value.',
       );
     } else {
-      return (pigeonVar_replyList[0] as FlutterDocumentVerificationJobStatusResponse?)!;
+      return (pigeonVar_replyList[0]
+          as FlutterDocumentVerificationJobStatusResponse?)!;
     }
   }
 
-  Future<FlutterBiometricKycJobStatusResponse> pollBiometricKycJobStatus(FlutterJobStatusRequest request, int interval, int numAttempts) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.pollBiometricKycJobStatus$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+  Future<FlutterBiometricKycJobStatusResponse> pollBiometricKycJobStatus(
+      FlutterJobStatusRequest request, int interval, int numAttempts) async {
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.pollBiometricKycJobStatus$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final List<Object?>? pigeonVar_replyList =
-        await pigeonVar_channel.send(<Object?>[request, interval, numAttempts]) as List<Object?>?;
+    final List<Object?>? pigeonVar_replyList = await pigeonVar_channel
+        .send(<Object?>[request, interval, numAttempts]) as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
     } else if (pigeonVar_replyList.length > 1) {
@@ -2878,15 +3017,19 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterEnhancedDocumentVerificationJobStatusResponse> pollEnhancedDocumentVerificationJobStatus(FlutterJobStatusRequest request, int interval, int numAttempts) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.pollEnhancedDocumentVerificationJobStatus$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+  Future<FlutterEnhancedDocumentVerificationJobStatusResponse>
+      pollEnhancedDocumentVerificationJobStatus(FlutterJobStatusRequest request,
+          int interval, int numAttempts) async {
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.pollEnhancedDocumentVerificationJobStatus$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final List<Object?>? pigeonVar_replyList =
-        await pigeonVar_channel.send(<Object?>[request, interval, numAttempts]) as List<Object?>?;
+    final List<Object?>? pigeonVar_replyList = await pigeonVar_channel
+        .send(<Object?>[request, interval, numAttempts]) as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
     } else if (pigeonVar_replyList.length > 1) {
@@ -2901,7 +3044,8 @@ class SmileIDApi {
         message: 'Host platform returned null value for non-null return value.',
       );
     } else {
-      return (pigeonVar_replyList[0] as FlutterEnhancedDocumentVerificationJobStatusResponse?)!;
+      return (pigeonVar_replyList[0]
+          as FlutterEnhancedDocumentVerificationJobStatusResponse?)!;
     }
   }
 }
