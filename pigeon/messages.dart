@@ -344,22 +344,6 @@ class FlutterImageLinks {
   });
 }
 
-class FlutterAntifraud {
-  final List<FlutterSuspectUser?> suspectUsers;
-
-  FlutterAntifraud({required this.suspectUsers});
-}
-
-class FlutterSuspectUser {
-  final String reason;
-  final String userId;
-
-  FlutterSuspectUser({
-    required this.reason,
-    required this.userId,
-  });
-}
-
 class FlutterJobStatusRequest {
   final String userId;
   final String jobId;
@@ -515,7 +499,6 @@ class FlutterBiometricKycJobResult {
   final String resultType;
   final String smileJobId;
   final FlutterPartnerParams partnerParams;
-  final FlutterAntifraud? antifraud;
   final String? dob;
   final String? photoBase64;
   final String? gender;
@@ -540,7 +523,6 @@ class FlutterBiometricKycJobResult {
     required this.resultType,
     required this.smileJobId,
     required this.partnerParams,
-    this.antifraud,
     this.dob,
     this.photoBase64,
     this.gender,
@@ -589,7 +571,6 @@ class FlutterEnhancedDocumentVerificationJobResult {
   final String resultType;
   final String smileJobId;
   final FlutterPartnerParams partnerParams;
-  final FlutterAntifraud? antifraud;
   final String? dob;
   final String? photoBase64;
   final String? gender;
@@ -614,7 +595,6 @@ class FlutterEnhancedDocumentVerificationJobResult {
     required this.resultType,
     required this.smileJobId,
     required this.partnerParams,
-    this.antifraud,
     this.dob,
     this.photoBase64,
     this.gender,
