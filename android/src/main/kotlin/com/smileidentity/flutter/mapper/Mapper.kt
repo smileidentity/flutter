@@ -86,10 +86,10 @@ import com.smileidentity.models.UploadImageInfo
 import com.smileidentity.models.UploadRequest
 import com.smileidentity.models.ValidDocument
 import com.smileidentity.models.ValidDocumentsResponse
+import com.smileidentity.models.v2.JobType as JobTypeV2
 import com.smileidentity.models.v2.SmartSelfieResponse
 import com.smileidentity.models.v2.SmartSelfieStatus
 import java.io.File
-import com.smileidentity.models.v2.JobType as JobTypeV2
 
 /**
  * Pigeon does not allow non nullable types in this example here
@@ -253,14 +253,14 @@ fun FlutterEnhancedKycRequest.toRequest() = EnhancedKycRequest(
     timestamp = timestamp,
     signature = signature,
     consentInformation =
-        consentInformation?.toRequest() ?: ConsentInformation(
-            consented = ConsentedInformation(
-                consentGrantedDate = getCurrentIsoTimestamp(),
-                personalDetails = false,
-                contactInformation = false,
-                documentInformation = false,
-            ),
+    consentInformation?.toRequest() ?: ConsentInformation(
+        consented = ConsentedInformation(
+            consentGrantedDate = getCurrentIsoTimestamp(),
+            personalDetails = false,
+            contactInformation = false,
+            documentInformation = false,
         ),
+    ),
 )
 
 fun EnhancedKycResponse.toResponse() = FlutterEnhancedKycResponse(
@@ -543,25 +543,25 @@ fun BankCode.toResponse() = FlutterBankCode(
 fun HostedWeb.toResponse() = FlutterHostedWeb(
     basicKyc = basicKyc.groupBy { it.countryCode }.mapValues { it.value.first().toResponse() },
     biometricKyc =
-        biometricKyc
-            .groupBy { it.countryCode }
-            .mapValues { it.value.first().toResponse() },
+    biometricKyc
+        .groupBy { it.countryCode }
+        .mapValues { it.value.first().toResponse() },
     enhancedKyc =
-        enhancedKyc
-            .groupBy { it.countryCode }
-            .mapValues { it.value.first().toResponse() },
+    enhancedKyc
+        .groupBy { it.countryCode }
+        .mapValues { it.value.first().toResponse() },
     documentVerification =
-        docVerification
-            .groupBy { it.countryCode }
-            .mapValues { it.value.first().toResponse() },
+    docVerification
+        .groupBy { it.countryCode }
+        .mapValues { it.value.first().toResponse() },
     enhancedKycSmartSelfie =
-        enhancedKycSmartSelfie
-            .groupBy { it.countryCode }
-            .mapValues { it.value.first().toResponse() },
+    enhancedKycSmartSelfie
+        .groupBy { it.countryCode }
+        .mapValues { it.value.first().toResponse() },
     enhancedDocumentVerification =
-        enhancedDocumentVerification
-            .groupBy { it.countryCode }
-            .mapValues { it.value.first().toResponse() },
+    enhancedDocumentVerification
+        .groupBy { it.countryCode }
+        .mapValues { it.value.first().toResponse() },
 )
 
 fun CountryInfo.toResponse() = FlutterCountryInfo(
