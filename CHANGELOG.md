@@ -1,5 +1,11 @@
 # Release Notes
 
+## Unreleased
+
+### Changed
+
+* Removed `AntiFraud` response in `JobStatus` calls
+
 ## 11.0.6 - July 11, 2025
 
 ### Changed

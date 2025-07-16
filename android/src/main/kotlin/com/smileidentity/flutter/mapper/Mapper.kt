@@ -2,7 +2,6 @@ package com.smileidentity.flutter
 
 import FlutterActionResult
 import FlutterActions
-import FlutterAntifraud
 import FlutterAuthenticationRequest
 import FlutterAuthenticationResponse
 import FlutterAvailableIdType
@@ -48,7 +47,6 @@ import FlutterValidDocumentsResponse
 import com.smileidentity.flutter.utils.getCurrentIsoTimestamp
 import com.smileidentity.models.ActionResult
 import com.smileidentity.models.Actions
-import com.smileidentity.models.Antifraud
 import com.smileidentity.models.AuthenticationRequest
 import com.smileidentity.models.AuthenticationResponse
 import com.smileidentity.models.AvailableIdType
@@ -333,16 +331,6 @@ fun ImageLinks.toResponse() = FlutterImageLinks(
     selfieImageUrl = selfieImageUrl,
     error = error,
 )
-
-fun Antifraud.toResponse() = FlutterAntifraud(
-    suspectUsers = suspectUsers.map { it.toResponse() },
-)
-
-fun SuspectUser.toResponse() = FlutterSuspectUser(
-    reason = reason,
-    userId = userId,
-)
-
 fun FlutterJobStatusRequest.toRequest() = JobStatusRequest(
     userId = userId,
     jobId = jobId,
@@ -450,7 +438,6 @@ fun BiometricKycJobResult.toResponse(): Any = when (this) {
             resultType = resultType,
             smileJobId = smileJobId,
             partnerParams = partnerParams.toResponse(),
-            antifraud = antifraud?.toResponse(),
             dob = dob,
             photoBase64 = photoBase64,
             gender = gender,
@@ -488,7 +475,6 @@ fun EnhancedDocumentVerificationJobResult.toResponse(): Any = when (this) {
             smileJobId = smileJobId,
             resultType = resultType,
             partnerParams = partnerParams.toResponse(),
-            antifraud = antifraud?.toResponse(),
             dob = dob,
             photoBase64 = photoBase64,
             gender = gender,

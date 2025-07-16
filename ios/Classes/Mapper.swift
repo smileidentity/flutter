@@ -424,25 +424,6 @@ extension ImageLinks {
     }
 }
 
-extension Antifraud {
-    func toResponse() -> FlutterAntifraud {
-        FlutterAntifraud(
-            suspectUsers: suspectUsers?.map {
-                $0.toResponse()
-            } ?? []
-        )
-    }
-}
-
-extension SuspectUser {
-    func toResponse() -> FlutterSuspectUser {
-        FlutterSuspectUser(
-            reason: reason ?? "",
-            userId: userId ?? ""
-        )
-    }
-}
-
 extension FlutterJobStatusRequest {
     func toRequest() -> JobStatusRequest {
         JobStatusRequest(
@@ -544,7 +525,6 @@ extension BiometricKycJobResult {
             resultType: "",
             smileJobId: smileJobId,
             partnerParams: partnerParams.toResponse(),
-            antifraud: antifraud?.toResponse(),
             dob: dob,
             photoBase64: photoBase64,
             gender: gender,
@@ -585,7 +565,6 @@ extension EnhancedDocumentVerificationJobResult {
             resultType: "",
             smileJobId: smileJobId,
             partnerParams: partnerParams.toResponse(),
-            antifraud: antifraud?.toResponse(),
             dob: dob,
             photoBase64: photoBase64,
             gender: gender,
