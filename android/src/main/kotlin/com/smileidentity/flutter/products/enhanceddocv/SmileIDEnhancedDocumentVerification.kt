@@ -41,6 +41,30 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
     @Composable
     override fun Content(args: Map<String, Any?>) {
         val extraPartnerParams = args["extraPartnerParams"] as? Map<String, String> ?: emptyMap()
+        val consentInformation: ConsentInformation? = run {
+            val consentGrantedDate = args["consentGrantedDate"] as? String
+            val personalDetails = args["personalDetailsConsentGranted"] as? Boolean
+            val contactInformation = args["contactInfoConsentGranted"] as? Boolean
+            val documentInformation = args["documentInfoConsentGranted"] as? Boolean
+
+            if (consentGrantedDate != null &&
+                personalDetails != null &&
+                contactInformation != null &&
+                documentInformation != null
+            ) {
+                ConsentInformation(
+                    consented = ConsentedInformation(
+                        consentGrantedDate = consentGrantedDate,
+                        personalDetails = personalDetails,
+                        contactInformation = contactInformation,
+                        documentInformation = documentInformation,
+                    )
+                )
+            } else {
+                null
+            }
+        }
+
         SmileID.EnhancedDocumentVerificationScreen(
             countryCode = args["countryCode"] as String,
             documentType = args["documentType"] as? String,
@@ -55,16 +79,7 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
             allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false,
             showInstructions = args["showInstructions"] as? Boolean ?: true,
             useStrictMode = args["useStrictMode"] as? Boolean ?: false,
-            consentInformation =
-            ConsentInformation(
-                consented = ConsentedInformation(
-                    consentGrantedDate = args["consentGrantedDate"] as? String
-                        ?: getCurrentIsoTimestamp(),
-                    personalDetails = args["personalDetailsConsentGranted"] as? Boolean == true,
-                    contactInformation = args["contactInfoConsentGranted"] as? Boolean == true,
-                    documentInformation = args["documentInfoConsentGranted"] as? Boolean == true,
-                ),
-            ),
+            consentInformation = ConsentInformation(consented = consentInformation),
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {
             when (it) {

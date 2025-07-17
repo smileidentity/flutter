@@ -16,11 +16,11 @@ class FlutterConsentInformation {
   final bool contactInfoConsentGranted;
   final bool documentInfoConsentGranted;
 
-  FlutterConsentInformation(
-    this.consentGrantedDate, {
-    this.personalDetailsConsentGranted = false,
-    this.contactInfoConsentGranted = false,
-    this.documentInfoConsentGranted = false,
+  FlutterConsentInformation({
+    required this.consentGrantedDate,
+    required this.personalDetailsConsentGranted,
+    required this.contactInfoConsentGranted,
+    required this.documentInfoConsentGranted,
   });
 }
 

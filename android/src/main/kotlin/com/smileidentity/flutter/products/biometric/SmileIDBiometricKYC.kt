@@ -6,7 +6,6 @@ import com.smileidentity.SmileID
 import com.smileidentity.compose.BiometricKYC
 import com.smileidentity.flutter.results.SmartSelfieCaptureResult
 import com.smileidentity.flutter.utils.SelfieCaptureResultAdapter
-import com.smileidentity.flutter.utils.getCurrentIsoTimestamp
 import com.smileidentity.flutter.views.SmileComposablePlatformView
 import com.smileidentity.flutter.views.SmileIDViewFactory
 import com.smileidentity.models.ConsentInformation
@@ -42,29 +41,42 @@ internal class SmileIDBiometricKYC private constructor(
     @Composable
     override fun Content(args: Map<String, Any?>) {
         val extraPartnerParams = args["extraPartnerParams"] as? Map<String, String> ?: emptyMap()
+        val consentInformation: ConsentInformation? = run {
+            val consentGrantedDate = args["consentGrantedDate"] as? String
+            val personalDetails = args["personalDetailsConsentGranted"] as? Boolean
+            val contactInformation = args["contactInfoConsentGranted"] as? Boolean
+            val documentInformation = args["documentInfoConsentGranted"] as? Boolean
+
+            if (consentGrantedDate != null && personalDetails != null &&
+                contactInformation != null && documentInformation != null
+            ) {
+                ConsentInformation(
+                    consented = ConsentedInformation(
+                        consentGrantedDate = consentGrantedDate,
+                        personalDetails = personalDetails,
+                        contactInformation = contactInformation,
+                        documentInformation = documentInformation,
+                    ),
+                )
+            } else {
+                null
+            }
+        }
+
         SmileID.BiometricKYC(
             idInfo =
-            IdInfo(
-                country = args["country"] as? String ?: "",
-                idType = args["idType"] as? String?,
-                idNumber = args["idNumber"] as? String?,
-                firstName = args["firstName"] as? String?,
-                middleName = args["middleName"] as? String?,
-                lastName = args["lastName"] as? String?,
-                dob = args["dob"] as? String?,
-                bankCode = args["bankCode"] as? String?,
-                entered = args["entered"] as? Boolean?,
-            ),
-            consentInformation =
-            ConsentInformation(
-                consented = ConsentedInformation(
-                    consentGrantedDate = args["consentGrantedDate"] as? String
-                        ?: getCurrentIsoTimestamp(),
-                    personalDetails = args["personalDetailsConsentGranted"] as? Boolean == true,
-                    contactInformation = args["contactInfoConsentGranted"] as? Boolean == true,
-                    documentInformation = args["documentInfoConsentGranted"] as? Boolean == true,
+                IdInfo(
+                    country = args["country"] as? String ?: "",
+                    idType = args["idType"] as? String?,
+                    idNumber = args["idNumber"] as? String?,
+                    firstName = args["firstName"] as? String?,
+                    middleName = args["middleName"] as? String?,
+                    lastName = args["lastName"] as? String?,
+                    dob = args["dob"] as? String?,
+                    bankCode = args["bankCode"] as? String?,
+                    entered = args["entered"] as? Boolean?,
                 ),
-            ),
+            consentInformation = ConsentInformation(consented = consentInformation),
             userId = args["userId"] as? String ?: randomUserId(),
             jobId = args["jobId"] as? String ?: randomJobId(),
             allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
