@@ -1,3 +1,6 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -6,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.smileidentity.flutter.sample"
-    compileSdk = 35
+    compileSdk = 36
 
     sourceSets {
         getByName("main").java.srcDirs("src/main/kotlin")
@@ -15,7 +18,7 @@ android {
     defaultConfig {
         applicationId = "com.smileidentity.flutter.sample"
         minSdk = 21
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0.0"
     }
@@ -27,9 +30,11 @@ android {
         }
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
-        freeCompilerArgs += listOf("-Xskip-metadata-version-check")
+    tasks.withType<KotlinJvmCompile>().configureEach {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+            freeCompilerArgs.add("-Xskip-metadata-version-check")
+        }
     }
 }
 val checkSmileConfigFileTask = tasks.register("checkSmileConfigFile") {
