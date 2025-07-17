@@ -6,7 +6,6 @@ import com.smileidentity.SmileID
 import com.smileidentity.compose.EnhancedDocumentVerificationScreen
 import com.smileidentity.flutter.results.DocumentCaptureResult
 import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
-import com.smileidentity.flutter.utils.getCurrentIsoTimestamp
 import com.smileidentity.flutter.views.SmileComposablePlatformView
 import com.smileidentity.flutter.views.SmileIDViewFactory
 import com.smileidentity.models.ConsentInformation
@@ -56,7 +55,7 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
                         personalDetails = personalDetails,
                         contactInformation = contactInformation,
                         documentInformation = documentInformation,
-                    )
+                    ),
                 )
             } else {
                 null
