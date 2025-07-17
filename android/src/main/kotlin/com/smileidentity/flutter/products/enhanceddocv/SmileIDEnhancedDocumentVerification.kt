@@ -47,10 +47,8 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
             val contactInformation = args["contactInfoConsentGranted"] as? Boolean
             val documentInformation = args["documentInfoConsentGranted"] as? Boolean
 
-            if (consentGrantedDate != null &&
-                personalDetails != null &&
-                contactInformation != null &&
-                documentInformation != null
+            if (consentGrantedDate != null && personalDetails != null &&
+                contactInformation != null && documentInformation != null
             ) {
                 ConsentInformation(
                     consented = ConsentedInformation(
