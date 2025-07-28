@@ -5,7 +5,9 @@
 ### Changed
 
 * Removed `AntiFraud` response in `JobStatus` calls
-* Updated the `targetSdk` to 36 and updated the AGP version 
+* Updated the `targetSdk` to 36 and updated the AGP version
+* Added `autoCaptureTimeout` that allows partners to override the default 10 seconds auto capture
+    timeout
 
 ## 11.0.6 - July 11, 2025
 
