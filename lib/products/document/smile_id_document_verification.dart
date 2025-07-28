@@ -28,6 +28,7 @@ class SmileIDDocumentVerification extends StatelessWidget {
     // the native platform code, since that's where the random ID creation happens
     String? userId,
     String? jobId,
+    Duration autoCaptureTimeout = const Duration(seconds: 10),
     bool enableAutoCapture = true,
     bool allowNewEnroll = false,
     bool showAttribution = true,
@@ -51,6 +52,7 @@ class SmileIDDocumentVerification extends StatelessWidget {
         "bypassSelfieCaptureWithFile": bypassSelfieCaptureWithFile,
         "userId": userId,
         "jobId": jobId,
+        "autoCaptureTimeout": autoCaptureTimeout,
         "enableAutoCapture": enableAutoCapture,
         "allowNewEnroll": allowNewEnroll,
         "showAttribution": showAttribution,
