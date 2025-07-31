@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:smile_id/products/capture/smile_id_document_capture_view.dart';
 import 'package:smile_id/products/capture/smile_id_smart_selfie_capture_view.dart';
+import 'package:smile_id/products/models/model.dart';
 import 'package:smile_id/smileid_messages.g.dart';
 import 'package:smile_id/smile_id.dart';
 import 'package:smile_id/products/biometric/smile_id_biometric_kyc.dart';
@@ -149,6 +150,8 @@ class MainContent extends StatelessWidget {
                 body: SmileIDDocumentVerification(
               countryCode: "GH",
               documentType: "DRIVERS_LICENSE",
+              autoCapture: AutoCaptureMode.AutoCapture,
+              autoCaptureTimeout: 200000,
               onSuccess: (String? result) {
                 // Your success handling logic
                 Map<String, dynamic> jsonResult = json.decode(result ?? '{}');

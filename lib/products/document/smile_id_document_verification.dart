@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../../views/smile_view.dart';
+import '../models/model.dart';
 
 class SmileIDDocumentVerification extends StatelessWidget {
   static const String viewType = "SmileIDDocumentVerification";
@@ -28,7 +29,8 @@ class SmileIDDocumentVerification extends StatelessWidget {
     // the native platform code, since that's where the random ID creation happens
     String? userId,
     String? jobId,
-    bool enableAutoCapture = true,
+    int? autoCaptureTimeout,
+    AutoCaptureMode autoCapture = AutoCaptureMode.AutoCapture,
     bool allowNewEnroll = false,
     bool showAttribution = true,
     bool allowGalleryUpload = false,
@@ -51,7 +53,8 @@ class SmileIDDocumentVerification extends StatelessWidget {
         "bypassSelfieCaptureWithFile": bypassSelfieCaptureWithFile,
         "userId": userId,
         "jobId": jobId,
-        "enableAutoCapture": enableAutoCapture,
+        "autoCaptureTimeout": autoCaptureTimeout,
+        "autoCapture": autoCapture.name,
         "allowNewEnroll": allowNewEnroll,
         "showAttribution": showAttribution,
         "allowAgentMode": allowAgentMode,

@@ -9,6 +9,7 @@ import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
 import com.smileidentity.flutter.utils.getCurrentIsoTimestamp
 import com.smileidentity.flutter.views.SmileComposablePlatformView
 import com.smileidentity.flutter.views.SmileIDViewFactory
+import com.smileidentity.models.AutoCapture
 import com.smileidentity.models.ConsentInformation
 import com.smileidentity.models.ConsentedInformation
 import com.smileidentity.results.SmileIDResult
@@ -17,6 +18,8 @@ import com.smileidentity.util.randomUserId
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.platform.PlatformViewFactory
 import kotlinx.collections.immutable.toImmutableMap
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 internal class SmileIDEnhancedDocumentVerification private constructor(
     context: Context,
@@ -48,7 +51,8 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
             captureBothSides = args["captureBothSides"] as? Boolean ?: true,
             userId = args["userId"] as? String ?: randomUserId(),
             jobId = args["jobId"] as? String ?: randomJobId(),
-            enableAutoCapture = args["enableAutoCapture"] as? Boolean ?: true,
+            autoCaptureTimeout = (args["autoCaptureTimeout"] as? Int)?.toLong()?.milliseconds ?: 10.seconds,
+            autoCapture = AutoCapture.valueOf ((args["autoCapture"] as? String).toString()) ?: AutoCapture.AutoCapture,
             allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
             showAttribution = args["showAttribution"] as? Boolean ?: true,
             allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
