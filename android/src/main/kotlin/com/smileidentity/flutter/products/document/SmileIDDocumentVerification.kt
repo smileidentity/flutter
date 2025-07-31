@@ -54,7 +54,7 @@ internal class SmileIDDocumentVerification private constructor(
             userId = args["userId"] as? String ?: randomUserId(),
             jobId = args["jobId"] as? String ?: randomJobId(),
             autoCaptureTimeout = (args["autoCaptureTimeout"] as? Int)?.toLong()?.milliseconds ?: 10.seconds,
-            autoCapture = AutoCapture.valueOf ((args["autoCapture"] as? String).toString()) ?: AutoCapture.AutoCapture,
+            autoCapture = (args["autoCapture"] as? String)?.let { AutoCapture.valueOf(it) } ?: AutoCapture.AutoCapture,
             allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
             showAttribution = args["showAttribution"] as? Boolean ?: true,
             allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
