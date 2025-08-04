@@ -150,7 +150,7 @@ class MainContent extends StatelessWidget {
                 body: SmileIDDocumentVerification(
               countryCode: "GH",
               documentType: "DRIVERS_LICENSE",
-              autoCapture: AutoCaptureMode.AutoCapture,
+              autoCapture: AutoCaptureMode.autoCapture,
               autoCaptureTimeout: 200000,
               onSuccess: (String? result) {
                 // Your success handling logic

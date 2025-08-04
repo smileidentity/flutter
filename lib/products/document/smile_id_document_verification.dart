@@ -30,7 +30,7 @@ class SmileIDDocumentVerification extends StatelessWidget {
     String? userId,
     String? jobId,
     int? autoCaptureTimeout,
-    AutoCaptureMode autoCapture = AutoCaptureMode.AutoCapture,
+    AutoCaptureMode autoCapture = AutoCaptureMode.autoCapture,
     bool allowNewEnroll = false,
     bool showAttribution = true,
     bool allowGalleryUpload = false,

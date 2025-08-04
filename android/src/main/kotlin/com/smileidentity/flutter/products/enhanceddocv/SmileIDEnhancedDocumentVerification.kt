@@ -17,9 +17,9 @@ import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.platform.PlatformViewFactory
-import kotlinx.collections.immutable.toImmutableMap
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
+import kotlinx.collections.immutable.toImmutableMap
 
 internal class SmileIDEnhancedDocumentVerification private constructor(
     context: Context,
@@ -51,8 +51,11 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
             captureBothSides = args["captureBothSides"] as? Boolean ?: true,
             userId = args["userId"] as? String ?: randomUserId(),
             jobId = args["jobId"] as? String ?: randomJobId(),
-            autoCaptureTimeout = (args["autoCaptureTimeout"] as? Int)?.toLong()?.milliseconds ?: 10.seconds,
-            autoCapture = (args["autoCapture"] as? String)?.let { AutoCapture.valueOf(it) } ?: AutoCapture.AutoCapture,
+            autoCaptureTimeout = (args["autoCaptureTimeout"] as? Int)?.toLong()?.milliseconds
+                ?: 10.seconds,
+            autoCapture = (args["autoCapture"] as? String)?.let {
+                AutoCapture.valueOf(it)
+            } ?: AutoCapture.AutoCapture,
             allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
             showAttribution = args["showAttribution"] as? Boolean ?: true,
             allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,

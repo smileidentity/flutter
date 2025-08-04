@@ -54,7 +54,9 @@ internal class SmileIDDocumentCaptureView private constructor(
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                 ) {
-                    val autoCapture = AutoCapture.valueOf ((args["autoCapture"] as? String).toString()) ?: AutoCapture.AutoCapture
+                    val autoCapture =
+                        AutoCapture.valueOf((args["autoCapture"] as? String).toString())
+                            ?: AutoCapture.AutoCapture
                     val isDocumentFrontSide = args["isDocumentFrontSide"] as? Boolean ?: true
                     val showInstructions = args["showInstructions"] as? Boolean ?: true
                     val showAttribution = args["showAttribution"] as? Boolean ?: true

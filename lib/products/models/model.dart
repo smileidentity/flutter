@@ -1,5 +1,5 @@
 enum AutoCaptureMode {
-  AutoCapture,
-  AutoCaptureOnly,
-  ManualCaptureOnly,
+  autoCapture,
+  autoCaptureOnly,
+  manualCaptureOnly,
 }
