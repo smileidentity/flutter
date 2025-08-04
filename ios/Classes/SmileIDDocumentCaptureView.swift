@@ -17,7 +17,8 @@ class SmileIDDocumentCaptureView: NSObject, FlutterPlatformView {
         binaryMessenger messenger: FlutterBinaryMessenger
     ) {
         let jobId = generateJobId()
-        let enableAutoCapture = args["enableAutoCapture"] as? Bool ?? true
+        let autoCaptureTimeout = args["autoCaptureTimeout"] as? TimeInterval ?? 10.0
+        let autoCapture = args["autoCapture"] as? AutoCapture ?? AutoCapture.autoCapture
         let isDocumentFrontSide = args["isDocumentFrontSide"] as? Bool ?? true
         let showInstructions = args["showInstructions"] as? Bool ?? true
         let showAttribution = args["showAttribution"] as? Bool ?? true
@@ -35,7 +36,8 @@ class SmileIDDocumentCaptureView: NSObject, FlutterPlatformView {
         super.init()
 
         let rootView = SmileIDDocumentRootView(
-            enableAutoCapture: enableAutoCapture,
+            autoCaptureTimeout: autoCaptureTimeout,
+            autoCapture: autoCapture,
             showConfirmationDialog: showConfirmationDialog,
             isDocumentFrontSide: isDocumentFrontSide,
             showInstructions: showInstructions,
@@ -54,7 +56,8 @@ class SmileIDDocumentCaptureView: NSObject, FlutterPlatformView {
 }
 
 struct SmileIDDocumentRootView: View {
-    let enableAutoCapture: Bool
+    let autoCaptureTimeout: TimeInterval
+    let autoCapture: AutoCapture
     let showConfirmationDialog: Bool
     let isDocumentFrontSide: Bool
     let showInstructions: Bool
@@ -68,7 +71,8 @@ struct SmileIDDocumentRootView: View {
         NavigationView {
             DocumentCaptureScreen(
                 side: isDocumentFrontSide ? .front : .back,
-                enableAutoCapture: enableAutoCapture,
+                autoCaptureTimeout: autoCaptureTimeout,
+                autoCapture: autoCapture,
                 showInstructions: showInstructions,
                 showAttribution: showAttribution,
                 allowGallerySelection: allowGalleryUpload,
