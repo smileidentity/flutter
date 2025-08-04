@@ -17,8 +17,8 @@ class SmileIDDocumentCaptureView: NSObject, FlutterPlatformView {
         binaryMessenger messenger: FlutterBinaryMessenger
     ) {
         let jobId = generateJobId()
-        let autoCaptureTimeout = args["autoCaptureTimeout"] as? TimeInterval ?? 10.0
-        let autoCapture = args["autoCapture"] as? AutoCapture ?? AutoCapture.autoCapture
+        let autoCaptureTimeout = (args["autoCaptureTimeout"] as? Int).map { TimeInterval($0) } ?? 10.0
+        let autoCapture = AutoCapture.from(args["autoCapture"] as? String)
         let isDocumentFrontSide = args["isDocumentFrontSide"] as? Bool ?? true
         let showInstructions = args["showInstructions"] as? Bool ?? true
         let showAttribution = args["showAttribution"] as? Bool ?? true
