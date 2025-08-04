@@ -33,7 +33,7 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
             documentType: args["documentType"] as? String,
             idAspectRatio: args["idAspectRatio"] as? Double,
             bypassSelfieCaptureWithFile: bypassSelfieCaptureWithFile,
-            autoCaptureTimeout: (args["autoCaptureTimeout"] as? Int).map { TimeInterval($0) } ?? 10.0,
+            autoCaptureTimeout: (args["autoCaptureTimeout"] as? Int).map { TimeInterval($0) / 1000.0 } ?? 10.0,
             autoCapture: AutoCapture.from(args["autoCapture"] as? String),
             captureBothSides: args["captureBothSides"] as? Bool ?? true,
             allowAgentMode: args["allowAgentMode"] as? Bool ?? false,
