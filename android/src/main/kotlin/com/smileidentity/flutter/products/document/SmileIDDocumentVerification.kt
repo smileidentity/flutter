@@ -56,8 +56,8 @@ internal class SmileIDDocumentVerification private constructor(
             autoCaptureTimeout = (args["autoCaptureTimeout"] as? Int)?.toLong()?.milliseconds
                 ?: 10.seconds,
             autoCapture = (args["autoCapture"] as? String)?.lowercase()?.let { input ->
-                AutoCapture.values().firstOrNull { it.name.lowercase() == input }
-            } ?: AutoCapture.AutoCapture
+                AutoCapture.entries.firstOrNull { it.name.lowercase() == input }
+            } ?: AutoCapture.AutoCapture,
             allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
             showAttribution = args["showAttribution"] as? Boolean ?: true,
             allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,

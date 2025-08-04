@@ -151,7 +151,7 @@ class MainContent extends StatelessWidget {
               countryCode: "GH",
               documentType: "DRIVERS_LICENSE",
               autoCapture: AutoCaptureMode.autoCapture,
-              autoCaptureTimeout: 200000,
+              autoCaptureTimeout: 20000,
               onSuccess: (String? result) {
                 // Your success handling logic
                 Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
@@ -185,6 +185,8 @@ class MainContent extends StatelessWidget {
                 body: SmileIDEnhancedDocumentVerification(
               countryCode: "GH",
               documentType: "DRIVERS_LICENSE",
+              autoCapture: AutoCaptureMode.autoCapture,
+              autoCaptureTimeout: 20000,
               onSuccess: (String? result) {
                 // Your success handling logic
                 Map<String, dynamic> jsonResult = json.decode(result ?? '{}');

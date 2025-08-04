@@ -55,7 +55,7 @@ internal class SmileIDDocumentCaptureView private constructor(
                     modifier = Modifier.fillMaxSize(),
                 ) {
                     val autoCapture = (args["autoCapture"] as? String)?.lowercase()?.let { input ->
-                        AutoCapture.values().firstOrNull { it.name.lowercase() == input }
+                        AutoCapture.entries.firstOrNull { it.name.lowercase() == input }
                     } ?: AutoCapture.AutoCapture
                     val isDocumentFrontSide = args["isDocumentFrontSide"] as? Boolean ?: true
                     val showInstructions = args["showInstructions"] as? Boolean ?: true
