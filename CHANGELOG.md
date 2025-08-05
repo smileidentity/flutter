@@ -1,6 +1,6 @@
 # Release Notes
 
-## 11.1.0
+## 11.1.0 - August 5, 2025
 
 ### Changed
 

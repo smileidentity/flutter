@@ -151,7 +151,7 @@ class MainContent extends StatelessWidget {
               countryCode: "GH",
               documentType: "DRIVERS_LICENSE",
               autoCapture: AutoCaptureMode.autoCapture,
-              autoCaptureTimeout: 20000,
+              autoCaptureTimeout: 10000,
               onSuccess: (String? result) {
                 // Your success handling logic
                 Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
@@ -186,7 +186,7 @@ class MainContent extends StatelessWidget {
               countryCode: "GH",
               documentType: "DRIVERS_LICENSE",
               autoCapture: AutoCaptureMode.autoCapture,
-              autoCaptureTimeout: 20000,
+              autoCaptureTimeout: 10000,
               onSuccess: (String? result) {
                 // Your success handling logic
                 Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
