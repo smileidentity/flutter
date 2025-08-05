@@ -33,22 +33,20 @@ fun buildConsentInformation(
     personalDetails: Boolean?,
     contactInformation: Boolean?,
     documentInformation: Boolean?,
-): ConsentInformation? {
-    return if (
-        consentGrantedDate != null &&
-        personalDetails != null &&
-        contactInformation != null &&
-        documentInformation != null
-    ) {
-        ConsentInformation(
-            consented = ConsentedInformation(
-                consentGrantedDate = consentGrantedDate,
-                personalDetails = personalDetails,
-                contactInformation = contactInformation,
-                documentInformation = documentInformation,
-            ),
-        )
-    } else {
-        null
-    }
+): ConsentInformation? = if (
+    consentGrantedDate != null &&
+    personalDetails != null &&
+    contactInformation != null &&
+    documentInformation != null
+) {
+    ConsentInformation(
+        consented = ConsentedInformation(
+            consentGrantedDate = consentGrantedDate,
+            personalDetails = personalDetails,
+            contactInformation = contactInformation,
+            documentInformation = documentInformation,
+        ),
+    )
+} else {
+    null
 }
