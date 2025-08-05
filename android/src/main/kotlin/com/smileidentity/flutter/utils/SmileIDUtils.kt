@@ -32,7 +32,7 @@ fun buildConsentInformation(
     consentGrantedDate: String?,
     personalDetails: Boolean?,
     contactInformation: Boolean?,
-    documentInformation: Boolean?
+    documentInformation: Boolean?,
 ): ConsentInformation? {
     return if (
         consentGrantedDate != null &&
@@ -46,7 +46,7 @@ fun buildConsentInformation(
                 personalDetails = personalDetails,
                 contactInformation = contactInformation,
                 documentInformation = documentInformation,
-            )
+            ),
         )
     } else {
         null
