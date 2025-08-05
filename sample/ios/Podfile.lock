@@ -5,29 +5,31 @@ PODS:
     - FingerprintJS/SystemControl
   - FingerprintJS/SystemControl (1.6.0)
   - Flutter (1.0.0)
-  - integration_test (0.0.1):
-    - Flutter
   - lottie-ios (4.5.2)
-  - smile_id (11.0.5):
+  - Sentry (8.53.2):
+    - Sentry/Core (= 8.53.2)
+  - Sentry/Core (8.53.2)
+  - smile_id (11.0.6):
     - Flutter
-    - SmileID (= 11.0.2)
-  - SmileID (11.0.2):
-    - FingerprintJS
-    - lottie-ios (~> 4.5.0)
-    - SmileIDSecurity (~> 1.0.3)
-    - ZIPFoundation (~> 0.9)
-  - SmileIDSecurity (1.0.3)
+    - SmileID (= 11.1.0)
+  - SmileID (11.1.0):
+    - FingerprintJS (= 1.6.0)
+    - lottie-ios (= 4.5.2)
+    - Sentry (= 8.53.2)
+    - SmileIDSecurity (= 11.1.0)
+    - ZIPFoundation (= 0.9.19)
+  - SmileIDSecurity (11.1.0)
   - ZIPFoundation (0.9.19)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - smile_id (from `.symlinks/plugins/smile_id/ios`)
 
 SPEC REPOS:
   trunk:
     - FingerprintJS
     - lottie-ios
+    - Sentry
     - SmileID
     - SmileIDSecurity
     - ZIPFoundation
@@ -35,19 +37,17 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  integration_test:
-    :path: ".symlinks/plugins/integration_test/ios"
   smile_id:
     :path: ".symlinks/plugins/smile_id/ios"
 
 SPEC CHECKSUMS:
   FingerprintJS: 3a0c3e7f5035ecae199e5e5836200d9b20f1266a
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
   lottie-ios: 96784afc26ea031d3e2b6cae342a4b8915072489
-  smile_id: 55cf66fcba7311909e4b7403da9fa61170154e5f
-  SmileID: 907d71f709a12b6dbd951205b70b8eeba89d2cfd
-  SmileIDSecurity: e721b4a2ccc403ab61e2e14a4c7dd15fa4e4e55d
+  Sentry: 59993bffde4a1ac297ba6d268dc4bbce068d7c1b
+  smile_id: 3aac71dd2443c16951374b39ea98b0390bf4fc82
+  SmileID: 8af7cd0190245e561ec2496dda08eeb3ecb61f7d
+  SmileIDSecurity: 9bf50182c931074316892e929ddcfc34f74368c5
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
 PODFILE CHECKSUM: 81be4fc09878044dc75c762493ad56e861d5bf57
