@@ -6,12 +6,10 @@ import com.smileidentity.SmileID
 import com.smileidentity.compose.EnhancedDocumentVerificationScreen
 import com.smileidentity.flutter.results.DocumentCaptureResult
 import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
-import com.smileidentity.flutter.utils.getCurrentIsoTimestamp
+import com.smileidentity.flutter.utils.buildConsentInformation
 import com.smileidentity.flutter.views.SmileComposablePlatformView
 import com.smileidentity.flutter.views.SmileIDViewFactory
 import com.smileidentity.models.AutoCapture
-import com.smileidentity.models.ConsentInformation
-import com.smileidentity.models.ConsentedInformation
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
@@ -44,6 +42,13 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
     @Composable
     override fun Content(args: Map<String, Any?>) {
         val extraPartnerParams = args["extraPartnerParams"] as? Map<String, String> ?: emptyMap()
+        val consentInformation = buildConsentInformation(
+            consentGrantedDate = args["consentGrantedDate"] as? String,
+            personalDetails = args["personalDetailsConsentGranted"] as? Boolean,
+            contactInformation = args["contactInfoConsentGranted"] as? Boolean,
+            documentInformation = args["documentInfoConsentGranted"] as? Boolean,
+        )
+
         SmileID.EnhancedDocumentVerificationScreen(
             countryCode = args["countryCode"] as String,
             documentType = args["documentType"] as? String,
@@ -62,16 +67,7 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
             allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false,
             showInstructions = args["showInstructions"] as? Boolean ?: true,
             useStrictMode = args["useStrictMode"] as? Boolean ?: false,
-            consentInformation =
-            ConsentInformation(
-                consented = ConsentedInformation(
-                    consentGrantedDate = args["consentGrantedDate"] as? String
-                        ?: getCurrentIsoTimestamp(),
-                    personalDetails = args["personalDetailsConsentGranted"] as? Boolean == true,
-                    contactInformation = args["contactInfoConsentGranted"] as? Boolean == true,
-                    documentInformation = args["documentInfoConsentGranted"] as? Boolean == true,
-                ),
-            ),
+            consentInformation = consentInformation,
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {
             when (it) {

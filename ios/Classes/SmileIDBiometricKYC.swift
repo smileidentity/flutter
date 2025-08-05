@@ -23,6 +23,27 @@ class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDel
         )
         _childViewController = nil
         super.init()
+
+        let consentInformation: ConsentInformation? = {
+            guard
+                let consentGrantedDate = args["consentGrantedDate"] as? String,
+                let personalDetails = args["personalDetailsConsentGranted"] as? Bool,
+                let contactInformation = args["contactInfoConsentGranted"] as? Bool,
+                let documentInformation = args["documentInfoConsentGranted"] as? Bool
+            else {
+                return nil
+            }
+
+            return ConsentInformation(
+                consented: ConsentedInformation(
+                    consentGrantedDate: consentGrantedDate,
+                    personalDetails: personalDetails,
+                    contactInformation: contactInformation,
+                    documentInformation: documentInformation
+                )
+            )
+        }()
+
         let screen = SmileID.biometricKycScreen(
             idInfo: IdInfo(
                 country:  args["country"] as? String ?? "",
@@ -43,13 +64,7 @@ class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDel
             showInstructions: args["showInstructions"] as? Bool ?? true,
             useStrictMode: args["useStrictMode"] as? Bool ?? false,
             extraPartnerParams: args["extraPartnerParams"] as? [String: String] ?? [:],
-            consentInformation: ConsentInformation( consented: ConsentedInformation(
-                consentGrantedDate: args["consentGrantedDate"] as? String ?? getCurrentIsoTimestamp(),
-                personalDetails: args["personalDetailsConsentGranted"] as? Bool ?? false,
-                contactInformation: args["contactInfoConsentGranted"] as? Bool ?? false,
-                documentInformation: args["documentInfoConsentGranted"] as? Bool ?? false
-            )
-            ),
+            consentInformation: consentInformation,
             delegate: self
         )
         let navView = NavigationView{screen}
