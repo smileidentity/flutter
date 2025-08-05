@@ -18,6 +18,7 @@ import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
 import com.smileidentity.flutter.views.SmileComposablePlatformView
 import com.smileidentity.flutter.views.SmileIDViewFactory
 import com.smileidentity.metadata.LocalMetadataProvider
+import com.smileidentity.models.AutoCapture
 import com.smileidentity.util.randomJobId
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.platform.PlatformViewFactory
@@ -53,7 +54,9 @@ internal class SmileIDDocumentCaptureView private constructor(
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                 ) {
-                    val enableAutoCapture = args["enableAutoCapture"] as? Boolean ?: true
+                    val autoCapture = (args["autoCapture"] as? String)?.lowercase()?.let { input ->
+                        AutoCapture.entries.firstOrNull { it.name.lowercase() == input }
+                    } ?: AutoCapture.AutoCapture
                     val isDocumentFrontSide = args["isDocumentFrontSide"] as? Boolean ?: true
                     val showInstructions = args["showInstructions"] as? Boolean ?: true
                     val showAttribution = args["showAttribution"] as? Boolean ?: true
@@ -62,7 +65,7 @@ internal class SmileIDDocumentCaptureView private constructor(
                     val idAspectRatio = (args["idAspectRatio"] as Double?)?.toFloat()
                     RenderDocumentCaptureScreen(
                         jobId = randomJobId(),
-                        enableAutoCapture = enableAutoCapture,
+                        autoCapture = autoCapture,
                         isDocumentFrontSide = isDocumentFrontSide,
                         showInstructions = showInstructions,
                         showAttribution = showAttribution,
@@ -78,7 +81,7 @@ internal class SmileIDDocumentCaptureView private constructor(
     @Composable
     private fun RenderDocumentCaptureScreen(
         jobId: String,
-        enableAutoCapture: Boolean,
+        autoCapture: AutoCapture,
         isDocumentFrontSide: Boolean,
         showInstructions: Boolean,
         showAttribution: Boolean,
@@ -112,7 +115,7 @@ internal class SmileIDDocumentCaptureView private constructor(
             }
         DocumentCaptureScreen(
             jobId = jobId,
-            enableAutoCapture = enableAutoCapture,
+            autoCapture = autoCapture,
             side = if (isDocumentFrontSide) DocumentCaptureSide.Front else DocumentCaptureSide.Back,
             showInstructions = showInstructions,
             showAttribution = showAttribution,

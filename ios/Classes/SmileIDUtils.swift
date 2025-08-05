@@ -1,4 +1,5 @@
 import Foundation
+import SmileID
 
 extension String {
     func isValidUrl() -> Bool {
@@ -16,4 +17,19 @@ func getCurrentIsoTimestamp() -> String {
     formatter.locale = Locale(identifier: "en_US")
     formatter.timeZone = TimeZone(identifier: "UTC")
     return formatter.string(from: Date())
+}
+
+extension AutoCapture {
+    static func from(_ string: String?) -> AutoCapture {
+        switch string?.lowercased() {
+        case "autocapture":
+            return .autoCapture
+        case "autocaptureonly":
+            return .autoCaptureOnly
+        case "manualcaptureonly":
+            return .manualCaptureOnly
+        default:
+            return .autoCapture
+        }
+    }
 }
