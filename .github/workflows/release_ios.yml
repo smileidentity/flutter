@@ -15,7 +15,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Create Release Branch
         run: |
           git checkout -b "ios-${{ github.event.inputs.ios_release_version }}"
