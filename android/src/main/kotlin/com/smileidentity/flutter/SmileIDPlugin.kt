@@ -155,10 +155,7 @@ class SmileIDPlugin :
         )
     }
 
-    override fun initialize(
-        useSandbox: Boolean,
-        enableCrashReporting: Boolean,
-    ) {
+    override fun initialize(useSandbox: Boolean, enableCrashReporting: Boolean) {
         SmileID.initialize(
             context = context,
             useSandbox = useSandbox,
