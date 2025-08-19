@@ -1,4 +1,4 @@
-package com.smileidentity.flutter
+package com.smileidentity.flutter.mapper
 
 import FlutterActionResult
 import FlutterActions

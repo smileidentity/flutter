@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-import 'smileid_messages.g.dart';
+import 'generated/smileid_messages.g.dart';
 import 'smile_id_service.dart';
 
 class SmileID {
@@ -26,10 +26,9 @@ class SmileID {
         config, useSandbox, enableCrashReporting);
   }
 
-  static void initialize({
-    required bool useSandbox,
-  }) {
-    platformInterface.initialize(useSandbox);
+  static void initialize(
+      {required bool useSandbox, required bool enableCrashReporting}) {
+    platformInterface.initialize(useSandbox, enableCrashReporting);
   }
 
   static void setCallbackUrl({required Uri callbackUrl}) {

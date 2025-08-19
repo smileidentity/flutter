@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:smile_id/smileid_messages.g.dart';
+
+import 'package:smile_id/generated/smileid_messages.g.dart';
 
 void main() {
   group('Consent Mapping Tests', () {

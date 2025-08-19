@@ -3070,7 +3070,7 @@ class SmileIDApi {
     }
   }
 
-  Future<void> initialize(bool useSandbox) async {
+  Future<void> initialize(bool useSandbox, bool enableCrashReporting) async {
     final String pigeonVar_channelName =
         'dev.flutter.pigeon.smileid.SmileIDApi.initialize$pigeonVar_messageChannelSuffix';
     final BasicMessageChannel<Object?> pigeonVar_channel =
@@ -3080,7 +3080,7 @@ class SmileIDApi {
       binaryMessenger: pigeonVar_binaryMessenger,
     );
     final Future<Object?> pigeonVar_sendFuture =
-        pigeonVar_channel.send(<Object?>[useSandbox]);
+        pigeonVar_channel.send(<Object?>[useSandbox, enableCrashReporting]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {

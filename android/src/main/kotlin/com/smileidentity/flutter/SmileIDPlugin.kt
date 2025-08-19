@@ -24,6 +24,9 @@ import android.app.Activity
 import android.content.Context
 import com.smileidentity.SmileID
 import com.smileidentity.SmileIDOptIn
+import com.smileidentity.flutter.mapper.convertNullableMapToNonNull
+import com.smileidentity.flutter.mapper.toRequest
+import com.smileidentity.flutter.mapper.toResponse
 import com.smileidentity.flutter.products.biometric.SmileIDBiometricKYC
 import com.smileidentity.flutter.products.capture.SmileIDDocumentCaptureView
 import com.smileidentity.flutter.products.capture.SmileIDSmartSelfieCaptureView
@@ -135,7 +138,7 @@ class SmileIDPlugin :
             apiKey = apiKey,
             config = config.toRequest(),
             useSandbox = useSandbox,
-            enableCrashReporting = false,
+            enableCrashReporting = enableCrashReporting,
         )
     }
 
@@ -148,14 +151,18 @@ class SmileIDPlugin :
             context = context,
             config = config.toRequest(),
             useSandbox = useSandbox,
-            enableCrashReporting = false,
+            enableCrashReporting = enableCrashReporting,
         )
     }
 
-    override fun initialize(useSandbox: Boolean) {
+    override fun initialize(
+        useSandbox: Boolean,
+        enableCrashReporting: Boolean,
+    ) {
         SmileID.initialize(
             context = context,
             useSandbox = useSandbox,
+            enableCrashReporting = enableCrashReporting,
         )
     }
 
