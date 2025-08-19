@@ -1,5 +1,13 @@
 # Release Notes
 
+## 11.2.0 - August 19, 2025
+
+### Added
+* Enabled `enableCrashReporting` as a required param on all `initialize()` calls
+
+### Removed
+* Removed duplicate `smileid_messages.g.dart` that caused an `initializeWithConfig` bug
+
 ## 11.1.0 - August 5, 2025
 
 ### Added
