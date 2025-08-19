@@ -1,4 +1,4 @@
-import 'smileid_messages.g.dart';
+import 'generated/smileid_messages.g.dart';
 
 class SmileIDService {
   SmileIDApi platformInterface;

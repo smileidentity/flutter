@@ -87,31 +87,35 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         apiKey: String,
         config: FlutterConfig,
         useSandbox: Bool,
-        enableCrashReporting _: Bool
+        enableCrashReporting: Bool
     ) {
         SmileID.initialize(
             apiKey: apiKey,
             config: config.toRequest(),
-            useSandbox: useSandbox
+            useSandbox: useSandbox,
+            enableCrashReporting: enableCrashReporting
         )
     }
 
     func initializeWithConfig(
         config: FlutterConfig,
         useSandbox: Bool,
-        enableCrashReporting _: Bool
+        enableCrashReporting: Bool
     ) {
         SmileID.initialize(
             config: config.toRequest(),
-            useSandbox: useSandbox
+            useSandbox: useSandbox,
+            enableCrashReporting: enableCrashReporting
         )
     }
 
     func initialize(
-        useSandbox: Bool
+        useSandbox: Bool,
+        enableCrashReporting: Bool
     ) {
         SmileID.initialize(
-            useSandbox: useSandbox
+            useSandbox: useSandbox,
+            enableCrashReporting: enableCrashReporting
         )
     }
 

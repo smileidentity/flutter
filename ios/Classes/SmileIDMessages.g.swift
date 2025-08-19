@@ -2271,7 +2271,7 @@ class SmileIDMessagesPigeonCodec: FlutterStandardMessageCodec, @unchecked Sendab
 protocol SmileIDApi {
   func initializeWithApiKey(apiKey: String, config: FlutterConfig, useSandbox: Bool, enableCrashReporting: Bool) throws
   func initializeWithConfig(config: FlutterConfig, useSandbox: Bool, enableCrashReporting: Bool) throws
-  func initialize(useSandbox: Bool) throws
+  func initialize(useSandbox: Bool, enableCrashReporting: Bool) throws
   func setCallbackUrl(callbackUrl: String) throws
   func setAllowOfflineMode(allowOfflineMode: Bool) throws
   func getSubmittedJobs() throws -> [String]
@@ -2345,8 +2345,9 @@ class SmileIDApiSetup {
       initializeChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
         let useSandboxArg = args[0] as! Bool
+        let enableCrashReportingArg = args[1] as! Bool
         do {
-          try api.initialize(useSandbox: useSandboxArg)
+          try api.initialize(useSandbox: useSandboxArg, enableCrashReporting: enableCrashReportingArg)
           reply(wrapResult(nil))
         } catch {
           reply(wrapError(error))

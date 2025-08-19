@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:smile_id/smileid_messages.g.dart';
+import 'package:smile_id/generated/smileid_messages.g.dart';
 import 'package:smile_id/smile_id.dart';
 
 @GenerateNiceMocks([MockSpec<SmileIDApi>()])
@@ -16,8 +16,8 @@ void main() {
   });
 
   test("initialize call is proxied", () {
-    SmileID.initialize(useSandbox: true);
-    verify(SmileID.platformInterface.initialize(true));
+    SmileID.initialize(useSandbox: true, enableCrashReporting: true);
+    verify(SmileID.platformInterface.initialize(true, true));
   });
 
   test("authenticate call is proxied", () {

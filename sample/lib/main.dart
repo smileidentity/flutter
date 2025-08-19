@@ -2,18 +2,18 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:smile_id/generated/smileid_messages.g.dart';
+import 'package:smile_id/products/biometric/smile_id_biometric_kyc.dart';
 import 'package:smile_id/products/capture/smile_id_document_capture_view.dart';
 import 'package:smile_id/products/capture/smile_id_smart_selfie_capture_view.dart';
-import 'package:smile_id/products/models/model.dart';
-import 'package:smile_id/smileid_messages.g.dart';
-import 'package:smile_id/smile_id.dart';
-import 'package:smile_id/products/biometric/smile_id_biometric_kyc.dart';
 import 'package:smile_id/products/document/smile_id_document_verification.dart';
 import 'package:smile_id/products/enhanceddocv/smile_id_enhanced_document_verification.dart';
-import 'package:smile_id/products/selfie/smile_id_smart_selfie_authentication.dart';
 import 'package:smile_id/products/enhancedselfie/smile_id_smart_selfie_authentication_enhanced.dart';
-import 'package:smile_id/products/selfie/smile_id_smart_selfie_enrollment.dart';
 import 'package:smile_id/products/enhancedselfie/smile_id_smart_selfie_enrollment_enhanced.dart';
+import 'package:smile_id/products/models/model.dart';
+import 'package:smile_id/products/selfie/smile_id_smart_selfie_authentication.dart';
+import 'package:smile_id/products/selfie/smile_id_smart_selfie_enrollment.dart';
+import 'package:smile_id/smile_id.dart';
 
 // ignore_for_file: avoid_print
 
@@ -42,7 +42,15 @@ class _MyAppState extends State<MyApp> {
     // setState to update our non-existent appearance.
     if (!mounted) return;
     // replace with your own credentials
-    SmileID.initialize(
+    var config = FlutterConfig(
+        partnerId: "partner-id-here",
+        authToken: "auth-token-here",
+        prodBaseUrl: "https://api.smileidentity.com/v1/",
+        sandboxBaseUrl: "https://api.smileidentity.com/v1/");
+
+    SmileID.initializeWithConfig(
+      config: config,
+      enableCrashReporting: true,
       useSandbox: false,
     );
   }
@@ -103,9 +111,20 @@ class MainContent extends StatelessWidget {
         child: const Text("Enhanced KYC (Async)"),
         onPressed: () {
           // replace with your own credentials
-          SmileID.initialize(
+          // SmileID.initialize(useSandbox: false, enableCrashReporting: true);
+          var config = FlutterConfig(
+              partnerId: "005",
+              authToken:
+                  "PIsq6/Vd4H5ja0XQK7zHo59JzbtWoVwNtkhLuQTsFV8vZNoYiJOdvoR3Tg2pKnMaeiwQe8Hy/n0sh81DpP8jUbHls0ut0/w9twmeD328/fahoxS41XPLsvrao4TPvNGSKu0XKqiZTPptXVdMIz1oJgfvHYHWZJ+H7N4LEj5fmAw=",
+              prodBaseUrl: "https://api.smileidentity.com/v1/",
+              sandboxBaseUrl: "https://api.smileidentity.com/v1/");
+
+          SmileID.initializeWithConfig(
+            config: config,
+            enableCrashReporting: true,
             useSandbox: false,
           );
+
           var userId = "<your user's user ID>";
           SmileID.api
               .authenticate(FlutterAuthenticationRequest(
