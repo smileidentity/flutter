@@ -113,9 +113,8 @@ class MainContent extends StatelessWidget {
           // replace with your own credentials
           // SmileID.initialize(useSandbox: false, enableCrashReporting: true);
           var config = FlutterConfig(
-              partnerId: "005",
-              authToken:
-                  "PIsq6/Vd4H5ja0XQK7zHo59JzbtWoVwNtkhLuQTsFV8vZNoYiJOdvoR3Tg2pKnMaeiwQe8Hy/n0sh81DpP8jUbHls0ut0/w9twmeD328/fahoxS41XPLsvrao4TPvNGSKu0XKqiZTPptXVdMIz1oJgfvHYHWZJ+H7N4LEj5fmAw=",
+              partnerId: "partner-id-here",
+              authToken: "auth-token-here",
               prodBaseUrl: "https://api.smileidentity.com/v1/",
               sandboxBaseUrl: "https://api.smileidentity.com/v1/");
 
