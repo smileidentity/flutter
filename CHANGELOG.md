@@ -1,6 +1,6 @@
 # Release Notes
 
-## 11.2.0 - August 19, 2025
+## 11.2.0 - August 25, 2025
 
 ### Added
 * Enabled `enableCrashReporting` as a required param on all `initialize()` calls
