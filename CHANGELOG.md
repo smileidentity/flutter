@@ -4,7 +4,7 @@
 
 ### Added
 * Enabled `enableCrashReporting` as a required param on all `initialize()` calls
-* Bump iOS to 10.1.1 (https://github.com/smileidentity/ios/releases/tag/v11.1.1)
+* Bump iOS to 11.1.1 (https://github.com/smileidentity/ios/releases/tag/v11.1.1)
 
 ### Removed
 * Removed duplicate `smileid_messages.g.dart` that caused an `initializeWithConfig` bug
