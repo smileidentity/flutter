@@ -201,7 +201,12 @@ class SmileIDPlugin :
         request: FlutterPrepUploadRequest,
         callback: (Result<FlutterPrepUploadResponse>) -> Unit,
     ) = launch(
-        work = { SmileID.api.prepUpload(request.toRequest()).toResponse() },
+        work = {
+            SmileID.api.prepUpload(
+                headers = mapOf(),
+                request = request.toRequest(),
+            ).toResponse()
+        },
         callback = callback,
     )
 

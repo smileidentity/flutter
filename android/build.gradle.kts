@@ -92,7 +92,10 @@ android {
 }
 
 dependencies {
-    implementation("com.smileidentity:android-sdk:11.1.0")
+    implementation("com.smileidentity:android-sdk:11.1.1") {
+        exclude(group = "SmileID", module = "attestation")
+    }
+    implementation("com.smileidentity:android-attestation:11.1.1")
     implementation("androidx.core:core-ktx:1.16.0")
     implementation(platform("androidx.compose:compose-bom:2025.07.00"))
     implementation("androidx.compose.ui:ui")
