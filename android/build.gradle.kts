@@ -91,7 +91,6 @@ android {
     }
 }
 
-
 dependencies {
     implementation("com.smileidentity:android-sdk:11.1.1") {
         exclude(group = "SmileID", module = "attestation")
