@@ -71,7 +71,7 @@ class SmileIDPlugin :
         context = flutterPluginBinding.applicationContext
 
         // Set wrapper info for Flutter SDK
-        SmileID.setWrapperInfo(WrapperSdkName.Flutter, "11.1.0")
+        SmileID.setWrapperInfo(WrapperSdkName.Flutter, "11.2.2")
 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             SmileIDBiometricKYC.VIEW_TYPE_ID,
