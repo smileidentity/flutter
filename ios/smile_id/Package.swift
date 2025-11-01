@@ -11,7 +11,7 @@ let package = Package(
         .library(name: "smile-id", targets: ["smile_id"])
     ],
     dependencies: [
-        .package(url: "https://github.com/smileidentity/ios.git", .upToNextMajor(from: "11.1.1"))
+        .package(url: "https://github.com/smileidentity/ios.git", .upToNextMajor(from: "11.1.2"))
     ],
     targets: [
         .target(
