@@ -19,7 +19,7 @@ jobs:
           flutter-version: '3.32.0' # Set the desired Flutter version here
           channel: 'stable'
       - name: Install Dependencies
-        run: flutter pub get && cd sample && flutter pub get && cd ..
+        run: flutter config --enable-swift-package-manager && flutter pub get && cd sample && flutter pub get && cd ..
       - name: Lint Flutter
         run: dart format . --set-exit-if-changed && flutter analyze
   Android:
