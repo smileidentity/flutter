@@ -1,5 +1,6 @@
 import Foundation
-import SmileID
+import SmileIDSDK
+import UIKit
 
 extension String {
     func isValidUrl() -> Bool {
