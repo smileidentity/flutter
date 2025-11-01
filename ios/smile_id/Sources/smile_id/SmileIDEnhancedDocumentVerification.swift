@@ -1,15 +1,15 @@
 import Flutter
 import UIKit
-import SmileID
+import SmileIDSDK
 import SwiftUI
 
-class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerificationResultDelegate {
+class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, EnhancedDocumentVerificationResultDelegate {
     private var _view: UIView
     private var _channel: FlutterMethodChannel
     private var _childViewController: UIViewController?
-
-    static let VIEW_TYPE_ID = "SmileIDDocumentVerification"
-
+    
+    static let VIEW_TYPE_ID = "SmileIDEnhancedDocumentVerification"
+    
     init(
         frame: CGRect,
         viewIdentifier viewId: Int64,
@@ -18,14 +18,36 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerif
     ) {
         _view = UIView()
         _channel = FlutterMethodChannel(
-            name: "\(SmileIDDocumentVerification.VIEW_TYPE_ID)_\(viewId)",
+            name: "\(SmileIDEnhancedDocumentVerification.VIEW_TYPE_ID)_\(viewId)",
             binaryMessenger: messenger
         )
         _childViewController = nil
         super.init()
+
+        let consentInformation: ConsentInformation? = {
+            guard
+                let consentGrantedDate = args["consentGrantedDate"] as? String,
+                let personalDetails = args["personalDetailsConsentGranted"] as? Bool,
+                let contactInformation = args["contactInfoConsentGranted"] as? Bool,
+                let documentInformation = args["documentInfoConsentGranted"] as? Bool
+            else {
+                return nil
+            }
+
+            return ConsentInformation(
+                consented: ConsentedInformation(
+                    consentGrantedDate: consentGrantedDate,
+                    personalDetails: personalDetails,
+                    contactInformation: contactInformation,
+                    documentInformation: documentInformation
+                )
+            )
+        }()
+
         let bypassSelfieCaptureWithFile = (args["bypassSelfieCaptureWithFile"] as? String)
             .flatMap { URL(string: $0) }
-        let screen = SmileID.documentVerificationScreen(
+
+        let screen = SmileID.enhancedDocumentVerificationScreen(
             userId: args["userId"] as? String ?? "user-\(UUID().uuidString)",
             jobId: args["jobId"] as? String ?? "job-\(UUID().uuidString)",
             allowNewEnroll: args["allowNewEnroll"] as? Bool ?? false,
@@ -39,26 +61,27 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerif
             allowAgentMode: args["allowAgentMode"] as? Bool ?? false,
             allowGalleryUpload: args["allowGalleryUpload"] as? Bool ?? false,
             showInstructions: args["showInstructions"] as? Bool ?? true,
-            showAttribution: args["showAttribution"] as? Bool ?? true,
             skipApiSubmission: args["skipApiSubmission"] as? Bool ?? false,
+            showAttribution: args["showAttribution"] as? Bool ?? true,
             useStrictMode: args["useStrictMode"] as? Bool ?? false,
             extraPartnerParams: args["extraPartnerParams"] as? [String: String] ?? [:],
+            consentInformation: consentInformation,
             delegate: self
         )
         let navView = NavigationView{screen}
         _childViewController = embedView(navView, in: _view, frame: frame)
     }
-
+    
     func view() -> UIView {
         return _view
     }
     
-    func didSucceed(selfie: URL, documentFrontImage: URL, documentBackImage: URL?, didSubmitDocumentVerificationJob: Bool) {
+    func didSucceed(selfie: URL, documentFrontImage: URL, documentBackImage: URL?, didSubmitEnhancedDocVJob: Bool) {
         _childViewController?.removeFromParent()
         let arguments: [String: Any] = [
             "selfieFile": selfie.absoluteString,
             "documentFrontFile": documentFrontImage.absoluteString,
-            "didSubmitDocumentVerificationJob": didSubmitDocumentVerificationJob
+            "didSubmitEnhancedDocVJob": didSubmitEnhancedDocVJob
         ]
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: arguments, options: [])
@@ -69,25 +92,25 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerif
             didError(error: error)
         }
     }
-
+    
     func didError(error: Error) {
         print("[Smile ID] An error occurred - \(error.localizedDescription)")
         _channel.invokeMethod("onError", arguments: error.localizedDescription)
     }
-
+    
     class Factory : NSObject, FlutterPlatformViewFactory {
         private var messenger: FlutterBinaryMessenger
         init(messenger: FlutterBinaryMessenger) {
             self.messenger = messenger
             super.init()
         }
-
+        
         func create(
             withFrame frame: CGRect,
             viewIdentifier viewId: Int64,
             arguments args: Any?
         ) -> FlutterPlatformView {
-            return SmileIDDocumentVerification(
+            return SmileIDEnhancedDocumentVerification(
                 frame: frame,
                 viewIdentifier: viewId,
                 arguments: args as! [String: Any?],
@@ -96,7 +119,7 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerif
         }
         
         public func createArgsCodec() -> FlutterMessageCodec & NSObjectProtocol {
-              return FlutterStandardMessageCodec.sharedInstance()
+            return FlutterStandardMessageCodec.sharedInstance()
         }
     }
 }

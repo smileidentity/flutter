@@ -1,6 +1,6 @@
 import Flutter
 import UIKit
-import SmileID
+import SmileIDSDK
 import SwiftUI
 
 class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieResultDelegate {

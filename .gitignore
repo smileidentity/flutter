@@ -34,3 +34,6 @@ build/
 smile_config.json
 
 sample/android/app/.cxx
+
+.build/
+.swiftpm/

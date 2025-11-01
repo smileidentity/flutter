@@ -1,14 +1,14 @@
 import Flutter
 import UIKit
-import SmileID
+import SmileIDSDK
 import SwiftUI
 
-class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, EnhancedDocumentVerificationResultDelegate {
+class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDelegate {
     private var _view: UIView
     private var _channel: FlutterMethodChannel
     private var _childViewController: UIViewController?
     
-    static let VIEW_TYPE_ID = "SmileIDEnhancedDocumentVerification"
+    static let VIEW_TYPE_ID = "SmileIDBiometricKYC"
     
     init(
         frame: CGRect,
@@ -18,7 +18,7 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
     ) {
         _view = UIView()
         _channel = FlutterMethodChannel(
-            name: "\(SmileIDEnhancedDocumentVerification.VIEW_TYPE_ID)_\(viewId)",
+            name: "\(SmileIDBiometricKYC.VIEW_TYPE_ID)_\(viewId)",
             binaryMessenger: messenger
         )
         _childViewController = nil
@@ -44,25 +44,24 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
             )
         }()
 
-        let bypassSelfieCaptureWithFile = (args["bypassSelfieCaptureWithFile"] as? String)
-            .flatMap { URL(string: $0) }
-
-        let screen = SmileID.enhancedDocumentVerificationScreen(
-            userId: args["userId"] as? String ?? "user-\(UUID().uuidString)",
-            jobId: args["jobId"] as? String ?? "job-\(UUID().uuidString)",
+        let screen = SmileID.biometricKycScreen(
+            idInfo: IdInfo(
+                country:  args["country"] as? String ?? "",
+                idType:  args["idType"] as? String,
+                idNumber:  args["idNumber"] as? String,
+                firstName:  args["firstName"] as? String,
+                middleName:  args["middleName"] as? String,
+                lastName:  args["lastName"] as? String,
+                dob:  args["dob"] as? String,
+                bankCode:  args["bankCode"] as? String,
+                entered:  args["entered"] as? Bool
+            ),
+            userId: args["userId"] as? String ?? generateUserId(),
+            jobId: args["jobId"] as? String ?? generateJobId(),
             allowNewEnroll: args["allowNewEnroll"] as? Bool ?? false,
-            countryCode: args["countryCode"] as! String,
-            documentType: args["documentType"] as? String,
-            idAspectRatio: args["idAspectRatio"] as? Double,
-            bypassSelfieCaptureWithFile: bypassSelfieCaptureWithFile,
-            autoCaptureTimeout: (args["autoCaptureTimeout"] as? Int).map { TimeInterval($0) / 1000.0 } ?? 10.0,
-            autoCapture: AutoCapture.from(args["autoCapture"] as? String),
-            captureBothSides: args["captureBothSides"] as? Bool ?? true,
             allowAgentMode: args["allowAgentMode"] as? Bool ?? false,
-            allowGalleryUpload: args["allowGalleryUpload"] as? Bool ?? false,
-            showInstructions: args["showInstructions"] as? Bool ?? true,
-            skipApiSubmission: args["skipApiSubmission"] as? Bool ?? false,
             showAttribution: args["showAttribution"] as? Bool ?? true,
+            showInstructions: args["showInstructions"] as? Bool ?? true,
             useStrictMode: args["useStrictMode"] as? Bool ?? false,
             extraPartnerParams: args["extraPartnerParams"] as? [String: String] ?? [:],
             consentInformation: consentInformation,
@@ -76,12 +75,14 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
         return _view
     }
     
-    func didSucceed(selfie: URL, documentFrontImage: URL, documentBackImage: URL?, didSubmitEnhancedDocVJob: Bool) {
+    func didSucceed(selfieImage: URL, livenessImages: [URL], didSubmitBiometricJob: Bool) {
         _childViewController?.removeFromParent()
         let arguments: [String: Any] = [
-            "selfieFile": selfie.absoluteString,
-            "documentFrontFile": documentFrontImage.absoluteString,
-            "didSubmitEnhancedDocVJob": didSubmitEnhancedDocVJob
+            "selfieFile": selfieImage.absoluteString,
+            "livenessFiles": livenessImages.map {
+                $0.absoluteString
+            },
+            "didSubmitBiometricKycJob": didSubmitBiometricJob,
         ]
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: arguments, options: [])
@@ -110,7 +111,7 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
             viewIdentifier viewId: Int64,
             arguments args: Any?
         ) -> FlutterPlatformView {
-            return SmileIDEnhancedDocumentVerification(
+            return SmileIDBiometricKYC(
                 frame: frame,
                 viewIdentifier: viewId,
                 arguments: args as! [String: Any?],
