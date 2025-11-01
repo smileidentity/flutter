@@ -30,7 +30,7 @@ let package = Package(
                 .product(name: "Sentry", package: "sentry-cocoa"),
                 .product(name: "SmileIDSecurity", package: "smile-id-security")
             ],
-        ),
+        )
         .binaryTarget(
             name: "SmileIDSDK",
             url: "https://github.com/smileidentity/ios/releases/download/v11.1.2/SmileIDSDK.xcframework.zip",
