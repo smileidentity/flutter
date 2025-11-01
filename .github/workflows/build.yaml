@@ -96,7 +96,6 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v5
-
       - run: touch sample/ios/smile_config.json
 
       - uses: subosito/flutter-action@v2
@@ -104,11 +103,10 @@ jobs:
           flutter-version: '3.32.0'
           channel: 'stable'
 
-      - name: Enable Swift Package Manager
-        run: flutter config --enable-swift-package-manager
-
-      - name: Install Dependencies
-        run: flutter pub get && cd sample && flutter pub get && cd ..
-
-      - name: Build iOS Sample App
-        run: cd sample && flutter build ios --no-codesign && cd ..
+      - name: Enable SPM and Build iOS
+        run: |
+          flutter config --enable-swift-package-manager
+          flutter pub get
+          cd sample
+          flutter pub get
+          flutter build ios --no-codesign
