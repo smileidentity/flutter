@@ -29,7 +29,6 @@ jobs:
           flutter test
           cd sample
           flutter config --enable-swift-package-manager
-          flutter pub get
           flutter test
           cd ..
       - name: Lint Flutter
@@ -60,7 +59,6 @@ jobs:
           flutter pub get
           cd sample
           flutter config --enable-swift-package-manager
-          flutter pub get
           flutter build apk 
           cd ..
       - name: Lint Android
@@ -88,6 +86,5 @@ jobs:
           flutter pub get
           cd sample/ios
           flutter config --enable-swift-package-manager
-          flutter pub get
           flutter build ios --no-codesign
           cd ..
