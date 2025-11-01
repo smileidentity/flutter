@@ -28,6 +28,7 @@ jobs:
           flutter pub get
           flutter test
           cd sample
+          flutter config --enable-swift-package-manager
           flutter pub get
           flutter test
           cd ..
@@ -58,6 +59,7 @@ jobs:
           flutter config --enable-swift-package-manager
           flutter pub get
           cd sample
+          flutter config --enable-swift-package-manager
           flutter pub get
           flutter build apk 
           cd ..
@@ -85,6 +87,7 @@ jobs:
           flutter config --enable-swift-package-manager
           flutter pub get
           cd sample/ios
+          flutter config --enable-swift-package-manager
           flutter pub get
           flutter build ios --no-codesign
           cd ..
