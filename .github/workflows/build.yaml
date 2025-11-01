@@ -16,14 +16,18 @@ jobs:
       - uses: actions/checkout@v5
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.32.0' # Set the desired Flutter version here
+          flutter-version: '3.32.0'
           channel: 'stable'
       - name: Enable Swift Package Manager
         run: flutter config --enable-swift-package-manager
-      - name: Install Dependencies
-        run: flutter pub get && cd sample && flutter pub get && cd ..
+      - name: Install Root Dependencies
+        run: flutter pub get
+      - name: Install Sample Dependencies
+        working-directory: sample
+        run: flutter pub get
       - name: Lint Flutter
         run: dart format . --set-exit-if-changed && flutter analyze
+        
   Android:
     runs-on: ubuntu-latest
     env:
@@ -46,8 +50,11 @@ jobs:
           channel: 'stable'
       - name: Enable Swift Package Manager
         run: flutter config --enable-swift-package-manager
-      - name: Install Dependencies
-        run: flutter pub get && cd sample && flutter pub get && cd ..
+      - name: Install Root Dependencies
+        run: flutter pub get
+      - name: Install Sample Dependencies
+        working-directory: sample
+        run: flutter pub get
       - name: Lint Android
         uses: musichin/ktlint-check@v3
         with:
@@ -57,11 +64,15 @@ jobs:
             !**/**.g.kt
             !**/generated/**
       - name: Test
-        run: flutter test && cd sample && flutter test && cd ..
+        run: flutter test
+      - name: Test Sample
+        working-directory: sample
+        run: flutter test
       - name: Build Android Sample App
-        run: cd sample && flutter build apk && cd ..
+        working-directory: sample
+        run: flutter build apk
+        
   iOS:
-    # TODO: Change back to macos-latest once it points to macOS 14 (Q2 '24)
     runs-on: macos-14
     timeout-minutes: 10
     steps:
@@ -69,11 +80,15 @@ jobs:
       - run: touch sample/ios/smile_config.json
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.32.0' # Set the desired Flutter version here
+          flutter-version: '3.32.0'
           channel: 'stable'
       - name: Enable Swift Package Manager
         run: flutter config --enable-swift-package-manager
-      - name: Install Dependencies
-        run: flutter pub get && cd sample && flutter pub get && cd ..
+      - name: Install Root Dependencies
+        run: flutter pub get
+      - name: Install Sample Dependencies
+        working-directory: sample
+        run: flutter pub get
       - name: Build iOS Sample App
-        run: cd sample/ios && flutter build ios --no-codesign && cd ..
+        working-directory: sample
+        run: flutter build ios --no-codesign
