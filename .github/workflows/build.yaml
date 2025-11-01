@@ -70,21 +70,62 @@ jobs:
             !**/**.g.kt
             !**/generated/**
   iOS:
-    # TODO: Change back to macos-latest once it points to macOS 14 (Q2 '24)
+    name: iOS Build
     runs-on: macos-14
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v5
+
       - run: touch sample/ios/smile_config.json
+
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.32.0'
           channel: 'stable'
-      - name: Enable SPM and Build iOS Sample App
+
+    # Ensure all iOS build artifacts are downloaded
+      - name: Precache iOS artifacts
+        run: flutter precache --ios
+
+    # ✅ Force-enable Swift Package Manager and verify the setting persisted
+      - name: Enable Swift Package Manager (persistently)
         run: |
           flutter config --enable-swift-package-manager
+          echo "=== Flutter Settings ==="
+          cat "$HOME/.flutter_settings" || echo "No settings file found"
+          flutter config
+
+    # ✅ Make sure Xcode is configured and selected
+      - name: Select Xcode 15+
+        run: sudo xcode-select -s /Applications/Xcode_15.2.app
+
+    # ✅ Run all iOS-related commands in one shell to preserve context
+      - name: Build iOS Sample App
+        shell: bash
+        run: |
+          set -e
           flutter pub get
-          cd sample/ios
-          flutter config --enable-swift-package-manager
-          flutter build ios --no-codesign
-          cd ..
+          cd sample
+          flutter pub get
+          echo "Building iOS app..."
+          flutter build ios --no-codesign --verbose
+
+            # iOS:
+    # TODO: Change back to macos-latest once it points to macOS 14 (Q2 '24)
+    # runs-on: macos-14
+    # timeout-minutes: 10
+    # steps:
+    #   - uses: actions/checkout@v5
+    #   - run: touch sample/ios/smile_config.json
+    #   - uses: subosito/flutter-action@v2
+    #     with:
+    #       flutter-version: '3.32.0'
+    #       channel: 'stable'
+    #   - name: Enable SPM and Build iOS Sample App
+    #     run: |
+    #       flutter config --enable-swift-package-manager
+    #       flutter pub get
+    #       cd sample/ios
+    #       flutter config --enable-swift-package-manager
+    #       flutter build ios --no-codesign
+    #       cd ..
