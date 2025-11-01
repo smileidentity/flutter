@@ -18,15 +18,15 @@ jobs:
         with:
           flutter-version: '3.32.0'
           channel: 'stable'
-      - name: Verify and Enable Swift Package Manager
-        run: |
-          flutter config --enable-swift-package-manager
-          flutter config
+      - name: Enable Swift Package Manager
+        run: flutter config --enable-swift-package-manager
       - name: Install Root Dependencies
         run: flutter pub get
-      - name: Install Sample Dependencies
+      - name: Migrate Sample to SPM and Install Dependencies
         working-directory: sample
-        run: flutter pub get
+        run: |
+          flutter build apk --config-only || true
+          flutter pub get
       - name: Lint Flutter
         run: dart format . --set-exit-if-changed && flutter analyze
         
@@ -50,15 +50,15 @@ jobs:
         with:
           flutter-version: ${{ matrix.flutter-version }}
           channel: 'stable'
-      - name: Verify and Enable Swift Package Manager
-        run: |
-          flutter config --enable-swift-package-manager
-          flutter config
+      - name: Enable Swift Package Manager
+        run: flutter config --enable-swift-package-manager
       - name: Install Root Dependencies
         run: flutter pub get
-      - name: Install Sample Dependencies
+      - name: Migrate Sample to SPM and Install Dependencies
         working-directory: sample
-        run: flutter pub get
+        run: |
+          flutter build apk --config-only || true
+          flutter pub get
       - name: Lint Android
         uses: musichin/ktlint-check@v3
         with:
@@ -86,15 +86,15 @@ jobs:
         with:
           flutter-version: '3.32.0'
           channel: 'stable'
-      - name: Verify and Enable Swift Package Manager
-        run: |
-          flutter config --enable-swift-package-manager
-          flutter config
+      - name: Enable Swift Package Manager
+        run: flutter config --enable-swift-package-manager
       - name: Install Root Dependencies
         run: flutter pub get
-      - name: Install Sample Dependencies
+      - name: Migrate Sample to SPM and Install Dependencies
         working-directory: sample
-        run: flutter pub get
+        run: |
+          flutter build ios --config-only --no-codesign || true
+          flutter pub get
       - name: Build iOS Sample App
         working-directory: sample
         run: flutter build ios --no-codesign
