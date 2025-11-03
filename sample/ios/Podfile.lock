@@ -5,24 +5,29 @@ PODS:
     - FingerprintJS/SystemControl
   - FingerprintJS/SystemControl (1.6.0)
   - Flutter (1.0.0)
-  - lottie-ios (4.5.2)
-  - Sentry (8.55.0):
-    - Sentry/Core (= 8.55.0)
-  - Sentry/Core (8.55.0)
-  - smile_id (11.2.0):
+  - integration_test (0.0.1):
     - Flutter
-    - SmileID (= 11.1.1)
-  - SmileID (11.1.1):
+  - lottie-ios (4.5.2)
+  - Sentry (8.57.0):
+    - Sentry/Core (= 8.57.0)
+  - Sentry/Core (8.57.0)
+  - smile_id (11.2.3):
+    - Flutter
+    - SmileID (= 11.1.2)
+  - SmileID (11.1.2):
+    - SmileIDSDK (= 11.1.2)
+  - SmileIDSDK (11.1.2):
     - FingerprintJS (= 1.6.0)
     - lottie-ios (= 4.5.2)
-    - Sentry (= 8.55.0)
-    - SmileIDSecurity (= 11.1.1)
-    - ZIPFoundation (= 0.9.19)
-  - SmileIDSecurity (11.1.1)
-  - ZIPFoundation (0.9.19)
+    - Sentry (= 8.57.0)
+    - SmileIDSecurity (= 11.1.2)
+    - ZIPFoundation (= 0.9.20)
+  - SmileIDSecurity (11.1.2)
+  - ZIPFoundation (0.9.20)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - smile_id (from `.symlinks/plugins/smile_id/ios`)
 
 SPEC REPOS:
@@ -31,24 +36,29 @@ SPEC REPOS:
     - lottie-ios
     - Sentry
     - SmileID
+    - SmileIDSDK
     - SmileIDSecurity
     - ZIPFoundation
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
   smile_id:
     :path: ".symlinks/plugins/smile_id/ios"
 
 SPEC CHECKSUMS:
   FingerprintJS: 3a0c3e7f5035ecae199e5e5836200d9b20f1266a
-  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
+  integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
   lottie-ios: 96784afc26ea031d3e2b6cae342a4b8915072489
-  Sentry: f7dddfabe691274d6d630f04621e1345f9d6b9e0
-  smile_id: 34d2793c6fb8c2116e38b78f69ecaf6e84f01b89
-  SmileID: 814fac7c88593349680276789688496f1a948403
-  SmileIDSecurity: 2849074a33fa738cb7478f90b32b7f7333a14630
-  ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
+  Sentry: e1b49e5f49367ff211b25c431a60e2bd83b792aa
+  smile_id: 1ed68a7582a66a3d909f124b48fccbea4c3a34ee
+  SmileID: e2b0529f765fd264e6e1201e4fb7d4f75b578532
+  SmileIDSDK: f7d3bc45d1ca4bf79619a102e8ed6bfa58726c0e
+  SmileIDSecurity: 049b6d1c0b00866a5e7885d7d57228e091a58413
+  ZIPFoundation: dfd3d681c4053ff7e2f7350bc4e53b5dba3f5351
 
 PODFILE CHECKSUM: 81be4fc09878044dc75c762493ad56e861d5bf57
 
