@@ -33,7 +33,7 @@ allprojects {
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("org.jlleitschuh.gradle.ktlint") version "12.3.0"
+    id("org.jlleitschuh.gradle.ktlint") version "13.1.0"
 }
 
 if (kotlinVersion.startsWith("2")) {
@@ -92,7 +92,7 @@ android {
 }
 
 dependencies {
-    implementation("com.smileidentity:android-sdk:11.1.2")
+    implementation("com.smileidentity:android-sdk:11.1.3")
     implementation("androidx.core:core-ktx:1.16.0")
     implementation(platform("androidx.compose:compose-bom:2025.07.00"))
     implementation("androidx.compose.ui:ui")
