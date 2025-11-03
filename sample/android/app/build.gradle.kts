@@ -36,6 +36,11 @@ android {
             freeCompilerArgs.add("-Xskip-metadata-version-check")
         }
     }
+    packaging {
+        resources {
+            excludes += "META-INF/versions/9/OSGI-INF/MANIFEST.MF"
+        }
+    }
 }
 val checkSmileConfigFileTask = tasks.register("checkSmileConfigFile") {
     doLast {
