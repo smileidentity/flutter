@@ -13,7 +13,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/smileidentity/ios.git", exact: "11.1.1")
+        .package(url: "https://github.com/smileidentity/ios.git", exact: "11.1.2")
     ],
     targets: [
         .target(
