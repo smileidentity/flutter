@@ -1,5 +1,5 @@
 import Foundation
-import SmileIDSDK
+import SmileID
 import UIKit
 
 extension String {

@@ -1,6 +1,6 @@
 import Combine
 import Flutter
-import SmileIDSDK
+import SmileID
 import SwiftUI
 
 class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView {

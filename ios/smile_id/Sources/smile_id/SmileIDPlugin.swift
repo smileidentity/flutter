@@ -1,5 +1,5 @@
 import Flutter
-import SmileIDSDK
+import SmileID
 import UIKit
 
 public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {

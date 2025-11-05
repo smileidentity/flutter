@@ -1,4 +1,4 @@
-import SmileIDSDK
+import SmileID
 import Foundation
 
 func convertNullableMapToNonNull(data: [String?: String?]?) -> [String: String]? {
