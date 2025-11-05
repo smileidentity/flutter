@@ -28,3 +28,10 @@ flutter:
         pluginClass: SmileIDPlugin
       ios:
         pluginClass: SmileIDPlugin
+        swiftPackage:
+          iosPrefix: SmileID
+          name: smile_id
+          baseUrl: https://github.com/SmileIdentity/smile-identity-flutter
+          path: ios
+          iosFolder: smile_id
+          version: 11.2.2

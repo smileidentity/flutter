@@ -59,6 +59,8 @@ Drag the `smile_config.json` into your project's file inspector and ensure that 
 your app's target. Confirm that it is by checking the Copy Bundle Resources drop down in the Build
 Phases tab as shown below.
 
+> **Swift Package Manager:** This plugin now bundles its iOS code as a Swift package and pulls in the official Smile ID iOS SDK (v11.1.1) via `https://github.com/smileidentity/ios`. When you run `flutter build` or open the generated Xcode project, Flutter will integrate the package automatically—no manual CocoaPods step is required.
+
 #### 3. Initialization
 
 Initialize the Smile ID SDK in `main.dart` by calling `initialize`
