@@ -35,6 +35,8 @@ target 'Runner' do
   use_frameworks!
   use_modular_headers!
 
+  pod 'SmileID', git: 'https://github.com/smileidentity/ios.git', branch: 'prep-release-v11.1.3'
+
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   target 'RunnerTests' do
     inherit! :search_paths
