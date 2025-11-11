@@ -41,18 +41,7 @@ class _MyAppState extends State<MyApp> {
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
     if (!mounted) return;
-    // replace with your own credentials
-    var config = FlutterConfig(
-        partnerId: "partner-id-here",
-        authToken: "auth-token-here",
-        prodBaseUrl: "https://api.smileidentity.com/v1/",
-        sandboxBaseUrl: "https://api.smileidentity.com/v1/");
-
-    SmileID.initializeWithConfig(
-      config: config,
-      enableCrashReporting: true,
-      useSandbox: false,
-    );
+    SmileID.initialize(useSandbox: false, enableCrashReporting: true);
   }
 
   @override
