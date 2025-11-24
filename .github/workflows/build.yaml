@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.32.0" # Set the desired Flutter version here
@@ -31,7 +31,7 @@ jobs:
       matrix:
         flutter-version: ["3.32.0"]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-java@v5
         with:
           distribution: temurin
@@ -45,7 +45,7 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get && cd sample && flutter pub get && cd ..
       - name: Lint Android
-        uses: musichin/ktlint-check@v3
+        uses: musichin/ktlint-check@v4
         with:
           ktlint-version: "1.7.0"
           patterns: |
@@ -60,7 +60,7 @@ jobs:
     runs-on: macos-15
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: touch sample/ios/smile_config.json
       - uses: subosito/flutter-action@v2
         with:
